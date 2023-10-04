@@ -11,13 +11,13 @@ interface LayoutProps {
 export default function Layout(props: LayoutProps) {
   const location = useLocation();
   const normalPaths = [...Object.values(PATH_URL), ...Object.values(PATH_URL.SURVEY)];
-  const showSidebar = normalPaths.includes(location.pathname);
+  const isSidebarVisible = normalPaths.includes(location.pathname);
 
   return (
     <>
       <Header />
       <main>
-        {showSidebar && <Sidebar />}
+        {isSidebarVisible && <Sidebar />}
         <section>{props.children}</section>
       </main>
     </>
