@@ -1,7 +1,6 @@
-import { useLocation } from 'react-router-dom';
-import { PATH_URL } from 'shared/constants/path.const';
 import Sidebar from 'components/layout/sidebar/Sidebar';
 import Header from './header/Header';
+import usePathCheck from 'shared/hooks/usePathCheck';
 import './layout.scss';
 
 interface LayoutProps {
@@ -9,15 +8,13 @@ interface LayoutProps {
 }
 
 export default function Layout(props: LayoutProps) {
-  const location = useLocation();
-  const normalPaths = [...Object.values(PATH_URL), ...Object.values(PATH_URL.SURVEY)];
-  const isSidebarVisible = normalPaths.includes(location.pathname);
+  const isSurveyPage = usePathCheck();
 
   return (
     <>
       <Header />
       <main>
-        {isSidebarVisible && <Sidebar />}
+        {isSurveyPage && <Sidebar />}
         <section>{props.children}</section>
       </main>
     </>
