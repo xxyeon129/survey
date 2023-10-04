@@ -1,0 +1,8 @@
+aside {
+  height: calc(100vh - 4.563rem);
+  width: 16.25rem;
+  background-color: $sidebar-background-blue-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
