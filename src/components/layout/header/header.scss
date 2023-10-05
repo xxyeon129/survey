@@ -1,5 +1,71 @@
 header {
   width: 100vw;
-  height: 4.563rem;
-  padding: 1.125rem;
+  height: 73px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: white;
+  z-index: 999;
+
+  // TEST CODE
+  // border: 1px solid red;
+}
+
+#header-contents {
+  height: calc(100% - 7px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 30px;
+
+  img {
+    width: 164px;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+    // TEST CODE
+    // border: 1px solid green;
+  }
+
+  span {
+    font-size: 0.9rem;
+    font-weight: $text-medium;
+    color: $text-grey-color;
+    padding-top: 3.5px;
+    padding-right: 15px;
+  }
+}
+
+#prev-next-btn {
+  display: flex;
+  gap: 10px;
+
+  button {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+
+    > svg {
+      font-size: 2.2rem;
+      color: $main-blue-color;
+      cursor: pointer;
+    }
+  }
+}
+
+#progress-bar-background {
+  width: 100vw;
+  height: 6px;
+  background-color: $progressbar-grey-color;
+
+  #progress-bar-filled {
+    // TEST CODE: width
+    width: 60%;
+    height: 100%;
+    background-color: $main-blue-color;
+  }
 }
