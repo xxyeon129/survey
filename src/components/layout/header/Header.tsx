@@ -24,7 +24,7 @@ export default function Header() {
         <img src={logo} alt="header 좌측 병원 로고" />
         <div>{rightContent}</div>
       </div>
-      <ProgressBar />
+      {isSurveyPage && <ProgressBar />}
     </header>
   );
 }
