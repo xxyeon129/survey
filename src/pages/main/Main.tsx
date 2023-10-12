@@ -36,10 +36,10 @@ export default function Main() {
         {routeItems.map((routeList) => (
           <li className={styles['route-box']}>
             <div className={styles['route-box-content']}>
-              <figure className={styles['route-box-icon-container']}>
+              <figure className={styles['route-box-icon-wrapper']}>
                 <img src={routeList.icon} alt={routeList.alt} />
               </figure>
-              <div className={styles['route-box-text-container']}>
+              <div className={styles['route-box-text-wrapper']}>
                 <h3>{routeList.title}</h3>
                 <div>{routeList.description}</div>
               </div>
