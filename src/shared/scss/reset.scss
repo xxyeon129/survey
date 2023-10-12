@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: 'Pretendard Variable';
 }
 
 html,
@@ -38,6 +39,10 @@ h2,
 h3,
 h4 {
   margin: 0;
+}
+h3,
+h4 {
+  font-weight: $text-semi-bold;
 }
 /* HTML5 display-role reset for older browsers */
 body {
