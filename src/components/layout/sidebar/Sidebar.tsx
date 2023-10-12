@@ -16,7 +16,7 @@ export default function Sidebar() {
   return (
     <aside>
       <ul>
-        <li>{SURVEY_TITLE}</li>
+        <li>{`${SURVEY_TITLE} 설문`}</li>
         {surveyList.map((surveyType, index) => (
           <li
             key={index}
