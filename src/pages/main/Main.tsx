@@ -50,7 +50,7 @@ export default function Main() {
         </figure>
         <div className={styles['route-box-text-wrapper']}>
           <h3>{routeList.title}</h3>
-          <div>{routeList.description}</div>
+          <div className={styles['route-box-description']}>{routeList.description}</div>
         </div>
       </div>
     </li>
