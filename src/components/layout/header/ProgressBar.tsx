@@ -1,7 +1,9 @@
+import styles from './header.module.scss';
+
 export default function ProgressBar() {
   return (
-    <div id='progress-bar-background'>
-      <div id='progress-bar-filled' />
+    <div className={styles['progress-bar-background']}>
+      <div className={styles['progress-bar-filled']} />
     </div>
   );
 }

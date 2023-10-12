@@ -12,7 +12,7 @@ header {
   // border: 1px solid red;
 }
 
-#header-contents {
+.header-contents {
   height: calc(100% - 7px);
   display: flex;
   align-items: center;
@@ -41,7 +41,7 @@ header {
   }
 }
 
-#prev-next-btn {
+.prev-next-btn {
   display: flex;
   gap: 10px;
 
@@ -58,12 +58,12 @@ header {
   }
 }
 
-#progress-bar-background {
+.progress-bar-background {
   width: 100vw;
   height: 6px;
   background-color: $progressbar-grey-color;
 
-  #progress-bar-filled {
+  .progress-bar-filled {
     // TEST CODE: width
     width: 60%;
     height: 100%;

@@ -1,5 +1,5 @@
 import { SURVEY, SURVEY_TITLE } from 'shared/constants/survey.const';
-import './sidebar.scss';
+import styles from './sidebar.module.scss';
 import { useState } from 'react';
 
 export default function Sidebar() {
@@ -20,7 +20,7 @@ export default function Sidebar() {
         {surveyList.map((surveyType, index) => (
           <li
             key={index}
-            className={checkedIndex === index ? 'checked' : ''}
+            className={checkedIndex === index ? styles['checked'] : ''}
             onClick={() => handleClick(index)}
           >
             {index}. {surveyType}

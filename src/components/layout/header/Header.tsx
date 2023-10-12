@@ -2,7 +2,7 @@ import usePathCheck from 'shared/hooks/usePathCheck';
 import logo from 'assets/header-logo.svg';
 import PrevNextBtn from './PrevNextBtn';
 import ProgressBar from './ProgressBar';
-import './header.scss';
+import styles from './header.module.scss';
 
 export default function Header() {
   const isSurveyPage = usePathCheck();
@@ -19,8 +19,8 @@ export default function Header() {
 
   return (
     <header>
-      <div id='header-contents'>
-        <img src={logo} alt='header 좌측 병원 로고' />
+      <div className={styles['header-contents']}>
+        <img src={logo} alt="header 좌측 병원 로고" />
         <div>{rightContent}</div>
       </div>
       <ProgressBar />
