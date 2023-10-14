@@ -1,0 +1,35 @@
+.title-container {
+  position: relative;
+
+  > header {
+    .circle {
+      position: absolute;
+      top: -3.125rem;
+      left: -3.125rem;
+
+      width: 3.75rem;
+      height: 3.75rem;
+      flex-shrink: 0;
+      background: radial-gradient(
+        50% 50% at 50% 50%,
+        $main-blue-color 0%,
+        rgba(15, 111, 222, 0) 100%
+      );
+    }
+
+    hgroup {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+
+      .title {
+        font-size: 2.5rem;
+      }
+      .sub-title {
+        font-size: 1.5rem;
+        color: $main-blue-color;
+        padding-left: 0.1rem;
+      }
+    }
+  }
+}
