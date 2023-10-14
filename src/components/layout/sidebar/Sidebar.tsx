@@ -11,19 +11,19 @@ export default function Sidebar() {
     // TODO: 페이지 이동
   };
 
-  const surveyList = Object.values(SURVEY).map((el) => el.TYPE);
+  const surveyList = Object.values(SURVEY).map((surveyItem) => surveyItem.TITLE);
 
   return (
     <aside>
       <ul>
         <li>{`${SURVEY_TITLE} 설문`}</li>
-        {surveyList.map((surveyType, index) => (
+        {surveyList.map((surveyTitle, index) => (
           <li
             key={index}
             className={checkedIndex === index ? styles['checked'] : ''}
             onClick={() => handleClick(index)}
           >
-            {index}. {surveyType}
+            {index}. {surveyTitle}
           </li>
         ))}
       </ul>

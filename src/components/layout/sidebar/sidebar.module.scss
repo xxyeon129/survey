@@ -1,10 +1,10 @@
 aside {
-  height: calc(100vh - 73px);
-  width: 260px;
+  height: calc(100vh - 4.563rem);
+  width: 16.25rem;
   background-color: $sidebar-background-blue-color;
   display: flex;
   flex-direction: column;
-  padding: 40px 20px;
+  padding: 2.5rem 1.25rem;
 
   // TEST CODE
   // border: 3px solid green;
@@ -12,10 +12,10 @@ aside {
   ul {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0.625rem;
 
     :first-child {
-      margin-bottom: 20px;
+      margin-bottom: 1.25rem;
       cursor: default;
     }
 
@@ -23,8 +23,8 @@ aside {
       font-size: 0.8rem;
       font-weight: $text-semi-bold;
       color: $text-sidebar-grey-color;
-      padding: 10px 5px 10px 30px;
-      border-radius: 5px;
+      padding: 0.625rem 0.313rem 0.625rem 1.875rem;
+      border-radius: 0.313rem;
       cursor: pointer;
 
       &:not(:first-child, .checked) {
@@ -32,7 +32,6 @@ aside {
           background-color: #eff2f8;
         }
       }
-      // border: 1px solid lightcoral;
     }
 
     .checked {
