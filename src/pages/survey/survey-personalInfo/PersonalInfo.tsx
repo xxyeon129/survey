@@ -1,3 +1,11 @@
+import styles from 'pages/survey/common/survey.module.scss';
+import { SURVEY } from 'shared/constants/survey.const';
+import SurveyTitle from '../common/SurveyTitle';
+
 export default function PersonalInfo() {
-  return <div>개인정보</div>;
+  return (
+    <article className={styles['survey-container']}>
+      <SurveyTitle title={SURVEY[0].TITLE} subTitle={SURVEY[0].SUB_TITLE} />
+    </article>
+  );
 }
