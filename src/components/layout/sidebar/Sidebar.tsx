@@ -1,17 +1,25 @@
 import { SURVEY, SURVEY_TITLE } from 'shared/constants/survey.const';
 import styles from './sidebar.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export default function Sidebar() {
-  const [checkedIndex, setCheckedIndex] = useState(-1);
+  const [checkedIndex, setCheckedIndex] = useState(0);
+
+  const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const location = pathname.substring(8);
 
   const handleClick = (index: number) => {
+    navigate(`/survey/${index}`);
     setCheckedIndex(index);
-
-    // TODO: 페이지 이동
   };
 
   const surveyList = Object.values(SURVEY).map((surveyItem) => surveyItem.TITLE);
+
+  useEffect(() => {
+    setCheckedIndex(+location);
+  }, [checkedIndex]);
 
   return (
     <aside>

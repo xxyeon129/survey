@@ -13,11 +13,11 @@ export default function MainRouter() {
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path='/' element={<Main />} />
-          <Route path={PATH_URL.PERSONAL} element={<PersonalInfo />} />
+          <Route path="/" element={<Main />} />
+          <Route path={PATH_URL.SURVEY.PERSONAL} element={<PersonalInfo />} />
           <Route path={PATH_URL.SURVEY.UPDRS} element={<SurveyUPDRS />} />
           <Route path={PATH_URL.TEST} element={<Test />} />
-          <Route path='*' element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Layout>
     </BrowserRouter>

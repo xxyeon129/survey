@@ -4,6 +4,7 @@ import PrevNextBtn from './PrevNextBtn';
 import ProgressBar from './ProgressBar';
 import styles from './header.module.scss';
 import { SURVEY_TITLE } from 'shared/constants/survey.const';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   const isSurveyPage = usePathCheck();
@@ -21,7 +22,9 @@ export default function Header() {
   return (
     <header className={styles['header']}>
       <div className={styles['header-contents']}>
-        <img src={logo} alt="header 좌측 병원 로고" />
+        <Link to="/">
+          <img src={logo} alt="header 좌측 병원 로고" />
+        </Link>
         <div>{rightContent}</div>
       </div>
       {isSurveyPage && <ProgressBar />}
