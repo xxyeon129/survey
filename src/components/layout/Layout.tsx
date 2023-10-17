@@ -9,7 +9,6 @@ interface LayoutProps {
 
 export default function Layout(props: LayoutProps) {
   const isSurveyPage = usePathCheck();
-  console.log(isSurveyPage);
 
   return (
     <>

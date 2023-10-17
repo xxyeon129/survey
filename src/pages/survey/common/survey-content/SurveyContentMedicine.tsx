@@ -23,7 +23,7 @@ export default function SurveyContentMedicine(props: SurveyContentMedicineProps)
                 answer={answer}
                 medicineType={true}
                 inputName={`${props.questionNo}-medicine-true`}
-                inputId={`${answer}-medicine-true`}
+                inputId={`${props.questionNo}-${answer}-medicine-true`}
                 key={`${answer}-medicine-true`}
               />
             ))}
@@ -37,7 +37,7 @@ export default function SurveyContentMedicine(props: SurveyContentMedicineProps)
                 answer={answer}
                 medicineType={false}
                 inputName={`${props.questionNo}-medicine-false`}
-                inputId={`${answer}-medicine-false`}
+                inputId={`${props.questionNo}-${answer}-medicine-false`}
                 key={`${answer}-medicine-false`}
               />
             ))}
