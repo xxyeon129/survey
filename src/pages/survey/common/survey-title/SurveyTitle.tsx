@@ -16,7 +16,6 @@ export default function SurveyTitle(props: SurveyTitleProps) {
           <h3 className={styles['sub-title']}>{props.subTitle}</h3>
         </hgroup>
       </header>
-      {/* TO DO: 설명이 있는 설문 종류일 경우 추가, css setting */}
       <div className={styles.explain}>{props.explain}</div>
     </article>
   );

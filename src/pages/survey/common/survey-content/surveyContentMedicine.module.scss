@@ -4,12 +4,12 @@
   > hr {
     border: 1px solid $main-blue-color;
   }
-}
 
-.question {
-  font-size: 1.3rem;
-  padding-top: 0.5rem;
-  line-height: 170%;
+  .question {
+    font-size: 1.3rem;
+    padding-top: 0.5rem;
+    line-height: 170%;
+  }
 }
 
 .answer-container {
@@ -24,6 +24,10 @@
   }
 }
 
+.answer-ul {
+  padding-top: 0.2rem;
+}
+
 .answer-li {
   position: relative;
 
@@ -32,42 +36,34 @@
     visibility: hidden;
   }
 
-  .radio-button {
-    position: absolute;
-    border: max(3px, 0.1em) solid $checkbox-grey-color;
-    border-radius: 100%;
-    width: 1.7rem;
-    height: 1.7rem;
-    top: 1.79rem;
-    left: 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: border 0.25s linear;
-
-    .radio-button-checked-circle {
-      width: 0.8rem;
-      height: 0.8rem;
-      border-radius: 100%;
-    }
-  }
-
   > label {
     display: block;
     position: relative;
     font-size: 1.2rem;
-    padding: 0.8rem 1.5rem 1rem 4.5rem;
-    height: 2rem;
+    line-height: 170%;
+    padding-left: 4.5rem;
+    min-height: 2rem;
     z-index: 2;
     cursor: pointer;
-  }
 
-  > input[type='radio']:checked ~ .radio-button {
-    border: max(4px, 0.1em) solid $main-blue-color;
+    .radio-button {
+      position: absolute;
+      border: max(3px, 0.1em) solid $checkbox-grey-color;
+      border-radius: 100%;
+      width: 1.7rem;
+      height: 1.7rem;
+      top: 0.17rem;
+      left: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border 0.25s linear;
 
-    .radio-button-checked-circle {
-      background: $main-blue-color;
-      transition: 0.25s;
+      .radio-button-checked-circle {
+        width: 0.8rem;
+        height: 0.8rem;
+        border-radius: 100%;
+      }
     }
   }
 
@@ -75,6 +71,15 @@
     color: $main-blue-color;
     font-weight: $text-semi-bold;
     transition: 0.25s;
+
+    .radio-button {
+      border: max(4px, 0.1em) solid $main-blue-color;
+
+      .radio-button-checked-circle {
+        background: $main-blue-color;
+        transition: 0.25s;
+      }
+    }
   }
 
   &:hover {
