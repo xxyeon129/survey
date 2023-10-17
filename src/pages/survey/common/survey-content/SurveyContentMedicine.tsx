@@ -10,7 +10,7 @@ export default function SurveyContentMedicine(props: SurveyContentMedicineProps)
   return (
     <div className={styles['survey-content-container']}>
       <hr />
-      <h3 className={styles['question-container']}>
+      <h3 className={styles['question']}>
         {props.questionNo}. {props.question}
       </h3>
 
