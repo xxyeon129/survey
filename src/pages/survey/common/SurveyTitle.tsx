@@ -3,6 +3,7 @@ import styles from './surveyTitle.module.scss';
 interface SurveyTitleProps {
   title: string;
   subTitle?: string;
+  explain?: string;
 }
 
 export default function SurveyTitle(props: SurveyTitleProps) {
@@ -16,7 +17,7 @@ export default function SurveyTitle(props: SurveyTitleProps) {
         </hgroup>
       </header>
       {/* TO DO: 설명이 있는 설문 종류일 경우 추가, css setting */}
-      {/* <p></p> */}
+      <div className={styles.explain}>{props.explain}</div>
     </article>
   );
 }

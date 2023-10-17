@@ -5,7 +5,7 @@
     .circle {
       position: absolute;
       top: -2.5rem;
-      left: -3.125rem;
+      left: -3.5rem;
 
       width: 3.5rem;
       height: 3.5rem;
@@ -20,7 +20,7 @@
     hgroup {
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
+      gap: 1rem;
 
       .title {
         font-size: 2.5rem;
@@ -31,5 +31,13 @@
         padding-left: 0.1rem;
       }
     }
+  }
+
+  .explain {
+    white-space: pre-line;
+    line-height: 175%;
+    font-size: 1.1rem;
+    color: $text-grey-color;
+    padding-top: 1rem;
   }
 }
