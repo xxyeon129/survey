@@ -1,6 +1,6 @@
 import styles from 'pages/survey/common/survey.module.scss';
 import { SURVEY } from 'shared/constants/survey.const';
-import SurveyTitle from '../common/SurveyTitle';
+import SurveyTitle from '../common/survey-title/SurveyTitle';
 
 export default function PersonalInfo() {
   return (

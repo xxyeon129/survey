@@ -1,7 +1,7 @@
 import { SURVEY } from 'shared/constants/survey.const';
-import SurveyTitle from '../common/SurveyTitle';
+import SurveyTitle from '../common/survey-title/SurveyTitle';
 import styles from 'pages/survey/common/survey.module.scss';
-import SurveyContentMedicine from '../common/SurveyContentMedicine';
+import SurveyContentMedicine from 'pages/survey/common/survey-content/SurveyContentMedicine';
 
 export default function Survey02FG() {
   const questionList = SURVEY[2].QUESTIONS;
