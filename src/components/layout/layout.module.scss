@@ -1,8 +1,13 @@
 main {
   display: flex;
+  overflow-x: hidden;
+}
 
-  section,
-  aside {
-    margin-top: 73px; // header height size
-  }
+section,
+aside {
+  margin-top: 73px; // header height size
+}
+
+.survey-page {
+  margin-left: 16.25rem; // sidebar width size
 }

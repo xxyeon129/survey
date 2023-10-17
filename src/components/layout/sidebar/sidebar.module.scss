@@ -1,13 +1,12 @@
 aside {
+  position: fixed;
   height: calc(100vh - 4.563rem);
-  width: 16.25rem;
+  max-width: 16.25rem;
+  min-width: 16.25rem;
   background-color: $sidebar-background-blue-color;
   display: flex;
   flex-direction: column;
   padding: 2.5rem 1.25rem;
-
-  // TEST CODE
-  // border: 3px solid green;
 
   ul {
     display: flex;

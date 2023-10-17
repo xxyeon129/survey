@@ -1,7 +1,7 @@
 import Sidebar from 'components/layout/sidebar/Sidebar';
 import Header from './header/Header';
 import usePathCheck from 'shared/hooks/usePathCheck';
-import './layout.module.scss';
+import styles from './layout.module.scss';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -9,13 +9,14 @@ interface LayoutProps {
 
 export default function Layout(props: LayoutProps) {
   const isSurveyPage = usePathCheck();
+  console.log(isSurveyPage);
 
   return (
     <>
       <Header />
       <main>
         {isSurveyPage && <Sidebar />}
-        <section>{props.children}</section>
+        <section className={isSurveyPage ? styles['survey-page'] : ''}>{props.children}</section>
       </main>
     </>
   );
