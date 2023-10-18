@@ -1,0 +1,53 @@
+.prev-next-btn-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6rem;
+
+  > button {
+    font-size: 1.1rem;
+    font-weight: $text-semi-bold;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    cursor: pointer;
+
+    svg {
+      font-size: 1.7rem;
+    }
+
+    &:disabled {
+      color: $checkbox-grey-color;
+      cursor: not-allowed;
+    }
+  }
+
+  .prev-btn {
+    color: $main-blue-color;
+  }
+
+  .next-btn {
+    justify-content: space-between;
+    color: white;
+    background-color: rgba(36, 84, 156, 0.7);
+    border-radius: 1.875rem;
+    min-width: 11.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+
+    .next-btn-icon-container {
+      background-color: $main-blue-color;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &:disabled {
+      background-color: $sidebar-background-blue-color;
+      .next-btn-icon-container {
+        background-color: #ebf0f7;
+      }
+    }
+  }
+}

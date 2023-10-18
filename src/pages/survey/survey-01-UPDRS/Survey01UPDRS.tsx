@@ -1,9 +1,10 @@
 import { SURVEY } from 'shared/constants/survey.const';
 import SurveyTitle from '../common/survey-title/SurveyTitle';
 import SurveyContentMedicine from '../common/survey-content/SurveyContentMedicine';
-import styles from '../common/survey.module.scss';
+import BottomPrevNextButton from '../common/bottom-prev-next-button/BottomPrevNextButton';
 import useQnAList from '../common/hooks/useQnAList';
 import usePagination from '../common/hooks/usePagination';
+import styles from '../common/survey.module.scss';
 
 export default function Survey01UPDRS() {
   const questionList = SURVEY[1].QUESTIONS;
@@ -30,14 +31,12 @@ export default function Survey01UPDRS() {
         />
       ))}
 
-      <div className={styles['pagination']}>
-        <button onClick={handlePrevPage} disabled={currentPage === 1}>
-          이전
-        </button>
-        <button onClick={handleNextPage} disabled={currentPage === totalPages}>
-          다음
-        </button>
-      </div>
+      <BottomPrevNextButton
+        currentPage={currentPage}
+        totalPages={totalPages}
+        handlePrevPage={handlePrevPage}
+        handleNextPage={handleNextPage}
+      />
     </article>
   );
 }
