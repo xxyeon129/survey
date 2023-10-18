@@ -6,7 +6,7 @@ import useQnAList from '../common/hooks/useQnAList';
 
 export default function Survey02FG() {
   const questionList = SURVEY[2].QUESTIONS;
-  const { questionTitle, questionAnswers } = useQnAList(questionList);
+  const { questions, answers } = useQnAList(questionList);
 
   return (
     <article className={styles['survey-container']}>
@@ -15,11 +15,11 @@ export default function Survey02FG() {
         subTitle={SURVEY[2].SUB_TITLE}
         explain={SURVEY[2].EXPLAIN}
       />
-      {questionTitle.map((question, index) => (
+      {questions.map((question, index) => (
         <SurveyContentMedicine
           questionNo={index + 1}
           question={question}
-          answers={questionAnswers[index]}
+          answers={answers[index]}
           key={index}
         />
       ))}

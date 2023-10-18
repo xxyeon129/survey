@@ -8,8 +8,8 @@ interface QuestionListType {
 }
 
 export default function useQnAList(questionList: QuestionListType) {
-  const questionTitle = Object.values(questionList).map((question) => question.Q);
-  const questionAnswers = Object.values(questionList).map((question) => Object.values(question.A));
+  const questions = Object.values(questionList).map((question) => question.Q);
+  const answers = Object.values(questionList).map((question) => Object.values(question.A));
 
-  return { questionTitle, questionAnswers };
+  return { questions, answers };
 }
