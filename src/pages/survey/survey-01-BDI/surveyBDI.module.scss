@@ -1,0 +1,20 @@
+.questions-ul {
+  .questions-li {
+    margin-top: 5rem;
+
+    .questions-title {
+      padding-left: 1rem;
+      padding-bottom: 0.5rem;
+      color: $main-blue-color;
+    }
+
+    > hr {
+      border: 1px solid $main-blue-color;
+    }
+  }
+}
+
+.answers-ul {
+  display: flex;
+  flex-direction: column;
+}
