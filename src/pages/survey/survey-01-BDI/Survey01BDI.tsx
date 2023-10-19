@@ -26,7 +26,7 @@ function Survey01QuestionLi(props: QuestionLiProps) {
   return (
     <li className={surveyStyles['questions-li']}>
       <h2 className={surveyStyles['questions-title']}>설문 {props.question.No}</h2>
-      <hr />
+      <hr className={styles.hr} />
       <ul className={surveyStyles['answers-ul']}>
         {props.question.A.map((answer) => (
           <AnswerList
