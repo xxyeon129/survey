@@ -6,8 +6,8 @@ import useQnAList from '../common/hooks/useQnAList';
 import BottomPrevNextButton from '../common/bottom-prev-next-button/BottomPrevNextButton';
 import usePagination from '../common/hooks/usePagination';
 
-export default function Survey02FG() {
-  const questionList = SURVEY[2].QUESTIONS;
+export default function Survey05FG() {
+  const questionList = SURVEY[5].QUESTIONS;
   const { questions, answers } = useQnAList(questionList);
   const {
     currentPage,
@@ -16,14 +16,14 @@ export default function Survey02FG() {
     // currentPageQuestions,
     handleNextPage,
     handlePrevPage,
-  } = usePagination(questions, SURVEY[2].PAGINATION_QUESTIONS_LIMIT);
+  } = usePagination(questions, SURVEY[5].PAGINATION_QUESTIONS_LIMIT);
 
   return (
     <article className={styles['survey-container']}>
       <SurveyTitle
-        title={SURVEY[2].TITLE}
-        subTitle={SURVEY[2].SUB_TITLE}
-        explain={SURVEY[2].EXPLAIN}
+        title={SURVEY[5].TITLE}
+        subTitle={SURVEY[5].SUB_TITLE}
+        explain={SURVEY[5].EXPLAIN}
       />
       {questions.map((question, index) => (
         <SurveyContentMedicine

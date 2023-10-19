@@ -1,11 +1,11 @@
 import { SURVEY } from 'shared/constants/survey.const';
 import SurveyTitle from '../common/survey-title/SurveyTitle';
-import styles from 'pages/survey/common/survey.module.scss';
+import styles from '../common/survey.module.scss';
 
-export default function Survey04NMS() {
+export default function Survey02RBD() {
   return (
     <article className={styles['survey-container']}>
-      <SurveyTitle title={SURVEY[4].TITLE} subTitle={SURVEY[4].SUB_TITLE} />
+      <SurveyTitle title={SURVEY[2].TITLE} />
     </article>
   );
 }

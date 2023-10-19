@@ -6,8 +6,8 @@ import useQnAList from '../common/hooks/useQnAList';
 import usePagination from '../common/hooks/usePagination';
 import styles from '../common/survey.module.scss';
 
-export default function Survey01UPDRS() {
-  const questionList = SURVEY[1].QUESTIONS;
+export default function Survey04UPDRS() {
+  const questionList = SURVEY[4].QUESTIONS;
   const { questions, answers } = useQnAList(questionList);
   const {
     currentPage,
@@ -16,11 +16,11 @@ export default function Survey01UPDRS() {
     currentPageQuestions,
     handleNextPage,
     handlePrevPage,
-  } = usePagination(questions, SURVEY[1].PAGINATION_QUESTIONS_LIMIT);
+  } = usePagination(questions, SURVEY[4].PAGINATION_QUESTIONS_LIMIT);
 
   return (
     <article className={styles['survey-container']}>
-      <SurveyTitle title={SURVEY[1].TITLE} subTitle={SURVEY[1].SUB_TITLE} />
+      <SurveyTitle title={SURVEY[4].TITLE} subTitle={SURVEY[4].SUB_TITLE} />
 
       {currentPageQuestions.map((question, currentPageIndex) => (
         <SurveyContentMedicine
