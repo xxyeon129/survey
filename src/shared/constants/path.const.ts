@@ -1,4 +1,5 @@
 export const PATH_URL = {
+  SURVEY_PATH: '/survey/', // for pagination
   SURVEY: {
     PERSONAL: '/survey/0',
     '01_UPDRS': '/survey/1',

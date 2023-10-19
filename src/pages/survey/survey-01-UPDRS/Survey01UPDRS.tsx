@@ -11,12 +11,12 @@ export default function Survey01UPDRS() {
   const { questions, answers } = useQnAList(questionList);
   const {
     currentPage,
-    totalPages,
+    currentSurveyTotalPages,
     questionStartIndex,
     currentPageQuestions,
     handleNextPage,
     handlePrevPage,
-  } = usePagination(questions);
+  } = usePagination(questions, SURVEY[1].PAGINATION_QUESTIONS_LIMIT);
 
   return (
     <article className={styles['survey-container']}>
@@ -33,7 +33,7 @@ export default function Survey01UPDRS() {
 
       <BottomPrevNextButton
         currentPage={currentPage}
-        totalPages={totalPages}
+        currentSurveyTotalPages={currentSurveyTotalPages}
         handlePrevPage={handlePrevPage}
         handleNextPage={handleNextPage}
       />

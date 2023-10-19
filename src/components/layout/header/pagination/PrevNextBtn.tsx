@@ -1,6 +1,6 @@
 import { IoIosArrowDropleft } from 'react-icons/io';
 import { IoIosArrowDroprightCircle } from 'react-icons/io';
-import styles from './header.module.scss';
+import styles from '../header.module.scss';
 
 export default function PrevNextBtn() {
   return (

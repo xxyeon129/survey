@@ -1,26 +1,53 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { headerCurrentPageState } from 'components/layout/header/pagination/headerPageState';
+import { PATH_URL } from 'shared/constants/path.const';
+import useCurrentSurveyPagePath from 'shared/hooks/useCurrentSurveyPagePath';
 
-export default function usePagination(questions: string[]) {
+export default function usePagination(questions: string[], questionLimit: number) {
+  // for header page display
+  const [headerCurrentPage, setHeaderCurrentPage] = useRecoilState(headerCurrentPageState);
+
+  // current survey pages
   const [currentPage, setCurrentPage] = useState(1);
-  const limit = 5;
-  const totalPages = Math.ceil(questions.length / limit);
-  const questionStartIndex = (currentPage - 1) * limit;
+  const currentSurveyTotalPages = Math.ceil(questions.length / questionLimit);
+  const questionStartIndex = (currentPage - 1) * questionLimit;
+  const currentPageQuestions = questions.slice(questionStartIndex, currentPage * questionLimit);
 
-  const currentPageQuestions = questions.slice(questionStartIndex, currentPage * limit);
+  // for prev/next survey type page
+  const navigate = useNavigate();
+  const currentSurveyPath = useCurrentSurveyPagePath();
 
-  const handleNextPage = () => {
-    currentPage < totalPages && setCurrentPage(currentPage + 1);
-    window.scrollTo(0, 0);
-  };
+  /* prev/next button click */
 
   const handlePrevPage = () => {
     currentPage > 1 && setCurrentPage(currentPage - 1);
+
+    if (currentPage === 1) {
+      navigate(`${PATH_URL.SURVEY_PATH}${currentSurveyPath - 1}`);
+      // TO DO: 사이드바 체크 업데이트
+    }
+
+    setHeaderCurrentPage(headerCurrentPage - 1);
+    window.scrollTo(0, 0);
+  };
+
+  const handleNextPage = () => {
+    currentPage < currentSurveyTotalPages && setCurrentPage(currentPage + 1);
+
+    if (currentPage === currentSurveyTotalPages) {
+      navigate(`${PATH_URL.SURVEY_PATH}${currentSurveyPath + 1}`);
+      // TO DO: 사이드바 체크 업데이트
+    }
+
+    setHeaderCurrentPage(headerCurrentPage + 1);
     window.scrollTo(0, 0);
   };
 
   return {
     currentPage,
-    totalPages,
+    currentSurveyTotalPages,
     questionStartIndex,
     currentPageQuestions,
     handleNextPage,

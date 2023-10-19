@@ -3,10 +3,20 @@ import SurveyTitle from '../common/survey-title/SurveyTitle';
 import styles from '../common/survey.module.scss';
 import SurveyContentMedicine from '../common/survey-content/SurveyContentMedicine';
 import useQnAList from '../common/hooks/useQnAList';
+import BottomPrevNextButton from '../common/bottom-prev-next-button/BottomPrevNextButton';
+import usePagination from '../common/hooks/usePagination';
 
 export default function Survey02FG() {
   const questionList = SURVEY[2].QUESTIONS;
   const { questions, answers } = useQnAList(questionList);
+  const {
+    currentPage,
+    currentSurveyTotalPages,
+    // questionStartIndex,
+    // currentPageQuestions,
+    handleNextPage,
+    handlePrevPage,
+  } = usePagination(questions, SURVEY[2].PAGINATION_QUESTIONS_LIMIT);
 
   return (
     <article className={styles['survey-container']}>
@@ -23,6 +33,13 @@ export default function Survey02FG() {
           key={index}
         />
       ))}
+
+      <BottomPrevNextButton
+        currentPage={currentPage}
+        currentSurveyTotalPages={currentSurveyTotalPages}
+        handlePrevPage={handlePrevPage}
+        handleNextPage={handleNextPage}
+      />
     </article>
   );
 }

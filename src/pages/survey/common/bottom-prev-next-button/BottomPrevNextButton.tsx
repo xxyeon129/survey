@@ -1,21 +1,25 @@
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
 import styles from './bottomPrevNextButton.module.scss';
+import { useRecoilValue } from 'recoil';
+import { headerCurrentPageState } from 'components/layout/header/pagination/headerPageState';
 
 interface BottomPrevNextButtonProps {
   currentPage: number;
-  totalPages: number;
+  currentSurveyTotalPages: number;
   handlePrevPage: () => void;
   handleNextPage: () => void;
 }
 
 export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
+  const headerCurrentPage = useRecoilValue(headerCurrentPageState);
+
   return (
     <div className={styles['prev-next-btn-container']}>
       <button
         className={styles['prev-btn']}
         onClick={props.handlePrevPage}
-        disabled={props.currentPage === 1}
+        disabled={headerCurrentPage === 1}
       >
         <IoIosArrowBack />
         이전 페이지
@@ -23,7 +27,8 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
       <button
         className={styles['next-btn']}
         onClick={props.handleNextPage}
-        disabled={props.currentPage === props.totalPages}
+        // // TO DO: headerCurrentPage === headerTotalPages일 경우 disabled
+        // disabled={props.currentPage === props.currentSurveyTotalPages}
       >
         다음 페이지
         <div className={styles['next-btn-icon-container']}>

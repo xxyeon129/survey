@@ -1,23 +1,35 @@
-import usePathCheck from 'shared/hooks/usePathCheck';
-import logo from 'assets/header-logo.svg';
-import PrevNextBtn from './PrevNextBtn';
-import ProgressBar from './ProgressBar';
-import styles from './header.module.scss';
-import { SURVEY_TITLE } from 'shared/constants/survey.const';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { headerCurrentPageState, headerTotalPageState } from './pagination/headerPageState';
+import logo from 'assets/header-logo.svg';
+import styles from './header.module.scss';
+// components
+import PrevNextBtn from './pagination/PrevNextBtn';
+import ProgressBar from './ProgressBar';
+// utils
+import { SURVEY_TITLE } from 'shared/constants/survey.const';
+import { getTotalPages } from './pagination/getTotalPages';
+import usePathCheck from 'shared/hooks/usePathCheck';
 
 export default function Header() {
+  const [headerTotalPage, setHeaderTotalPage] = useRecoilState(headerTotalPageState);
+  const headerCurrentPage = useRecoilValue(headerCurrentPageState);
   const isSurveyPage = usePathCheck();
 
   const rightContent = isSurveyPage ? (
     <>
-      {/* TEST CODE: 임시 목업 텍스트 */}
-      <span>설문 5 / 20 페이지</span>
+      <span>{`설문 ${headerCurrentPage} / ${headerTotalPage} 페이지`}</span>
       <PrevNextBtn />
     </>
   ) : (
     <span>{`${SURVEY_TITLE} 전자설문`}</span>
   );
+
+  useEffect(() => {
+    const totalPages = getTotalPages();
+    setHeaderTotalPage(totalPages);
+  }, []);
 
   return (
     <header className={styles['header']}>
