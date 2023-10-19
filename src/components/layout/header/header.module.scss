@@ -7,9 +7,6 @@
   justify-content: space-between;
   background-color: white;
   z-index: 999;
-
-  // TEST CODE
-  // border: 1px solid red;
 }
 
 .header-contents {
@@ -28,8 +25,6 @@
   div {
     display: flex;
     align-items: center;
-    // TEST CODE
-    // border: 1px solid green;
   }
 
   span {
@@ -64,9 +59,8 @@
   background-color: $progressbar-grey-color;
 
   .progress-bar-filled {
-    // TEST CODE: width
-    width: 60%;
     height: 100%;
     background-color: $main-blue-color;
+    transition: 1s;
   }
 }
