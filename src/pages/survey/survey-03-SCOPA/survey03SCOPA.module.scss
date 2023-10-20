@@ -1,0 +1,26 @@
+.questions-ul {
+  .questions-li {
+    margin-top: 5rem;
+    // border: 1px solid tomato;
+  }
+}
+
+.questions-title {
+  padding: 0.5rem 0 0.2rem 0.7rem;
+  font-size: 1.3rem;
+  line-height: 170%;
+
+  .question-title-explain {
+    font-size: 1.2rem;
+    padding-left: 1.2rem;
+    color: $text-grey-color;
+  }
+}
+
+.answers-ul {
+  display: flex;
+  column-gap: 3.5rem;
+  row-gap: 0.5rem;
+  padding-left: 1.5rem;
+  flex-wrap: wrap;
+}

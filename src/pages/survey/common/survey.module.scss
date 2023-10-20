@@ -1,9 +1,22 @@
 .survey-container {
-  // background-color: lavender;
   width: calc(100vw - 16.25rem);
   padding: 6rem 8.5rem;
 }
 
 .hr {
   border: 1.5px solid $main-blue-color;
+}
+
+.explain {
+  color: $text-grey-color;
+  line-height: 175%;
+  font-size: 1.15rem;
+  padding: 0.7rem 0;
+
+  .explain-emphasize {
+    color: $main-blue-color;
+    text-decoration: underline;
+    text-underline-position: under;
+    font-weight: $text-semi-bold;
+  }
 }
