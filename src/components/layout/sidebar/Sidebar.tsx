@@ -23,10 +23,10 @@ export default function Sidebar() {
 
   // for update header current page display
 
-  useEffect(() => {
-    setCheckedIndex(location);
-    setHeaderCurrentPage(calculatePages(location));
-  }, [checkedIndex, pathname]);
+  // useEffect(() => {
+  //   setCheckedIndex(location);
+  //   setHeaderCurrentPage(calculatePages(location));
+  // }, [checkedIndex, pathname]);
 
   return (
     <aside>

@@ -8,9 +8,3 @@ export const headerCurrentPageState = atom({
   default: 1,
   effects_UNSTABLE: [persistAtom],
 });
-
-export const headerTotalPageState = atom({
-  key: 'headerTotalPageState',
-  default: 0,
-  effects_UNSTABLE: [persistAtom],
-});

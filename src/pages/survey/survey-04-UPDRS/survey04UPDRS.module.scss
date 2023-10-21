@@ -1,0 +1,119 @@
+.questions-ul {
+  .questions-li {
+    margin-top: 5rem;
+    // border: 1px solid tomato;
+  }
+}
+
+.questions-title {
+  padding: 0.5rem 0 0.2rem 0.7rem;
+  font-size: 1.3rem;
+  line-height: 170%;
+
+  .question-title-explain {
+    font-size: 1.2rem;
+    padding-left: 1.2rem;
+    color: $text-grey-color;
+  }
+}
+
+.answers-ul {
+  display: flex;
+  column-gap: 3.5rem;
+  row-gap: 0.5rem;
+  padding-left: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.survey-content-container {
+  margin-top: 5rem;
+
+  > hr {
+    border: 1px solid $main-blue-color;
+  }
+
+  .question {
+    font-size: 1.3rem;
+    padding-top: 0.5rem;
+    line-height: 170%;
+  }
+}
+
+.answer-container {
+  padding: 0.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  .medicine-text {
+    color: $main-blue-color;
+    padding-top: 1.2rem;
+  }
+}
+
+.answer-ul {
+  padding-top: 0.2rem;
+}
+
+.answer-li {
+  position: relative;
+
+  > input[type='radio'] {
+    position: relative;
+    visibility: hidden;
+  }
+
+  > label {
+    display: block;
+    position: relative;
+    font-size: 1.2rem;
+    line-height: 170%;
+    padding-left: 4.5rem;
+    min-height: 2rem;
+    z-index: 2;
+    cursor: pointer;
+
+    .radio-button {
+      position: absolute;
+      border: max(3px, 0.1em) solid $checkbox-grey-color;
+      border-radius: 100%;
+      width: 1.7rem;
+      height: 1.7rem;
+      top: 0.17rem;
+      left: 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border 0.25s linear;
+
+      .radio-button-checked-circle {
+        width: 0.8rem;
+        height: 0.8rem;
+        border-radius: 100%;
+      }
+    }
+  }
+
+  > input[type='radio']:checked ~ label {
+    color: $main-blue-color;
+    font-weight: $text-semi-bold;
+    transition: 0.25s;
+
+    .radio-button {
+      border: max(4px, 0.1em) solid $main-blue-color;
+
+      .radio-button-checked-circle {
+        background: $main-blue-color;
+        transition: 0.25s;
+      }
+    }
+  }
+
+  &:hover {
+    transition: 0.25s;
+    color: $main-skyblue-color;
+    .radio-button {
+      border: max(4px, 0.1em) solid $main-skyblue-color;
+    }
+  }
+}

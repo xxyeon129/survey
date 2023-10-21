@@ -9,8 +9,8 @@ import PersonalInfo from 'pages/survey/survey-00-personalInfo/PersonalInfo';
 import Survey01BDI from 'pages/survey/survey-01-BDI/Survey01BDI';
 import Survey02RBD from 'pages/survey/survey-02-RBD/Survey02RBD';
 import Survey03SCOPA from 'pages/survey/survey-03-SCOPA/Survey03SCOPA';
-import Survey04UPDRS from 'pages/survey/survey-TEST/Survey04UPDRS';
-import Survey05FG from 'pages/survey/survey-TEST/Survey05FG';
+import Survey04UPDRS from 'pages/survey/survey-04-UPDRS/Survey04UPDRS';
+import Survey05FG from 'pages/survey/survey-05-FG/Survey05FG';
 
 export default function MainRouter() {
   return (

@@ -4,18 +4,25 @@ import { headerCurrentPageState } from 'components/layout/header/pagination/head
 import styles from 'pages/survey/common/survey.module.scss';
 import { SURVEY } from 'shared/constants/survey.const';
 import SurveyTitle from '../common/survey-title/SurveyTitle';
-import BottomPrevNextButton from '../common/bottom-prev-next-button/BottomPrevNextButton';
-import usePagination from '../common/hooks/usePagination';
+import { useNavigate } from 'react-router-dom';
+import { survey01CurrentPageState } from '../common/surveyPaginationStates';
+import { PATH_URL } from 'shared/constants/path.const';
 
 export default function PersonalInfo() {
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  const setNextSurveyPage = useSetRecoilState(survey01CurrentPageState);
 
-  // TEST CODE: 개인정보 입력 내용 결정되면 survey.const.ts에 추가
-  const questions = ['성함', '전화번호', '이메일', '성별'];
-  const { currentPage, currentSurveyTotalPages, handleNextPage, handlePrevPage } = usePagination(
-    questions,
-    SURVEY[0].PAGINATION_QUESTIONS_LIMIT
-  );
+  const navigate = useNavigate();
+
+  const handleNextPage = () => {
+    navigate(`${PATH_URL.SURVEY_PATH}1`);
+
+    // 이전 설문 전역 상태 첫 페이지로
+    setNextSurveyPage(1);
+
+    setHeaderCurrentPage(2);
+    window.scrollTo(0, 0);
+  };
 
   useEffect(() => {
     setHeaderCurrentPage(1);
@@ -25,12 +32,13 @@ export default function PersonalInfo() {
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY[0].TITLE} subTitle={SURVEY[0].SUB_TITLE} />
 
-      <BottomPrevNextButton
+      {/* <BottomPrevNextButton
         currentPage={currentPage}
         currentSurveyTotalPages={currentSurveyTotalPages}
         handlePrevPage={handlePrevPage}
         handleNextPage={handleNextPage}
-      />
+      /> */}
+      <button onClick={handleNextPage}>다음</button>
     </article>
   );
 }
