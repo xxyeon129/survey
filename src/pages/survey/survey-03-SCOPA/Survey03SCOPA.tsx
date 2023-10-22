@@ -1,17 +1,21 @@
-import { SURVEY } from 'shared/constants/survey.const';
-import { SCOPA_QUESTIONS, SCOPA_QUESTIONS_PER_PAGE } from './survey.const';
-import SurveyTitle from '../common/survey-title/SurveyTitle';
-import styles from '../common/survey.module.scss';
-import AnswerList from '../common/components/AnswerList';
-import surveyStyles from './survey03SCOPA.module.scss';
-import usePagination from '../common/hooks/usePagination';
+// states, hook
 import { useSetRecoilState } from 'recoil';
 import {
   survey02CurrentPageState,
   survey03CurrentPageState,
   survey04CurrentPageState,
 } from '../common/surveyPaginationStates';
+import usePagination from '../common/hooks/usePagination';
+// constants
+import { SURVEY } from 'shared/constants/survey.const';
+import { SCOPA_QUESTIONS, SCOPA_QUESTIONS_PER_PAGE } from './survey.const';
 import { survey02TotalPages } from '../survey-02-RBD/survey.const';
+// components
+import SurveyTitle from '../common/components/survey-title/SurveyTitle';
+import AnswerList from '../common/components/survey-contents/AnswerList';
+// styles
+import styles from '../common/survey.module.scss';
+import surveyStyles from './survey03SCOPA.module.scss';
 
 export default function Survey03SCOPA() {
   // pagination hook props

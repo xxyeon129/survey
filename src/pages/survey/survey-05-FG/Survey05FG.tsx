@@ -1,15 +1,19 @@
-import { SURVEY } from 'shared/constants/survey.const';
-import { FG_QUESTIONS, FG_QUESTIONS_PER_PAGE, survey05TotalPages } from './survey.const';
-import SurveyTitle from '../common/survey-title/SurveyTitle';
-import styles from '../common/survey.module.scss';
-import surveyStyles from './survey05FG.module.scss';
+// states, hook
 import { useSetRecoilState } from 'recoil';
 import {
   survey04CurrentPageState,
   survey05CurrentPageState,
 } from '../common/surveyPaginationStates';
-import { survey04TotalPages } from '../survey-04-UPDRS/survey.const';
 import usePagination from '../common/hooks/usePagination';
+// constants
+import { SURVEY } from 'shared/constants/survey.const';
+import { FG_QUESTIONS, FG_QUESTIONS_PER_PAGE, survey05TotalPages } from './survey.const';
+import { survey04TotalPages } from '../survey-04-UPDRS/survey.const';
+// components
+import SurveyTitle from '../common/components/survey-title/SurveyTitle';
+// styles
+import styles from '../common/survey.module.scss';
+import surveyStyles from './survey05FG.module.scss';
 
 export default function Survey05FG() {
   // pagination hook props

@@ -1,16 +1,20 @@
-import { SURVEY } from 'shared/constants/survey.const';
-import SurveyTitle from '../common/survey-title/SurveyTitle';
-import styles from '../common/survey.module.scss';
-import { RBD_QUESTIONS, RBD_QUESTIONS_PER_PAGE } from './survey.const';
-import AnswerList from '../common/components/AnswerList';
-import surveyStyles from './survey02RBD.module.scss';
+// states, hook
 import { useSetRecoilState } from 'recoil';
 import {
   survey01CurrentPageState,
   survey03CurrentPageState,
 } from '../common/surveyPaginationStates';
-import { survey01TotalPages } from '../survey-01-BDI/survey.const';
 import usePagination from '../common/hooks/usePagination';
+// constants
+import { SURVEY } from 'shared/constants/survey.const';
+import { RBD_QUESTIONS, RBD_QUESTIONS_PER_PAGE } from './survey.const';
+import { survey01TotalPages } from '../survey-01-BDI/survey.const';
+// components
+import SurveyTitle from '../common/components/survey-title/SurveyTitle';
+import AnswerList from '../common/components/survey-contents/AnswerList';
+// styles
+import styles from '../common/survey.module.scss';
+import surveyStyles from './survey02RBD.module.scss';
 
 export default function Survey02RBD() {
   // pagination hook props

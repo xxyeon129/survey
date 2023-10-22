@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil';
 import { headerCurrentPageState } from 'components/layout/header/pagination/headerPageState';
 import styles from 'pages/survey/common/survey.module.scss';
 import { SURVEY } from 'shared/constants/survey.const';
-import SurveyTitle from '../common/survey-title/SurveyTitle';
+import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import { useNavigate } from 'react-router-dom';
 import { survey01CurrentPageState } from '../common/surveyPaginationStates';
 import { PATH_URL } from 'shared/constants/path.const';
