@@ -12,9 +12,9 @@ import { UPDRS_QUESTIONS, UPDRS_QUESTIONS_PER_PAGE } from './survey.const';
 import { survey03TotalPages } from '../survey-03-SCOPA/survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-// styles
+import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
+
 import styles from '../common/survey.module.scss';
-import surveyStyles from './survey04UPDRS.module.scss';
 
 export default function Survey04UPDRS() {
   // pagination hook props
@@ -39,69 +39,11 @@ export default function Survey04UPDRS() {
       <SurveyTitle title={SURVEY[4].TITLE} subTitle={SURVEY[4].SUB_TITLE} />
 
       {currentPageQuestions.map((question) => (
-        <SurveyContent question={question} key={question.No} />
+        <SurveyContentWithMedicineEffect question={question} key={question.No} />
       ))}
 
       <button onClick={handlePrevPage}>이전</button>
       <button onClick={handleNextPage}>다음</button>
     </article>
-  );
-}
-
-interface SurveyContentProps {
-  question: { No: number; Q?: string; EXPLAIN?: string; A: string[] };
-}
-
-function SurveyContent(props: SurveyContentProps) {
-  const medicineDivisionList = [
-    { radioBtnKeyword: '-medicine-true', text: '있을' },
-    { radioBtnKeyword: '-medicine-false', text: '없을' },
-  ];
-
-  return (
-    <article className={surveyStyles['survey-content-container']}>
-      <hr />
-      <h3 className={surveyStyles['question']}>
-        {props.question.No}. {props.question.Q}
-      </h3>
-
-      <div className={surveyStyles['answer-container']}>
-        {medicineDivisionList.map((list, index) => (
-          <div key={index}>
-            <h3 className={surveyStyles['medicine-text']}>{`약 효과가 ${list.text} 때`}</h3>
-            <ul className={surveyStyles['answer-ul']}>
-              {props.question.A.map((answer) => (
-                <AnswerLi
-                  answer={answer}
-                  inputName={`${props.question.No}${list.radioBtnKeyword}`}
-                  inputId={`${props.question.No}${answer}${list.radioBtnKeyword}`}
-                  key={`${answer}${list.radioBtnKeyword}`}
-                />
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </article>
-  );
-}
-
-interface AnswerLiProps {
-  answer: string;
-  inputName: string;
-  inputId: string;
-}
-
-function AnswerLi(props: AnswerLiProps) {
-  return (
-    <li className={surveyStyles['answer-li']}>
-      <input type="radio" id={props.inputId} name={props.inputName} value={props.answer} />
-      <label htmlFor={props.inputId}>
-        <div className={surveyStyles['radio-button']}>
-          <div className={surveyStyles['radio-button-checked-circle']} />
-        </div>
-        {props.answer}
-      </label>
-    </li>
   );
 }

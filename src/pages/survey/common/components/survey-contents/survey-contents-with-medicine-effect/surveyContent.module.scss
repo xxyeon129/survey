@@ -1,0 +1,28 @@
+.survey-content-container {
+  margin-top: 5rem;
+
+  > hr {
+    border: 1px solid $main-blue-color;
+  }
+
+  .question {
+    font-size: 1.3rem;
+    padding-top: 0.5rem;
+    line-height: 170%;
+  }
+  .answer-container {
+    padding: 0.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    .medicine-text {
+      color: $main-blue-color;
+      padding-top: 1.2rem;
+    }
+
+    .answer-ul {
+      padding-top: 0.2rem;
+    }
+  }
+}
