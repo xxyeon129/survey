@@ -2,53 +2,31 @@ import { SURVEY } from 'shared/constants/survey.const';
 import SurveyTitle from '../common/survey-title/SurveyTitle';
 import styles from '../common/survey.module.scss';
 import surveyStyles from './surveyBDI.module.scss';
-import { BDI_QUESTIONS, BDI_QUESTIONS_PER_PAGE, survey01TotalPages } from './survey.const';
+import { BDI_QUESTIONS, BDI_QUESTIONS_PER_PAGE } from './survey.const';
 import AnswerList from '../common/components/AnswerList';
-import { useRecoilState } from 'recoil';
-import { survey01CurrentPageState } from '../common/surveyPaginationStates';
-import { useNavigate } from 'react-router-dom';
-import useCurrentSurveyPagePath from 'shared/hooks/useCurrentSurveyPagePath';
-import { PATH_URL } from 'shared/constants/path.const';
-import { headerCurrentPageState } from 'components/layout/header/pagination/headerPageState';
+import { useSetRecoilState } from 'recoil';
+import {
+  survey01CurrentPageState,
+  survey02CurrentPageState,
+} from '../common/surveyPaginationStates';
+import usePagination from '../common/hooks/usePagination';
 
 export default function Survey01BDI() {
-  // for header page display
-  const [headerCurrentPage, setHeaderCurrentPage] = useRecoilState(headerCurrentPageState);
+  // pagination hook props
+  const setNextSurveyPage = useSetRecoilState(survey02CurrentPageState);
+  const personalInfoPageCount = 1;
+  const prevSurveyTotalPages = personalInfoPageCount;
+  const currentPageState = survey01CurrentPageState;
+  const questions = BDI_QUESTIONS;
+  const questionsPerPage = BDI_QUESTIONS_PER_PAGE;
 
-  const [currentPage, setCurrentPage] = useRecoilState(survey01CurrentPageState);
-  // survey02TotalPages
-  // const currentSurveyTotalPages = Math.ceil(BDI_QUESTIONS.length / BDI_QUESTIONS_PER_PAGE);
-  const questionStartIndex = (currentPage - 1) * BDI_QUESTIONS_PER_PAGE;
-  const currentPageQuestions = BDI_QUESTIONS.slice(
-    questionStartIndex,
-    currentPage * BDI_QUESTIONS_PER_PAGE
-  );
-
-  // for prev/next survey type page
-  const navigate = useNavigate();
-  const currentSurveyPath = useCurrentSurveyPagePath();
-
-  const handlePrevPage = () => {
-    currentPage > 1 && setCurrentPage(currentPage - 1);
-
-    if (currentPage === 1) {
-      navigate(`${PATH_URL.SURVEY_PATH}${currentSurveyPath - 1}`);
-    }
-
-    setHeaderCurrentPage(headerCurrentPage - 1);
-    window.scrollTo(0, 0);
-  };
-
-  const handleNextPage = () => {
-    currentPage < survey01TotalPages && setCurrentPage(currentPage + 1);
-
-    if (currentPage === survey01TotalPages) {
-      navigate(`${PATH_URL.SURVEY_PATH}${currentSurveyPath + 1}`);
-    }
-
-    setHeaderCurrentPage(headerCurrentPage + 1);
-    window.scrollTo(0, 0);
-  };
+  const { currentPageQuestions, handleNextPage, handlePrevPage } = usePagination({
+    setNextSurveyPage,
+    prevSurveyTotalPages,
+    currentPageState,
+    questions,
+    questionsPerPage,
+  });
 
   return (
     <article className={styles['survey-container']}>

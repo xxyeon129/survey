@@ -4,63 +4,32 @@ import SurveyTitle from '../common/survey-title/SurveyTitle';
 import styles from '../common/survey.module.scss';
 import AnswerList from '../common/components/AnswerList';
 import surveyStyles from './survey03SCOPA.module.scss';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { headerCurrentPageState } from 'components/layout/header/pagination/headerPageState';
+import usePagination from '../common/hooks/usePagination';
+import { useSetRecoilState } from 'recoil';
 import {
   survey02CurrentPageState,
   survey03CurrentPageState,
   survey04CurrentPageState,
 } from '../common/surveyPaginationStates';
-import { useNavigate } from 'react-router-dom';
-import useCurrentSurveyPagePath from 'shared/hooks/useCurrentSurveyPagePath';
-import { PATH_URL } from 'shared/constants/path.const';
 import { survey02TotalPages } from '../survey-02-RBD/survey.const';
 
 export default function Survey03SCOPA() {
-  // for header page display
-  const [headerCurrentPage, setHeaderCurrentPage] = useRecoilState(headerCurrentPageState);
-
-  // for prev survey type last page / next survey type first page
+  // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey02CurrentPageState);
   const setNextSurveyPage = useSetRecoilState(survey04CurrentPageState);
+  const prevSurveyTotalPages = survey02TotalPages;
+  const currentPageState = survey03CurrentPageState;
+  const questions = SCOPA_QUESTIONS;
+  const questionsPerPage = SCOPA_QUESTIONS_PER_PAGE;
 
-  const [currentPage, setCurrentPage] = useRecoilState(survey03CurrentPageState);
-  const currentSurveyTotalPages = Math.ceil(SCOPA_QUESTIONS.length / SCOPA_QUESTIONS_PER_PAGE);
-  const questionStartIndex = (currentPage - 1) * SCOPA_QUESTIONS_PER_PAGE;
-  const currentPageQuestions = SCOPA_QUESTIONS.slice(
-    questionStartIndex,
-    currentPage * SCOPA_QUESTIONS_PER_PAGE
-  );
-
-  // for prev/next survey type page
-  const navigate = useNavigate();
-  const currentSurveyPath = useCurrentSurveyPagePath();
-
-  const handlePrevPage = () => {
-    currentPage > 1 && setCurrentPage(currentPage - 1);
-
-    if (currentPage === 1) {
-      navigate(`${PATH_URL.SURVEY_PATH}${currentSurveyPath - 1}`);
-      // 이전 설문 전역 상태 마지막 페이지로
-      setPrevSurveyPage(survey02TotalPages);
-    }
-
-    setHeaderCurrentPage(headerCurrentPage - 1);
-    window.scrollTo(0, 0);
-  };
-
-  const handleNextPage = () => {
-    currentPage < currentSurveyTotalPages && setCurrentPage(currentPage + 1);
-
-    if (currentPage === currentSurveyTotalPages) {
-      navigate(`${PATH_URL.SURVEY_PATH}${currentSurveyPath + 1}`);
-      // 이전 설문 전역 상태 첫 페이지로
-      setNextSurveyPage(1);
-    }
-
-    setHeaderCurrentPage(headerCurrentPage + 1);
-    window.scrollTo(0, 0);
-  };
+  const { currentPageQuestions, handleNextPage, handlePrevPage } = usePagination({
+    setPrevSurveyPage,
+    setNextSurveyPage,
+    prevSurveyTotalPages,
+    currentPageState,
+    questions,
+    questionsPerPage,
+  });
 
   const surveyExplain = (
     <p className={styles.explain}>
@@ -89,7 +58,7 @@ export default function Survey03SCOPA() {
 }
 
 interface QuestionLiProps {
-  question: { No: number; Q: string; EXPLAIN?: string; A: string[] };
+  question: { No: number; Q?: string; EXPLAIN?: string; A: string[] };
 }
 
 function Survey02QuestionLi(props: QuestionLiProps) {

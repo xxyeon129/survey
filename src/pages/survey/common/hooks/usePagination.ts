@@ -1,19 +1,32 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { RecoilState, SetterOrUpdater, useRecoilState } from 'recoil';
 import { headerCurrentPageState } from 'components/layout/header/pagination/headerPageState';
 import { PATH_URL } from 'shared/constants/path.const';
 import useCurrentSurveyPagePath from 'shared/hooks/useCurrentSurveyPagePath';
 
-export default function usePagination(questions: string[], questionLimit: number) {
+interface usePaginationProps {
+  // for prev survey type last page / next survey type first page
+  setPrevSurveyPage?: SetterOrUpdater<number>;
+  setNextSurveyPage?: SetterOrUpdater<number>;
+  prevSurveyTotalPages: number;
+
+  currentPageState: RecoilState<number>;
+  questions: { No: number; Q?: string; A: string[]; EXPLAIN?: string }[];
+  questionsPerPage: number;
+}
+
+export default function usePagination(props: usePaginationProps) {
   // for header page display
   const [headerCurrentPage, setHeaderCurrentPage] = useRecoilState(headerCurrentPageState);
 
   // current survey pages
-  const [currentPage, setCurrentPage] = useState(1);
-  const currentSurveyTotalPages = Math.ceil(questions.length / questionLimit);
-  const questionStartIndex = (currentPage - 1) * questionLimit;
-  const currentPageQuestions = questions.slice(questionStartIndex, currentPage * questionLimit);
+  const [currentPage, setCurrentPage] = useRecoilState(props.currentPageState);
+  const currentSurveyTotalPages = Math.ceil(props.questions.length / props.questionsPerPage);
+  const questionStartIndex = (currentPage - 1) * props.questionsPerPage;
+  const currentPageQuestions = props.questions.slice(
+    questionStartIndex,
+    currentPage * props.questionsPerPage
+  );
 
   // for prev/next survey type page
   const navigate = useNavigate();
@@ -26,7 +39,8 @@ export default function usePagination(questions: string[], questionLimit: number
 
     if (currentPage === 1) {
       navigate(`${PATH_URL.SURVEY_PATH}${currentSurveyPath - 1}`);
-      // TO DO: 사이드바 체크 업데이트
+      // for setting prev survey last page
+      props.setPrevSurveyPage && props.setPrevSurveyPage(props.prevSurveyTotalPages);
     }
 
     setHeaderCurrentPage(headerCurrentPage - 1);
@@ -38,7 +52,8 @@ export default function usePagination(questions: string[], questionLimit: number
 
     if (currentPage === currentSurveyTotalPages) {
       navigate(`${PATH_URL.SURVEY_PATH}${currentSurveyPath + 1}`);
-      // TO DO: 사이드바 체크 업데이트
+      // for setting next survey first page
+      props.setNextSurveyPage && props.setNextSurveyPage(1);
     }
 
     setHeaderCurrentPage(headerCurrentPage + 1);
@@ -46,9 +61,9 @@ export default function usePagination(questions: string[], questionLimit: number
   };
 
   return {
-    currentPage,
-    currentSurveyTotalPages,
-    questionStartIndex,
+    // currentPage,
+    // currentSurveyTotalPages,
+    // questionStartIndex,
     currentPageQuestions,
     handleNextPage,
     handlePrevPage,

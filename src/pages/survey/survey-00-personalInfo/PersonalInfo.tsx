@@ -9,17 +9,15 @@ import { survey01CurrentPageState } from '../common/surveyPaginationStates';
 import { PATH_URL } from 'shared/constants/path.const';
 
 export default function PersonalInfo() {
+  const navigate = useNavigate();
+
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
   const setNextSurveyPage = useSetRecoilState(survey01CurrentPageState);
-
-  const navigate = useNavigate();
 
   const handleNextPage = () => {
     navigate(`${PATH_URL.SURVEY_PATH}1`);
 
-    // 이전 설문 전역 상태 첫 페이지로
     setNextSurveyPage(1);
-
     setHeaderCurrentPage(2);
     window.scrollTo(0, 0);
   };

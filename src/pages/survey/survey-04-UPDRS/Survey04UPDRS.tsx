@@ -3,63 +3,32 @@ import { UPDRS_QUESTIONS, UPDRS_QUESTIONS_PER_PAGE } from './survey.const';
 import SurveyTitle from '../common/survey-title/SurveyTitle';
 import styles from '../common/survey.module.scss';
 import surveyStyles from './survey04UPDRS.module.scss';
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { headerCurrentPageState } from 'components/layout/header/pagination/headerPageState';
+import { useSetRecoilState } from 'recoil';
 import {
   survey03CurrentPageState,
   survey04CurrentPageState,
   survey05CurrentPageState,
 } from '../common/surveyPaginationStates';
-import { useNavigate } from 'react-router-dom';
-import useCurrentSurveyPagePath from 'shared/hooks/useCurrentSurveyPagePath';
-import { PATH_URL } from 'shared/constants/path.const';
 import { survey03TotalPages } from '../survey-03-SCOPA/survey.const';
+import usePagination from '../common/hooks/usePagination';
 
 export default function Survey04UPDRS() {
-  // for header page display
-  const [headerCurrentPage, setHeaderCurrentPage] = useRecoilState(headerCurrentPageState);
-
-  // for prev survey type last page / next survey type first page
+  // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey03CurrentPageState);
   const setNextSurveyPage = useSetRecoilState(survey05CurrentPageState);
+  const prevSurveyTotalPages = survey03TotalPages;
+  const currentPageState = survey04CurrentPageState;
+  const questions = UPDRS_QUESTIONS;
+  const questionsPerPage = UPDRS_QUESTIONS_PER_PAGE;
 
-  const [currentPage, setCurrentPage] = useRecoilState(survey04CurrentPageState);
-  const currentSurveyTotalPages = Math.ceil(UPDRS_QUESTIONS.length / UPDRS_QUESTIONS_PER_PAGE);
-  const questionStartIndex = (currentPage - 1) * UPDRS_QUESTIONS_PER_PAGE;
-  const currentPageQuestions = UPDRS_QUESTIONS.slice(
-    questionStartIndex,
-    currentPage * UPDRS_QUESTIONS_PER_PAGE
-  );
-
-  // for prev/next survey type page
-  const navigate = useNavigate();
-  const currentSurveyPath = useCurrentSurveyPagePath();
-
-  const handlePrevPage = () => {
-    currentPage > 1 && setCurrentPage(currentPage - 1);
-
-    if (currentPage === 1) {
-      navigate(`${PATH_URL.SURVEY_PATH}${currentSurveyPath - 1}`);
-      // 이전 설문 전역 상태 마지막 페이지로
-      setPrevSurveyPage(survey03TotalPages);
-    }
-
-    setHeaderCurrentPage(headerCurrentPage - 1);
-    window.scrollTo(0, 0);
-  };
-
-  const handleNextPage = () => {
-    currentPage < currentSurveyTotalPages && setCurrentPage(currentPage + 1);
-
-    if (currentPage === currentSurveyTotalPages) {
-      navigate(`${PATH_URL.SURVEY_PATH}${currentSurveyPath + 1}`);
-      // 이전 설문 전역 상태 첫 페이지로
-      setNextSurveyPage(1);
-    }
-
-    setHeaderCurrentPage(headerCurrentPage + 1);
-    window.scrollTo(0, 0);
-  };
+  const { currentPageQuestions, handleNextPage, handlePrevPage } = usePagination({
+    setPrevSurveyPage,
+    setNextSurveyPage,
+    prevSurveyTotalPages,
+    currentPageState,
+    questions,
+    questionsPerPage,
+  });
 
   return (
     <article className={styles['survey-container']}>
@@ -76,12 +45,10 @@ export default function Survey04UPDRS() {
 }
 
 interface SurveyContentProps {
-  question: { No: number; Q: string; EXPLAIN?: string; A: { [key: number]: string } };
+  question: { No: number; Q?: string; EXPLAIN?: string; A: string[] };
 }
 
 function SurveyContent(props: SurveyContentProps) {
-  const answers = Object.values(props.question.A);
-
   const medicineDivisionList = [
     { radioBtnKeyword: '-medicine-true', text: '있을' },
     { radioBtnKeyword: '-medicine-false', text: '없을' },
@@ -99,7 +66,7 @@ function SurveyContent(props: SurveyContentProps) {
           <div key={index}>
             <h3 className={surveyStyles['medicine-text']}>{`약 효과가 ${list.text} 때`}</h3>
             <ul className={surveyStyles['answer-ul']}>
-              {answers.map((answer) => (
+              {props.question.A.map((answer) => (
                 <AnswerLi
                   answer={answer}
                   inputName={`${props.question.No}${list.radioBtnKeyword}`}
