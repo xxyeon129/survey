@@ -13,6 +13,7 @@ import { survey02TotalPages } from '../survey-02-RBD/survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithShortAnswers from '../common/components/survey-contents/survey-contents-with-short-answers/SurveyContent';
+import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 
 import styles from '../common/survey.module.scss';
 
@@ -54,8 +55,7 @@ export default function Survey03SCOPA() {
         ))}
       </ul>
 
-      <button onClick={handlePrevPage}>이전</button>
-      <button onClick={handleNextPage}>다음</button>
+      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }

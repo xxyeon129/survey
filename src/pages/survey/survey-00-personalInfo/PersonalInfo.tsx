@@ -7,6 +7,7 @@ import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import { useNavigate } from 'react-router-dom';
 import { survey01CurrentPageState } from '../common/surveyPaginationStates';
 import { PATH_URL } from 'shared/constants/path.const';
+import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 
 export default function PersonalInfo() {
   const navigate = useNavigate();
@@ -30,13 +31,7 @@ export default function PersonalInfo() {
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY[0].TITLE} subTitle={SURVEY[0].SUB_TITLE} />
 
-      {/* <BottomPrevNextButton
-        currentPage={currentPage}
-        currentSurveyTotalPages={currentSurveyTotalPages}
-        handlePrevPage={handlePrevPage}
-        handleNextPage={handleNextPage}
-      /> */}
-      <button onClick={handleNextPage}>다음</button>
+      <BottomPrevNextButton handleNextPage={handleNextPage} />
     </article>
   );
 }

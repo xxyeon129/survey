@@ -7,11 +7,12 @@ import {
 import usePagination from '../common/hooks/usePagination';
 // constants
 import { SURVEY } from 'shared/constants/survey.const';
-import { FG_QUESTIONS, FG_QUESTIONS_PER_PAGE, survey05TotalPages } from './survey.const';
+import { FG_QUESTIONS, FG_QUESTIONS_PER_PAGE } from './survey.const';
 import { survey04TotalPages } from '../survey-04-UPDRS/survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
+import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 
 import styles from '../common/survey.module.scss';
 
@@ -39,10 +40,7 @@ export default function Survey05FG() {
         <SurveyContentWithMedicineEffect question={question} key={question.No} />
       ))}
 
-      <button onClick={handlePrevPage}>이전</button>
-      <button onClick={handleNextPage} disabled={+currentPageState === survey05TotalPages}>
-        다음
-      </button>
+      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }

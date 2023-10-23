@@ -11,6 +11,7 @@ import { BDI_QUESTIONS, BDI_QUESTIONS_PER_PAGE } from './survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import AnswerList from '../common/components/survey-contents/AnswerList';
+import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // styles
 import styles from '../common/survey.module.scss';
 import surveyStyles from './surveyBDI.module.scss';
@@ -41,8 +42,7 @@ export default function Survey01BDI() {
         ))}
       </ul>
 
-      <button onClick={handlePrevPage}>이전</button>
-      <button onClick={handleNextPage}>다음</button>
+      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }

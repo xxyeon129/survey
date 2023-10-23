@@ -13,6 +13,7 @@ import { survey03TotalPages } from '../survey-03-SCOPA/survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
+import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 
 import styles from '../common/survey.module.scss';
 
@@ -42,8 +43,7 @@ export default function Survey04UPDRS() {
         <SurveyContentWithMedicineEffect question={question} key={question.No} />
       ))}
 
-      <button onClick={handlePrevPage}>이전</button>
-      <button onClick={handleNextPage}>다음</button>
+      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }
