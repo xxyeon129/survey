@@ -1,13 +1,15 @@
 // states, hook
 import { useSetRecoilState } from 'recoil';
 import {
-  survey01CurrentPageState,
-  survey02CurrentPageState,
+  survey03CurrentPageState,
+  survey04CurrentPageState,
+  survey05CurrentPageState,
 } from '../common/surveyPaginationStates';
 import usePagination from '../common/hooks/usePagination';
 // constants
-import { SURVEY } from 'shared/constants/survey.const';
+import { SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
 import { BDI_QUESTIONS, BDI_QUESTIONS_PER_PAGE } from './survey.const';
+import { SURVEY_03_BAI_TOTAL_PAGES } from '../survey-03-BAI/survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import AnswerList from '../common/components/survey-contents/AnswerList';
@@ -16,16 +18,17 @@ import BottomPrevNextButton from '../common/components/bottom-prev-next-button/B
 import styles from '../common/survey.module.scss';
 import surveyStyles from './surveyBDI.module.scss';
 
-export default function Survey01BDI() {
+export default function Survey04BDI() {
   // pagination hook props
-  const setNextSurveyPage = useSetRecoilState(survey02CurrentPageState);
-  const personalInfoPageCount = 1;
-  const prevSurveyTotalPages = personalInfoPageCount;
-  const currentPageState = survey01CurrentPageState;
+  const setPrevSurveyPage = useSetRecoilState(survey03CurrentPageState);
+  const setNextSurveyPage = useSetRecoilState(survey05CurrentPageState);
+  const prevSurveyTotalPages = SURVEY_03_BAI_TOTAL_PAGES;
+  const currentPageState = survey04CurrentPageState;
   const questions = BDI_QUESTIONS;
   const questionsPerPage = BDI_QUESTIONS_PER_PAGE;
 
   const { currentPageQuestions, handleNextPage, handlePrevPage } = usePagination({
+    setPrevSurveyPage,
     setNextSurveyPage,
     prevSurveyTotalPages,
     currentPageState,
@@ -35,7 +38,7 @@ export default function Survey01BDI() {
 
   return (
     <article className={styles['survey-container']}>
-      <SurveyTitle title={SURVEY[1].TITLE} subTitle={SURVEY[1].SUB_TITLE} />
+      <SurveyTitle title={SURVEY_TITLE_LIST[4].TITLE} subTitle={SURVEY_TITLE_LIST[4].SUB_TITLE} />
       <ul className={surveyStyles['questions-ul']}>
         {currentPageQuestions.map((question) => (
           <Survey01QuestionLi question={question} key={question.No} />

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { routeItems } from './main.const';
-import { HOSPITAL_NAME, SURVEY_TITLE } from 'shared/constants/survey.const';
+import { HOSPITAL_NAME, SURVEY_NAME } from 'shared/constants/survey.const';
 import { PATH_URL } from 'shared/constants/path.const';
 import styles from './main.module.scss';
 
@@ -60,7 +60,7 @@ export default function Main() {
     <article className={styles['main-container']}>
       <hgroup className={styles['title-container']}>
         <h4>{HOSPITAL_NAME}</h4>
-        <h1>{`${SURVEY_TITLE} 전자설문`}</h1>
+        <h1>{`${SURVEY_NAME} 전자설문`}</h1>
       </hgroup>
       <ul className={styles['route-container']}>{routeBoxes}</ul>
     </article>

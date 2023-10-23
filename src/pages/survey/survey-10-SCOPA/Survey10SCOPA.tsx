@@ -1,15 +1,15 @@
 // states, hook
 import { useSetRecoilState } from 'recoil';
 import {
-  survey02CurrentPageState,
-  survey03CurrentPageState,
-  survey04CurrentPageState,
+  survey09CurrentPageState,
+  survey10CurrentPageState,
+  survey11CurrentPageState,
 } from '../common/surveyPaginationStates';
 import usePagination from '../common/hooks/usePagination';
 // constants
-import { SURVEY } from 'shared/constants/survey.const';
+import { SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
 import { SCOPA_QUESTIONS, SCOPA_QUESTIONS_PER_PAGE } from './survey.const';
-import { survey02TotalPages } from '../survey-02-RBD/survey.const';
+import { SURVEY_09_TIRED_TOTAL_PAGES } from '../survey-09-TIRED/survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithShortAnswers from '../common/components/survey-contents/survey-contents-with-short-answers/SurveyContent';
@@ -17,12 +17,12 @@ import BottomPrevNextButton from '../common/components/bottom-prev-next-button/B
 
 import styles from '../common/survey.module.scss';
 
-export default function Survey03SCOPA() {
+export default function Survey10SCOPA() {
   // pagination hook props
-  const setPrevSurveyPage = useSetRecoilState(survey02CurrentPageState);
-  const setNextSurveyPage = useSetRecoilState(survey04CurrentPageState);
-  const prevSurveyTotalPages = survey02TotalPages;
-  const currentPageState = survey03CurrentPageState;
+  const setPrevSurveyPage = useSetRecoilState(survey09CurrentPageState);
+  const setNextSurveyPage = useSetRecoilState(survey11CurrentPageState);
+  const prevSurveyTotalPages = SURVEY_09_TIRED_TOTAL_PAGES;
+  const currentPageState = survey10CurrentPageState;
   const questions = SCOPA_QUESTIONS;
   const questionsPerPage = SCOPA_QUESTIONS_PER_PAGE;
 
@@ -47,7 +47,7 @@ export default function Survey03SCOPA() {
 
   return (
     <article className={styles['survey-container']}>
-      <SurveyTitle title={SURVEY[3].TITLE} subTitle={SURVEY[3].SUB_TITLE} />
+      <SurveyTitle title={SURVEY_TITLE_LIST[10].TITLE} subTitle={SURVEY_TITLE_LIST[10].SUB_TITLE} />
       {surveyExplain}
       <ul>
         {currentPageQuestions.map((question) => (

@@ -3,31 +3,29 @@ import { useRecoilValue } from 'recoil';
 import { headerCurrentPageState } from './pagination/headerPageState';
 import logo from 'assets/header-logo.svg';
 import styles from './header.module.scss';
+import usePathCheck from 'shared/hooks/usePathCheck';
 // components
 import PrevNextBtn from './pagination/PrevNextBtn';
 import ProgressBar from './ProgressBar';
-// utils
-import { SURVEY_TITLE } from 'shared/constants/survey.const';
-import usePathCheck from 'shared/hooks/usePathCheck';
-import { survey01TotalPages } from 'pages/survey/survey-01-BDI/survey.const';
-import { survey02TotalPages } from 'pages/survey/survey-02-RBD/survey.const';
-import { survey03TotalPages } from 'pages/survey/survey-03-SCOPA/survey.const';
-import { survey04TotalPages } from 'pages/survey/survey-04-UPDRS/survey.const';
-import { survey05TotalPages } from 'pages/survey/survey-05-FG/survey.const';
+// constants
+import { SURVEY_NAME } from 'shared/constants/survey.const';
+import { SURVEY_01_UPDRS_TOTAL_PAGES } from 'pages/survey/survey-01-UPDRS/survey.const';
+import { SURVEY_02_FG_TOTAL_PAGES } from 'pages/survey/survey-02-FG/survey.const';
+import { SURVEY_03_BAI_TOTAL_PAGES } from 'pages/survey/survey-03-BAI/survey.const';
+import { SURVEY_04_BDI_TOTAL_PAGES } from 'pages/survey/survey-04-BDI/survey.const';
+import { SURVEY_05_RBD_TOTAL_PAGES } from 'pages/survey/survey-05-RBD/survey.const';
 
 const personalInfoPageCount = 1;
 
 export const headerTotalPage =
   personalInfoPageCount +
-  survey01TotalPages +
-  survey02TotalPages +
-  survey03TotalPages +
-  survey04TotalPages +
-  survey05TotalPages;
+  SURVEY_01_UPDRS_TOTAL_PAGES +
+  SURVEY_02_FG_TOTAL_PAGES +
+  SURVEY_03_BAI_TOTAL_PAGES +
+  SURVEY_04_BDI_TOTAL_PAGES +
+  SURVEY_05_RBD_TOTAL_PAGES;
 
 export default function Header() {
-  // const [headerTotalPage, setHeaderTotalPage] = useRecoilState(headerTotalPageState);
-
   const headerCurrentPage = useRecoilValue(headerCurrentPageState);
   const isSurveyPage = usePathCheck();
 
@@ -37,7 +35,7 @@ export default function Header() {
       <PrevNextBtn />
     </>
   ) : (
-    <span>{`${SURVEY_TITLE} 전자설문`}</span>
+    <span>{`${SURVEY_NAME} 전자설문`}</span>
   );
 
   return (

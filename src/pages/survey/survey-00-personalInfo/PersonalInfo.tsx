@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { headerCurrentPageState } from 'components/layout/header/pagination/headerPageState';
 import styles from 'pages/survey/common/survey.module.scss';
-import { SURVEY } from 'shared/constants/survey.const';
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import { useNavigate } from 'react-router-dom';
 import { survey01CurrentPageState } from '../common/surveyPaginationStates';
 import { PATH_URL } from 'shared/constants/path.const';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
+import { SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
 
 export default function PersonalInfo() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export default function PersonalInfo() {
 
   return (
     <article className={styles['survey-container']}>
-      <SurveyTitle title={SURVEY[0].TITLE} subTitle={SURVEY[0].SUB_TITLE} />
+      <SurveyTitle title={SURVEY_TITLE_LIST[0].TITLE} subTitle={SURVEY_TITLE_LIST[0].SUB_TITLE} />
 
       <BottomPrevNextButton handleNextPage={handleNextPage} />
     </article>

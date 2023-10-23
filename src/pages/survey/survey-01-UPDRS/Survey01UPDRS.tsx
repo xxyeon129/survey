@@ -1,14 +1,13 @@
 // states, hook
 import { useSetRecoilState } from 'recoil';
 import {
-  survey04CurrentPageState,
-  survey05CurrentPageState,
+  survey01CurrentPageState,
+  survey02CurrentPageState,
 } from '../common/surveyPaginationStates';
 import usePagination from '../common/hooks/usePagination';
 // constants
-import { SURVEY } from 'shared/constants/survey.const';
-import { FG_QUESTIONS, FG_QUESTIONS_PER_PAGE } from './survey.const';
-import { survey04TotalPages } from '../survey-04-UPDRS/survey.const';
+import { SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
+import { UPDRS_QUESTIONS, UPDRS_QUESTIONS_PER_PAGE } from './survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
@@ -16,16 +15,17 @@ import BottomPrevNextButton from '../common/components/bottom-prev-next-button/B
 
 import styles from '../common/survey.module.scss';
 
-export default function Survey05FG() {
+export default function Survey01UPDRS() {
   // pagination hook props
-  const setPrevSurveyPage = useSetRecoilState(survey04CurrentPageState);
-  const prevSurveyTotalPages = survey04TotalPages;
-  const currentPageState = survey05CurrentPageState;
-  const questions = FG_QUESTIONS;
-  const questionsPerPage = FG_QUESTIONS_PER_PAGE;
+  const setNextSurveyPage = useSetRecoilState(survey02CurrentPageState);
+  const personalInfoPageCount = 1;
+  const prevSurveyTotalPages = personalInfoPageCount;
+  const currentPageState = survey01CurrentPageState;
+  const questions = UPDRS_QUESTIONS;
+  const questionsPerPage = UPDRS_QUESTIONS_PER_PAGE;
 
   const { currentPageQuestions, handleNextPage, handlePrevPage } = usePagination({
-    setPrevSurveyPage,
+    setNextSurveyPage,
     prevSurveyTotalPages,
     currentPageState,
     questions,
@@ -34,7 +34,7 @@ export default function Survey05FG() {
 
   return (
     <article className={styles['survey-container']}>
-      <SurveyTitle title={SURVEY[5].TITLE} subTitle={SURVEY[5].SUB_TITLE} />
+      <SurveyTitle title={SURVEY_TITLE_LIST[1].TITLE} subTitle={SURVEY_TITLE_LIST[1].SUB_TITLE} />
 
       {currentPageQuestions.map((question) => (
         <SurveyContentWithMedicineEffect question={question} key={question.No} />
