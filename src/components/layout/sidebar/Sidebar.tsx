@@ -70,6 +70,7 @@ export default function Sidebar() {
 
     // for display survey first page
     resetSurveyPage.forEach((reset) => reset());
+    window.scrollTo(0, 0);
   };
 
   useEffect(() => {
