@@ -14,7 +14,7 @@ import Survey05RBD from 'pages/survey/survey-05-RBD/Survey05RBD';
 import Survey06NMS from 'pages/survey/survey-06-NMS/Survey06NMS';
 import Survey07PDQ from 'pages/survey/survey-07-PDQ/Survey07PDQ';
 import Survey08PDSS from 'pages/survey/survey-08-PDSS/Survey08PDSS';
-import Survey09Tired from 'pages/survey/survey-09-TIRED/Survey09TIRED';
+import Survey09Tired from 'pages/survey/survey-09-TIRED/Survey09Tired';
 import Survey10SCOPA from 'pages/survey/survey-10-SCOPA/Survey10SCOPA';
 import Survey11Constipation from 'pages/survey/survey-11-CONSTIPATION/Survey11Constipation';
 import Survey12Food from 'pages/survey/survey-12-FOOD/Survey12Food';

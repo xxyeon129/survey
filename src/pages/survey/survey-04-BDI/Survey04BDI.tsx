@@ -1,11 +1,10 @@
-// states, hook
+// states
 import { useSetRecoilState } from 'recoil';
 import {
   survey03CurrentPageState,
   survey04CurrentPageState,
   survey05CurrentPageState,
 } from '../common/surveyPaginationStates';
-import usePagination from '../common/hooks/usePagination';
 // constants
 import { SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
 import { BDI_QUESTIONS, BDI_QUESTIONS_PER_PAGE } from './survey.const';
@@ -17,6 +16,9 @@ import BottomPrevNextButton from '../common/components/bottom-prev-next-button/B
 // styles
 import styles from '../common/survey.module.scss';
 import surveyStyles from './surveyBDI.module.scss';
+
+import { SurveyContentType } from '../common/types/surveyTypes';
+import usePagination from '../common/hooks/usePagination';
 
 export default function Survey04BDI() {
   // pagination hook props
@@ -41,7 +43,7 @@ export default function Survey04BDI() {
       <SurveyTitle title={SURVEY_TITLE_LIST[4].TITLE} subTitle={SURVEY_TITLE_LIST[4].SUB_TITLE} />
       <ul className={surveyStyles['questions-ul']}>
         {currentPageQuestions.map((question) => (
-          <Survey01QuestionLi question={question} key={question.No} />
+          <SurveyContent question={question} key={question.No} />
         ))}
       </ul>
 
@@ -50,11 +52,7 @@ export default function Survey04BDI() {
   );
 }
 
-interface QuestionLiProps {
-  question: { No: number; A: string[] };
-}
-
-function Survey01QuestionLi(props: QuestionLiProps) {
+function SurveyContent(props: SurveyContentType) {
   return (
     <li className={surveyStyles['questions-li']}>
       <h2 className={surveyStyles['questions-title']}>설문 {props.question.No}</h2>

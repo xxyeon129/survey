@@ -61,9 +61,6 @@ export default function usePagination(props: usePaginationProps) {
   };
 
   return {
-    // currentPage,
-    // currentSurveyTotalPages,
-    // questionStartIndex,
     currentPageQuestions,
     handleNextPage,
     handlePrevPage,
