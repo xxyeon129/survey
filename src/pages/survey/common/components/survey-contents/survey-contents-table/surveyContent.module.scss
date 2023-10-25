@@ -5,17 +5,17 @@
   table {
     width: 100%;
 
-    .answers-tr {
+    .answers-table-row {
       white-space: pre;
       line-height: 120%;
       color: #707070;
 
-      > th {
-        padding: 0 0.5rem 1rem 0.5rem;
+      .answers-table-header-text {
+        padding: 0 1rem 1rem 1rem;
       }
     }
 
-    .question-container {
+    .questions-table-row {
       color: $text-dark-grey-color;
 
       &:nth-child(odd) {
@@ -32,11 +32,11 @@
         border-radius: 0 0.625rem 0.625rem 0;
       }
 
-      .question-th {
-        font-size: 1.1rem;
+      .questions-table-header-text {
+        font-size: 1.15rem;
         line-height: 160%;
         text-align: left;
-        padding: 2rem 1rem;
+        padding: 2rem 1.5rem;
       }
 
       .question-td-radio-button-container {
@@ -69,8 +69,8 @@
             transition: border 0.25s linear;
 
             .radio-button-checked-circle {
-              width: 1.35rem;
-              height: 1.35rem;
+              width: 1.22rem;
+              height: 1.22rem;
               border-radius: 100%;
             }
           }

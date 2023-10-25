@@ -9,20 +9,22 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
   const radioBtnValues = [0, 1, 2, 3];
 
   const answersHeaderCell = props.answers.map((answerText) => (
-    <th key={answerText}>{answerText}</th>
+    <th key={answerText} className={styles['answers-table-header-text']}>
+      {answerText}
+    </th>
   ));
 
   return (
     <article className={styles['survey-content-container']}>
       <table>
-        <tr className={styles['answers-tr']}>
+        <tr className={styles['answers-table-row']}>
           <th></th>
           {answersHeaderCell}
         </tr>
         <tbody>
           {props.questions.map((question) => (
-            <tr key={question.No} className={styles['question-container']}>
-              <th className={styles['question-th']}>
+            <tr key={question.No} className={styles['questions-table-row']}>
+              <th className={styles['questions-table-header-text']}>
                 {question.No}. {question.Q}
               </th>
               {radioBtnValues.map((radioBtnValue) => (
