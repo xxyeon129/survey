@@ -1,0 +1,63 @@
+.survey-content-container {
+  margin-top: 1rem;
+  width: 100%;
+
+  table {
+    width: 100%;
+
+    .answers-tr {
+      white-space: pre;
+      line-height: 120%;
+      color: #707070;
+
+      > th {
+        padding: 0 0.5rem 1rem 0.5rem;
+      }
+    }
+
+    .question-container {
+      border-radius: 0.625rem;
+      color: $text-dark-grey-color;
+
+      &:nth-child(odd) {
+        background-color: $table-background-grey-color;
+        border-radius: 10px;
+      }
+
+      // for border-radius
+      td:first-child,
+      th:first-child {
+        border-radius: 0.625rem 0 0 0.625rem;
+      }
+      td:last-child,
+      th:last-child {
+        border-radius: 0 0.625rem 0.625rem 0;
+      }
+
+      .question-th {
+        font-size: 1.1rem;
+        line-height: 160%;
+        text-align: left;
+        padding: 2rem 1rem;
+      }
+
+      .question-td-radio-btn {
+        text-align: center;
+
+        input[type='radio'] {
+          appearance: none;
+          width: 1.7rem;
+          height: 1.7rem;
+          border: max(2.5px, 0.1em) solid $main-blue-color;
+          border-radius: 50%;
+          cursor: pointer;
+
+          &:hover {
+            border: max(4px, 0.1em) solid $main-blue-color;
+            transition: 0.25s;
+          }
+        }
+      }
+    }
+  }
+}
