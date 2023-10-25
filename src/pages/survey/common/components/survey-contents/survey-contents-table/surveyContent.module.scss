@@ -16,12 +16,10 @@
     }
 
     .question-container {
-      border-radius: 0.625rem;
       color: $text-dark-grey-color;
 
       &:nth-child(odd) {
         background-color: $table-background-grey-color;
-        border-radius: 10px;
       }
 
       // for border-radius
@@ -41,20 +39,63 @@
         padding: 2rem 1rem;
       }
 
-      .question-td-radio-btn {
-        text-align: center;
+      .question-td-radio-button-container {
+        position: relative;
 
         input[type='radio'] {
-          appearance: none;
-          width: 1.7rem;
-          height: 1.7rem;
-          border: max(2.5px, 0.1em) solid $main-blue-color;
-          border-radius: 50%;
+          position: relative;
+          visibility: hidden;
+        }
+
+        > label {
+          position: absolute;
+          right: 50%;
+          top: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 2;
           cursor: pointer;
 
-          &:hover {
+          .radio-button {
+            position: absolute;
+            border: max(3px, 0.1em) solid $checkbox-grey-color;
+            border-radius: 100%;
+            width: 2.4rem;
+            height: 2.4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: border 0.25s linear;
+
+            .radio-button-checked-circle {
+              width: 1.35rem;
+              height: 1.35rem;
+              border-radius: 100%;
+            }
+          }
+        }
+
+        > input[type='radio']:checked ~ label {
+          color: $main-blue-color;
+          font-weight: $text-semi-bold;
+          transition: 0.25s;
+
+          .radio-button {
             border: max(4px, 0.1em) solid $main-blue-color;
-            transition: 0.25s;
+
+            .radio-button-checked-circle {
+              background: $main-blue-color;
+              transition: 0.25s;
+            }
+          }
+        }
+
+        &:hover {
+          transition: 0.25s;
+          color: $main-skyblue-color;
+          .radio-button {
+            border: max(4px, 0.1em) solid $main-skyblue-color;
           }
         }
       }

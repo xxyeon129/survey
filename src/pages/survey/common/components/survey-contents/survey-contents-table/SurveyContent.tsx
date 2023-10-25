@@ -26,8 +26,18 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
                 {question.No}. {question.Q}
               </th>
               {radioBtnValues.map((radioBtnValue) => (
-                <td className={styles['question-td-radio-btn']}>
-                  <input type="radio" name={`${question.No}`} value={radioBtnValue} />
+                <td className={styles['question-td-radio-button-container']}>
+                  <input
+                    type="radio"
+                    id={`${question.No}${radioBtnValue}`}
+                    name={`${question.No}`}
+                    value={radioBtnValue}
+                  />
+                  <label htmlFor={`${question.No}${radioBtnValue}`}>
+                    <div className={styles['radio-button']}>
+                      <div className={styles['radio-button-checked-circle']} />
+                    </div>
+                  </label>
                 </td>
               ))}
             </tr>
