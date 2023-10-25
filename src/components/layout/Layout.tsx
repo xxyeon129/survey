@@ -8,6 +8,7 @@ interface LayoutProps {
 }
 
 export default function Layout(props: LayoutProps) {
+  // for non-survey page css styling
   const isSurveyPage = usePathCheck();
 
   return (

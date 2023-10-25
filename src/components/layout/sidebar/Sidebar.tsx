@@ -1,9 +1,11 @@
-import { SURVEY_NAME, SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
-import styles from './sidebar.module.scss';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import styles from './sidebar.module.scss';
+// states
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { headerCurrentPageState } from '../header/pagination/headerPageState';
+// constants
+import { SURVEY_NAME, SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
 import { totalPagesList } from '../header/pagination/totalPages.const';
 import { surveyCurrentPageStates } from './surveyCurrentPageStates.const';
 

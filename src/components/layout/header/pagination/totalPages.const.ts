@@ -11,6 +11,7 @@ import { SURVEY_10_SCOPA_TOTAL_PAGES } from 'pages/survey/survey-10-SCOPA/survey
 import { SURVEY_11_CONSTIPATION_TOTAL_PAGES } from 'pages/survey/survey-11-CONSTIPATION/survey.const';
 import { SURVEY_12_FOOD_TOTAL_PAGES } from 'pages/survey/survey-12-FOOD/survey.const';
 
+// for calculate header current page count when click sidebar survey list
 const personalInfoPageCount = 1;
 export const totalPagesList = [
   personalInfoPageCount,
@@ -28,4 +29,5 @@ export const totalPagesList = [
   SURVEY_12_FOOD_TOTAL_PAGES,
 ];
 
+// for header total page, progressbar
 export const totalPagesCount = totalPagesList.reduce((acc, cur) => acc + cur, 1);

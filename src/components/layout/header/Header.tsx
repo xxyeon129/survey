@@ -17,11 +17,13 @@ export default function Header() {
 
   const rightContent = isSurveyPage ? (
     <>
-      <span>{`설문 ${headerCurrentPage} / ${totalPagesCount} 페이지`}</span>
+      <span
+        className={styles['header-right-text']}
+      >{`설문 ${headerCurrentPage} / ${totalPagesCount} 페이지`}</span>
       <PrevNextBtn />
     </>
   ) : (
-    <span>{`${SURVEY_NAME} 전자설문`}</span>
+    <span className={styles['header-right-text']}>{`${SURVEY_NAME} 전자설문`}</span>
   );
 
   return (
@@ -30,7 +32,7 @@ export default function Header() {
         <Link to="/">
           <img src={logo} alt="header 좌측 병원 로고" />
         </Link>
-        <div>{rightContent}</div>
+        <div className={styles['header-right-contents']}>{rightContent}</div>
       </div>
       {isSurveyPage && <ProgressBar />}
     </header>

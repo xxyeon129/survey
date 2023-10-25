@@ -46,22 +46,6 @@
       background-color: $sub-skyblue-color;
     }
 
-    // TEST CODE: hover - darken background
-    // &::before {
-    //   content: '';
-    //   position: absolute;
-    //   top: 0;
-    //   left: 0;
-    //   width: 100%;
-    //   height: 100%;
-    //   border-radius: 20px;
-    //   transition: all 1s ease-out;
-    //   background-color: rgba(0, 0, 0, 0);
-    // }
-    // &:hover::before {
-    //   background-color: rgba(0, 0, 0, 0.3);
-    // }
-
     &:hover {
       background-color: $point-green-color;
       transition: 1s;

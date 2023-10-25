@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { RecoilState, SetterOrUpdater, useRecoilState } from 'recoil';
 import { headerCurrentPageState } from 'components/layout/header/pagination/headerPageState';
 import { PATH_URL } from 'shared/constants/path.const';
-import useCurrentSurveyPagePath from 'shared/hooks/useCurrentSurveyPagePath';
+import useCurrentSurveyPagePath from 'pages/survey/common/hooks/useCurrentSurveyPagePath';
 
 interface usePaginationProps {
   // for prev survey type last page / next survey type first page

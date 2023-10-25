@@ -22,17 +22,17 @@
     width: 164px;
   }
 
-  div {
+  .header-right-contents {
     display: flex;
     align-items: center;
-  }
 
-  span {
-    font-size: 0.9rem;
-    font-weight: $text-medium;
-    color: $text-grey-color;
-    padding-top: 3.5px;
-    padding-right: 15px;
+    .header-right-text {
+      font-size: 0.9rem;
+      font-weight: $text-medium;
+      color: $text-grey-color;
+      padding-top: 3.5px;
+      padding-right: 15px;
+    }
   }
 }
 

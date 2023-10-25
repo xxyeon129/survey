@@ -5,7 +5,6 @@ import { IoMdArrowRoundForward } from 'react-icons/io';
 import styles from './bottomPrevNextButton.module.scss';
 
 interface BottomPrevNextButtonProps {
-  // currentPage: number;
   handlePrevPage?: () => void;
   handleNextPage?: () => void;
 }
