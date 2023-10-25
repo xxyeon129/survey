@@ -6,13 +6,13 @@ import {
 } from '../common/surveyPaginationStates';
 import usePagination from '../common/hooks/usePagination';
 // constants
-import { SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
+import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { UPDRS_QUESTIONS, UPDRS_QUESTIONS_PER_PAGE } from './survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
-
+// styles
 import styles from '../common/survey.module.scss';
 
 export default function Survey01UPDRS() {

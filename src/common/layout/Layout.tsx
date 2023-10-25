@@ -1,6 +1,6 @@
-import Sidebar from 'components/layout/sidebar/Sidebar';
+import Sidebar from 'common/layout/sidebar/Sidebar';
 import Header from './header/Header';
-import usePathCheck from 'shared/hooks/usePathCheck';
+import usePathCheck from 'common/hooks/usePathCheck';
 import styles from './layout.module.scss';
 
 interface LayoutProps {

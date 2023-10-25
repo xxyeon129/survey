@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil';
-import { headerCurrentPageState } from 'components/layout/header/pagination/headerPageState';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
 import styles from './bottomPrevNextButton.module.scss';

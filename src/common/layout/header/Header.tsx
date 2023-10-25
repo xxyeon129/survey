@@ -3,12 +3,12 @@ import { useRecoilValue } from 'recoil';
 import { headerCurrentPageState } from './pagination/headerPageState';
 import logo from 'assets/header-logo.svg';
 import styles from './header.module.scss';
-import usePathCheck from 'shared/hooks/usePathCheck';
+import usePathCheck from 'common/hooks/usePathCheck';
 // components
 import PrevNextBtn from './pagination/PrevNextBtn';
 import ProgressBar from './ProgressBar';
 // constants
-import { SURVEY_NAME } from 'shared/constants/survey.const';
+import { SURVEY_NAME } from 'common/constants/survey.const';
 import { totalPagesCount } from './pagination/totalPages.const';
 
 export default function Header() {

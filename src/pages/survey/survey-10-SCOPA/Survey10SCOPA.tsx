@@ -1,20 +1,21 @@
-// states, hook
+// states
 import { useSetRecoilState } from 'recoil';
 import {
   survey09CurrentPageState,
   survey10CurrentPageState,
   survey11CurrentPageState,
 } from '../common/surveyPaginationStates';
+// hooks
 import usePagination from '../common/hooks/usePagination';
 // constants
-import { SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
+import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { SCOPA_QUESTIONS, SCOPA_QUESTIONS_PER_PAGE } from './survey.const';
 import { SURVEY_09_TIRED_TOTAL_PAGES } from '../survey-09-TIRED/survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithShortAnswers from '../common/components/survey-contents/survey-contents-with-short-answers/SurveyContent';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
-
+// styles
 import styles from '../common/survey.module.scss';
 
 export default function Survey10SCOPA() {

@@ -1,5 +1,5 @@
 import { SurveyContentType } from 'pages/survey/common/types/surveyTypes';
-import AnswerList from '../AnswerList';
+import AnswerList from '../answerList/AnswerList';
 import styles from 'pages/survey/common/survey.module.scss';
 import contentStyles from './surveyContent.module.scss';
 

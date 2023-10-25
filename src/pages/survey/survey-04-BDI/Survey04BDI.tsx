@@ -6,18 +6,19 @@ import {
   survey05CurrentPageState,
 } from '../common/surveyPaginationStates';
 // constants
-import { SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
+import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { BDI_QUESTIONS, BDI_QUESTIONS_PER_PAGE } from './survey.const';
 import { SURVEY_03_BAI_TOTAL_PAGES } from '../survey-03-BAI/survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import AnswerList from '../common/components/survey-contents/AnswerList';
+import AnswerList from '../common/components/survey-contents/answerList/AnswerList';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // styles
 import styles from '../common/survey.module.scss';
 import surveyStyles from './surveyBDI.module.scss';
-
+// types
 import { SurveyContentType } from '../common/types/surveyTypes';
+// hooks
 import usePagination from '../common/hooks/usePagination';
 
 export default function Survey04BDI() {

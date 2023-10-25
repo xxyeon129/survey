@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+// states
 import { useSetRecoilState } from 'recoil';
-import { headerCurrentPageState } from 'components/layout/header/pagination/headerPageState';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 import { survey01CurrentPageState } from '../common/surveyPaginationStates';
-import styles from 'pages/survey/common/survey.module.scss';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // constants
-import { PATH_URL } from 'shared/constants/path.const';
-import { SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
+import { PATH_URL } from 'common/constants/path.const';
+import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
+// styles
+import styles from 'pages/survey/common/survey.module.scss';
 
 export default function PersonalInfo() {
   const navigate = useNavigate();

@@ -1,6 +1,9 @@
+// components
 // import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
-import { SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
+// constants
+import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
+// styles
 import styles from '../common/survey.module.scss';
 
 export default function Survey12Food() {

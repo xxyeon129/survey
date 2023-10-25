@@ -1,13 +1,9 @@
+import AnswerList from '../answerList/AnswerList';
 import { SurveyContentType } from 'pages/survey/common/types/surveyTypes';
-import AnswerList from '../AnswerList';
+import { medicineDivisionList } from './surveyContent.const';
 import styles from './surveyContent.module.scss';
 
 export default function SurveyContentWithMedicineEffect(props: SurveyContentType) {
-  const medicineDivisionList = [
-    { radioBtnKeyword: '-medicine-true', text: '있을' },
-    { radioBtnKeyword: '-medicine-false', text: '없을' },
-  ];
-
   return (
     <article className={styles['survey-content-container']}>
       <hr />

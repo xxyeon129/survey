@@ -1,9 +1,12 @@
+// components
 // import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
-import { SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import styles from '../common/survey.module.scss';
 import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
+// constants
+import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { BAI_ANSWERS, BAI_QUESTIONS } from './survey.const';
+// styles
+import styles from '../common/survey.module.scss';
 
 export default function Survey03BAI() {
   const surveyExplain = (

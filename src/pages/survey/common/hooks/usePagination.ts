@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { RecoilState, SetterOrUpdater, useRecoilState } from 'recoil';
-import { headerCurrentPageState } from 'components/layout/header/pagination/headerPageState';
-import { PATH_URL } from 'shared/constants/path.const';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import { PATH_URL } from 'common/constants/path.const';
 import useCurrentSurveyPagePath from 'pages/survey/common/hooks/useCurrentSurveyPagePath';
 
 interface usePaginationProps {

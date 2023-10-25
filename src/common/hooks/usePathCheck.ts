@@ -1,5 +1,5 @@
 import { useLocation } from 'react-router-dom';
-import { PATH_URL } from 'shared/constants/path.const';
+import { PATH_URL } from 'common/constants/path.const';
 
 // for non-survey page
 // sidebar, header right content, header progress bar display

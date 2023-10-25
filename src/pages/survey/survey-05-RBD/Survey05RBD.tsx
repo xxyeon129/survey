@@ -1,20 +1,21 @@
-// states, hook
+// states
 import { useSetRecoilState } from 'recoil';
 import {
   survey04CurrentPageState,
   survey05CurrentPageState,
   survey06CurrentPageState,
 } from '../common/surveyPaginationStates';
+// hooks
 import usePagination from '../common/hooks/usePagination';
 // constants
-import { SURVEY_TITLE_LIST } from 'shared/constants/survey.const';
+import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { RBD_QUESTIONS, RBD_QUESTIONS_PER_PAGE } from './survey.const';
 import { SURVEY_04_BDI_TOTAL_PAGES } from '../survey-04-BDI/survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithShortAnswers from '../common/components/survey-contents/survey-contents-with-short-answers/SurveyContent';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
-
+// styles
 import styles from '../common/survey.module.scss';
 
 export default function Survey05RBD() {
