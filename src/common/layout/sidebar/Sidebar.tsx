@@ -46,7 +46,7 @@ export default function Sidebar() {
   const surveyList = Object.values(SURVEY_TITLE_LIST).map((surveyTitle) => surveyTitle.TITLE);
 
   return (
-    <aside>
+    <aside className={styles.aside}>
       <ul>
         <li>{`${SURVEY_NAME} 설문`}</li>
         {surveyList.map((surveyTitle, index) => (

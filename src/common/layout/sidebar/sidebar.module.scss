@@ -1,4 +1,4 @@
-aside {
+.aside {
   position: fixed;
   height: calc(100vh - 4.563rem);
   max-width: 16.25rem;
@@ -7,6 +7,7 @@ aside {
   display: flex;
   flex-direction: column;
   padding: 2rem 1.25rem;
+  margin-top: 4.563rem; // header height size
 
   ul {
     display: flex;

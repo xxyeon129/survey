@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PATH_URL } from './constants/path.const';
 import Layout from 'common/layout/Layout';
 // pages
-import Main from 'pages/main/Main';
+import MainPage from 'pages/main/MainPage';
 import Test from 'pages/Test';
 import NotFound from 'pages/error/NotFound';
 import PersonalInfo from 'pages/survey/survey-00-personalInfo/PersonalInfo';
@@ -18,13 +18,14 @@ import Survey09Tired from 'pages/survey/survey-09-TIRED/Survey09Tired';
 import Survey10SCOPA from 'pages/survey/survey-10-SCOPA/Survey10SCOPA';
 import Survey11Constipation from 'pages/survey/survey-11-CONSTIPATION/Survey11Constipation';
 import Survey12Food from 'pages/survey/survey-12-FOOD/Survey12Food';
+import EndPage from 'pages/end/EndPage';
 
 export default function MainRouter() {
   return (
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<MainPage />} />
           <Route path={PATH_URL.SURVEY.PERSONAL} element={<PersonalInfo />} />
           <Route path={PATH_URL.SURVEY['01_UPDRS']} element={<Survey01UPDRS />} />
           <Route path={PATH_URL.SURVEY['02_FG']} element={<Survey02FG />} />
@@ -38,6 +39,7 @@ export default function MainRouter() {
           <Route path={PATH_URL.SURVEY['10_SCOPA']} element={<Survey10SCOPA />} />
           <Route path={PATH_URL.SURVEY['11_CONSTIPATION']} element={<Survey11Constipation />} />
           <Route path={PATH_URL.SURVEY['12_FOOD']} element={<Survey12Food />} />
+          <Route path={PATH_URL.END} element={<EndPage />} />
           <Route path={PATH_URL.TEST} element={<Test />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

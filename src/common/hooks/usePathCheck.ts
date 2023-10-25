@@ -5,8 +5,9 @@ import { PATH_URL } from 'common/constants/path.const';
 // sidebar, header right content, header progress bar display
 export default function usePathCheck() {
   const location = useLocation();
-  const normalPaths = [...Object.values(PATH_URL), ...Object.values(PATH_URL.SURVEY)];
-  const isSurveyPage = normalPaths.includes(location.pathname);
+  const surveyPaths = [...Object.values(PATH_URL.SURVEY)];
+
+  const isSurveyPage = surveyPaths.includes(location.pathname);
 
   return isSurveyPage;
 }

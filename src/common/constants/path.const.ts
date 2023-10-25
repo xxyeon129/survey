@@ -15,5 +15,6 @@ export const PATH_URL = {
     '11_CONSTIPATION': '/survey/11',
     '12_FOOD': '/survey/12',
   },
+  END: '/end',
   TEST: '/test',
 };

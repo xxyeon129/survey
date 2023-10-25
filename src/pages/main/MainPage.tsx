@@ -4,7 +4,7 @@ import { HOSPITAL_NAME, SURVEY_NAME } from 'common/constants/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
 import styles from './main.module.scss';
 
-export default function Main() {
+export default function MainPage() {
   const navigate = useNavigate();
 
   const handleRouteBoxClick = (id: string) => {
