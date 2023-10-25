@@ -11,7 +11,7 @@ interface usePaginationProps {
   prevSurveyTotalPages: number;
 
   currentPageState: RecoilState<number>;
-  questions: { No: number; Q?: string; A: string[]; EXPLAIN?: string }[];
+  questions: { No: number; Q?: string; A?: string[]; EXPLAIN?: string }[];
   questionsPerPage: number;
 }
 

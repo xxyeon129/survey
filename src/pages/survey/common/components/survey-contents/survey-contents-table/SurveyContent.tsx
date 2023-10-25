@@ -1,7 +1,7 @@
 import styles from './surveyContent.module.scss';
 
 interface SurveyContentTableProps {
-  questions: { No: number; Q: string }[];
+  questions: { No: number; Q?: string }[];
   answers: string[];
 }
 
