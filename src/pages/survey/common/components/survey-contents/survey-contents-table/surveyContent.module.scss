@@ -37,6 +37,7 @@
         line-height: 160%;
         text-align: left;
         padding: 2rem 1.5rem;
+        min-width: 29.375rem;
       }
 
       .question-td-radio-button-container {
@@ -59,7 +60,8 @@
 
           .radio-button {
             position: absolute;
-            border: max(3px, 0.1em) solid $checkbox-grey-color;
+            // for no gradation
+            // border: max(3px, 0.1em) solid $checkbox-grey-color;
             border-radius: 100%;
             width: 2.4rem;
             height: 2.4rem;
@@ -77,25 +79,93 @@
         }
 
         > input[type='radio']:checked ~ label {
-          color: $main-blue-color;
-          font-weight: $text-semi-bold;
           transition: 0.25s;
 
           .radio-button {
-            border: max(4px, 0.1em) solid $main-blue-color;
+            // for no gradation
+            //  border: max(4px, 0.1em) solid $main-blue-color;
 
             .radio-button-checked-circle {
-              background: $main-blue-color;
+              // for no gradation
+              // background: $main-blue-color;
               transition: 0.25s;
             }
           }
         }
 
         &:hover {
-          transition: 0.25s;
-          color: $main-skyblue-color;
           .radio-button {
-            border: max(4px, 0.1em) solid $main-skyblue-color;
+            transition: 0.25s;
+          }
+        }
+      }
+
+      // for checkbox gradation
+      td:nth-child(2) {
+        .radio-button {
+          border: max(3px, 0.1em) solid $checkbox-gradation-2-color;
+          &:hover {
+            border: max(4px, 0.1em) solid $checkbox-gradation-2-color;
+          }
+        }
+
+        > input[type='radio']:checked ~ label {
+          .radio-button {
+            border: max(4px, 0.1em) solid $checkbox-gradation-2-color;
+            .radio-button-checked-circle {
+              background: $checkbox-gradation-2-color;
+            }
+          }
+        }
+      }
+      td:nth-child(3) {
+        .radio-button {
+          border: max(3px, 0.1em) solid $checkbox-gradation-4-color;
+          &:hover {
+            border: max(4px, 0.1em) solid $checkbox-gradation-4-color;
+          }
+        }
+
+        > input[type='radio']:checked ~ label {
+          .radio-button {
+            border: max(4px, 0.1em) solid $checkbox-gradation-4-color;
+            .radio-button-checked-circle {
+              background: $checkbox-gradation-4-color;
+            }
+          }
+        }
+      }
+      td:nth-child(4) {
+        .radio-button {
+          border: max(3px, 0.1em) solid $checkbox-gradation-6-color;
+          &:hover {
+            border: max(4px, 0.1em) solid $checkbox-gradation-6-color;
+          }
+        }
+
+        > input[type='radio']:checked ~ label {
+          .radio-button {
+            border: max(4px, 0.1em) solid $checkbox-gradation-6-color;
+            .radio-button-checked-circle {
+              background: $checkbox-gradation-6-color;
+            }
+          }
+        }
+      }
+      td:last-child {
+        .radio-button {
+          border: max(3px, 0.1em) solid $main-blue-color;
+          &:hover {
+            border: max(4px, 0.1em) solid $main-blue-color;
+          }
+        }
+
+        > input[type='radio']:checked ~ label {
+          .radio-button {
+            border: max(4px, 0.1em) solid $main-blue-color;
+            .radio-button-checked-circle {
+              background: $main-blue-color;
+            }
           }
         }
       }
