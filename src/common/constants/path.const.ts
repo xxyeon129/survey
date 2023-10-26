@@ -1,4 +1,5 @@
 export const PATH_URL = {
+  MAIN: '/main',
   SURVEY_PATH: '/survey/', // for pagination
   SURVEY: {
     PERSONAL: '/survey/0',

@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { PATH_URL } from './constants/path.const';
+import { PATH_URL } from '../common/constants/path.const';
 import Layout from 'common/layout/Layout';
 // pages
+import LoginPage from 'pages/login/LoginPage';
 import MainPage from 'pages/main/MainPage';
 import Test from 'pages/Test';
 import NotFound from 'pages/error/NotFound';
@@ -19,13 +20,17 @@ import Survey10SCOPA from 'pages/survey/survey-10-SCOPA/Survey10SCOPA';
 import Survey11Constipation from 'pages/survey/survey-11-CONSTIPATION/Survey11Constipation';
 import Survey12Food from 'pages/survey/survey-12-FOOD/Survey12Food';
 import EndPage from 'pages/end/EndPage';
+import PreventRootNavigation from './preventRootNavigation';
 
 export default function MainRouter() {
   return (
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<MainPage />} />
+          <Route path="/" element={<PreventRootNavigation />}>
+            <Route index element={<LoginPage />} />
+          </Route>
+          <Route path={PATH_URL.MAIN} element={<MainPage />} />
           <Route path={PATH_URL.SURVEY.PERSONAL} element={<PersonalInfo />} />
           <Route path={PATH_URL.SURVEY['01_UPDRS']} element={<Survey01UPDRS />} />
           <Route path={PATH_URL.SURVEY['02_FG']} element={<Survey02FG />} />

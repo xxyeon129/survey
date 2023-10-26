@@ -1,5 +1,5 @@
 import { RecoilRoot } from 'recoil';
-import MainRouter from 'common/MainRouter';
+import MainRouter from 'routes/MainRouter';
 import 'common/scss/reset.scss';
 
 function App() {
