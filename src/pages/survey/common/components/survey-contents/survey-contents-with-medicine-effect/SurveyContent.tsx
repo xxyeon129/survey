@@ -16,14 +16,15 @@ export default function SurveyContentWithMedicineEffect(props: SurveyContentType
           <div key={index}>
             <h3 className={styles['medicine-text']}>{`약 효과가 ${list.text} 때`}</h3>
             <ul className={styles['answer-ul']}>
-              {props.question.A.map((answer) => (
-                <AnswerList
-                  answer={answer}
-                  inputName={`${props.question.No}${list.radioBtnKeyword}`}
-                  inputId={`${props.question.No}${answer}${list.radioBtnKeyword}`}
-                  key={`${answer}${list.radioBtnKeyword}`}
-                />
-              ))}
+              {props.question.A &&
+                props.question.A.map((answer) => (
+                  <AnswerList
+                    answer={answer}
+                    inputName={`${props.question.No}${list.radioBtnKeyword}`}
+                    inputId={`${props.question.No}${answer}${list.radioBtnKeyword}`}
+                    key={`${answer}${list.radioBtnKeyword}`}
+                  />
+                ))}
             </ul>
           </div>
         ))}
