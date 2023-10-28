@@ -25,7 +25,9 @@ export default function Layout(props: LayoutProps) {
       {isLogin && <Header />}
       <main>
         {isSurveyPage && <Sidebar />}
-        <section className={isSurveyPage ? styles['survey-page'] : ''}>{props.children}</section>
+        <section className={isSurveyPage ? `${styles['survey-page']} section` : 'section'}>
+          {props.children}
+        </section>
       </main>
     </>
   );
