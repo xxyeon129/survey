@@ -8,6 +8,7 @@ import { headerCurrentPageState } from '../header/pagination/headerPageState';
 import { SURVEY_NAME, SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { totalPagesList } from '../header/pagination/totalPages.const';
 import { surveyCurrentPageStates } from './surveyCurrentPageStates.const';
+import { PATH_URL } from 'common/constants/path.const';
 
 export default function Sidebar() {
   const [checkedIndex, setCheckedIndex] = useState(0);
@@ -22,11 +23,18 @@ export default function Sidebar() {
   const location = +pathname.substring(8);
 
   const handleClick = (index: number) => {
+    if (index === 0) {
+      navigate(PATH_URL.PERSONAL);
+      return;
+    }
+
     navigate(`/survey/${index}`);
     setCheckedIndex(index);
 
     // for update header current page display
-    if (index > 0) {
+    if (index === 1) {
+      setHeaderCurrentPage(1);
+    } else {
       const prevPagesList = totalPagesList.slice(0, index);
       const prevPagesCount = prevPagesList.reduce((acc, cur) => acc + cur, 1);
       setHeaderCurrentPage(prevPagesCount);
@@ -55,7 +63,7 @@ export default function Sidebar() {
             className={checkedIndex === index ? styles['checked'] : ''}
             onClick={() => handleClick(index)}
           >
-            {index}. {surveyTitle}
+            {index !== 0 && `${index}.`} {surveyTitle}
           </li>
         ))}
       </ul>

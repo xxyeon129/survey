@@ -18,8 +18,8 @@ import styles from '../common/survey.module.scss';
 export default function Survey01UPDRS() {
   // pagination hook props
   const setNextSurveyPage = useSetRecoilState(survey02CurrentPageState);
-  const personalInfoPageCount = 1;
-  const prevSurveyTotalPages = personalInfoPageCount;
+  // const personalInfoPageCount = 1;
+  const prevSurveyTotalPages = 0;
   const currentPageState = survey01CurrentPageState;
   const questions = UPDRS_QUESTIONS;
   const questionsPerPage = UPDRS_QUESTIONS_PER_PAGE;

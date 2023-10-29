@@ -12,9 +12,7 @@ import { SURVEY_11_CONSTIPATION_TOTAL_PAGES } from 'pages/survey/survey-11-CONST
 import { SURVEY_12_FOOD_TOTAL_PAGES } from 'pages/survey/survey-12-FOOD/survey.const';
 
 // for calculate header current page count when click sidebar survey list
-const personalInfoPageCount = 1;
 export const totalPagesList = [
-  personalInfoPageCount,
   SURVEY_01_UPDRS_TOTAL_PAGES,
   SURVEY_02_FG_TOTAL_PAGES,
   SURVEY_03_BAI_TOTAL_PAGES,
