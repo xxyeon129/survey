@@ -42,6 +42,8 @@ export default function Survey04BDI() {
   return (
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[4].TITLE} subTitle={SURVEY_TITLE_LIST[4].SUB_TITLE} />
+
+      {/* TO DO: 19번 체중관리 추가질문 예/아니오 추가 */}
       <ul className={surveyStyles['questions-ul']}>
         {currentPageQuestions.map((question) => (
           <SurveyContent question={question} key={question.No} />
@@ -59,14 +61,15 @@ function SurveyContent(props: SurveyContentType) {
       <h2 className={surveyStyles['questions-title']}>설문 {props.question.No}</h2>
       <hr className={styles.hr} />
       <ul className={surveyStyles['answers-ul']}>
-        {props.question.A.map((answer) => (
-          <AnswerList
-            answer={answer}
-            inputName={`${props.question.No}`}
-            inputId={`${props.question.No}${answer}`}
-            key={`${props.question.No}${answer}`}
-          />
-        ))}
+        {props.question.A &&
+          props.question.A.map((answer) => (
+            <AnswerList
+              answer={answer}
+              inputName={`${props.question.No}`}
+              inputId={`${props.question.No}${answer}`}
+              key={`${props.question.No}${answer}`}
+            />
+          ))}
       </ul>
     </li>
   );

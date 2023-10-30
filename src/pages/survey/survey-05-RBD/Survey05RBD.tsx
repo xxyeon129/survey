@@ -39,6 +39,9 @@ export default function Survey05RBD() {
   return (
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[5].TITLE} subTitle={SURVEY_TITLE_LIST[5].SUB_TITLE} />
+
+      {/* TO DO: 설문지 작성자 질문 추가 */}
+
       <ul>
         {currentPageQuestions.map((question) => (
           <SurveyContentWithShortAnswers question={question} key={question.No} />

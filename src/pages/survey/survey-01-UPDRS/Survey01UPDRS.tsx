@@ -36,6 +36,10 @@ export default function Survey01UPDRS() {
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[1].TITLE} subTitle={SURVEY_TITLE_LIST[1].SUB_TITLE} />
 
+      {/* TO DO: 질문 추가 - 파킨슨병 약을 복용 중이신가요?
+          복용하지 않는다 -> 질문만 표시
+          복용 중이다 -> 약 효과 있을 경우, 없을 경우 구분
+      */}
       {currentPageQuestions.map((question) => (
         <SurveyContentWithMedicineEffect question={question} key={question.No} />
       ))}

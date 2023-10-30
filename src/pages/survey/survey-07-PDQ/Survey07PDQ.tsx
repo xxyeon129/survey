@@ -11,6 +11,8 @@ export default function Survey07PDQ() {
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[7].TITLE} subTitle={SURVEY_TITLE_LIST[7].SUB_TITLE} />
 
+      {/* TO DO: 28번 문항의 경우 추가 체크 문항 존재 */}
+
       {/* <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} /> */}
     </article>
   );

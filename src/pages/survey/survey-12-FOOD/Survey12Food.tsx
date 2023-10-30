@@ -11,6 +11,8 @@ export default function Survey12Food() {
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[12].TITLE} subTitle={SURVEY_TITLE_LIST[12].SUB_TITLE} />
 
+      {/* TO DO: 요구사항 반영 - 질문 변경 */}
+
       {/* <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} /> */}
     </article>
   );

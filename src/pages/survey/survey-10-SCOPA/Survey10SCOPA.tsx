@@ -51,6 +51,10 @@ export default function Survey10SCOPA() {
       <SurveyTitle title={SURVEY_TITLE_LIST[10].TITLE} subTitle={SURVEY_TITLE_LIST[10].SUB_TITLE} />
       {surveyExplain}
       <ul>
+        {/* TO DO: 8~13 안내 텍스트 추가
+        TO DO: 22-23 안내 텍스트 추가, 개인정보 입력 페이지 성별 체크 따라 다른 설문 내용 보여주기,
+        TO DO: 마지막 질문 안내 텍스트 추가 */}
+
         {currentPageQuestions.map((question) => (
           <SurveyContentWithShortAnswers question={question} key={question.No} />
         ))}
