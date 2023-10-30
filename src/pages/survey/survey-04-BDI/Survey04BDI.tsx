@@ -7,7 +7,7 @@ import {
 } from '../common/surveyPaginationStates';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { BDI_QUESTIONS, BDI_QUESTIONS_PER_PAGE } from './survey.const';
+import { BDI_ADDITIONAL_QUESTIONS_19, BDI_QUESTIONS, BDI_QUESTIONS_PER_PAGE } from './survey.const';
 import { SURVEY_03_BAI_TOTAL_PAGES } from '../survey-03-BAI/survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
@@ -43,7 +43,6 @@ export default function Survey04BDI() {
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[4].TITLE} subTitle={SURVEY_TITLE_LIST[4].SUB_TITLE} />
 
-      {/* TO DO: 19번 체중관리 추가질문 예/아니오 추가 */}
       <ul className={surveyStyles['questions-ul']}>
         {currentPageQuestions.map((question) => (
           <SurveyContent question={question} key={question.No} />
@@ -57,20 +56,39 @@ export default function Survey04BDI() {
 
 function SurveyContent(props: SurveyContentType) {
   return (
-    <li className={surveyStyles['questions-li']}>
-      <h2 className={surveyStyles['questions-title']}>설문 {props.question.No}</h2>
-      <hr className={styles.hr} />
-      <ul className={surveyStyles['answers-ul']}>
-        {props.question.A &&
-          props.question.A.map((answer) => (
-            <AnswerList
-              answer={answer}
-              inputName={`${props.question.No}`}
-              inputId={`${props.question.No}${answer}`}
-              key={`${props.question.No}${answer}`}
-            />
-          ))}
-      </ul>
-    </li>
+    <>
+      <li className={surveyStyles['questions-li']}>
+        <h2 className={surveyStyles['questions-title']}>설문 {props.question.No}</h2>
+        <hr className={styles.hr} />
+        <ul className={surveyStyles['answers-ul']}>
+          {props.question.A &&
+            props.question.A.map((answer) => (
+              <AnswerList
+                answer={answer}
+                inputName={`${props.question.No}`}
+                inputId={`${props.question.No}${answer}`}
+                key={`${props.question.No}${answer}`}
+              />
+            ))}
+        </ul>
+      </li>
+      {props.question.No === 19 && (
+        <li className={surveyStyles['questions-li-additional-question']}>
+          <h3 className={surveyStyles['questions-title-additional-question']}>
+            * {BDI_ADDITIONAL_QUESTIONS_19.Q}
+          </h3>
+          <ul className={surveyStyles['answers-ul-additional-question']}>
+            {BDI_ADDITIONAL_QUESTIONS_19.A.map((answer) => (
+              <AnswerList
+                answer={answer}
+                inputName={`${props.question.No}-additional`}
+                inputId={`${props.question.No}${answer}`}
+                key={`${props.question.No}${answer}`}
+              />
+            ))}
+          </ul>
+        </li>
+      )}
+    </>
   );
 }

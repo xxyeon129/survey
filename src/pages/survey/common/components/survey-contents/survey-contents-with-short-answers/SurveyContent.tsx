@@ -21,14 +21,15 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentType) 
       </header>
 
       <ul className={contentStyles['answers-ul']}>
-        {props.question.A.map((answer) => (
-          <AnswerList
-            answer={answer}
-            inputName={`${props.question.No}`}
-            inputId={`${props.question.No}${answer}`}
-            key={`${props.question.No}${answer}`}
-          />
-        ))}
+        {props.question.A &&
+          props.question.A.map((answer) => (
+            <AnswerList
+              answer={answer}
+              inputName={`${props.question.No}`}
+              inputId={`${props.question.No}${answer}`}
+              key={`${props.question.No}${answer}`}
+            />
+          ))}
       </ul>
     </li>
   );
