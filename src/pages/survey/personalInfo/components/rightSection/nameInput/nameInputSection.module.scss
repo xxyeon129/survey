@@ -1,0 +1,11 @@
+.name-input {
+  height: 4.5rem;
+  border-radius: 0.625rem;
+  outline: 0.188rem solid $progressbar-grey-color;
+  font-size: 1.2rem;
+  padding: 0 0.8rem;
+
+  &::placeholder {
+    color: $text-input-label-color;
+  }
+}

@@ -30,7 +30,7 @@ export default function MainPage() {
 
   const onClickCreateBox = () => {
     // TO DO: 웹스토리지에 저장된 내용이 있는지 확인 -> 있으면 임시저장된 작성 내용이 있습니다. 초기화하시겠습니까? 이어 작성하기 + 초기화 버튼 팝업창
-    navigate(PATH_URL.SURVEY.PERSONAL);
+    navigate(PATH_URL.PERSONAL);
   };
 
   const onClickExcelBox = () => {

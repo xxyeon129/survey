@@ -6,7 +6,7 @@ import LoginPage from 'pages/login/LoginPage';
 import MainPage from 'pages/main/MainPage';
 import Test from 'pages/Test';
 import NotFound from 'pages/error/NotFound';
-import PersonalInfo from 'pages/survey/survey-00-personalInfo/PersonalInfo';
+import PersonalInfo from 'pages/survey/personalInfo/PersonalInfo';
 import Survey01UPDRS from 'pages/survey/survey-01-UPDRS/Survey01UPDRS';
 import Survey02FG from 'pages/survey/survey-02-FG/Survey02FG';
 import Survey03BAI from 'pages/survey/survey-03-BAI/Survey03BAI';
@@ -20,7 +20,7 @@ import Survey10SCOPA from 'pages/survey/survey-10-SCOPA/Survey10SCOPA';
 import Survey11Constipation from 'pages/survey/survey-11-CONSTIPATION/Survey11Constipation';
 import Survey12Food from 'pages/survey/survey-12-FOOD/Survey12Food';
 import EndPage from 'pages/end/EndPage';
-import PreventRootNavigation from './preventRootNavigation';
+import PreventRootNavigation from './PreventRootNavigation';
 
 export default function MainRouter() {
   return (
@@ -31,7 +31,7 @@ export default function MainRouter() {
             <Route index element={<LoginPage />} />
           </Route>
           <Route path={PATH_URL.MAIN} element={<MainPage />} />
-          <Route path={PATH_URL.SURVEY.PERSONAL} element={<PersonalInfo />} />
+          <Route path={PATH_URL.PERSONAL} element={<PersonalInfo />} />
           <Route path={PATH_URL.SURVEY['01_UPDRS']} element={<Survey01UPDRS />} />
           <Route path={PATH_URL.SURVEY['02_FG']} element={<Survey02FG />} />
           <Route path={PATH_URL.SURVEY['03_BAI']} element={<Survey03BAI />} />

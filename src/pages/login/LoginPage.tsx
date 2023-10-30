@@ -8,7 +8,7 @@ import { PATH_URL } from 'common/constants/path.const';
 import useInput from 'common/hooks/useInput';
 // styles
 import styles from './login.module.scss';
-import logo from 'assets/loginpage-logo.svg';
+import logo from 'assets/login-personalinfo-page-logo.svg';
 import backgroundImg from 'assets/loginpage-background-img.jpeg';
 import { totalPagesCount } from 'common/layout/header/pagination/totalPages.const';
 

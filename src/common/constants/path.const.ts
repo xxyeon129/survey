@@ -1,8 +1,8 @@
 export const PATH_URL = {
   MAIN: '/main',
+  PERSONAL: '/personal',
   SURVEY_PATH: '/survey/', // for pagination
   SURVEY: {
-    PERSONAL: '/survey/0',
     '01_UPDRS': '/survey/1',
     '02_FG': '/survey/2',
     '03_BAI': '/survey/3',

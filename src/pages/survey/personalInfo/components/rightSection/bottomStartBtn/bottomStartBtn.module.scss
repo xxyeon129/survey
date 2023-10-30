@@ -1,0 +1,43 @@
+.bottom-start-btn-container {
+  margin-top: 5rem;
+}
+
+.start-btn {
+  float: right;
+  min-width: 14.5rem;
+  padding: 1rem 1rem 1rem 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  font-weight: $text-semi-bold;
+  color: white;
+  background-color: #416baa;
+  border-radius: 2.5rem;
+  gap: 0.2rem;
+  cursor: pointer;
+
+  svg {
+    font-size: 2rem;
+  }
+
+  &:disabled {
+    background-color: $sidebar-background-blue-color;
+    color: $checkbox-grey-color;
+    cursor: not-allowed;
+
+    .start-btn-icon-container {
+      background-color: #ebf0f7;
+    }
+  }
+
+  .start-btn-icon-container {
+    background-color: $main-blue-color;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
