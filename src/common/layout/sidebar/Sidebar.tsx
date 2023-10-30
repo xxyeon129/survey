@@ -35,7 +35,9 @@ export default function Sidebar() {
     if (index === 1) {
       setHeaderCurrentPage(1);
     } else {
-      const prevPagesList = totalPagesList.slice(0, index);
+      const prevPagesList = totalPagesList.slice(0, index - 1);
+      console.log(prevPagesList);
+
       const prevPagesCount = prevPagesList.reduce((acc, cur) => acc + cur, 1);
       setHeaderCurrentPage(prevPagesCount);
     }
