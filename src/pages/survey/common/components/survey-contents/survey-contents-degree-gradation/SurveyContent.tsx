@@ -18,10 +18,15 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
       </h3>
       <ul className={styles['degrees-container-ul']}>
         {degreesList.map((degree) => (
-          <li className={styles['degree-container-li']}>
+          <li className={styles['degree-container-li']} key={props.question.No + degree}>
             <label className={styles['degree-li-label']}>
               <span className={styles['degree-number']}>{degree}</span>
-              <input type="radio" name={`${props.question.No}`} value={degree} />
+              <input
+                type="radio"
+                name={`${props.question.No}`}
+                id={`${props.question.No}${degree}`}
+                value={`${props.question.No}${degree}`}
+              />
             </label>
 
             {/* for bottom degree explain text */}
