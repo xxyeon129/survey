@@ -1,19 +1,66 @@
 // components
-// import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
+import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
+import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
+// states
+import { useSetRecoilState } from 'recoil';
+import {
+  survey06CurrentPageState,
+  survey07CurrentPageState,
+  survey08CurrentPageState,
+} from '../common/surveyPaginationStates';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
+import { PDQ_ANSWERS, PDQ_QUESTIONS, PDQ_QUESTIONS_PER_PAGE } from './survey.const';
+import { SURVEY_06_NMS_TOTAL_PAGES } from '../survey-06-NMS/survey.const';
+// hooks
+import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
 
 export default function Survey07PDQ() {
+  // pagination hook props
+  const setPrevSurveyPage = useSetRecoilState(survey06CurrentPageState);
+  const setNextSurveyPage = useSetRecoilState(survey08CurrentPageState);
+  const prevSurveyTotalPages = SURVEY_06_NMS_TOTAL_PAGES;
+  const currentPageState = survey07CurrentPageState;
+  const questions = PDQ_QUESTIONS;
+  const questionsPerPage = PDQ_QUESTIONS_PER_PAGE;
+
+  const { currentPageQuestions, handleNextPage, handlePrevPage } = usePagination({
+    setPrevSurveyPage,
+    setNextSurveyPage,
+    prevSurveyTotalPages,
+    currentPageState,
+    questions,
+    questionsPerPage,
+  });
+
+  const surveyExplain = (
+    <p className={styles.explain}>
+      총 {PDQ_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[7].TITLE}에 관한
+      설문입니다. <br />
+      <span className={styles['explain-emphasize']}>최근 한 달 동안의</span> 증상을 평가합니다. 각
+      질문에 대해 하나의 유형을 선택해 주십시오.
+    </p>
+  );
+
   return (
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[7].TITLE} subTitle={SURVEY_TITLE_LIST[7].SUB_TITLE} />
+      {surveyExplain}
 
-      {/* TO DO: 28번 문항의 경우 추가 체크 문항 존재 */}
+      <section className={styles['survey-content-wrapper']}>
+        <SurveyContentTable
+          questions={currentPageQuestions}
+          answers={PDQ_ANSWERS}
+          radioBtnValues={[0, 1, 2, 3, 4]}
+          additionalCheckQuestionNo={28}
+          additionalCheckQuestion="귀하에게 배우자나 같이 사는 사람이 없다면 여기에 표시해주십시오."
+        />
+      </section>
 
-      {/* <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} /> */}
+      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }
