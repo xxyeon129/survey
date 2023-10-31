@@ -9,8 +9,10 @@
       white-space: pre;
       line-height: 120%;
       color: #707070;
+      text-align: center;
 
       .answers-table-header-text {
+        width: 6.25rem;
         padding: 0 1rem 1rem 1rem;
       }
     }
@@ -103,39 +105,22 @@
       // for checkbox gradation
       td:nth-child(2) {
         .radio-button {
-          border: max(3px, 0.1em) solid $checkbox-gradation-2-color;
+          border: max(3px, 0.1em) solid $checkbox-gradation-9-color;
           &:hover {
-            border: max(4px, 0.1em) solid $checkbox-gradation-2-color;
+            border: max(4px, 0.1em) solid $checkbox-gradation-9-color;
           }
         }
 
         > input[type='radio']:checked ~ label {
           .radio-button {
-            border: max(4px, 0.1em) solid $checkbox-gradation-2-color;
+            border: max(4px, 0.1em) solid $checkbox-gradation-9-color;
             .radio-button-checked-circle {
-              background: $checkbox-gradation-2-color;
+              background: $checkbox-gradation-9-color;
             }
           }
         }
       }
       td:nth-child(3) {
-        .radio-button {
-          border: max(3px, 0.1em) solid $checkbox-gradation-4-color;
-          &:hover {
-            border: max(4px, 0.1em) solid $checkbox-gradation-4-color;
-          }
-        }
-
-        > input[type='radio']:checked ~ label {
-          .radio-button {
-            border: max(4px, 0.1em) solid $checkbox-gradation-4-color;
-            .radio-button-checked-circle {
-              background: $checkbox-gradation-4-color;
-            }
-          }
-        }
-      }
-      td:nth-child(4) {
         .radio-button {
           border: max(3px, 0.1em) solid $checkbox-gradation-6-color;
           &:hover {
@@ -152,22 +137,72 @@
           }
         }
       }
-      td:last-child {
+      td:nth-child(4) {
         .radio-button {
-          border: max(3px, 0.1em) solid $main-blue-color;
+          border: max(3px, 0.1em) solid $checkbox-gradation-4-color;
           &:hover {
-            border: max(4px, 0.1em) solid $main-blue-color;
+            border: max(4px, 0.1em) solid $checkbox-gradation-4-color;
           }
         }
 
         > input[type='radio']:checked ~ label {
           .radio-button {
-            border: max(4px, 0.1em) solid $main-blue-color;
+            border: max(4px, 0.1em) solid $checkbox-gradation-4-color;
             .radio-button-checked-circle {
-              background: $main-blue-color;
+              background: $checkbox-gradation-4-color;
             }
           }
         }
+      }
+      td:nth-child(5) {
+        .radio-button {
+          border: max(3px, 0.1em) solid $checkbox-gradation-2-color;
+          &:hover {
+            border: max(4px, 0.1em) solid $checkbox-gradation-2-color;
+          }
+        }
+
+        > input[type='radio']:checked ~ label {
+          .radio-button {
+            border: max(4px, 0.1em) solid $checkbox-gradation-2-color;
+            .radio-button-checked-circle {
+              background: $checkbox-gradation-2-color;
+            }
+          }
+        }
+      }
+      td:nth-child(6) {
+        .radio-button {
+          border: max(3px, 0.1em) solid $checkbox-gradation-1-color;
+          &:hover {
+            border: max(4px, 0.1em) solid $checkbox-gradation-1-color;
+          }
+        }
+
+        > input[type='radio']:checked ~ label {
+          .radio-button {
+            border: max(4px, 0.1em) solid $checkbox-gradation-1-color;
+            .radio-button-checked-circle {
+              background: $checkbox-gradation-1-color;
+            }
+          }
+        }
+      }
+    }
+
+    // for additional question
+    .additional-question {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      display: flex;
+      column-gap: 0.2rem;
+      cursor: pointer;
+
+      .additional-question-input {
+        margin-top: 0.4rem;
+        width: 1rem;
+        height: 1rem;
+        accent-color: $main-blue-color;
       }
     }
   }

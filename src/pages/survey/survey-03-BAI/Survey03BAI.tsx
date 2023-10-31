@@ -50,7 +50,11 @@ export default function Survey03BAI() {
 
       {surveyExplain}
 
-      <SurveyContentTable questions={currentPageQuestions} answers={BAI_ANSWERS} />
+      <SurveyContentTable
+        questions={currentPageQuestions}
+        answers={BAI_ANSWERS}
+        radioBtnValues={[0, 1, 2, 3]}
+      />
       <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
