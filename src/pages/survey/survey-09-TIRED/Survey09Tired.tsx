@@ -2,19 +2,21 @@
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
-// constants
-import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { TIRED_ANSWERS, TIRED_QUESTIONS, TIRED_QUESTIONS_PER_PAGE } from './survey.const';
-// styles
-import styles from '../common/survey.module.scss';
+// states
 import { useSetRecoilState } from 'recoil';
 import {
   survey08CurrentPageState,
   survey09CurrentPageState,
   survey10CurrentPageState,
 } from '../common/surveyPaginationStates';
+// constants
+import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
+import { TIRED_ANSWERS, TIRED_QUESTIONS, TIRED_QUESTIONS_PER_PAGE } from './survey.const';
 import { SURVEY_08_PDSS_TOTAL_PAGES } from '../survey-08-PDSS/survey.const';
+// hooks
 import usePagination from '../common/hooks/usePagination';
+// styles
+import styles from '../common/survey.module.scss';
 
 export default function Survey09Tired() {
   // pagination hook props
