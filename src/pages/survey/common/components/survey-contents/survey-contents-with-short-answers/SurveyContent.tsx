@@ -8,6 +8,9 @@ type ImageSelectAnswerListType = { key: number; imgSrc: string; explain: string;
 interface SurveyContentWithShortAnswersProps {
   question: SurveyContentObjectType;
 
+  // for survey-10-SCOPA explain text box option
+  explainSectionList?: { questionNumber: number; element: JSX.Element }[];
+  // for survey-11-Constipation image select option
   imageSelectAnswersNo?: number;
   imageSelectAnswersList?: ImageSelectAnswerListType;
 }
@@ -15,6 +18,19 @@ interface SurveyContentWithShortAnswersProps {
 export default function SurveyContentWithShortAnswers(props: SurveyContentWithShortAnswersProps) {
   return (
     <li className={contentStyles['questions-li']}>
+      {props.explainSectionList &&
+        props.explainSectionList.map(
+          (explain) =>
+            props.question.No === explain.questionNumber && (
+              <section className={contentStyles['explain-section']}>
+                <span className={contentStyles['explain-section-asterisk']}>
+                  <strong>*</strong>
+                </span>
+                {explain.element}
+              </section>
+            )
+        )}
+
       <hr className={styles.hr} />
 
       <header className={contentStyles['questions-title']}>
