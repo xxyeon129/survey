@@ -56,14 +56,18 @@ interface ImageSelectAnswersProps {
 
 function ImageSelectAnswers({ imageSelectAnswersList }: ImageSelectAnswersProps) {
   return (
-    <ul className={styles['img-answers-ul']}>
+    <ul className={contentStyles['img-answers-ul']}>
       {imageSelectAnswersList.map((imageList) => (
-        <li className={styles['img-answer-li']} key={imageList.key}>
+        <li className={contentStyles['img-answer-li']} key={imageList.key}>
           <figure>
-            <img className={styles['img-answer-img']} src={imageList.imgSrc} alt={imageList.alt} />
+            <img
+              className={contentStyles['img-answer-img']}
+              src={imageList.imgSrc}
+              alt={imageList.alt}
+            />
             <figcaption>{imageList.explain}</figcaption>
           </figure>
-          <input className={styles['img-answer-input']} type="radio" name="img-answer" />
+          <input className={contentStyles['img-answer-input']} type="radio" name="img-answer" />
         </li>
       ))}
     </ul>

@@ -1,4 +1,5 @@
 .questions-li {
+  width: 100%;
   margin-top: 5rem;
 
   .questions-title {
@@ -16,10 +17,47 @@
   }
 
   .answers-ul {
+    margin-top: 2rem;
     display: flex;
     column-gap: 3.5rem;
     row-gap: 0.5rem;
     padding-left: 1.5rem;
     flex-wrap: wrap;
+  }
+
+  // for image select answer component
+  .img-answers-ul {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13.125rem, 1fr));
+    grid-auto-rows: min-content;
+    gap: 2.5rem;
+
+    .img-answer-li {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 16.875ren;
+      border: 2px solid $checkbox-grey-color;
+      border-radius: 0.625rem;
+      padding: 0.5rem 0 1.5rem 0;
+
+      figure {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 1rem;
+        img {
+          object-fit: cover;
+          width: 10rem;
+          height: 5.5rem;
+        }
+        figcaption {
+          text-align: center;
+          line-height: 135%;
+          white-space: pre;
+        }
+      }
+    }
   }
 }
