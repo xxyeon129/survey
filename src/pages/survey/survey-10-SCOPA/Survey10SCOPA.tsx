@@ -17,6 +17,7 @@ import SurveyContentWithShortAnswers from '../common/components/survey-contents/
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // styles
 import styles from '../common/survey.module.scss';
+import contentStyles from '../common/components/survey-contents/survey-contents-with-short-answers/surveyContent.module.scss';
 
 export default function Survey10SCOPA() {
   // pagination hook props
@@ -46,17 +47,44 @@ export default function Survey10SCOPA() {
     </p>
   );
 
+  // for explain text box before question number 8~13, 22~23, 24
+  const before08SectionExplain = (
+    <p>
+      8번부터 13번 문항은 배뇨장애에 대한 설문입니다.
+      <br />
+      만약 도뇨관을 사용 중이라면 "도뇨관 사용"에 표시해주세요.
+    </p>
+  );
+  const before22SectionExplain = (
+    <p>
+      다음은 성생활에 대한 설문입니다.
+      <br />
+      성생활은 성행위 상대자와의 모든 형태의 성적 접촉과 자위 행위를 포함합니다.
+      <br />
+      만약 지난 한 달간 성생활을 한 적이 없거나, 다른 이유로 답을 하기 어려운 경우에는{' '}
+      <span className={contentStyles['explain-emphasize']}>"해당 없음"</span>에 표시해 주세요.
+    </p>
+  );
+
+  const explainSectionList = [
+    { questionNumber: 8, element: before08SectionExplain },
+    { questionNumber: 22, element: before22SectionExplain },
+  ];
+
   return (
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[10].TITLE} subTitle={SURVEY_TITLE_LIST[10].SUB_TITLE} />
       {surveyExplain}
       <ul>
-        {/* TO DO: 8~13 안내 텍스트 추가
-        TO DO: 22-23 안내 텍스트 추가, 개인정보 입력 페이지 성별 체크 따라 다른 설문 내용 보여주기,
+        {/* 개인정보 입력 페이지 성별 체크 따라 다른 설문 내용 보여주기,
         TO DO: 마지막 질문 안내 텍스트 추가 */}
 
         {currentPageQuestions.map((question) => (
-          <SurveyContentWithShortAnswers question={question} key={question.No} />
+          <SurveyContentWithShortAnswers
+            question={question}
+            explainSectionList={explainSectionList}
+            key={question.No}
+          />
         ))}
       </ul>
 
