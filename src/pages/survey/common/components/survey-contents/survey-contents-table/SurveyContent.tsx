@@ -6,8 +6,12 @@ interface SurveyContentTableProps {
   answers: string[];
   radioBtnValues: number[];
 
+  // for survey-07-PDQ
   additionalCheckQuestionNo?: number;
   additionalCheckQuestion?: string;
+  // for survey-12-FOOD
+  questionExplain?: boolean;
+  nonGradationStyle?: boolean;
 }
 
 export default function SurveyContentTable(props: SurveyContentTableProps) {
@@ -32,7 +36,16 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
             <tr key={question.No} className={styles['questions-table-row']}>
               {/* question */}
               <th className={styles['questions-table-header-text']}>
-                {question.No}. {question.Q}
+                <p className={styles['questions-table-header-text-p']}>
+                  {question.No}. {question.Q}
+                  {/* for question explain text */}
+                  {props.questionExplain && (
+                    <p className={styles['question-table-header-text-explain']}>
+                      {question.EXPLAIN && `(${question.EXPLAIN})`}
+                    </p>
+                  )}
+                </p>
+
                 {/* for additional question */}
                 {props.additionalCheckQuestionNo &&
                   props.additionalCheckQuestionNo === question.No && (
@@ -57,8 +70,20 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
                     value={radioBtnValue}
                   />
                   <label htmlFor={`${question.No}${radioBtnValue}`}>
-                    <div className={styles['radio-button']}>
-                      <div className={styles['radio-button-checked-circle']} />
+                    <div
+                      className={
+                        props.nonGradationStyle
+                          ? styles['non-gradtion-radio-button']
+                          : styles['radio-button']
+                      }
+                    >
+                      <div
+                        className={
+                          props.nonGradationStyle
+                            ? styles['non-radio-button-checked-circle']
+                            : styles['radio-button-checked-circle']
+                        }
+                      />
                     </div>
                   </label>
                 </td>
