@@ -42,8 +42,8 @@ export default function Survey11Constipation() {
 
   const surveyExplain = (
     <p className={styles.explain}>
-      총 {CONSTIPATION_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[11].TITLE}에 관한
-      설문입니다. <br />
+      총 {CONSTIPATION_QUESTIONS.length}개의 문항으로 이루어진{' '}
+      {SURVEY_TITLE_LIST[11].TITLE.slice(0, 2)}에 관한 설문입니다. <br />
       <span className={styles['explain-emphasize']}>최근 일주일</span>의 평균을 기준으로
       작성해주세요.
     </p>

@@ -59,15 +59,20 @@ function ImageSelectAnswers({ imageSelectAnswersList }: ImageSelectAnswersProps)
     <ul className={contentStyles['img-answers-ul']}>
       {imageSelectAnswersList.map((imageList) => (
         <li className={contentStyles['img-answer-li']} key={imageList.key}>
-          <figure>
-            <img
-              className={contentStyles['img-answer-img']}
-              src={imageList.imgSrc}
-              alt={imageList.alt}
-            />
-            <figcaption>{imageList.explain}</figcaption>
-          </figure>
-          <input className={contentStyles['img-answer-input']} type="radio" name="img-answer" />
+          <input type="radio" id={`img-answer-${imageList.key}`} name="img-answer" />
+          <label htmlFor={`img-answer-${imageList.key}`}>
+            <figure>
+              <img
+                className={contentStyles['img-answer-img']}
+                src={imageList.imgSrc}
+                alt={imageList.alt}
+              />
+              <figcaption>{imageList.explain}</figcaption>
+            </figure>
+            <div className={contentStyles['radio-button']}>
+              <div className={contentStyles['radio-button-checked-circle']} />
+            </div>
+          </label>
         </li>
       ))}
     </ul>
