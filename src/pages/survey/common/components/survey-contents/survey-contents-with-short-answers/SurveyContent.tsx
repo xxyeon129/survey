@@ -8,8 +8,16 @@ type ImageSelectAnswerListType = { key: number; imgSrc: string; explain: string;
 interface SurveyContentWithShortAnswersProps {
   question: SurveyContentObjectType;
 
-  // for survey-10-SCOPA explain text box option
-  explainSectionList?: { questionNumber: number; element: JSX.Element }[];
+  // for survey-10-SCOPA explain text box option, categorized questions, exceptional type question
+  explainSectionList?: { questionNumber: number; element: JSX.Element; key: number }[];
+  categorizedQuestionList?: SurveyContentObjectType[];
+  exceptionalTypeQuestion?: {
+    No: number;
+    Q: string;
+    EXPLAIN: string;
+    Q_TYPE: string[];
+    A: string[];
+  };
   // for survey-11-Constipation image select option
   imageSelectAnswersNo?: number;
   imageSelectAnswersList?: ImageSelectAnswerListType;
@@ -18,11 +26,12 @@ interface SurveyContentWithShortAnswersProps {
 export default function SurveyContentWithShortAnswers(props: SurveyContentWithShortAnswersProps) {
   return (
     <li className={contentStyles['questions-li']}>
+      {/* for explain question section text box */}
       {props.explainSectionList &&
         props.explainSectionList.map(
           (explain) =>
             props.question.No === explain.questionNumber && (
-              <section className={contentStyles['explain-section']}>
+              <section className={contentStyles['explain-section']} key={explain.key}>
                 <span className={contentStyles['explain-section-asterisk']}>
                   <strong>*</strong>
                 </span>
@@ -36,7 +45,16 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
       <header className={contentStyles['questions-title']}>
         <h4>
           {props.question.No}. {props.question.Q}
+          {/* for additional categorized question (according to specific conditions) */}
+          {props.categorizedQuestionList?.map(
+            (categorizedQuestion) =>
+              props.question.No === categorizedQuestion.No && categorizedQuestion.Q
+          )}
+          {/* for exceptional type question */}
+          {props.question.No === props.exceptionalTypeQuestion?.No &&
+            props.exceptionalTypeQuestion.Q}
         </h4>
+        {/* for question explain text */}
         {props.question.EXPLAIN && (
           <span className={contentStyles['question-title-explain']}>
             <strong>* </strong>
@@ -46,17 +64,31 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
       </header>
 
       <ul className={contentStyles['answers-ul']}>
-        {props.question.A &&
-          props.question.A.map((answer) => (
-            <AnswerList
-              answer={answer}
-              inputName={`${props.question.No}`}
-              inputId={`${props.question.No}${answer}`}
-              key={`${props.question.No}${answer}`}
-            />
-          ))}
+        {props.question.A?.map((answer) => (
+          <AnswerList
+            answer={answer}
+            inputName={`${props.question.No}`}
+            inputId={`${props.question.No}${answer}`}
+            key={`${props.question.No}${answer}`}
+          />
+        ))}
+
+        {/* for additional categorized question (according to specific conditions) */}
+        {props.categorizedQuestionList?.map(
+          (categorizedList) =>
+            props.question.No === categorizedList.No &&
+            categorizedList.A?.map((categorizedAnswer) => (
+              <AnswerList
+                answer={categorizedAnswer}
+                inputName={`${props.question.No}`}
+                inputId={`${props.question.No}${categorizedAnswer}`}
+                key={`${props.question.No}${categorizedAnswer}`}
+              />
+            ))
+        )}
       </ul>
 
+      {/* for image select type */}
       {props.imageSelectAnswersNo &&
         props.question.No === props.imageSelectAnswersNo &&
         props.imageSelectAnswersList && (
