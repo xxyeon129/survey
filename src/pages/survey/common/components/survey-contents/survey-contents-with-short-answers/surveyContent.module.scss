@@ -45,6 +45,24 @@
       text-underline-position: under;
       font-weight: $text-semi-bold;
     }
+
+    .explain-gender-change-button {
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+
+      background-color: $sidebar-checked-blue-color;
+      color: $main-blue-color;
+      font-size: 1rem;
+      font-weight: $text-semi-bold;
+      cursor: pointer;
+
+      &:hover {
+        transition: 0.5s;
+        background-color: $main-blue-color;
+        color: white;
+      }
+    }
   }
 
   // for image select answer component

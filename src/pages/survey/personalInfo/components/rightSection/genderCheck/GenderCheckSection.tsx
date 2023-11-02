@@ -3,7 +3,11 @@ import { FEMALE, GENDER, MALE } from './genderCheckSection.const';
 import styles from './genderCheckSection.module.scss';
 import { personalInfoGenderState } from 'pages/survey/personalInfo/personalInfo.state';
 
-export default function GenderCheckSection() {
+interface GenderCheckSection {
+  isSurveyPage?: boolean;
+}
+
+export default function GenderCheckSection(props: GenderCheckSection) {
   const [selectedGender, setSeclectedGender] = useRecoilState(personalInfoGenderState);
 
   const updateGenderState = (selectedGender: string) => {
@@ -12,7 +16,7 @@ export default function GenderCheckSection() {
 
   return (
     <section>
-      <label>성별</label>
+      {!props.isSurveyPage && <label>성별</label>}
       <ul className={styles['gender-section-checkbox-container']}>
         <li className={styles['gender-section-checkbox']}>
           <input
