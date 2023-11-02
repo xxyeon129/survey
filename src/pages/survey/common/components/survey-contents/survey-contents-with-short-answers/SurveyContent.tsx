@@ -9,7 +9,7 @@ interface SurveyContentWithShortAnswersProps {
   question: SurveyContentObjectType;
 
   // for survey-10-SCOPA explain text box option, categorized questions, exceptional type question
-  explainSectionList?: { questionNumber: number; element: JSX.Element; key: number }[];
+  explainSectionList?: { questionNumber: number; element: () => JSX.Element; key: number }[];
   categorizedQuestionList?: SurveyContentObjectType[];
   exceptionalTypeQuestion?: {
     No: number;
@@ -35,7 +35,7 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
                 <span className={contentStyles['explain-section-asterisk']}>
                   <strong>*</strong>
                 </span>
-                {explain.element}
+                {explain.element()}
               </section>
             )
         )}
