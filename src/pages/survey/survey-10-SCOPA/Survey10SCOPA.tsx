@@ -5,16 +5,21 @@ import {
   survey10CurrentPageState,
   survey11CurrentPageState,
 } from '../common/surveyPaginationStates';
-// hooks
-import usePagination from '../common/hooks/usePagination';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { SCOPA_QUESTIONS, SCOPA_QUESTIONS_PER_PAGE } from './survey.const';
+import {
+  SCOPA_QUESTIONS,
+  SCOPA_QUESTIONS_MEDICINE,
+  SCOPA_QUESTIONS_PER_PAGE,
+} from './survey.const';
 import { SURVEY_09_TIRED_TOTAL_PAGES } from '../survey-09-TIRED/survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithShortAnswers from '../common/components/survey-contents/survey-contents-with-short-answers/SurveyContent';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
+// hooks
+import usePagination from '../common/hooks/usePagination';
+import useSeparateGender from './hook/useSeparateGender';
 // styles
 import styles from '../common/survey.module.scss';
 import contentStyles from '../common/components/survey-contents/survey-contents-with-short-answers/surveyContent.module.scss';
@@ -36,6 +41,9 @@ export default function Survey10SCOPA() {
     questions,
     questionsPerPage,
   });
+
+  // for separate question 22-23 by gender
+  const categorizedQuestionList = useSeparateGender();
 
   const surveyExplain = (
     <p className={styles.explain}>
@@ -65,10 +73,21 @@ export default function Survey10SCOPA() {
       <span className={contentStyles['explain-emphasize']}>"해당 없음"</span>에 표시해 주세요.
     </p>
   );
+  const before24SectionExplain = (
+    <p>
+      다음은 복용했던 약에 대한 질문입니다.
+      <br />
+      의사에게 처방을 받은 약과, 처방 없이 살 수 있는 일반약 모두를 포함합니다.
+      <br />
+      만약 약을 먹었다면, <span className={contentStyles['explain-emphasize']}>약 이름</span>이나
+      성분명을 입력해주세요.
+    </p>
+  );
 
   const explainSectionList = [
-    { questionNumber: 8, element: before08SectionExplain },
-    { questionNumber: 22, element: before22SectionExplain },
+    { questionNumber: 8, element: before08SectionExplain, key: 8000 },
+    { questionNumber: 22, element: before22SectionExplain, key: 2200 },
+    { questionNumber: 24, element: before24SectionExplain, key: 2400 },
   ];
 
   return (
@@ -76,13 +95,12 @@ export default function Survey10SCOPA() {
       <SurveyTitle title={SURVEY_TITLE_LIST[10].TITLE} subTitle={SURVEY_TITLE_LIST[10].SUB_TITLE} />
       {surveyExplain}
       <ul>
-        {/* 개인정보 입력 페이지 성별 체크 따라 다른 설문 내용 보여주기,
-        TO DO: 마지막 질문 안내 텍스트 추가 */}
-
         {currentPageQuestions.map((question) => (
           <SurveyContentWithShortAnswers
             question={question}
             explainSectionList={explainSectionList}
+            categorizedQuestionList={categorizedQuestionList}
+            exceptionalTypeQuestion={SCOPA_QUESTIONS_MEDICINE}
             key={question.No}
           />
         ))}
