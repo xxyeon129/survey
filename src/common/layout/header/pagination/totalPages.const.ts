@@ -28,4 +28,4 @@ export const totalPagesList = [
 ];
 
 // for header total page, progressbar
-export const totalPagesCount = totalPagesList.reduce((acc, cur) => acc + cur, 1);
+export const totalPagesCount = totalPagesList.reduce((acc, cur) => acc + cur, 0);
