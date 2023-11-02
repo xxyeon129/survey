@@ -20,7 +20,7 @@ export default function GenderCheckSection() {
             id={MALE}
             name={GENDER}
             value={MALE}
-            checked={selectedGender === MALE}
+            defaultChecked={selectedGender === MALE}
             onClick={() => updateGenderState(MALE)}
           />
           <label htmlFor={MALE}>
@@ -36,7 +36,7 @@ export default function GenderCheckSection() {
             id={FEMALE}
             name={GENDER}
             value={FEMALE}
-            checked={selectedGender === FEMALE}
+            defaultChecked={selectedGender === FEMALE}
             onClick={() => updateGenderState(FEMALE)}
           />
           <label htmlFor={FEMALE}>
