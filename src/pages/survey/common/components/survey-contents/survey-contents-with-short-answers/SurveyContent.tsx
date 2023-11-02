@@ -17,7 +17,7 @@ interface SurveyContentWithShortAnswersProps {
   categorizedQuestionList?: SurveyContentObjectType[];
   questionWithInput?: SurveyContentObjectType;
   answerWithInputTitleList?: string[];
-  showInputCondition: string;
+  showInputCondition?: string;
   // for survey-11-Constipation image select option
   imageSelectAnswersNo?: number;
   imageSelectAnswersList?: ImageSelectAnswerListType;
@@ -87,13 +87,15 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
         )}
       </ul>
       {/* for with input type answer */}
-      {props.question.No === props.questionWithInput?.No && props.answerWithInputTitleList && (
-        <AnswerWithInput
-          answerWithInput={props.questionWithInput}
-          answerWithInputTitleList={props.answerWithInputTitleList}
-          showInputCondition={props.showInputCondition}
-        />
-      )}
+      {props.question.No === props.questionWithInput?.No &&
+        props.answerWithInputTitleList &&
+        props.showInputCondition && (
+          <AnswerWithInput
+            answerWithInput={props.questionWithInput}
+            answerWithInputTitleList={props.answerWithInputTitleList}
+            showInputCondition={props.showInputCondition}
+          />
+        )}
 
       {/* for image select type */}
       {props.imageSelectAnswersNo &&
