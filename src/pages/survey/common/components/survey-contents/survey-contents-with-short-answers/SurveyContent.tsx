@@ -1,5 +1,9 @@
-import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+// components
 import AnswerList from '../answerList/AnswerList';
+import AnswerWithInput from '../answerWithInput/AnswerWithInput';
+// types
+import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+// styles
 import styles from 'pages/survey/common/survey.module.scss';
 import contentStyles from './surveyContent.module.scss';
 
@@ -8,16 +12,12 @@ type ImageSelectAnswerListType = { key: number; imgSrc: string; explain: string;
 interface SurveyContentWithShortAnswersProps {
   question: SurveyContentObjectType;
 
-  // for survey-10-SCOPA explain text box option, categorized questions, exceptional type question
+  // for survey-10-SCOPA explain text box option, categorized questions, input type question
   explainSectionList?: { questionNumber: number; element: () => JSX.Element; key: number }[];
   categorizedQuestionList?: SurveyContentObjectType[];
-  exceptionalTypeQuestion?: {
-    No: number;
-    Q: string;
-    EXPLAIN: string;
-    Q_TYPE: string[];
-    A: string[];
-  };
+  questionWithInput?: SurveyContentObjectType;
+  answerWithInputTitleList?: string[];
+  showInputCondition: string;
   // for survey-11-Constipation image select option
   imageSelectAnswersNo?: number;
   imageSelectAnswersList?: ImageSelectAnswerListType;
@@ -50,9 +50,8 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
             (categorizedQuestion) =>
               props.question.No === categorizedQuestion.No && categorizedQuestion.Q
           )}
-          {/* for exceptional type question */}
-          {props.question.No === props.exceptionalTypeQuestion?.No &&
-            props.exceptionalTypeQuestion.Q}
+          {/* for with input type question */}
+          {props.question.No === props.questionWithInput?.No && props.questionWithInput.Q}
         </h4>
         {/* for question explain text */}
         {props.question.EXPLAIN && (
@@ -87,6 +86,14 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
             ))
         )}
       </ul>
+      {/* for with input type answer */}
+      {props.question.No === props.questionWithInput?.No && props.answerWithInputTitleList && (
+        <AnswerWithInput
+          answerWithInput={props.questionWithInput}
+          answerWithInputTitleList={props.answerWithInputTitleList}
+          showInputCondition={props.showInputCondition}
+        />
+      )}
 
       {/* for image select type */}
       {props.imageSelectAnswersNo &&

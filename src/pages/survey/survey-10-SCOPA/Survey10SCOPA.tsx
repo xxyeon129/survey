@@ -9,8 +9,9 @@ import {
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
   SCOPA_QUESTIONS,
-  SCOPA_QUESTIONS_MEDICINE,
+  SCOPA_QUESTIONS_WITH_INPUT,
   SCOPA_QUESTIONS_PER_PAGE,
+  SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST,
 } from './survey.const';
 import { SURVEY_09_TIRED_TOTAL_PAGES } from '../survey-09-TIRED/survey.const';
 // components
@@ -68,7 +69,9 @@ export default function Survey10SCOPA() {
             question={question}
             explainSectionList={explainSectionList}
             categorizedQuestionList={categorizedQuestionList}
-            exceptionalTypeQuestion={SCOPA_QUESTIONS_MEDICINE}
+            questionWithInput={SCOPA_QUESTIONS_WITH_INPUT}
+            answerWithInputTitleList={SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST}
+            showInputCondition={SCOPA_QUESTIONS_WITH_INPUT.A[1]}
             key={question.No}
           />
         ))}
