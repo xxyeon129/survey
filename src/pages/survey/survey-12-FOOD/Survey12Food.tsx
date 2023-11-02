@@ -37,8 +37,8 @@ export default function Survey12Food() {
     <p className={styles.explain}>
       총 {FOOD_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[12].TITLE}에 관한
       설문입니다. <br />
-      <span className={styles['explain-emphasize']}>평소 식사 습관에서 섭취하는 음식</span>을
-      체크해주세요.
+      <span className={styles['explain-emphasize']}>평소 식사 습관에서 섭취하는 음식</span>을 체크해
+      주십시오.
     </p>
   );
 

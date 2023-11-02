@@ -38,9 +38,18 @@ export default function Survey05RBD() {
     questionsPerPage,
   });
 
+  const surveyExplain = (
+    <p className={styles.explain}>
+      총 {RBD_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[5].TITLE}에 관한
+      설문입니다.
+    </p>
+  );
+
   return (
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[5].TITLE} subTitle={SURVEY_TITLE_LIST[5].SUB_TITLE} />
+      {surveyExplain}
+
       <ul>
         <PreQuestion />
         {currentPageQuestions.map((question) => (

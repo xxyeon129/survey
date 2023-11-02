@@ -51,11 +51,11 @@ export default function Survey10SCOPA() {
 
   const surveyExplain = (
     <p className={styles.explain}>
-      다음은 <span className={styles['explain-emphasize']}>지난 한 달 동안</span>의 자율신경계
-      증상에 대한 설문지입니다. 본인의 증상을 가장 잘 설명하는 답안을 선택해주세요. 만약 이런
-      증상들에 대해 약을 복용하는 것이 있다면,{' '}
-      <span className={styles['explain-emphasize']}>약을 먹은 상태에서</span> 어느 정도인지를
-      평가해주시기 바랍니다. 복용하는 약 이름은 마지막 페이지에 적어주세요.
+      총 {SCOPA_QUESTIONS.length}개의 문항으로 이루어진{' '}
+      <span className={styles['explain-emphasize']}>지난 한 달 동안</span>의 자율신경계 증상에 대한
+      설문지입니다. 본인의 증상을 가장 잘 설명하는 답안을 선택해주세요. 만약 이런 증상들에 대해 약을
+      복용하는 것이 있다면, <span className={styles['explain-emphasize']}>약을 먹은 상태에서</span>{' '}
+      어느 정도인지를 평가해주시기 바랍니다. 복용하는 약 이름은 마지막 페이지에 적어 주십시오.
     </p>
   );
 

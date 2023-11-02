@@ -18,7 +18,6 @@ import styles from '../common/survey.module.scss';
 export default function Survey01UPDRS() {
   // pagination hook props
   const setNextSurveyPage = useSetRecoilState(survey02CurrentPageState);
-  // const personalInfoPageCount = 1;
   const prevSurveyTotalPages = 0;
   const currentPageState = survey01CurrentPageState;
   const questions = UPDRS_QUESTIONS;
@@ -32,9 +31,17 @@ export default function Survey01UPDRS() {
     questionsPerPage,
   });
 
+  const surveyExplain = (
+    <p className={styles.explain}>
+      총 {UPDRS_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[1].TITLE}에 관한
+      설문입니다.
+    </p>
+  );
+
   return (
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[1].TITLE} subTitle={SURVEY_TITLE_LIST[1].SUB_TITLE} />
+      {surveyExplain}
 
       {/* TO DO: 질문 추가 - 파킨슨병 약을 복용 중이신가요?
           복용하지 않는다 -> 질문만 표시

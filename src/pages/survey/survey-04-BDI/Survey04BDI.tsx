@@ -39,9 +39,17 @@ export default function Survey04BDI() {
     questionsPerPage,
   });
 
+  const surveyExplain = (
+    <p className={styles.explain}>
+      총 {BDI_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[4].TITLE}에 관한
+      설문입니다.
+    </p>
+  );
+
   return (
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[4].TITLE} subTitle={SURVEY_TITLE_LIST[4].SUB_TITLE} />
+      {surveyExplain}
 
       <ul className={surveyStyles['questions-ul']}>
         {currentPageQuestions.map((question) => (

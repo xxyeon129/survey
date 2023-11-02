@@ -35,9 +35,17 @@ export default function Survey02FG() {
     questionsPerPage,
   });
 
+  const surveyExplain = (
+    <p className={styles.explain}>
+      총 {FG_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[2].TITLE.slice(0, 4)}에 관한
+      설문입니다.
+    </p>
+  );
+
   return (
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[2].TITLE} subTitle={SURVEY_TITLE_LIST[2].SUB_TITLE} />
+      {surveyExplain}
 
       {/* TO DO: 시작 시 질문 추가
         없다 응답 -> 다음 설문지(BAI, 벡 불안척도)로 이동
