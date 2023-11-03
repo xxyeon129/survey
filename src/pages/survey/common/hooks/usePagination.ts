@@ -13,6 +13,12 @@ interface usePaginationProps {
   currentPageState: RecoilState<number>;
   questions: { No: number; Q?: string; A?: string[]; EXPLAIN?: string }[];
   questionsPerPage: number;
+
+  // for survey-02-FG answered "없다" in pre-answer
+  conditionToRouteNextSurvey?: boolean;
+  routeToNextSurvey?: () => void;
+  conditionToSetPrevSurveyFirstPage?: boolean;
+  setPrevSurveyFirstPage?: () => void;
 }
 
 export default function usePagination(props: usePaginationProps) {
@@ -35,6 +41,12 @@ export default function usePagination(props: usePaginationProps) {
   /* prev/next button click */
 
   const handlePrevPage = () => {
+    // for set survey-02-FG first page when answered "없다" in survey-02-FG pre-question
+    if (props.conditionToSetPrevSurveyFirstPage) {
+      props.setPrevSurveyFirstPage && props.setPrevSurveyFirstPage();
+      return;
+    }
+
     currentPage > 1 && setCurrentPage(currentPage - 1);
 
     if (currentPage === 1) {
@@ -48,6 +60,12 @@ export default function usePagination(props: usePaginationProps) {
   };
 
   const handleNextPage = () => {
+    // for route to next survey when answered "없다" in survey-02-FG pre-question
+    if (props.conditionToRouteNextSurvey) {
+      props.routeToNextSurvey && props.routeToNextSurvey();
+      return;
+    }
+
     currentPage < currentSurveyTotalPages && setCurrentPage(currentPage + 1);
 
     if (currentPage === currentSurveyTotalPages) {

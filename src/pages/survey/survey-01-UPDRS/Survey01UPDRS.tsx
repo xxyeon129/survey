@@ -25,6 +25,18 @@ import usePagination from '../common/hooks/usePagination';
 import styles from '../common/survey.module.scss';
 
 export default function Survey01UPDRS() {
+  // for pre-question check
+  const [takeMedicine, setTakeMedicine] = useRecoilState(takeMedicineState);
+
+  // for answer pre-question
+  const onClickPreQuestionRadioBtn = (clickedRadioBtnLabel: string) => {
+    if (clickedRadioBtnLabel === NOT_TAKE_MEDICINE) {
+      setTakeMedicine(NOT_TAKE_MEDICINE);
+    } else if (clickedRadioBtnLabel === TAKE_MEDICINE) {
+      setTakeMedicine(TAKE_MEDICINE);
+    }
+  };
+
   // pagination hook props
   const setNextSurveyPage = useSetRecoilState(survey02CurrentPageState);
   const prevSurveyTotalPages = 0;
@@ -44,20 +56,9 @@ export default function Survey01UPDRS() {
     <p className={styles.explain}>
       총 {UPDRS_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[1].TITLE}에 관한
       설문입니다. <br />
-      하단 질문에 따라 설문이 다르게 구성되므로 하단 질문에 응답해주세요.
+      파킨슨병 약 복용 여부에 따라 설문이 다르게 구성되므로 하단 질문에 응답해 주세요.
     </p>
   );
-
-  // for pre-question check
-  const [takeMedicine, setTakeMedicine] = useRecoilState(takeMedicineState);
-
-  const onClickPreQuestionRadioBtn = (clickedRadioBtnLabel: string) => {
-    if (clickedRadioBtnLabel === NOT_TAKE_MEDICINE) {
-      setTakeMedicine(NOT_TAKE_MEDICINE);
-    } else if (clickedRadioBtnLabel === TAKE_MEDICINE) {
-      setTakeMedicine(TAKE_MEDICINE);
-    }
-  };
 
   return (
     <article className={styles['survey-container']}>

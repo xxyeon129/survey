@@ -1,10 +1,11 @@
 // states
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey02CurrentPageState,
   survey03CurrentPageState,
   survey04CurrentPageState,
 } from '../common/surveyPaginationStates';
+import { haveFGSymptomState } from '../survey-02-FG/Survey02FG.state';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
@@ -12,13 +13,25 @@ import BottomPrevNextButton from '../common/components/bottom-prev-next-button/B
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { BAI_ANSWERS, BAI_QUESTIONS, BAI_QUESTIONS_PER_PAGE } from './survey.const';
-import { SURVEY_02_FG_TOTAL_PAGES } from '../survey-02-FG/survey.const';
+import { HAVE_NO_FG_SYMPTOM, SURVEY_02_FG_TOTAL_PAGES } from '../survey-02-FG/survey.const';
+import { PATH_URL } from 'common/constants/path.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
+import useSetPrevSurveyFirstPage from './hooks/useSetPrevSurveyFirstPage';
 // styles
 import styles from '../common/survey.module.scss';
 
 export default function Survey03BAI() {
+  // for set survey-02-FG first page when click bottom prev button in condition answered "없음" to FG symptom pre-question
+  const beforPrevSurveyIndex = 1;
+  const prevSurveyPath = PATH_URL.SURVEY['02_FG'];
+  const prevSurveyCurrentPageState = survey02CurrentPageState;
+  const setPrevSurveyFirstPage = useSetPrevSurveyFirstPage({
+    beforPrevSurveyIndex,
+    prevSurveyPath,
+    prevSurveyCurrentPageState,
+  });
+
   // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey02CurrentPageState);
   const setNextSurveyPage = useSetRecoilState(survey04CurrentPageState);
@@ -26,6 +39,11 @@ export default function Survey03BAI() {
   const currentPageState = survey03CurrentPageState;
   const questions = BAI_QUESTIONS;
   const questionsPerPage = BAI_QUESTIONS_PER_PAGE;
+  // for set survey-02-FG first page when click bottom prev button in condition answered "없음" to FG symptom pre-question
+  const haveFGSymptom = useRecoilValue(haveFGSymptomState);
+  const currentPageNumber = useRecoilValue(currentPageState);
+  const conditionToSetPrevSurveyFirstPage =
+    haveFGSymptom === HAVE_NO_FG_SYMPTOM && currentPageNumber === 1;
 
   const { currentPageQuestions, handleNextPage, handlePrevPage } = usePagination({
     setPrevSurveyPage,
@@ -34,6 +52,8 @@ export default function Survey03BAI() {
     currentPageState,
     questions,
     questionsPerPage,
+    conditionToSetPrevSurveyFirstPage,
+    setPrevSurveyFirstPage,
   });
 
   const surveyExplain = (

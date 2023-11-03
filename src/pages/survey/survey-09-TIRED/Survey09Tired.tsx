@@ -36,6 +36,8 @@ export default function Survey09Tired() {
     questionsPerPage,
   });
 
+  console.log(currentPageState);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {TIRED_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[9].TITLE}에 관한
