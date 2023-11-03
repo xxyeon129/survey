@@ -19,6 +19,11 @@
     .medicine-text {
       color: $main-blue-color;
       padding-top: 1.2rem;
+
+      .medicine-text-emphasize {
+        text-decoration: underline;
+        text-underline-position: under;
+      }
     }
 
     .answer-ul {

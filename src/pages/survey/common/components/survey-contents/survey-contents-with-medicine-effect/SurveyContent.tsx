@@ -14,17 +14,20 @@ export default function SurveyContentWithMedicineEffect(props: SurveyContentType
       <div className={styles['answer-container']}>
         {medicineDivisionList.map((list, index) => (
           <div key={index}>
-            <h3 className={styles['medicine-text']}>{`약 효과가 ${list.text} 때`}</h3>
+            <h3 className={styles['medicine-text']}>
+              파킨슨병 약의 효과가{' '}
+              <span className={styles['medicine-text-emphasize']}>{list.text}</span> 때 아래 설문에
+              답변해 주세요.
+            </h3>
             <ul className={styles['answer-ul']}>
-              {props.question.A &&
-                props.question.A.map((answer) => (
-                  <AnswerList
-                    answer={answer}
-                    inputName={`${props.question.No}${list.radioBtnKeyword}`}
-                    inputId={`${props.question.No}${answer}${list.radioBtnKeyword}`}
-                    key={`${answer}${list.radioBtnKeyword}`}
-                  />
-                ))}
+              {props.question.A?.map((answer) => (
+                <AnswerList
+                  answer={answer}
+                  inputName={`${props.question.No}${list.radioBtnKeyword}`}
+                  inputId={`${props.question.No}${answer}${list.radioBtnKeyword}`}
+                  key={`${answer}${list.radioBtnKeyword}`}
+                />
+              ))}
             </ul>
           </div>
         ))}
