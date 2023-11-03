@@ -7,9 +7,10 @@ import {
 import usePagination from '../common/hooks/usePagination';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { UPDRS_QUESTIONS, UPDRS_QUESTIONS_PER_PAGE } from './survey.const';
+import { UPDRS_PRE_QUESTION, UPDRS_QUESTIONS, UPDRS_QUESTIONS_PER_PAGE } from './survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
+import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // styles
@@ -43,10 +44,13 @@ export default function Survey01UPDRS() {
       <SurveyTitle title={SURVEY_TITLE_LIST[1].TITLE} subTitle={SURVEY_TITLE_LIST[1].SUB_TITLE} />
       {surveyExplain}
 
-      {/* TO DO: 질문 추가 - 파킨슨병 약을 복용 중이신가요?
+      {/* TO DO: 질문 답변따라 다르게 표시
           복용하지 않는다 -> 질문만 표시
           복용 중이다 -> 약 효과 있을 경우, 없을 경우 구분
       */}
+      {/* for pre-question */}
+      <PreQuestion question={UPDRS_PRE_QUESTION} />
+
       {currentPageQuestions.map((question) => (
         <SurveyContentWithMedicineEffect question={question} key={question.No} />
       ))}
