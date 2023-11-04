@@ -35,6 +35,17 @@
         border-radius: 100%;
       }
     }
+
+    // for survey-06-NMS additional explain text
+    .answer-text {
+      display: flex;
+
+      .answer-explain-text {
+        margin-left: 0.5rem;
+        font-size: 1rem;
+        color: $text-grey-color;
+      }
+    }
   }
 
   > input[type='radio']:checked ~ label {
@@ -50,6 +61,11 @@
         transition: 0.25s;
       }
     }
+
+    // for survey-06-NMS additional explain text
+    .answer-explain-text {
+      color: $main-blue-color;
+    }
   }
 
   &:hover {
@@ -57,6 +73,13 @@
     color: $main-skyblue-color;
     .radio-button {
       border: max(4px, 0.1em) solid $main-skyblue-color;
+    }
+
+    // for survey-06-NMS additional explain text
+    > label {
+      .answer-explain-text {
+        color: $main-skyblue-color;
+      }
     }
   }
 }

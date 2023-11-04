@@ -3,6 +3,7 @@ import { RecoilState, SetterOrUpdater, useRecoilState } from 'recoil';
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 import { PATH_URL } from 'common/constants/path.const';
 import useCurrentSurveyPagePath from 'pages/survey/common/hooks/useCurrentSurveyPagePath';
+import { SurveyContentObjectType } from '../types/surveyTypes';
 
 interface usePaginationProps {
   // for prev survey type last page / next survey type first page
@@ -11,7 +12,7 @@ interface usePaginationProps {
   prevSurveyTotalPages: number;
 
   currentPageState: RecoilState<number>;
-  questions: { No: number; Q?: string; A?: string[]; EXPLAIN?: string }[];
+  questions: SurveyContentObjectType[];
   questionsPerPage: number;
 
   // for survey-02-FG answered "없다" in pre-answer
