@@ -41,7 +41,7 @@ export default function Survey06NMS() {
       총 {NMS_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[6].TITLE}에 관한
       설문입니다.
       <br />
-      중증도와 빈도 모두 응답해 주세요.
+      우측 상단의 점수는 입력하신 응답에 따라 계산된 점수입니다. 중증도와 빈도 모두 응답해 주세요.
     </p>
   );
 

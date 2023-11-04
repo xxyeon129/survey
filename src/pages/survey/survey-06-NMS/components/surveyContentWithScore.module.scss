@@ -1,10 +1,12 @@
 .survey-content-container {
+  /* section title */
   .section-title {
     color: $main-blue-color;
     font-size: 1.6rem;
     margin-bottom: 1.5rem;
   }
 
+  /* question */
   .questionnaire-container {
     .questionnaire-top-blue-hr {
       border: none;
@@ -13,11 +15,27 @@
       height: 0.18rem;
     }
 
-    .questionnaire-question-text {
+    .questionnaire-question-and-score-container {
       margin-top: 1rem;
-      padding: 0 0.5rem;
-      font-size: 1.3rem;
-      line-height: 175%;
+      display: flex;
+      justify-content: space-between;
+      .questionnaire-question-text {
+        padding: 0 0.5rem;
+        font-size: 1.3rem;
+        line-height: 175%;
+      }
+      .questionnaire-score-text {
+        width: 12rem;
+        color: $text-input-label-color;
+        display: flex;
+        justify-content: right;
+        align-items: baseline;
+        column-gap: 0.5rem;
+
+        .score-emphasis {
+          font-size: 1.8rem;
+        }
+      }
     }
 
     .degree-frequency-sections-container {
@@ -40,6 +58,31 @@
           width: 100%;
           height: 0.0625rem;
         }
+      }
+    }
+  }
+
+  /* section score */
+  .survey-section-bottom-score {
+    margin-bottom: 8rem;
+    .survey-section-bottom-grey-hr {
+      border: none;
+      background-color: $checkbox-grey-color;
+      width: 100%;
+      height: 0.18rem;
+    }
+    .survey-section-bottom-score-text {
+      margin-top: 1rem;
+      width: 100%;
+      font-size: 1.1rem;
+      font-weight: $text-semi-bold;
+      color: $text-grey-color;
+      display: flex;
+      justify-content: right;
+      align-items: baseline;
+      column-gap: 0.5rem;
+      .score-emphasis {
+        font-size: 1.8rem;
       }
     }
   }

@@ -18,21 +18,30 @@ interface SurveyContentWithScoreProps {
 }
 
 export default function SurveyContentWithScore(props: SurveyContentWithScoreProps) {
+  const surveySectionFirstQuestionNumber = props.question.section?.questionNumberList[0];
+  const surveySectionLastQuestionNumber = props.question.section?.questionNumberList[1];
+
   return (
     <article className={styles['survey-content-container']}>
       {/* for section title */}
-      {props.question.No === props.question.section?.questionNumberList[0] && (
+      {props.question.No === surveySectionFirstQuestionNumber && (
         <h2 className={styles['section-title']}>
-          영역 {props.question.section.number}: {props.question.section.title}
+          영역 {props.question.section?.number}: {props.question.section?.title}
         </h2>
       )}
 
       <section className={styles['questionnaire-container']}>
         <hr className={styles['questionnaire-top-blue-hr']} />
-        <h3 className={styles['questionnaire-question-text']}>
-          {props.question.No}. {props.question.Q}
-        </h3>
-        {/* <AnswerTable /> */}
+        <header className={styles['questionnaire-question-and-score-container']}>
+          <h3 className={styles['questionnaire-question-text']}>
+            {props.question.No}. {props.question.Q}
+          </h3>
+          <p className={styles['questionnaire-score-text']}>
+            {props.question.No}번 문항 점수<h3 className={styles['score-emphasis']}>3</h3>
+            {/* TO DO: 점수 상태값 적용 */}
+          </p>
+        </header>
+
         <article className={styles['degree-frequency-sections-container']}>
           <DegreeFrequencyAnswer
             degreeOrFrequencyTitle="중증도"
@@ -48,6 +57,18 @@ export default function SurveyContentWithScore(props: SurveyContentWithScoreProp
           />
         </article>
       </section>
+
+      {/* for survey section last question bottom calculate section score sum  */}
+      {props.question.No === surveySectionLastQuestionNumber && (
+        <section className={styles['survey-section-bottom-score']}>
+          <hr className={styles['survey-section-bottom-grey-hr']} />
+          <p className={styles['survey-section-bottom-score-text']}>
+            영역 {props.question.section?.number} 합계 점수
+            <h3 className={styles['score-emphasis']}>8</h3>
+            {/* TO DO: 점수 상태값 적용 */}
+          </p>
+        </section>
+      )}
     </article>
   );
 }
