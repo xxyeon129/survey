@@ -1,8 +1,7 @@
 import { ExplainTextObjectType } from 'pages/survey/survey-06-NMS/survey06NMS.type';
 import styles from './answerList.module.scss';
-import { responseState } from 'pages/survey/common/states/surveyResponse.state';
-import { useRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
+import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 
 interface AnswerLiProps {
   answer: string;
@@ -10,8 +9,8 @@ interface AnswerLiProps {
   inputId: string;
 
   // for radio button checked
-  clickedQuestionNumber?: string;
-  surveyStateKeyword?: string;
+  clickedQuestionNumber: string;
+  surveyStateKeyword: string;
 
   // for survey-06-NMS additional explain text
   explainTextList?: ExplainTextObjectType[];
@@ -22,14 +21,22 @@ interface AnswerLiProps {
 export default function AnswerList(props: AnswerLiProps) {
   // for survey-06-NMS additional explain text
   const withoutNumberTargetAnswerText = props.answer.slice(3);
-  const [responseValue, setResponseValue] = useRecoilState(
-    responseState(`${props.surveyStateKeyword}-${props.clickedQuestionNumber}`)
-  );
 
-  const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectValue = e.target.value;
-    setResponseValue(selectValue);
-  };
+  const surveyStateKeyword = props.surveyStateKeyword;
+  const clickedQuestionNumber = props.clickedQuestionNumber;
+  const { responseValue, handleRadioBtnChange } = useClickedRadioBtnChecked({
+    surveyStateKeyword,
+    clickedQuestionNumber,
+  });
+
+  // const [responseValue, setResponseValue] = useRecoilState(
+  //   responseState(`${props.surveyStateKeyword}-${props.clickedQuestionNumber}`)
+  // );
+
+  // const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const selectValue = e.target.value;
+  //   setResponseValue(selectValue);
+  // };
 
   return (
     <li className={styles['answer-li']}>
@@ -38,7 +45,7 @@ export default function AnswerList(props: AnswerLiProps) {
         id={props.inputId}
         name={props.inputName}
         value={props.answer}
-        onChange={handleRadioChange}
+        onChange={handleRadioBtnChange}
         checked={responseValue === props.answer}
       />
       <label htmlFor={props.inputId}>

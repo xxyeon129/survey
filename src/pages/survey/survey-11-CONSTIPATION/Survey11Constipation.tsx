@@ -15,6 +15,7 @@ import {
   CONSTIPATION_ANSWERS_04,
   CONSTIPATION_QUESTIONS,
   CONSTIPATION_QUESTIONS_PER_PAGE,
+  SURVEY_11_CONSTIPATION_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_10_SCOPA_TOTAL_PAGES } from '../survey-10-SCOPA/survey.const';
 // hooks
@@ -59,6 +60,7 @@ export default function Survey11Constipation() {
         {currentPageQuestions.map((question) => (
           <SurveyContentWithShortAnswers
             question={question}
+            surveyStateKeyword={SURVEY_11_CONSTIPATION_STATE_KEYWORD}
             imageSelectAnswersNo={4}
             imageSelectAnswersList={CONSTIPATION_ANSWERS_04}
             key={uuidv4()}

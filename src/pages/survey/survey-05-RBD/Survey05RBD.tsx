@@ -8,7 +8,12 @@ import {
 import { surveyRespondentState } from './survey05RBD.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { RBD_PRE_QUESTION, RBD_QUESTIONS, RBD_QUESTIONS_PER_PAGE } from './survey.const';
+import {
+  RBD_PRE_QUESTION,
+  RBD_QUESTIONS,
+  RBD_QUESTIONS_PER_PAGE,
+  SURVEY_05_RBD_STATE_KEYWORD,
+} from './survey.const';
 import { SURVEY_04_BDI_TOTAL_PAGES } from '../survey-04-BDI/survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
@@ -69,7 +74,11 @@ export default function Survey05RBD() {
       <ul>
         {/* <PreQuestion /> */}
         {currentPageQuestions.map((question) => (
-          <SurveyContentWithShortAnswers question={question} key={uuidv4()} />
+          <SurveyContentWithShortAnswers
+            question={question}
+            surveyStateKeyword={SURVEY_05_RBD_STATE_KEYWORD}
+            key={uuidv4()}
+          />
         ))}
       </ul>
 

@@ -1,6 +1,8 @@
 // components
 import AnswerList from '../answerList/AnswerList';
 import AnswerWithInput from '../answerWithInput/AnswerWithInput';
+// hooks
+import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 // styles
@@ -12,6 +14,9 @@ type ImageSelectAnswerListType = { key: number; imgSrc: string; explain: string;
 
 interface SurveyContentWithShortAnswersProps {
   question: SurveyContentObjectType;
+
+  // for radio button checked
+  surveyStateKeyword: string;
 
   // for survey-10-SCOPA explain text box option, categorized questions, input type question
   explainSectionList?: { questionNumber: number; element: () => JSX.Element; key: number }[];
@@ -70,6 +75,8 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
             answer={answer}
             inputName={`${props.question.No}`}
             inputId={`${props.question.No}${answer}`}
+            clickedQuestionNumber={`${props.question.No}`}
+            surveyStateKeyword={props.surveyStateKeyword}
             key={uuidv4()}
           />
         ))}
@@ -83,6 +90,8 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
                 answer={categorizedAnswer}
                 inputName={`${props.question.No}`}
                 inputId={`${props.question.No}${categorizedAnswer}`}
+                clickedQuestionNumber={`${props.question.No}`}
+                surveyStateKeyword={props.surveyStateKeyword}
                 key={uuidv4()}
               />
             ))
@@ -103,7 +112,11 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
       {props.imageSelectAnswersNo &&
         props.question.No === props.imageSelectAnswersNo &&
         props.imageSelectAnswersList && (
-          <ImageSelectAnswers imageSelectAnswersList={props.imageSelectAnswersList} />
+          <ImageSelectAnswers
+            imageSelectAnswersList={props.imageSelectAnswersList}
+            surveyStateKeyword={props.surveyStateKeyword}
+            clickedQuestionNumber={`${props.question.No}`}
+          />
         )}
     </li>
   );
@@ -111,14 +124,30 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
 
 interface ImageSelectAnswersProps {
   imageSelectAnswersList: ImageSelectAnswerListType;
+  surveyStateKeyword: string;
+  clickedQuestionNumber: string;
 }
 
-function ImageSelectAnswers({ imageSelectAnswersList }: ImageSelectAnswersProps) {
+function ImageSelectAnswers(props: ImageSelectAnswersProps) {
+  const surveyStateKeyword = props.surveyStateKeyword;
+  const clickedQuestionNumber = props.clickedQuestionNumber;
+  const { responseValue, handleRadioBtnChange } = useClickedRadioBtnChecked({
+    surveyStateKeyword,
+    clickedQuestionNumber,
+  });
+
   return (
     <ul className={contentStyles['img-answers-ul']}>
-      {imageSelectAnswersList.map((imageList) => (
+      {props.imageSelectAnswersList.map((imageList) => (
         <li className={contentStyles['img-answer-li']} key={uuidv4()}>
-          <input type="radio" id={`img-answer-${imageList.key}`} name="img-answer" />
+          <input
+            type="radio"
+            id={`img-answer-${imageList.key}`}
+            name="img-answer"
+            onChange={handleRadioBtnChange}
+            value={imageList.explain}
+            checked={responseValue === imageList.explain}
+          />
           <label htmlFor={`img-answer-${imageList.key}`}>
             <figure>
               <img

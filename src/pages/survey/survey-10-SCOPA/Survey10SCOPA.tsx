@@ -12,6 +12,7 @@ import {
   SCOPA_QUESTIONS_WITH_INPUT,
   SCOPA_QUESTIONS_PER_PAGE,
   SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST,
+  SURVEY_10_SCOPA_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_09_TIRED_TOTAL_PAGES } from '../survey-09-TIRED/survey.const';
 // components
@@ -68,6 +69,7 @@ export default function Survey10SCOPA() {
         {currentPageQuestions.map((question) => (
           <SurveyContentWithShortAnswers
             question={question}
+            surveyStateKeyword={SURVEY_10_SCOPA_STATE_KEYWORD}
             explainSectionList={explainSectionList}
             categorizedQuestionList={categorizedQuestionList}
             questionWithInput={SCOPA_QUESTIONS_WITH_INPUT}
