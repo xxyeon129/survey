@@ -1,3 +1,8 @@
+import { useEffect } from 'react';
+// states
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { responseState } from 'pages/survey/common/states/surveyResponse.state';
+import { questionScoreState } from '../survey06NMS.state';
 // components
 import AnswerList from 'pages/survey/common/components/survey-contents/answerList/AnswerList';
 // constants
@@ -6,7 +11,10 @@ import {
   NMS_ANSWER_DEGREE_EXPLAIN_TEXT_LIST,
   NMS_ANSWER_FREQUENCY,
   NMS_ANSWER_FREQUENCY_EXPLAIN_TEXT_LIST,
+  SURVEY_06_NMS_STATE_KEYWORD,
 } from '../survey.const';
+// hooks
+import useGetSectionScore from '../hooks/useGetSectionScore';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import { ExplainTextObjectType } from '../survey06NMS.type';
@@ -15,18 +23,28 @@ import styles from './surveyContentWithScore.module.scss';
 
 interface SurveyContentWithScoreProps {
   question: SurveyContentObjectType;
+  surveyStateKeyword: string;
 }
 
 export default function SurveyContentWithScore(props: SurveyContentWithScoreProps) {
+  const sectionNumber = props.question.section?.number;
+  // for score
+  const questionScore = useRecoilValue(questionScoreState(props.question.No));
+  const sectionScore = useGetSectionScore(sectionNumber);
+
+  // for display section title, section total score
   const surveySectionFirstQuestionNumber = props.question.section?.questionNumberList[0];
-  const surveySectionLastQuestionNumber = props.question.section?.questionNumberList[1];
+  const surveySectionLastQuestionNumber =
+    props.question.section?.questionNumberList[
+      props.question.section?.questionNumberList.length - 1
+    ];
 
   return (
     <article className={styles['survey-content-container']}>
       {/* for section title */}
       {props.question.No === surveySectionFirstQuestionNumber && (
         <h2 className={styles['section-title']}>
-          영역 {props.question.section?.number}: {props.question.section?.title}
+          영역 {sectionNumber}: {props.question.section?.title}
         </h2>
       )}
 
@@ -37,8 +55,8 @@ export default function SurveyContentWithScore(props: SurveyContentWithScoreProp
             {props.question.No}. {props.question.Q}
           </h3>
           <p className={styles['questionnaire-score-text']}>
-            {props.question.No}번 문항 점수<h3 className={styles['score-emphasis']}>3</h3>
-            {/* TO DO: 점수 상태값 적용 */}
+            {props.question.No}번 문항 점수
+            <h3 className={styles['score-emphasis']}>{questionScore}</h3>
           </p>
         </header>
 
@@ -48,24 +66,25 @@ export default function SurveyContentWithScore(props: SurveyContentWithScoreProp
             questionNumber={props.question.No}
             answerList={NMS_ANSWER_DEGREE}
             explainTextList={NMS_ANSWER_DEGREE_EXPLAIN_TEXT_LIST}
+            surveyStateKeyword={props.surveyStateKeyword}
           />
           <DegreeFrequencyAnswer
             degreeOrFrequencyTitle="빈도"
             questionNumber={props.question.No}
             answerList={NMS_ANSWER_FREQUENCY}
             explainTextList={NMS_ANSWER_FREQUENCY_EXPLAIN_TEXT_LIST}
+            surveyStateKeyword={props.surveyStateKeyword}
           />
         </article>
       </section>
 
-      {/* for survey section last question bottom calculate section score sum  */}
+      {/* for survey section last question bottom calculate section total score  */}
       {props.question.No === surveySectionLastQuestionNumber && (
         <section className={styles['survey-section-bottom-score']}>
           <hr className={styles['survey-section-bottom-grey-hr']} />
           <p className={styles['survey-section-bottom-score-text']}>
             영역 {props.question.section?.number} 합계 점수
-            <h3 className={styles['score-emphasis']}>8</h3>
-            {/* TO DO: 점수 상태값 적용 */}
+            <h3 className={styles['score-emphasis']}>{sectionScore}</h3>
           </p>
         </section>
       )}
@@ -78,9 +97,32 @@ interface DegreeFrequencyAnswerProps {
   questionNumber: number;
   answerList: string[];
   explainTextList?: ExplainTextObjectType[];
+  surveyStateKeyword: string;
 }
 
 function DegreeFrequencyAnswer(props: DegreeFrequencyAnswerProps) {
+  const setQuestionScore = useSetRecoilState(questionScoreState(props.questionNumber));
+
+  const responseDegreeAnswer = useRecoilValue(
+    responseState(`${props.surveyStateKeyword}-${props.questionNumber}중증도`)
+  );
+  const responseFrequencyAnswer = useRecoilValue(
+    responseState(`${props.surveyStateKeyword}-${props.questionNumber}빈도`)
+  ).slice(0, 1);
+
+  const responseDegreeScore = parseInt(responseDegreeAnswer.slice(0, 1));
+  const responseFrequencyScore = parseInt(responseFrequencyAnswer.slice(0, 1));
+  // for calculate score
+  const haveResponseDegreeScore = !isNaN(responseDegreeScore);
+  const haveResponseFrequencyScore = !isNaN(responseFrequencyScore);
+
+  useEffect(() => {
+    if (haveResponseDegreeScore && haveResponseFrequencyScore) {
+      const calculateScore = responseDegreeScore * responseFrequencyScore;
+      setQuestionScore(calculateScore);
+    }
+  }, [responseDegreeAnswer, responseFrequencyAnswer]);
+
   return (
     <section className={styles['degree-frequency-section']}>
       <h3 className={styles['degree-frequency-section-title']}>{props.degreeOrFrequencyTitle}</h3>
@@ -91,6 +133,8 @@ function DegreeFrequencyAnswer(props: DegreeFrequencyAnswerProps) {
           inputName={`${props.questionNumber}${props.degreeOrFrequencyTitle}`}
           inputId={`${props.questionNumber}${props.degreeOrFrequencyTitle}${answer}`}
           explainTextList={props.explainTextList}
+          clickedQuestionNumber={`${props.questionNumber}${props.degreeOrFrequencyTitle}`}
+          surveyStateKeyword={SURVEY_06_NMS_STATE_KEYWORD}
           key={`${props.questionNumber}${answer}`}
         />
       ))}

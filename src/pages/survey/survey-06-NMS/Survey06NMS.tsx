@@ -11,7 +11,7 @@ import {
 } from '../common/surveyPaginationStates';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { NMS_QUESTIONS, NMS_QUESTIONS_PER_PAGE } from './survey.const';
+import { NMS_QUESTIONS, NMS_QUESTIONS_PER_PAGE, SURVEY_06_NMS_STATE_KEYWORD } from './survey.const';
 import { SURVEY_05_RBD_TOTAL_PAGES } from '../survey-05-RBD/survey.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
@@ -54,7 +54,11 @@ export default function Survey06NMS() {
       {/* TO DO: 25번 문항의 경우 감소인지 증가인지 함께 표시 추가질문 */}
       <section className={styles['survey-content-wrapper']}>
         {currentPageQuestions.map((question, index) => (
-          <SurveyContentWithScore question={question} key={index} />
+          <SurveyContentWithScore
+            question={question}
+            surveyStateKeyword={SURVEY_06_NMS_STATE_KEYWORD}
+            key={index}
+          />
         ))}
       </section>
 

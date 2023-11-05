@@ -8,6 +8,7 @@ interface SurveyContentDegreeGradationProps {
   exceptionalNo?: number;
 }
 
+// survey-08-PDSS
 export default function SurveyContentDegreeGradation(props: SurveyContentDegreeGradationProps) {
   const degreesList = Array.from({ length: 11 }, (_, index) => index);
 

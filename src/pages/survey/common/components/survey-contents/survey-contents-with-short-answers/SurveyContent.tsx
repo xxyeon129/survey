@@ -23,6 +23,7 @@ interface SurveyContentWithShortAnswersProps {
   imageSelectAnswersList?: ImageSelectAnswerListType;
 }
 
+// survey-05-RBD, survey-10-SCOPA, survey-11-Constipation
 export default function SurveyContentWithShortAnswers(props: SurveyContentWithShortAnswersProps) {
   return (
     <li className={contentStyles['questions-li']}>

@@ -14,6 +14,7 @@ interface SurveyContentTableProps {
   nonGradationStyle?: boolean;
 }
 
+// survey-03-BAI, survey-07-PDQ, survey-09-Tired, survey-12-Food
 export default function SurveyContentTable(props: SurveyContentTableProps) {
   const answersHeaderCell = props.answers.map((answerText) => (
     <th key={answerText} className={styles['answers-table-header-text']}>

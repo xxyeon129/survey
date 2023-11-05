@@ -15,6 +15,7 @@ interface SurveyContentWithMedicineEffectProps {
   question: SurveyContentObjectType;
 }
 
+// survey-01-UPDRS, survey-02-FG
 export default function SurveyContentWithMedicineEffect(
   props: SurveyContentWithMedicineEffectProps
 ) {
