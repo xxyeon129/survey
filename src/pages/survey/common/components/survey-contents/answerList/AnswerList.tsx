@@ -2,6 +2,7 @@ import { ExplainTextObjectType } from 'pages/survey/survey-06-NMS/survey06NMS.ty
 import styles from './answerList.module.scss';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import { useRecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 
 interface AnswerLiProps {
   answer: string;
@@ -49,7 +50,7 @@ export default function AnswerList(props: AnswerLiProps) {
           {props.explainTextList?.map(
             (explainTextObject) =>
               withoutNumberTargetAnswerText === explainTextObject.targetAnswer && (
-                <span className={styles['answer-explain-text']}>
+                <span className={styles['answer-explain-text']} key={uuidv4()}>
                   {explainTextObject.explainText}
                 </span>
               )

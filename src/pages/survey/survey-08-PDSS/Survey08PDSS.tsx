@@ -22,6 +22,7 @@ import { SURVEY_07_PDQ_TOTAL_PAGES } from '../survey-07-PDQ/survey.const';
 import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Survey08PDSS() {
   // pagination hook props
@@ -58,13 +59,13 @@ export default function Survey08PDSS() {
       {surveyExplain}
 
       <section className={styles['survey-content-wrapper']}>
-        {currentPageQuestions.map((question, index) => (
+        {currentPageQuestions.map((question) => (
           <SurveyContentDegreeGradation
             question={question}
             answers={PDSS_ANSWERS}
             exceptionalAnswers={PDSS_ANSWERS_01}
             exceptionalNo={1}
-            key={index}
+            key={uuidv4()}
           />
         ))}
       </section>

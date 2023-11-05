@@ -6,6 +6,7 @@ import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 // styles
 import styles from 'pages/survey/common/survey.module.scss';
 import contentStyles from './surveyContent.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 type ImageSelectAnswerListType = { key: number; imgSrc: string; explain: string; alt: string }[];
 
@@ -32,7 +33,7 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
         props.explainSectionList.map(
           (explain) =>
             props.question.No === explain.questionNumber && (
-              <section className={contentStyles['explain-section']} key={explain.key}>
+              <section className={contentStyles['explain-section']} key={uuidv4()}>
                 <span className={contentStyles['explain-section-asterisk']}>
                   <strong>*</strong>
                 </span>
@@ -69,7 +70,7 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
             answer={answer}
             inputName={`${props.question.No}`}
             inputId={`${props.question.No}${answer}`}
-            key={`${props.question.No}${answer}`}
+            key={uuidv4()}
           />
         ))}
 
@@ -82,7 +83,7 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
                 answer={categorizedAnswer}
                 inputName={`${props.question.No}`}
                 inputId={`${props.question.No}${categorizedAnswer}`}
-                key={`${props.question.No}${categorizedAnswer}`}
+                key={uuidv4()}
               />
             ))
         )}
@@ -116,7 +117,7 @@ function ImageSelectAnswers({ imageSelectAnswersList }: ImageSelectAnswersProps)
   return (
     <ul className={contentStyles['img-answers-ul']}>
       {imageSelectAnswersList.map((imageList) => (
-        <li className={contentStyles['img-answer-li']} key={imageList.key}>
+        <li className={contentStyles['img-answer-li']} key={uuidv4()}>
           <input type="radio" id={`img-answer-${imageList.key}`} name="img-answer" />
           <label htmlFor={`img-answer-${imageList.key}`}>
             <figure>

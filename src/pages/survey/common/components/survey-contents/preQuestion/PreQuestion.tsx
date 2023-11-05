@@ -1,5 +1,6 @@
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import styles from './preQuestion.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 interface PreQuestionProps {
   question: SurveyContentObjectType;
@@ -13,8 +14,8 @@ export default function PreQuestion(props: PreQuestionProps) {
       <h3 className={styles['pre-question-h3']}>{props.question.Q}</h3>
 
       <ul className={styles['pre-question-radio-btn-container-ul']}>
-        {props.question.A?.map((answer, index) => (
-          <li className={styles['pre-question-radio-btn-li']} key={index}>
+        {props.question.A?.map((answer) => (
+          <li className={styles['pre-question-radio-btn-li']} key={uuidv4()}>
             <input
               type="radio"
               id={`${props.question.No}${answer}`}

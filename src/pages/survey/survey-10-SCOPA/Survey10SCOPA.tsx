@@ -24,6 +24,7 @@ import useSeparateGender from './hooks/useSeparateGender';
 import useExplainSectionElements from './hooks/useExplainSectionElements';
 // styles
 import styles from '../common/survey.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Survey10SCOPA() {
   // pagination hook props
@@ -72,7 +73,7 @@ export default function Survey10SCOPA() {
             questionWithInput={SCOPA_QUESTIONS_WITH_INPUT}
             answerWithInputTitleList={SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST}
             showInputCondition={SCOPA_QUESTIONS_WITH_INPUT.A[1]}
-            key={question.No}
+            key={uuidv4()}
           />
         ))}
       </ul>

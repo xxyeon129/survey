@@ -17,6 +17,7 @@ import { SURVEY_05_RBD_TOTAL_PAGES } from '../survey-05-RBD/survey.const';
 import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Survey06NMS() {
   // pagination hook props
@@ -53,12 +54,12 @@ export default function Survey06NMS() {
       {/* TO DO: 우측 점수칸 추가, 하단에 세션별 합계와 총합계 표시 */}
       {/* TO DO: 25번 문항의 경우 감소인지 증가인지 함께 표시 추가질문 */}
       <section className={styles['survey-content-wrapper']}>
-        {currentPageQuestions.map((question, index) => (
+        {currentPageQuestions.map((question) => (
           <SurveyContentWithScore
             question={question}
             surveyStateKeyword={SURVEY_06_NMS_STATE_KEYWORD}
             lastQuestionNumber={NMS_QUESTIONS.length}
-            key={index}
+            key={uuidv4()}
           />
         ))}
       </section>

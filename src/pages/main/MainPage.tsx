@@ -3,6 +3,7 @@ import { routeItems } from './main.const';
 import { HOSPITAL_NAME, SURVEY_NAME } from 'common/constants/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
 import styles from './main.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ export default function MainPage() {
   const routeBoxes = routeItems.map((routeList) => (
     <li
       className={styles['route-box']}
-      key={routeList.id}
+      key={uuidv4()}
       onClick={() => handleRouteBoxClick(routeList.id)}
     >
       <div className={styles['route-box-content']}>

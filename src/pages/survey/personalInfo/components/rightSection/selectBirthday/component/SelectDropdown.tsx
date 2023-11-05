@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoIosArrowUp } from 'react-icons/io';
 import styles from './selectDropdown.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 interface SelectDropdownProps {
   dropdownOptions: number[];
@@ -54,8 +55,12 @@ export default function SelectDropdown(props: SelectDropdownProps) {
 
       {isDropdownOpen && (
         <ul className={styles['dropdown-ul']} ref={dropdownRef}>
-          {props.dropdownOptions.map((option, index) => (
-            <li className={styles['dropdown-li']} key={index} onClick={() => onClickOption(option)}>
+          {props.dropdownOptions.map((option) => (
+            <li
+              className={styles['dropdown-li']}
+              onClick={() => onClickOption(option)}
+              key={uuidv4()}
+            >
               {option}
             </li>
           ))}

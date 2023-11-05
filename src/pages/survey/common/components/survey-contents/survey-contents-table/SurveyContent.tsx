@@ -1,5 +1,6 @@
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import styles from './surveyContent.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 interface SurveyContentTableProps {
   questions: SurveyContentObjectType[];
@@ -17,7 +18,7 @@ interface SurveyContentTableProps {
 // survey-03-BAI, survey-07-PDQ, survey-09-Tired, survey-12-Food
 export default function SurveyContentTable(props: SurveyContentTableProps) {
   const answersHeaderCell = props.answers.map((answerText) => (
-    <th key={answerText} className={styles['answers-table-header-text']}>
+    <th className={styles['answers-table-header-text']} key={uuidv4()}>
       {answerText}
     </th>
   ));
@@ -34,7 +35,7 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
 
         <tbody>
           {props.questions.map((question) => (
-            <tr key={question.No} className={styles['questions-table-row']}>
+            <tr className={styles['questions-table-row']} key={uuidv4()}>
               {/* question */}
               <th className={styles['questions-table-header-text']}>
                 <p className={styles['questions-table-header-text-p']}>
@@ -62,8 +63,8 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
                   )}
               </th>
               {/* radio buttons */}
-              {props.radioBtnValues.map((radioBtnValue, index) => (
-                <td className={styles['question-td-radio-button-container']} key={index}>
+              {props.radioBtnValues.map((radioBtnValue) => (
+                <td className={styles['question-td-radio-button-container']} key={uuidv4()}>
                   <input
                     type="radio"
                     id={`${question.No}${radioBtnValue}`}

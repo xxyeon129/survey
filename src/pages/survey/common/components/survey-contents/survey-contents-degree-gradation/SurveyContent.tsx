@@ -1,5 +1,6 @@
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import styles from './surveyContent.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 interface SurveyContentDegreeGradationProps {
   question: SurveyContentObjectType;
@@ -19,7 +20,7 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
       </h3>
       <ul className={styles['degrees-container-ul']}>
         {degreesList.map((degree) => (
-          <li className={styles['degree-container-li']} key={props.question.No + degree}>
+          <li className={styles['degree-container-li']} key={uuidv4()}>
             <label className={styles['degree-li-label']}>
               <span className={styles['degree-number']}>{degree}</span>
               <input

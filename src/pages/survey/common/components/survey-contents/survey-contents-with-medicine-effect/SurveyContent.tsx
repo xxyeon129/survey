@@ -10,6 +10,7 @@ import { TAKE_MEDICINE } from 'pages/survey/survey-01-UPDRS/survey.const';
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 // styles
 import styles from './surveyContent.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 interface SurveyContentWithMedicineEffectProps {
   question: SurveyContentObjectType;
@@ -31,8 +32,8 @@ export default function SurveyContentWithMedicineEffect(
       <div className={styles['answer-container']}>
         {takeMedicine === TAKE_MEDICINE ? (
           <>
-            {medicineDivisionList.map((list, index) => (
-              <div key={index}>
+            {medicineDivisionList.map((list) => (
+              <div key={uuidv4()}>
                 <h3 className={styles['medicine-text']}>
                   파킨슨병 약의 효과가{' '}
                   <span className={styles['medicine-text-emphasize']}>{list.text}</span> 때 아래
@@ -81,7 +82,7 @@ function AnswersUnorderedList(props: AnswersUnorderedListProps) {
           answer={answer}
           inputName={props.inputName}
           inputId={`${props.inputId}${answer}`}
-          key={`${props.key}${answer}`}
+          key={uuidv4()}
         />
       ))}
     </ul>

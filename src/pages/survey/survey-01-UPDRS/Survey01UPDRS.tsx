@@ -23,6 +23,7 @@ import BottomPrevNextButton from '../common/components/bottom-prev-next-button/B
 import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Survey01UPDRS() {
   // for pre-question check
@@ -76,7 +77,7 @@ export default function Survey01UPDRS() {
       {takeMedicine !== null && (
         <>
           {currentPageQuestions.map((question) => (
-            <SurveyContentWithMedicineEffect question={question} key={question.No} />
+            <SurveyContentWithMedicineEffect question={question} key={uuidv4()} />
           ))}
         </>
       )}

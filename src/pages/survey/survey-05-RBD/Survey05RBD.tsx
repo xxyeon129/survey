@@ -19,6 +19,7 @@ import BottomPrevNextButton from '../common/components/bottom-prev-next-button/B
 import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Survey05RBD() {
   // for pre-question check
@@ -68,7 +69,7 @@ export default function Survey05RBD() {
       <ul>
         {/* <PreQuestion /> */}
         {currentPageQuestions.map((question) => (
-          <SurveyContentWithShortAnswers question={question} key={question.No} />
+          <SurveyContentWithShortAnswers question={question} key={uuidv4()} />
         ))}
       </ul>
 

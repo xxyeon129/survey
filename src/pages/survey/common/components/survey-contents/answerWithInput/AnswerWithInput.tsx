@@ -1,6 +1,7 @@
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import styles from './answerWithInput.module.scss';
 import { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 interface AnswerWithInputProps {
   answerWithInput: SurveyContentObjectType;
@@ -12,7 +13,7 @@ export default function AnswerWithInput(props: AnswerWithInputProps) {
   return (
     <ul className={styles['answer-with-input-ul']}>
       {props.answerWithInputTitleList.map((answerTitle) => (
-        <li className={styles['answer-with-input-li']}>
+        <li className={styles['answer-with-input-li']} key={uuidv4()}>
           <header className={styles['answer-with-input-header']}>
             <h3 className={styles['answer-with-input-title']}>{answerTitle}</h3>
           </header>
@@ -49,7 +50,7 @@ function RadioBtnSection(props: RadioBtnSectionProps) {
     <section className={styles['answer-with-input-check-container']}>
       <ul className={styles['answer-with-input-check-ul']}>
         {props.answerList.map((answer) => (
-          <li className={styles['answer-with-input-check-li']}>
+          <li className={styles['answer-with-input-check-li']} key={uuidv4()}>
             <input
               type="radio"
               id={`${props.btnName}${answer}`}

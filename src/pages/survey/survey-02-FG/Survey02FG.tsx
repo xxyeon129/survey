@@ -27,6 +27,7 @@ import usePagination from '../common/hooks/usePagination';
 import useRouteToNextSurvey from './hooks/useRouteToNextSurvey';
 // styles
 import styles from '../common/survey.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Survey02FG() {
   // for pre-question check
@@ -100,7 +101,7 @@ export default function Survey02FG() {
       {haveFGSymptom === HAVE_FG_SYMPTOM && (
         <>
           {currentPageQuestions.map((question) => (
-            <SurveyContentWithMedicineEffect question={question} key={question.No} />
+            <SurveyContentWithMedicineEffect question={question} key={uuidv4()} />
           ))}
         </>
       )}

@@ -13,15 +13,16 @@ import {
   NMS_ANSWER_FREQUENCY_EXPLAIN_TEXT_LIST,
   SURVEY_06_NMS_STATE_KEYWORD,
 } from '../survey.const';
+import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 // hooks
 import useGetSectionScore from '../hooks/useGetSectionScore';
+import useGetTotalScore from '../hooks/useGetTotalScroe';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import { ExplainTextObjectType } from '../survey06NMS.type';
 // styles
 import styles from './surveyContentWithScore.module.scss';
-import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import useGetTotalScore from '../hooks/useGetTotalScroe';
+import { v4 as uuidv4 } from 'uuid';
 
 interface SurveyContentWithScoreProps {
   question: SurveyContentObjectType;
@@ -153,7 +154,7 @@ function DegreeFrequencyAnswer(props: DegreeFrequencyAnswerProps) {
           explainTextList={props.explainTextList}
           clickedQuestionNumber={`${props.questionNumber}${props.degreeOrFrequencyTitle}`}
           surveyStateKeyword={SURVEY_06_NMS_STATE_KEYWORD}
-          key={`${props.questionNumber}${answer}`}
+          key={uuidv4()}
         />
       ))}
     </section>

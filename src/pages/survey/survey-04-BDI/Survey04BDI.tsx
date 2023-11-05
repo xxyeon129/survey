@@ -13,13 +13,14 @@ import { SURVEY_03_BAI_TOTAL_PAGES } from '../survey-03-BAI/survey.const';
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import AnswerList from '../common/components/survey-contents/answerList/AnswerList';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
-// styles
-import styles from '../common/survey.module.scss';
-import surveyStyles from './surveyBDI.module.scss';
 // types
 import { SurveyContentType } from '../common/types/surveyTypes';
 // hooks
 import usePagination from '../common/hooks/usePagination';
+// styles
+import styles from '../common/survey.module.scss';
+import surveyStyles from './surveyBDI.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Survey04BDI() {
   // pagination hook props
@@ -53,7 +54,7 @@ export default function Survey04BDI() {
 
       <ul className={surveyStyles['questions-ul']}>
         {currentPageQuestions.map((question) => (
-          <SurveyContent question={question} key={question.No} />
+          <SurveyContent question={question} key={uuidv4()} />
         ))}
       </ul>
 
@@ -75,7 +76,7 @@ function SurveyContent(props: SurveyContentType) {
                 answer={answer}
                 inputName={`${props.question.No}`}
                 inputId={`${props.question.No}${answer}`}
-                key={`${props.question.No}${answer}`}
+                key={uuidv4()}
               />
             ))}
         </ul>
@@ -91,7 +92,7 @@ function SurveyContent(props: SurveyContentType) {
                 answer={answer}
                 inputName={`${props.question.No}-additional`}
                 inputId={`${props.question.No}${answer}`}
-                key={`${props.question.No}${answer}`}
+                key={uuidv4()}
               />
             ))}
           </ul>

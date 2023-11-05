@@ -21,6 +21,7 @@ import { SURVEY_10_SCOPA_TOTAL_PAGES } from '../survey-10-SCOPA/survey.const';
 import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function Survey11Constipation() {
   // pagination hook props
@@ -60,7 +61,7 @@ export default function Survey11Constipation() {
             question={question}
             imageSelectAnswersNo={4}
             imageSelectAnswersList={CONSTIPATION_ANSWERS_04}
-            key={question.No}
+            key={uuidv4()}
           />
         ))}
       </ul>
