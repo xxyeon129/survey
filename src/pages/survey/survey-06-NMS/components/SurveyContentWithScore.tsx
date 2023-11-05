@@ -62,7 +62,7 @@ export default function SurveyContentWithScore(props: SurveyContentWithScoreProp
           </h3>
           <p className={styles['questionnaire-score-text']}>
             {props.question.No}번 문항 점수
-            <h3 className={styles['score-emphasis']}>{questionScore}</h3>
+            <span className={styles['score-emphasis']}>{questionScore}</span>
           </p>
         </header>
 
@@ -90,7 +90,7 @@ export default function SurveyContentWithScore(props: SurveyContentWithScoreProp
           <hr className={styles['survey-section-bottom-grey-hr']} />
           <p className={styles['survey-section-bottom-score-text']}>
             영역 {props.question.section?.number} 합계 점수
-            <h3 className={styles['score-emphasis']}>{sectionScore}</h3>
+            <span className={styles['score-emphasis']}>{sectionScore}</span>
           </p>
         </section>
       )}

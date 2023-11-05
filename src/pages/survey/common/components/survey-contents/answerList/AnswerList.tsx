@@ -49,7 +49,9 @@ export default function AnswerList(props: AnswerLiProps) {
           {props.explainTextList?.map(
             (explainTextObject) =>
               withoutNumberTargetAnswerText === explainTextObject.targetAnswer && (
-                <p className={styles['answer-explain-text']}>{explainTextObject.explainText}</p>
+                <span className={styles['answer-explain-text']}>
+                  {explainTextObject.explainText}
+                </span>
               )
           )}
         </p>
