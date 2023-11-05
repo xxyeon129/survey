@@ -57,6 +57,7 @@ export default function Survey06NMS() {
           <SurveyContentWithScore
             question={question}
             surveyStateKeyword={SURVEY_06_NMS_STATE_KEYWORD}
+            lastQuestionNumber={NMS_QUESTIONS.length}
             key={index}
           />
         ))}

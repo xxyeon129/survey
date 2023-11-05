@@ -20,10 +20,15 @@ import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import { ExplainTextObjectType } from '../survey06NMS.type';
 // styles
 import styles from './surveyContentWithScore.module.scss';
+import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
+import useGetTotalScore from '../hooks/useGetTotalScroe';
 
 interface SurveyContentWithScoreProps {
   question: SurveyContentObjectType;
   surveyStateKeyword: string;
+
+  // for total sum score
+  lastQuestionNumber: number;
 }
 
 export default function SurveyContentWithScore(props: SurveyContentWithScoreProps) {
@@ -31,6 +36,7 @@ export default function SurveyContentWithScore(props: SurveyContentWithScoreProp
   // for score
   const questionScore = useRecoilValue(questionScoreState(props.question.No));
   const sectionScore = useGetSectionScore(sectionNumber);
+  const totalScore = useGetTotalScore();
 
   // for display section title, section total score
   const surveySectionFirstQuestionNumber = props.question.section?.questionNumberList[0];
@@ -85,6 +91,18 @@ export default function SurveyContentWithScore(props: SurveyContentWithScoreProp
           <p className={styles['survey-section-bottom-score-text']}>
             영역 {props.question.section?.number} 합계 점수
             <h3 className={styles['score-emphasis']}>{sectionScore}</h3>
+          </p>
+        </section>
+      )}
+
+      {/* for last page bottom total sum score */}
+      {props.question.No === props.lastQuestionNumber && (
+        <section className={styles['last-page-total-score']}>
+          <p className={styles['last-page-total-score-text']}>
+            {SURVEY_TITLE_LIST[6].TITLE} 설문{' '}
+            <span className={styles['last-page-total-score-text-bold']}>
+              총 합계 점수<span className={styles['score-emphasis']}>{totalScore}</span>
+            </span>
           </p>
         </section>
       )}

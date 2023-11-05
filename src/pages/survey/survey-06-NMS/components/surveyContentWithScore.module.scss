@@ -86,4 +86,27 @@
       }
     }
   }
+
+  /* last page total score */
+  .last-page-total-score {
+    background-color: $sidebar-background-blue-color;
+    padding: 1.5rem 1.2rem;
+    border: 1px solid $progressbar-grey-color;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border-radius: 0.8rem;
+    text-align: right;
+    color: $main-blue-color;
+
+    .last-page-total-score-text {
+      font-size: 1.1rem;
+      .last-page-total-score-text-bold {
+        font-size: 1.2rem;
+        font-weight: $text-semi-bold;
+        .score-emphasis {
+          margin-left: 0.5rem;
+          font-size: 1.8rem;
+        }
+      }
+    }
+  }
 }
