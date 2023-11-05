@@ -29,15 +29,6 @@ export default function AnswerList(props: AnswerLiProps) {
     clickedQuestionNumber,
   });
 
-  // const [responseValue, setResponseValue] = useRecoilState(
-  //   responseState(`${props.surveyStateKeyword}-${props.clickedQuestionNumber}`)
-  // );
-
-  // const handleRadioChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const selectValue = e.target.value;
-  //   setResponseValue(selectValue);
-  // };
-
   return (
     <li className={styles['answer-li']}>
       <input
