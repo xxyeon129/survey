@@ -1,4 +1,5 @@
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 import styles from './surveyContent.module.scss';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -7,6 +8,9 @@ interface SurveyContentDegreeGradationProps {
   answers: string[];
   exceptionalAnswers?: string[];
   exceptionalNo?: number;
+
+  // for button checked
+  surveyStateKeyword: string;
 }
 
 // survey-08-PDSS
@@ -21,15 +25,11 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
       <ul className={styles['degrees-container-ul']}>
         {degreesList.map((degree) => (
           <li className={styles['degree-container-li']} key={uuidv4()}>
-            <label className={styles['degree-li-label']}>
-              <span className={styles['degree-number']}>{degree}</span>
-              <input
-                type="radio"
-                name={`${props.question.No}`}
-                id={`${props.question.No}${degree}`}
-                value={`${props.question.No}${degree}`}
-              />
-            </label>
+            <DegreeBtn
+              questionNumber={props.question.No}
+              surveyStateKeyword={props.surveyStateKeyword}
+              degree={degree}
+            />
 
             {/* for bottom degree explain text */}
             {props.exceptionalNo &&
@@ -68,5 +68,34 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
       </ul>
       <hr className={styles['bottom-hr']} />
     </article>
+  );
+}
+
+interface DegreeBtnProps {
+  questionNumber: number;
+  surveyStateKeyword: string;
+  degree: number;
+}
+
+function DegreeBtn(props: DegreeBtnProps) {
+  const surveyStateKeyword = props.surveyStateKeyword;
+  const clickedQuestionNumber = `${props.questionNumber}`;
+  const { responseValue, handleRadioBtnChange } = useClickedRadioBtnChecked({
+    surveyStateKeyword,
+    clickedQuestionNumber,
+  });
+
+  return (
+    <label className={styles['degree-li-label']}>
+      <span className={styles['degree-number']}>{props.degree}</span>
+      <input
+        type="radio"
+        name={`${props.questionNumber}`}
+        id={`${props.questionNumber}${props.degree}`}
+        value={`QuestionNo${props.questionNumber}-${props.degree}`}
+        onChange={handleRadioBtnChange}
+        checked={responseValue === `QuestionNo${props.questionNumber}-${props.degree}`}
+      />
+    </label>
   );
 }

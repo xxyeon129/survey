@@ -16,6 +16,7 @@ import {
   PDSS_ANSWERS_01,
   PDSS_QUESTIONS,
   PDSS_QUESTIONS_PER_PAGE,
+  SURVEY_08_PDSS_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_07_PDQ_TOTAL_PAGES } from '../survey-07-PDQ/survey.const';
 // hooks
@@ -65,6 +66,7 @@ export default function Survey08PDSS() {
             answers={PDSS_ANSWERS}
             exceptionalAnswers={PDSS_ANSWERS_01}
             exceptionalNo={1}
+            surveyStateKeyword={SURVEY_08_PDSS_STATE_KEYWORD}
             key={uuidv4()}
           />
         ))}
