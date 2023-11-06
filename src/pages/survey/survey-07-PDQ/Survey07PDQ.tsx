@@ -1,14 +1,14 @@
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
-import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey06CurrentPageState,
   survey07CurrentPageState,
   survey08CurrentPageState,
 } from '../common/surveyPaginationStates';
+import { survey07PDQ_responseSelector } from './survey07PDQ.selector';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -42,6 +42,9 @@ export default function Survey07PDQ() {
     questionsPerPage,
   });
 
+  // for bottom next button disabled
+  const responseStateList = useRecoilValue(survey07PDQ_responseSelector);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {PDQ_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[7].TITLE}에 관한
@@ -64,10 +67,15 @@ export default function Survey07PDQ() {
           surveyStateKeyword={SURVEY_07_PDQ_STATE_KEYWORD}
           additionalCheckQuestionNo={28}
           additionalCheckQuestion="귀하에게 배우자나 같이 사는 사람이 없다면 여기에 표시해주십시오."
+          // for bottom prev/next button
+          handlePrevPage={handlePrevPage}
+          handleNextPage={handleNextPage}
+          // for bottom next button disabled
+          currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+          currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
+          responseStateList={responseStateList}
         />
       </section>
-
-      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }

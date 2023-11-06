@@ -1,3 +1,6 @@
+// components
+import SurveyTitle from '../common/components/survey-title/SurveyTitle';
+import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
 // states
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
@@ -6,10 +9,7 @@ import {
   survey04CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { haveFGSymptomState } from '../survey-02-FG/Survey02FG.state';
-// components
-import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
-import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
+import { survey03BAI_responseSelector } from './survey03BAI.selector';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -62,6 +62,9 @@ export default function Survey03BAI() {
     setPrevSurveyFirstPage,
   });
 
+  // for bottom next button disabled
+  const responseStateList = useRecoilValue(survey03BAI_responseSelector);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {BAI_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[3].TITLE}에 관한
@@ -83,9 +86,15 @@ export default function Survey03BAI() {
           answers={BAI_ANSWERS}
           radioBtnValues={SURVEY_03_BAI_STATE_ANSWERS}
           surveyStateKeyword={SURVEY_03_BAI_STATE_KEYWORD}
+          // for bottom prev/next button
+          handlePrevPage={handlePrevPage}
+          handleNextPage={handleNextPage}
+          // for bottom next button disabled
+          currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+          currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
+          responseStateList={responseStateList}
         />
       </section>
-      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }

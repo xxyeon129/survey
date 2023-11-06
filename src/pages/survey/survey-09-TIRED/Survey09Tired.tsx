@@ -1,14 +1,14 @@
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
-import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey08CurrentPageState,
   survey09CurrentPageState,
   survey10CurrentPageState,
 } from '../common/surveyPaginationStates';
+import { survey09Tired_responseSelector } from './survey09Tired.selector';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -42,6 +42,9 @@ export default function Survey09Tired() {
     questionsPerPage,
   });
 
+  // for bottom next button disabled
+  const responseStateList = useRecoilValue(survey09Tired_responseSelector);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {TIRED_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[9].TITLE}에 관한
@@ -62,10 +65,15 @@ export default function Survey09Tired() {
           answers={TIRED_ANSWERS}
           radioBtnValues={SURVEY_09_TIRED_STATE_ANSWERS}
           surveyStateKeyword={SURVEY_09_TIRED_STATE_KEYWORD}
+          // for bottom prev/next button
+          handlePrevPage={handlePrevPage}
+          handleNextPage={handleNextPage}
+          // for bottom next button disabled
+          currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+          currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
+          responseStateList={responseStateList}
         />
       </section>
-
-      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }

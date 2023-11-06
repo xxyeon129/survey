@@ -1,13 +1,13 @@
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
-import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey11CurrentPageState,
   survey12CurrentPageState,
 } from '../common/surveyPaginationStates';
+import { survey12Food_responseSelector } from './survey12Food.selector';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -39,6 +39,9 @@ export default function Survey12Food() {
     questionsPerPage,
   });
 
+  // for bottom next button disabled
+  const responseStateList = useRecoilValue(survey12Food_responseSelector);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {FOOD_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[12].TITLE}에 관한
@@ -61,10 +64,15 @@ export default function Survey12Food() {
           surveyStateKeyword={SURVEY_12_FOOD_STATE_KEYWORD}
           questionExplain={true}
           nonGradationStyle={true}
+          // for bottom prev/next button
+          handlePrevPage={handlePrevPage}
+          handleNextPage={handleNextPage}
+          // for bottom next button disabled
+          currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+          currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
+          responseStateList={responseStateList}
         />
       </section>
-
-      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }
