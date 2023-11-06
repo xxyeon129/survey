@@ -24,6 +24,7 @@
   &:disabled {
     background-color: $sidebar-background-blue-color;
     color: $checkbox-grey-color;
+    outline: 2px solid $progressbar-grey-color;
     cursor: not-allowed;
 
     .start-btn-icon-container {

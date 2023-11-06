@@ -1,8 +1,13 @@
 import { useNavigate } from 'react-router-dom';
 // states
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 import { survey01CurrentPageState } from 'pages/survey/common/surveyPaginationStates';
+import {
+  personalInfoBirthdayState,
+  personalInfoGenderState,
+  personalInfoNameState,
+} from 'pages/survey/personalInfo/personalInfo.state';
 // constants
 import { PATH_URL } from 'common/constants/path.const';
 // styles
@@ -23,9 +28,20 @@ export default function BottomStartBtn() {
     window.scrollTo(0, 0);
   };
 
+  // for button disabled
+  const notRespondedName = useRecoilValue(personalInfoNameState).length === 0;
+  const notResopndedBirthday = useRecoilValue(personalInfoBirthdayState).length === 0;
+  const notRespondedGender = useRecoilValue(personalInfoGenderState).length === 0;
+
+  const disabledCondition = notRespondedName || notResopndedBirthday || notRespondedGender;
+
   return (
     <div className={styles['bottom-start-btn-container']}>
-      <button className={styles['start-btn']} onClick={onClickStartSurveyBtn}>
+      <button
+        className={styles['start-btn']}
+        onClick={onClickStartSurveyBtn}
+        disabled={disabledCondition}
+      >
         설문 시작하기
         <div className={styles['start-btn-icon-container']}>
           <IoMdArrowRoundForward />

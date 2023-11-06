@@ -1,11 +1,11 @@
-// constants
-import { SURVEY_NAME } from 'common/constants/survey.const';
 // components
 import LeftBlueBoxSection from './components/leftSection/LeftBlueBoxSection';
 import NameInputSection from './components/rightSection/nameInput/NameInputSection';
 import SelectBirthdaySection from './components/rightSection/selectBirthday/SelectBirthdaySection';
 import GenderCheckSection from './components/rightSection/genderCheck/GenderCheckSection';
 import BottomStartBtn from './components/rightSection/bottomStartBtn/BottomStartBtn';
+// constants
+import { SURVEY_NAME } from 'common/constants/survey.const';
 // styles
 import styles from './personalInfo.module.scss';
 

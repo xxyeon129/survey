@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useRecoilState } from 'recoil';
+import {
+  selectedBirthDayState,
+  selectedBirthMonthState,
+  selectedBirthYearState,
+} from '../selectBirthdaySection.state';
 
 // for birthday select dropdown
 export default function useSelectBirthdayList() {
-  const [selectedYear, setSelectedYear] = useState(0);
-  const [selectedMonth, setSelectedMonth] = useState(0);
-  const [selectedDay, setSelectedDay] = useState(0);
+  const [selectedYear, setSelectedYear] = useRecoilState(selectedBirthYearState);
+  const [selectedMonth, setSelectedMonth] = useRecoilState(selectedBirthMonthState);
+  const [selectedDay, setSelectedDay] = useRecoilState(selectedBirthDayState);
 
   // year
   const currentYear = new Date().getFullYear();
@@ -21,7 +26,6 @@ export default function useSelectBirthdayList() {
 
   const selectBirthdayList = [
     {
-      id: 1,
       dropdownOptions: yearsArray,
       selectBarDefaultText: '년도 선택',
       selectedOption: selectedYear,
@@ -29,7 +33,6 @@ export default function useSelectBirthdayList() {
       additionalText: '년',
     },
     {
-      id: 2,
       dropdownOptions: monthsArray,
       selectBarDefaultText: '월 선택',
       selectedOption: selectedMonth,
@@ -37,7 +40,6 @@ export default function useSelectBirthdayList() {
       additionalText: '월',
     },
     {
-      id: 3,
       dropdownOptions: daysArray,
       selectBarDefaultText: '일 선택',
       selectedOption: selectedDay,
