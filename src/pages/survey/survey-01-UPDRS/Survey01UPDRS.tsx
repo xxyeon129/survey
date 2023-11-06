@@ -9,6 +9,7 @@ import { takeMedicineState } from './survey01UPDRS.state';
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
   NOT_TAKE_MEDICINE,
+  SURVEY_01_UPDRS_STATE_KEYWORD,
   TAKE_MEDICINE,
   UPDRS_PRE_QUESTION,
   UPDRS_QUESTIONS,
@@ -77,7 +78,11 @@ export default function Survey01UPDRS() {
       {takeMedicine !== null && (
         <>
           {currentPageQuestions.map((question) => (
-            <SurveyContentWithMedicineEffect question={question} key={uuidv4()} />
+            <SurveyContentWithMedicineEffect
+              question={question}
+              surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
+              key={uuidv4()}
+            />
           ))}
         </>
       )}

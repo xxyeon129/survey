@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 interface SurveyContentWithMedicineEffectProps {
   question: SurveyContentObjectType;
+  surveyStateKeyword: string;
 }
 
 // survey-01-UPDRS, survey-02-FG
@@ -43,8 +44,8 @@ export default function SurveyContentWithMedicineEffect(
                   <AnswersUnorderedList
                     answersList={props.question.A}
                     inputName={`${props.question.No}${list.radioBtnKeyword}`}
-                    inputId={`${props.question.No}${list.radioBtnKeyword}`}
-                    key={`${list.radioBtnKeyword}`}
+                    questionNumber={`${props.question.No}-${list.radioBtnKeyword}`}
+                    surveyStateKeyword={props.surveyStateKeyword}
                   />
                 )}
               </div>
@@ -56,8 +57,8 @@ export default function SurveyContentWithMedicineEffect(
               <AnswersUnorderedList
                 answersList={props.question.A}
                 inputName={`${props.question.No}`}
-                inputId={`${props.question.No}`}
-                key={`${props.question.No}nondrug`}
+                questionNumber={`${props.question.No}`}
+                surveyStateKeyword={props.surveyStateKeyword}
               />
             )}
           </>
@@ -68,10 +69,11 @@ export default function SurveyContentWithMedicineEffect(
 }
 
 interface AnswersUnorderedListProps {
+  questionNumber: string;
+  surveyStateKeyword: string;
+
   answersList: string[];
   inputName: string;
-  inputId: string;
-  key: string;
 }
 
 function AnswersUnorderedList(props: AnswersUnorderedListProps) {
@@ -81,7 +83,9 @@ function AnswersUnorderedList(props: AnswersUnorderedListProps) {
         <AnswerList
           answer={answer}
           inputName={props.inputName}
-          inputId={`${props.inputId}${answer}`}
+          inputId={`${props.questionNumber}${answer}`}
+          clickedQuestionNumber={props.questionNumber}
+          surveyStateKeyword={props.surveyStateKeyword}
           key={uuidv4()}
         />
       ))}

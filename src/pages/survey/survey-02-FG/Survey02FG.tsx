@@ -14,6 +14,7 @@ import {
   FG_QUESTIONS_PER_PAGE,
   HAVE_FG_SYMPTOM,
   HAVE_NO_FG_SYMPTOM,
+  SURVEY_02_FG_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_01_UPDRS_TOTAL_PAGES } from '../survey-01-UPDRS/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
@@ -101,7 +102,11 @@ export default function Survey02FG() {
       {haveFGSymptom === HAVE_FG_SYMPTOM && (
         <>
           {currentPageQuestions.map((question) => (
-            <SurveyContentWithMedicineEffect question={question} key={uuidv4()} />
+            <SurveyContentWithMedicineEffect
+              question={question}
+              surveyStateKeyword={SURVEY_02_FG_STATE_KEYWORD}
+              key={uuidv4()}
+            />
           ))}
         </>
       )}
