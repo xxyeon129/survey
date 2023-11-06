@@ -1,14 +1,24 @@
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 import styles from './preQuestion.module.scss';
 import { v4 as uuidv4 } from 'uuid';
 
 interface PreQuestionProps {
   question: SurveyContentObjectType;
-  onClickPreQuestionRadioBtn: (arg0: string) => void;
-  defaultCheckedLabel: string;
+
+  // for radio button checked
+  clickedQuestionNumber: string;
+  surveyStateKeyword: string;
 }
 
 export default function PreQuestion(props: PreQuestionProps) {
+  const surveyStateKeyword = props.surveyStateKeyword;
+  const clickedQuestionNumber = props.clickedQuestionNumber;
+  const { responseValue, handleRadioBtnChange } = useClickedRadioBtnChecked({
+    surveyStateKeyword,
+    clickedQuestionNumber,
+  });
+
   return (
     <section className={styles['pre-question-container']}>
       <h3 className={styles['pre-question-h3']}>{props.question.Q}</h3>
@@ -21,8 +31,8 @@ export default function PreQuestion(props: PreQuestionProps) {
               id={`${props.question.No}${answer}`}
               name={`${props.question.No}`}
               value={answer}
-              defaultChecked={props.defaultCheckedLabel === answer}
-              onClick={() => props.onClickPreQuestionRadioBtn(answer)}
+              onChange={handleRadioBtnChange}
+              checked={responseValue === answer}
             />
             <label htmlFor={`${props.question.No}${answer}`}>
               <div className={styles['radio-button']}>
