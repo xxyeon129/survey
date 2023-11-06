@@ -1,10 +1,15 @@
+// components
+import SurveyTitle from '../common/components/survey-title/SurveyTitle';
+import AnswerList from '../common/components/survey-contents/answerList/AnswerList';
+import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey03CurrentPageState,
   survey04CurrentPageState,
   survey05CurrentPageState,
 } from '../common/surveyPaginationStates';
+import { survey04BDI_responseSelector } from './survey04BDI.selector';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -14,12 +19,8 @@ import {
   SURVEY_04_BDI_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_03_BAI_TOTAL_PAGES } from '../survey-03-BAI/survey.const';
-// components
-import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import AnswerList from '../common/components/survey-contents/answerList/AnswerList';
-import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // types
-import { SurveyContentType } from '../common/types/surveyTypes';
+import { SurveyContentObjectType } from '../common/types/surveyTypes';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 // styles
@@ -45,6 +46,9 @@ export default function Survey04BDI() {
     questionsPerPage,
   });
 
+  // for bottom next button disabled
+  const responseStateList = useRecoilValue(survey04BDI_responseSelector);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {BDI_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[4].TITLE}에 관한
@@ -59,33 +63,65 @@ export default function Survey04BDI() {
 
       <ul className={surveyStyles['questions-ul']}>
         {currentPageQuestions.map((question) => (
-          <SurveyContent question={question} key={uuidv4()} />
+          <SurveyContent
+            question={question}
+            currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+            currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
+            handlePrevPage={handlePrevPage}
+            handleNextPage={handleNextPage}
+            responseStateList={responseStateList}
+            key={uuidv4()}
+          />
         ))}
       </ul>
-
-      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }
 
-function SurveyContent(props: SurveyContentType) {
+interface SurveyContentProps {
+  question: SurveyContentObjectType;
+
+  // for bottom prev/next button
+  currentPageFirstQuestionNumber: number;
+  currentPageLastQuestionNumber: number;
+  handlePrevPage: () => void;
+  handleNextPage: () => void;
+  responseStateList: string[];
+}
+
+function SurveyContent(props: SurveyContentProps) {
+  let currentPageResponseList = props.responseStateList.slice(
+    props.currentPageFirstQuestionNumber - 1,
+    props.currentPageLastQuestionNumber
+  );
+  if (props.currentPageFirstQuestionNumber === 16) {
+    currentPageResponseList = props.responseStateList.slice(
+      props.currentPageFirstQuestionNumber - 1,
+      props.currentPageLastQuestionNumber + 1
+    );
+  }
+  if (props.currentPageFirstQuestionNumber === props.currentPageLastQuestionNumber) {
+    currentPageResponseList = props.responseStateList.slice(props.currentPageLastQuestionNumber);
+  }
+
+  const nextBtnDisabledCondition = currentPageResponseList.includes('');
+
   return (
     <>
       <li className={surveyStyles['questions-li']}>
         <h2 className={surveyStyles['questions-title']}>설문 {props.question.No}</h2>
         <hr className={styles.hr} />
         <ul className={surveyStyles['answers-ul']}>
-          {props.question.A &&
-            props.question.A.map((answer) => (
-              <AnswerList
-                answer={answer}
-                inputName={`${props.question.No}`}
-                inputId={`${props.question.No}${answer}`}
-                clickedQuestionNumber={`${props.question.No}`}
-                surveyStateKeyword={SURVEY_04_BDI_STATE_KEYWORD}
-                key={uuidv4()}
-              />
-            ))}
+          {props.question.A?.map((answer) => (
+            <AnswerList
+              answer={answer}
+              inputName={`${props.question.No}`}
+              inputId={`${props.question.No}${answer}`}
+              clickedQuestionNumber={`${props.question.No}`}
+              surveyStateKeyword={SURVEY_04_BDI_STATE_KEYWORD}
+              key={uuidv4()}
+            />
+          ))}
         </ul>
       </li>
       {props.question.No === 19 && (
@@ -106,6 +142,13 @@ function SurveyContent(props: SurveyContentType) {
             ))}
           </ul>
         </li>
+      )}
+      {props.question.No === props.currentPageLastQuestionNumber && (
+        <BottomPrevNextButton
+          handleNextPage={props.handleNextPage}
+          handlePrevPage={props.handlePrevPage}
+          nextBtnDisabledCondition={nextBtnDisabledCondition}
+        />
       )}
     </>
   );

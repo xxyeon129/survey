@@ -7,6 +7,9 @@ import styles from './bottomPrevNextButton.module.scss';
 interface BottomPrevNextButtonProps {
   handlePrevPage?: () => void;
   handleNextPage?: () => void;
+
+  // TO DO: 전체 설문 적용 후 조건 삭제
+  nextBtnDisabledCondition?: boolean;
 }
 
 export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
@@ -25,8 +28,7 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
       <button
         className={styles['next-btn']}
         onClick={props.handleNextPage}
-        // // TO DO: headerCurrentPage === headerTotalPages일 경우 disabled
-        // disabled={props.currentPage === props.currentSurveyTotalPages}
+        disabled={props.nextBtnDisabledCondition}
       >
         다음 페이지
         <div className={styles['next-btn-icon-container']}>
