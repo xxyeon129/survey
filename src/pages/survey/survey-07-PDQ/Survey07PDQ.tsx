@@ -11,7 +11,13 @@ import {
 } from '../common/surveyPaginationStates';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { PDQ_ANSWERS, PDQ_QUESTIONS, PDQ_QUESTIONS_PER_PAGE } from './survey.const';
+import {
+  PDQ_ANSWERS,
+  PDQ_QUESTIONS,
+  PDQ_QUESTIONS_PER_PAGE,
+  SURVEY_07_PDQ_STATE_ANSWERS,
+  SURVEY_07_PDQ_STATE_KEYWORD,
+} from './survey.const';
 import { SURVEY_06_NMS_TOTAL_PAGES } from '../survey-06-NMS/survey.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
@@ -54,7 +60,8 @@ export default function Survey07PDQ() {
         <SurveyContentTable
           questions={currentPageQuestions}
           answers={PDQ_ANSWERS}
-          radioBtnValues={[0, 1, 2, 3, 4]}
+          radioBtnValues={SURVEY_07_PDQ_STATE_ANSWERS}
+          surveyStateKeyword={SURVEY_07_PDQ_STATE_KEYWORD}
           additionalCheckQuestionNo={28}
           additionalCheckQuestion="귀하에게 배우자나 같이 사는 사람이 없다면 여기에 표시해주십시오."
         />

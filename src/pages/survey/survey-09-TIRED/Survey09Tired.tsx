@@ -11,7 +11,13 @@ import {
 } from '../common/surveyPaginationStates';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { TIRED_ANSWERS, TIRED_QUESTIONS, TIRED_QUESTIONS_PER_PAGE } from './survey.const';
+import {
+  SURVEY_09_TIRED_STATE_ANSWERS,
+  SURVEY_09_TIRED_STATE_KEYWORD,
+  TIRED_ANSWERS,
+  TIRED_QUESTIONS,
+  TIRED_QUESTIONS_PER_PAGE,
+} from './survey.const';
 import { SURVEY_08_PDSS_TOTAL_PAGES } from '../survey-08-PDSS/survey.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
@@ -54,7 +60,8 @@ export default function Survey09Tired() {
         <SurveyContentTable
           questions={currentPageQuestions}
           answers={TIRED_ANSWERS}
-          radioBtnValues={[0, 1, 2, 3, 4]}
+          radioBtnValues={SURVEY_09_TIRED_STATE_ANSWERS}
+          surveyStateKeyword={SURVEY_09_TIRED_STATE_KEYWORD}
         />
       </section>
 

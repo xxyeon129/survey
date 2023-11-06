@@ -12,7 +12,13 @@ import SurveyContentTable from '../common/components/survey-contents/survey-cont
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { BAI_ANSWERS, BAI_QUESTIONS, BAI_QUESTIONS_PER_PAGE } from './survey.const';
+import {
+  BAI_ANSWERS,
+  BAI_QUESTIONS,
+  BAI_QUESTIONS_PER_PAGE,
+  SURVEY_03_BAI_STATE_ANSWERS,
+  SURVEY_03_BAI_STATE_KEYWORD,
+} from './survey.const';
 import { HAVE_NO_FG_SYMPTOM, SURVEY_02_FG_TOTAL_PAGES } from '../survey-02-FG/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
 // hooks
@@ -75,7 +81,8 @@ export default function Survey03BAI() {
         <SurveyContentTable
           questions={currentPageQuestions}
           answers={BAI_ANSWERS}
-          radioBtnValues={[0, 1, 2, 3]}
+          radioBtnValues={SURVEY_03_BAI_STATE_ANSWERS}
+          surveyStateKeyword={SURVEY_03_BAI_STATE_KEYWORD}
         />
       </section>
       <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />

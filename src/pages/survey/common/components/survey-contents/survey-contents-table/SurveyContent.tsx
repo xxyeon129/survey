@@ -1,3 +1,4 @@
+import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import styles from './surveyContent.module.scss';
 import { v4 as uuidv4 } from 'uuid';
@@ -5,7 +6,10 @@ import { v4 as uuidv4 } from 'uuid';
 interface SurveyContentTableProps {
   questions: SurveyContentObjectType[];
   answers: string[];
-  radioBtnValues: number[];
+  radioBtnValues: string[];
+
+  // for radio button checked
+  surveyStateKeyword: string;
 
   // for survey-07-PDQ
   additionalCheckQuestionNo?: number;
@@ -63,37 +67,73 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
                   )}
               </th>
               {/* radio buttons */}
-              {props.radioBtnValues.map((radioBtnValue) => (
-                <td className={styles['question-td-radio-button-container']} key={uuidv4()}>
-                  <input
-                    type="radio"
-                    id={`${question.No}${radioBtnValue}`}
-                    name={`${question.No}`}
-                    value={radioBtnValue}
+              {props.radioBtnValues.map((radioBtnValue) =>
+                props.nonGradationStyle ? (
+                  <TableRadioBtn
+                    surveyStateKeyword={props.surveyStateKeyword}
+                    clickedQuestionNumber={question.No}
+                    radioBtnValue={radioBtnValue}
+                    nonGradationStyle={props.nonGradationStyle}
                   />
-                  <label htmlFor={`${question.No}${radioBtnValue}`}>
-                    <div
-                      className={
-                        props.nonGradationStyle
-                          ? styles['non-gradtion-radio-button']
-                          : styles['radio-button']
-                      }
-                    >
-                      <div
-                        className={
-                          props.nonGradationStyle
-                            ? styles['non-radio-button-checked-circle']
-                            : styles['radio-button-checked-circle']
-                        }
-                      />
-                    </div>
-                  </label>
-                </td>
-              ))}
+                ) : (
+                  <TableRadioBtn
+                    surveyStateKeyword={props.surveyStateKeyword}
+                    clickedQuestionNumber={question.No}
+                    radioBtnValue={radioBtnValue}
+                  />
+                )
+              )}
             </tr>
           ))}
         </tbody>
       </table>
     </article>
+  );
+}
+
+interface TableRadioBtnProps {
+  surveyStateKeyword: string;
+  clickedQuestionNumber: number;
+  radioBtnValue: string;
+
+  // for survey-12-FOOD
+  nonGradationStyle?: boolean;
+}
+
+function TableRadioBtn(props: TableRadioBtnProps) {
+  // for radio button checked
+  const surveyStateKeyword = props.surveyStateKeyword;
+  const clickedQuestionNumber = `${props.clickedQuestionNumber}`;
+  const { responseValue, handleRadioBtnChange } = useClickedRadioBtnChecked({
+    surveyStateKeyword,
+    clickedQuestionNumber,
+  });
+
+  return (
+    <td className={styles['question-td-radio-button-container']} key={uuidv4()}>
+      <input
+        type="radio"
+        id={`${props.clickedQuestionNumber}${props.radioBtnValue}`}
+        name={`${props.clickedQuestionNumber}`}
+        value={props.radioBtnValue}
+        onChange={handleRadioBtnChange}
+        checked={responseValue === props.radioBtnValue}
+      />
+      <label htmlFor={`${props.clickedQuestionNumber}${props.radioBtnValue}`}>
+        <div
+          className={
+            props.nonGradationStyle ? styles['non-gradtion-radio-button'] : styles['radio-button']
+          }
+        >
+          <div
+            className={
+              props.nonGradationStyle
+                ? styles['non-radio-button-checked-circle']
+                : styles['radio-button-checked-circle']
+            }
+          />
+        </div>
+      </label>
+    </td>
   );
 }

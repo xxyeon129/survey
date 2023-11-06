@@ -10,7 +10,13 @@ import {
 } from '../common/surveyPaginationStates';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { FOOD_ANSWERS, FOOD_QUESTIONS, FOOD_QUESTIONS_PER_PAGE } from './survey.const';
+import {
+  FOOD_ANSWERS,
+  FOOD_QUESTIONS,
+  FOOD_QUESTIONS_PER_PAGE,
+  SURVEY_12_FOOD_STATE_ANSWERS,
+  SURVEY_12_FOOD_STATE_KEYWORD,
+} from './survey.const';
 import { SURVEY_11_CONSTIPATION_TOTAL_PAGES } from '../survey-11-CONSTIPATION/survey.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
@@ -51,7 +57,8 @@ export default function Survey12Food() {
         <SurveyContentTable
           questions={currentPageQuestions}
           answers={FOOD_ANSWERS}
-          radioBtnValues={[0, 1, 2, 3, 4, 5]}
+          radioBtnValues={SURVEY_12_FOOD_STATE_ANSWERS}
+          surveyStateKeyword={SURVEY_12_FOOD_STATE_KEYWORD}
           questionExplain={true}
           nonGradationStyle={true}
         />
