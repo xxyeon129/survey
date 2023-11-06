@@ -7,7 +7,12 @@ import {
 } from '../common/surveyPaginationStates';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { BDI_ADDITIONAL_QUESTIONS_19, BDI_QUESTIONS, BDI_QUESTIONS_PER_PAGE } from './survey.const';
+import {
+  BDI_ADDITIONAL_QUESTIONS_19,
+  BDI_QUESTIONS,
+  BDI_QUESTIONS_PER_PAGE,
+  SURVEY_04_BDI_STATE_KEYWORD,
+} from './survey.const';
 import { SURVEY_03_BAI_TOTAL_PAGES } from '../survey-03-BAI/survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
@@ -76,6 +81,8 @@ function SurveyContent(props: SurveyContentType) {
                 answer={answer}
                 inputName={`${props.question.No}`}
                 inputId={`${props.question.No}${answer}`}
+                clickedQuestionNumber={`${props.question.No}`}
+                surveyStateKeyword={SURVEY_04_BDI_STATE_KEYWORD}
                 key={uuidv4()}
               />
             ))}
@@ -91,6 +98,8 @@ function SurveyContent(props: SurveyContentType) {
               <AnswerList
                 answer={answer}
                 inputName={`${props.question.No}-additional`}
+                clickedQuestionNumber={`${props.question.No}-additional`}
+                surveyStateKeyword={SURVEY_04_BDI_STATE_KEYWORD}
                 inputId={`${props.question.No}${answer}`}
                 key={uuidv4()}
               />
