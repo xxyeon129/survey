@@ -4,18 +4,19 @@ import {
   NOT_TAKE_MEDICINE,
   SURVEY_01_UPDRS_STATE_KEYWORD,
   TAKE_MEDICINE,
+  UPDRS_PRE_QUESTION,
   UPDRS_QUESTIONS,
 } from 'pages/survey/survey-01-UPDRS/survey.const';
 import { medicineDivisionList } from 'pages/survey/common/components/survey-contents/survey-contents-with-medicine-effect/surveyContent.const';
 
-export const forExcelFileSelectorSurvey01UPDRS = selector({
-  key: 'surveyDataSelector',
+export const survey01UPDRS_excelData = selector({
+  key: 'survey01UPDRS_excelData',
   get: ({ get }) => {
     const takeMedicineResponse = get(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`));
     const responseList = [
       {
         문항번호: '사전질문',
-        질문내용: '파킨슨병 약을 복용 중이신가요?',
+        질문내용: UPDRS_PRE_QUESTION.Q,
         응답내용: takeMedicineResponse,
       },
     ];

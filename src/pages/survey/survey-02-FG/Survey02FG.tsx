@@ -46,8 +46,6 @@ export default function Survey02FG() {
   // for bottom next button activate when answered "없다"
   const nextBtnDisabledCondition = preQuestionResponse === '';
 
-  console.log('TOTAL', responseStateList);
-
   // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey01CurrentPageState);
   const setNextSurveyPage = useSetRecoilState(survey03CurrentPageState);
