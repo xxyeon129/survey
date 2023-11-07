@@ -1,14 +1,14 @@
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithScore from './components/SurveyContentWithScore';
-import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey05CurrentPageState,
   survey06CurrentPageState,
   survey07CurrentPageState,
 } from '../common/surveyPaginationStates';
+import { survey06NMS_responseSelector } from './survey06NMS.selector';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { NMS_QUESTIONS, NMS_QUESTIONS_PER_PAGE, SURVEY_06_NMS_STATE_KEYWORD } from './survey.const';
@@ -37,6 +37,9 @@ export default function Survey06NMS() {
     questionsPerPage,
   });
 
+  // for bottom next button disabled
+  const responseStateList = useRecoilValue(survey06NMS_responseSelector);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {NMS_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[6].TITLE}에 관한
@@ -51,7 +54,6 @@ export default function Survey06NMS() {
       <SurveyTitle title={SURVEY_TITLE_LIST[6].TITLE} subTitle={SURVEY_TITLE_LIST[6].SUB_TITLE} />
       {surveyExplain}
 
-      {/* TO DO: 우측 점수칸 추가, 하단에 세션별 합계와 총합계 표시 */}
       {/* TO DO: 25번 문항의 경우 감소인지 증가인지 함께 표시 추가질문 */}
       <section className={styles['survey-content-wrapper']}>
         {currentPageQuestions.map((question) => (
@@ -59,12 +61,17 @@ export default function Survey06NMS() {
             question={question}
             surveyStateKeyword={SURVEY_06_NMS_STATE_KEYWORD}
             lastQuestionNumber={NMS_QUESTIONS.length}
+            // for bottom prev/next button
+            handlePrevPage={handlePrevPage}
+            handleNextPage={handleNextPage}
+            // for bottom next button disabled
+            currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+            currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
+            responseStateList={responseStateList}
             key={uuidv4()}
           />
         ))}
       </section>
-
-      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }

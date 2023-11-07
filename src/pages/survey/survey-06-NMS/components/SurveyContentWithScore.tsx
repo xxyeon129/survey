@@ -23,6 +23,7 @@ import { ExplainTextObjectType } from '../survey06NMS.type';
 // styles
 import styles from './surveyContentWithScore.module.scss';
 import { v4 as uuidv4 } from 'uuid';
+import BottomPrevNextButton from 'pages/survey/common/components/bottom-prev-next-button/BottomPrevNextButton';
 
 interface SurveyContentWithScoreProps {
   question: SurveyContentObjectType;
@@ -30,6 +31,14 @@ interface SurveyContentWithScoreProps {
 
   // for total sum score
   lastQuestionNumber: number;
+
+  // for bottom prev/next pagination button
+  handlePrevPage: () => void;
+  handleNextPage: () => void;
+  // for bottom next button disabled
+  currentPageFirstQuestionNumber: number;
+  currentPageLastQuestionNumber: number;
+  responseStateList: string[];
 }
 
 export default function SurveyContentWithScore(props: SurveyContentWithScoreProps) {
@@ -38,6 +47,14 @@ export default function SurveyContentWithScore(props: SurveyContentWithScoreProp
   const questionScore = useRecoilValue(questionScoreState(props.question.No));
   const sectionScore = useGetSectionScore(sectionNumber);
   const totalScore = useGetTotalScore();
+
+  // for bottom next button disabled
+  const currentPageResponseList = props.responseStateList.slice(
+    props.currentPageFirstQuestionNumber - 1,
+    props.currentPageLastQuestionNumber
+  );
+
+  const nextBtnDisabledCondition = currentPageResponseList.includes('-');
 
   // for display section title, section total score
   const surveySectionFirstQuestionNumber = props.question.section?.questionNumberList[0];
@@ -106,6 +123,15 @@ export default function SurveyContentWithScore(props: SurveyContentWithScoreProp
             </span>
           </p>
         </section>
+      )}
+
+      {/* bottom prev/next pagination buttons */}
+      {props.question.No === props.currentPageLastQuestionNumber && (
+        <BottomPrevNextButton
+          handleNextPage={props.handleNextPage}
+          handlePrevPage={props.handlePrevPage}
+          nextBtnDisabledCondition={nextBtnDisabledCondition}
+        />
       )}
     </article>
   );
