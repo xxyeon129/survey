@@ -22,6 +22,7 @@ export default function AnswerList(props: AnswerLiProps) {
   // for survey-06-NMS additional explain text
   const withoutNumberTargetAnswerText = props.answer.slice(3);
 
+  // for radio button checked
   const surveyStateKeyword = props.surveyStateKeyword;
   const clickedQuestionNumber = props.clickedQuestionNumber;
   const { responseValue, handleRadioBtnChange } = useClickedRadioBtnChecked({

@@ -1,6 +1,7 @@
 // components
 import AnswerList from '../answerList/AnswerList';
 import AnswerWithInput from '../answerWithInput/AnswerWithInput';
+import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
 // hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 // types
@@ -18,8 +19,18 @@ interface SurveyContentWithShortAnswersProps {
   // for radio button checked
   surveyStateKeyword: string;
 
+  // for bottom prev/next pagination button
+  handlePrevPage: () => void;
+  handleNextPage: () => void;
+  // for bottom next button disabled
+  currentPageFirstQuestionNumber: number;
+  currentPageLastQuestionNumber: number;
+  responseStateList: string[];
+
+  // for survey-05-RBD bottom next button disabled
+  havePreQuestion?: boolean;
   // for survey-10-SCOPA explain text box option, categorized questions, input type question
-  explainSectionList?: { questionNumber: number; element: () => JSX.Element; key: number }[];
+  explainSectionList?: { questionNumber: number; element: () => JSX.Element }[];
   categorizedQuestionList?: SurveyContentObjectType[];
   questionWithInput?: SurveyContentObjectType;
   answerWithInputTitleList?: string[];
@@ -31,6 +42,23 @@ interface SurveyContentWithShortAnswersProps {
 
 // survey-05-RBD, survey-10-SCOPA, survey-11-Constipation
 export default function SurveyContentWithShortAnswers(props: SurveyContentWithShortAnswersProps) {
+  // for bottom next button disabled
+  let currentPageResponseList = props.responseStateList.slice(
+    props.currentPageFirstQuestionNumber - 1,
+    props.currentPageLastQuestionNumber
+  );
+  if (props.havePreQuestion) {
+    currentPageResponseList = props.responseStateList;
+  }
+  // for survey-10-SCOPA input type question(question number 24)
+  if (props.question.No === 24 && props.showInputCondition) {
+    currentPageResponseList = props.responseStateList.slice(
+      props.currentPageFirstQuestionNumber - 1
+    );
+  }
+
+  const nextBtnDisabledCondition = currentPageResponseList.includes('');
+
   return (
     <li className={contentStyles['questions-li']}>
       {/* for explain question section text box */}
@@ -90,6 +118,7 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
                 answer={categorizedAnswer}
                 inputName={`${props.question.No}`}
                 inputId={`${props.question.No}${categorizedAnswer}`}
+                // for radio button checked
                 clickedQuestionNumber={`${props.question.No}`}
                 surveyStateKeyword={props.surveyStateKeyword}
                 key={uuidv4()}
@@ -105,6 +134,9 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
             answerWithInput={props.questionWithInput}
             answerWithInputTitleList={props.answerWithInputTitleList}
             showInputCondition={props.showInputCondition}
+            // for radio button checked
+            clickedQuestionNumber={`${props.question.No}`}
+            surveyStateKeyword={props.surveyStateKeyword}
           />
         )}
 
@@ -118,6 +150,15 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
             clickedQuestionNumber={`${props.question.No}`}
           />
         )}
+
+      {/* bottom prev/next pagination buttons */}
+      {props.question.No === props.currentPageLastQuestionNumber && (
+        <BottomPrevNextButton
+          handleNextPage={props.handleNextPage}
+          handlePrevPage={props.handlePrevPage}
+          nextBtnDisabledCondition={nextBtnDisabledCondition}
+        />
+      )}
     </li>
   );
 }
@@ -145,8 +186,8 @@ function ImageSelectAnswers(props: ImageSelectAnswersProps) {
             id={`img-answer-${imageList.key}`}
             name="img-answer"
             onChange={handleRadioBtnChange}
-            value={imageList.explain}
-            checked={responseValue === imageList.explain}
+            value={imageList.alt}
+            checked={responseValue === imageList.alt}
           />
           <label htmlFor={`img-answer-${imageList.key}`}>
             <figure>

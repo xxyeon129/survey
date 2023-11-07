@@ -1,10 +1,14 @@
+// components
+import SurveyTitle from '../common/components/survey-title/SurveyTitle';
+import SurveyContentWithShortAnswers from '../common/components/survey-contents/survey-contents-with-short-answers/SurveyContent';
 // states
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey09CurrentPageState,
   survey10CurrentPageState,
   survey11CurrentPageState,
 } from '../common/surveyPaginationStates';
+import { survey10SCOPA_responseSelector } from './survey10SCOPA.selector';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -15,10 +19,6 @@ import {
   SURVEY_10_SCOPA_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_09_TIRED_TOTAL_PAGES } from '../survey-09-TIRED/survey.const';
-// components
-import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import SurveyContentWithShortAnswers from '../common/components/survey-contents/survey-contents-with-short-answers/SurveyContent';
-import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 import useSeparateGender from './hooks/useSeparateGender';
@@ -44,6 +44,9 @@ export default function Survey10SCOPA() {
     questions,
     questionsPerPage,
   });
+
+  // for bottom next button disabled
+  const responseStateList = useRecoilValue(survey10SCOPA_responseSelector);
 
   // for separate question 22-23 by gender
   const categorizedQuestionList = useSeparateGender();
@@ -75,12 +78,17 @@ export default function Survey10SCOPA() {
             questionWithInput={SCOPA_QUESTIONS_WITH_INPUT}
             answerWithInputTitleList={SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST}
             showInputCondition={SCOPA_QUESTIONS_WITH_INPUT.A[1]}
+            // for bottom prev/next button
+            handlePrevPage={handlePrevPage}
+            handleNextPage={handleNextPage}
+            // for bottom next button disabled
+            currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+            currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
+            responseStateList={responseStateList}
             key={uuidv4()}
           />
         ))}
       </ul>
-
-      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }

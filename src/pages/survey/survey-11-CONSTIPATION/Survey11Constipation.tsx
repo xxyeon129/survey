@@ -1,14 +1,14 @@
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithShortAnswers from '../common/components/survey-contents/survey-contents-with-short-answers/SurveyContent';
-import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey10CurrentPageState,
   survey11CurrentPageState,
   survey12CurrentPageState,
 } from '../common/surveyPaginationStates';
+import { survey11Constipation_responseSelector } from './survey11Constipation.selector';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -42,6 +42,10 @@ export default function Survey11Constipation() {
     questionsPerPage,
   });
 
+  // for bottom next button disabled
+  const responseStateList = useRecoilValue(survey11Constipation_responseSelector);
+  console.log(responseStateList);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {CONSTIPATION_QUESTIONS.length}개의 문항으로 이루어진{' '}
@@ -63,12 +67,17 @@ export default function Survey11Constipation() {
             surveyStateKeyword={SURVEY_11_CONSTIPATION_STATE_KEYWORD}
             imageSelectAnswersNo={4}
             imageSelectAnswersList={CONSTIPATION_ANSWERS_04}
+            // for bottom prev/next button
+            handlePrevPage={handlePrevPage}
+            handleNextPage={handleNextPage}
+            // for bottom next button disabled
+            currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+            currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
+            responseStateList={responseStateList}
             key={uuidv4()}
           />
         ))}
       </ul>
-
-      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }

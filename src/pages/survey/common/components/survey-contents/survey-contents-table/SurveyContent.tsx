@@ -101,7 +101,7 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
         </tbody>
       </table>
 
-      {/* button prev/next pagination buttons */}
+      {/* bottom prev/next pagination buttons */}
       {props.questions.map(
         (question) =>
           question.No === props.currentPageLastQuestionNumber && (

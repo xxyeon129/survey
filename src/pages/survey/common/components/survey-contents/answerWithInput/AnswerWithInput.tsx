@@ -1,12 +1,18 @@
+import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import styles from './answerWithInput.module.scss';
-import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 interface AnswerWithInputProps {
   answerWithInput: SurveyContentObjectType;
   answerWithInputTitleList: string[];
   showInputCondition: string;
+
+  // for radio button checked
+  clickedQuestionNumber: string;
+  surveyStateKeyword: string;
 }
 
 export default function AnswerWithInput(props: AnswerWithInputProps) {
@@ -24,6 +30,9 @@ export default function AnswerWithInput(props: AnswerWithInputProps) {
               btnName={`${props.answerWithInput.No}${answerTitle}`}
               showInputCondition={props.showInputCondition}
               answerTitle={answerTitle}
+              // for radio button checked
+              clickedQuestionNumber={props.clickedQuestionNumber}
+              surveyStateKeyword={props.surveyStateKeyword}
             />
           )}
         </li>
@@ -37,13 +46,39 @@ interface RadioBtnSectionProps {
   btnName: string;
   showInputCondition: string;
   answerTitle: string;
+
+  // for radio button checked
+  clickedQuestionNumber: string;
+  surveyStateKeyword: string;
 }
 
 function RadioBtnSection(props: RadioBtnSectionProps) {
   const [showInput, setShowInput] = useState(false);
 
-  const showInputHandler = (clickedValue: string) => {
-    props.showInputCondition === clickedValue ? setShowInput(true) : setShowInput(false);
+  // for radio button checked
+  const [responseValue, setResponseValue] = useRecoilState(
+    responseState(`${props.surveyStateKeyword}-${props.clickedQuestionNumber}-${props.answerTitle}`)
+  );
+
+  const handleRadioBtnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectValue = e.target.value;
+    setResponseValue(selectValue);
+  };
+
+  useEffect(() => {
+    props.showInputCondition === responseValue ? setShowInput(true) : setShowInput(false);
+  }, [responseValue]);
+
+  // for medicine input state
+  const [responseMedicineInputValue, setResponseMedicineInputValue] = useRecoilState(
+    responseState(
+      `${props.surveyStateKeyword}-${props.clickedQuestionNumber}-${props.answerTitle}-medicineName`
+    )
+  );
+
+  const onChangeMedicineInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    setResponseMedicineInputValue(inputValue);
   };
 
   return (
@@ -56,7 +91,8 @@ function RadioBtnSection(props: RadioBtnSectionProps) {
               id={`${props.btnName}${answer}`}
               name={props.btnName}
               value={answer}
-              onClick={() => showInputHandler(answer)}
+              onChange={handleRadioBtnChange}
+              checked={responseValue === answer}
             />
             <label htmlFor={`${props.btnName}${answer}`}>
               <div className={styles['radio-button']}>
@@ -72,6 +108,8 @@ function RadioBtnSection(props: RadioBtnSectionProps) {
           <label>약 이름</label>
           <input
             type="text"
+            value={responseMedicineInputValue}
+            onChange={onChangeMedicineInput}
             placeholder={`${props.answerTitle}에 대해 복용하신 약 이름이나 성분명을 입력해주세요.`}
           />
         </div>

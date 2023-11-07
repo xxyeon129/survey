@@ -5,9 +5,9 @@ import GenderCheckSection from 'pages/survey/personalInfo/components/rightSectio
 // for explain text box before question number 8~13, 22~23, 24
 export default function useExplainSectionElements() {
   const explainSectionList = [
-    { questionNumber: 8, element: Before08SectionExplain, key: 8000 },
-    { questionNumber: 22, element: Before22SectionExplain, key: 2200 },
-    { questionNumber: 24, element: Before24SectionExplain, key: 2400 },
+    { questionNumber: 8, element: Before08SectionExplain },
+    { questionNumber: 22, element: Before22SectionExplain },
+    { questionNumber: 24, element: Before24SectionExplain },
   ];
 
   return explainSectionList;
