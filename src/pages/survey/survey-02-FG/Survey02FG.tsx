@@ -1,11 +1,16 @@
+// components
+import SurveyTitle from '../common/components/survey-title/SurveyTitle';
+import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
+import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
+import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey01CurrentPageState,
   survey02CurrentPageState,
   survey03CurrentPageState,
 } from '../common/surveyPaginationStates';
-import { haveFGSymptomState } from './Survey02FG.state';
+import { survey02FG_responseSelector } from './survey02FG.selector';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -18,11 +23,6 @@ import {
 } from './survey.const';
 import { SURVEY_01_UPDRS_TOTAL_PAGES } from '../survey-01-UPDRS/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
-// components
-import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
-import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
-import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 import useRouteToNextSurvey from './hooks/useRouteToNextSurvey';
@@ -31,9 +31,6 @@ import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Survey02FG() {
-  // for pre-question check
-  const [haveFGSymptom, setHaveFGSymptom] = useRecoilState(haveFGSymptomState);
-
   // for route to next survey when click bottom next button in condition answered "없음" to pre-question
   const currentSurveyIndex = 2;
   const nextSurveyPath = PATH_URL.SURVEY['03_BAI'];
@@ -42,15 +39,14 @@ export default function Survey02FG() {
     nextSurveyPath,
   });
 
-  // for answer pre-question
-  const onClickPreQuestionRadioBtn = (clickedRadioBtnLabel: string) => {
-    if (clickedRadioBtnLabel === HAVE_NO_FG_SYMPTOM) {
-      setHaveFGSymptom(HAVE_NO_FG_SYMPTOM);
-      routeToNextSurvey();
-    } else if (clickedRadioBtnLabel === HAVE_FG_SYMPTOM) {
-      setHaveFGSymptom(HAVE_FG_SYMPTOM);
-    }
-  };
+  // for bottom next button disabled
+  const responseStateList = useRecoilValue(survey02FG_responseSelector);
+  // for display questions only when answered pre-question
+  const preQuestionResponse = responseStateList[0];
+  // for bottom next button activate when answered "없다"
+  const nextBtnDisabledCondition = preQuestionResponse === '';
+
+  console.log('TOTAL', responseStateList);
 
   // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey01CurrentPageState);
@@ -60,7 +56,7 @@ export default function Survey02FG() {
   const questions = FG_QUESTIONS;
   const questionsPerPage = FG_QUESTIONS_PER_PAGE;
   // for route to next survey when click bottom next button in condition answered "없음" to pre-question
-  const conditionToRouteNextSurvey = haveFGSymptom === HAVE_NO_FG_SYMPTOM;
+  const conditionToRouteNextSurvey = preQuestionResponse === HAVE_NO_FG_SYMPTOM;
 
   const { currentPageQuestions, handleNextPage, handlePrevPage } = usePagination({
     setPrevSurveyPage,
@@ -94,24 +90,41 @@ export default function Survey02FG() {
       {/* for pre-question */}
       <PreQuestion
         question={FG_PRE_QUESTION}
-        onClickPreQuestionRadioBtn={onClickPreQuestionRadioBtn}
-        defaultCheckedLabel={haveFGSymptom}
+        clickedQuestionNumber="pre"
+        surveyStateKeyword={SURVEY_02_FG_STATE_KEYWORD}
+        routeToNextSurvey={routeToNextSurvey}
       />
 
       {/* for display questions only when answered "있다" in pre-question */}
-      {haveFGSymptom === HAVE_FG_SYMPTOM && (
+      {preQuestionResponse === HAVE_FG_SYMPTOM && (
         <>
           {currentPageQuestions.map((question) => (
             <SurveyContentWithMedicineEffect
               question={question}
               surveyStateKeyword={SURVEY_02_FG_STATE_KEYWORD}
+              // for bottom prev/next button
+              handlePrevPage={handlePrevPage}
+              handleNextPage={handleNextPage}
+              // for bottom next button disabled
+              currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+              currentPageLastQuestionNumber={
+                currentPageQuestions[currentPageQuestions.length - 1].No
+              }
+              responseStateList={responseStateList}
               key={uuidv4()}
             />
           ))}
         </>
       )}
 
-      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
+      {/* bottom prev/next pagination buttons when answered "없다" in pre-question  */}
+      {preQuestionResponse !== HAVE_FG_SYMPTOM && (
+        <BottomPrevNextButton
+          handleNextPage={handleNextPage}
+          handlePrevPage={handlePrevPage}
+          nextBtnDisabledCondition={nextBtnDisabledCondition}
+        />
+      )}
     </article>
   );
 }

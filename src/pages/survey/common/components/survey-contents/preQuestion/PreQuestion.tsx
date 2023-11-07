@@ -9,14 +9,21 @@ interface PreQuestionProps {
   // for radio button checked
   clickedQuestionNumber: string;
   surveyStateKeyword: string;
+
+  // for survey-02-FG route to next survey
+  routeToNextSurvey?: () => void;
 }
 
 export default function PreQuestion(props: PreQuestionProps) {
   const surveyStateKeyword = props.surveyStateKeyword;
   const clickedQuestionNumber = props.clickedQuestionNumber;
+  // for survey-02-FG route to next survey
+  const routeToNextSurvey = props.routeToNextSurvey;
+
   const { responseValue, handleRadioBtnChange } = useClickedRadioBtnChecked({
     surveyStateKeyword,
     clickedQuestionNumber,
+    routeToNextSurvey,
   });
 
   return (

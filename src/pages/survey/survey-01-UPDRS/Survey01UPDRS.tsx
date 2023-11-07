@@ -1,25 +1,22 @@
-// states
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import {
-  survey01CurrentPageState,
-  survey02CurrentPageState,
-} from '../common/surveyPaginationStates';
-import { takeMedicineState } from './survey01UPDRS.state';
-// constants
-import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import {
-  NOT_TAKE_MEDICINE,
-  SURVEY_01_UPDRS_STATE_KEYWORD,
-  TAKE_MEDICINE,
-  UPDRS_PRE_QUESTION,
-  UPDRS_QUESTIONS,
-  UPDRS_QUESTIONS_PER_PAGE,
-} from './survey.const';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
-import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
+// states
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import {
+  survey01CurrentPageState,
+  survey02CurrentPageState,
+} from '../common/surveyPaginationStates';
+import { survey01UPDRS_responseSelector } from './survey01UPDRS.selector';
+// constants
+import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
+import {
+  SURVEY_01_UPDRS_STATE_KEYWORD,
+  UPDRS_PRE_QUESTION,
+  UPDRS_QUESTIONS,
+  UPDRS_QUESTIONS_PER_PAGE,
+} from './survey.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 // styles
@@ -27,18 +24,6 @@ import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Survey01UPDRS() {
-  // for pre-question check
-  const [takeMedicine, setTakeMedicine] = useRecoilState(takeMedicineState);
-
-  // for answer pre-question
-  const onClickPreQuestionRadioBtn = (clickedRadioBtnLabel: string) => {
-    if (clickedRadioBtnLabel === NOT_TAKE_MEDICINE) {
-      setTakeMedicine(NOT_TAKE_MEDICINE);
-    } else if (clickedRadioBtnLabel === TAKE_MEDICINE) {
-      setTakeMedicine(TAKE_MEDICINE);
-    }
-  };
-
   // pagination hook props
   const setNextSurveyPage = useSetRecoilState(survey02CurrentPageState);
   const prevSurveyTotalPages = 0;
@@ -53,6 +38,11 @@ export default function Survey01UPDRS() {
     questions,
     questionsPerPage,
   });
+
+  // for bottom next button disabled
+  const responseStateList = useRecoilValue(survey01UPDRS_responseSelector);
+  // for display questions only when answered pre-question
+  const preQuestionResponse = responseStateList[0];
 
   const surveyExplain = (
     <p className={styles.explain}>
@@ -70,24 +60,31 @@ export default function Survey01UPDRS() {
       {/* for pre-question */}
       <PreQuestion
         question={UPDRS_PRE_QUESTION}
-        onClickPreQuestionRadioBtn={onClickPreQuestionRadioBtn}
-        defaultCheckedLabel={takeMedicine}
+        clickedQuestionNumber="pre"
+        surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
       />
 
       {/* for display questions only when answered pre-question */}
-      {takeMedicine !== null && (
+      {preQuestionResponse !== '' && (
         <>
           {currentPageQuestions.map((question) => (
             <SurveyContentWithMedicineEffect
               question={question}
               surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
+              // for bottom prev/next button
+              handlePrevPage={handlePrevPage}
+              handleNextPage={handleNextPage}
+              // for bottom next button disabled
+              currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+              currentPageLastQuestionNumber={
+                currentPageQuestions[currentPageQuestions.length - 1].No
+              }
+              responseStateList={responseStateList}
               key={uuidv4()}
             />
           ))}
         </>
       )}
-
-      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }
