@@ -9,6 +9,7 @@ import {
   survey02CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey01UPDRS_responseSelector } from './survey01UPDRS.selector';
+import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -43,6 +44,10 @@ export default function Survey01UPDRS() {
   const responseStateList = useRecoilValue(survey01UPDRS_responseSelector);
   // for display questions only when answered pre-question
   const preQuestionResponse = responseStateList[0];
+
+  // for apply uploaded excel file progress
+  const uploadedExcelFileData = useRecoilValue(uploadedResponseStates(SURVEY_TITLE_LIST[1].TITLE));
+  console.log('업로드된 파일 -> ', uploadedExcelFileData);
 
   const surveyExplain = (
     <p className={styles.explain}>
@@ -80,6 +85,8 @@ export default function Survey01UPDRS() {
                 currentPageQuestions[currentPageQuestions.length - 1].No
               }
               responseStateList={responseStateList}
+              // for apply uploaded excel file progress
+              uploadedExcelFileData={uploadedExcelFileData}
               key={uuidv4()}
             />
           ))}
