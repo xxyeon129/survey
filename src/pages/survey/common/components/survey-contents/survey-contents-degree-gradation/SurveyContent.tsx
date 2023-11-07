@@ -2,12 +2,21 @@ import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 import styles from './surveyContent.module.scss';
 import { v4 as uuidv4 } from 'uuid';
+import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
 
 interface SurveyContentDegreeGradationProps {
   question: SurveyContentObjectType;
   answers: string[];
   exceptionalAnswers?: string[];
   exceptionalNo?: number;
+
+  // for bottom prev/next pagination button
+  handlePrevPage: () => void;
+  handleNextPage: () => void;
+  // for bottom next button disabled
+  currentPageFirstQuestionNumber: number;
+  currentPageLastQuestionNumber: number;
+  responseStateList: string[];
 
   // for button checked
   surveyStateKeyword: string;
@@ -16,6 +25,13 @@ interface SurveyContentDegreeGradationProps {
 // survey-08-PDSS
 export default function SurveyContentDegreeGradation(props: SurveyContentDegreeGradationProps) {
   const degreesList = Array.from({ length: 11 }, (_, index) => index);
+
+  // for bottom next button disabled
+  const currentPageResponseList = props.responseStateList.slice(
+    props.currentPageFirstQuestionNumber - 1,
+    props.currentPageLastQuestionNumber
+  );
+  const nextBtnDisabledCondition = currentPageResponseList.includes('');
 
   return (
     <article className={styles['survey-content-container']}>
@@ -67,6 +83,15 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
         ))}
       </ul>
       <hr className={styles['bottom-hr']} />
+
+      {/* bottom prev/next pagination buttons */}
+      {props.question.No === props.currentPageLastQuestionNumber && (
+        <BottomPrevNextButton
+          handleNextPage={props.handleNextPage}
+          handlePrevPage={props.handlePrevPage}
+          nextBtnDisabledCondition={nextBtnDisabledCondition}
+        />
+      )}
     </article>
   );
 }
@@ -92,9 +117,9 @@ function DegreeBtn(props: DegreeBtnProps) {
         type="radio"
         name={`${props.questionNumber}`}
         id={`${props.questionNumber}${props.degree}`}
-        value={`QuestionNo${props.questionNumber}-${props.degree}`}
+        value={`${props.degree}점`}
         onChange={handleRadioBtnChange}
-        checked={responseValue === `QuestionNo${props.questionNumber}-${props.degree}`}
+        checked={responseValue === `${props.degree}점`}
       />
     </label>
   );

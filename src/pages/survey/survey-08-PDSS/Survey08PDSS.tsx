@@ -1,14 +1,14 @@
 // components
-import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentDegreeGradation from '../common/components/survey-contents/survey-contents-degree-gradation/SurveyContent';
 // states
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey07CurrentPageState,
   survey08CurrentPageState,
   survey09CurrentPageState,
 } from '../common/surveyPaginationStates';
+import { survey08PDSS_responseSelector } from './survey08PDSS.selector';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -43,6 +43,9 @@ export default function Survey08PDSS() {
     questionsPerPage,
   });
 
+  // for bottom next button disabled
+  const responseStateList = useRecoilValue(survey08PDSS_responseSelector);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {PDSS_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[8].TITLE}에 관한
@@ -67,12 +70,17 @@ export default function Survey08PDSS() {
             exceptionalAnswers={PDSS_ANSWERS_01}
             exceptionalNo={1}
             surveyStateKeyword={SURVEY_08_PDSS_STATE_KEYWORD}
+            // for bottom prev/next button
+            handlePrevPage={handlePrevPage}
+            handleNextPage={handleNextPage}
+            // for bottom next button disabled
+            currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+            currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
+            responseStateList={responseStateList}
             key={uuidv4()}
           />
         ))}
       </section>
-
-      <BottomPrevNextButton handleNextPage={handleNextPage} handlePrevPage={handlePrevPage} />
     </article>
   );
 }
