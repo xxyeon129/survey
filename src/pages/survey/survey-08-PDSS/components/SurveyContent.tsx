@@ -1,8 +1,12 @@
-import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+// components
+import BottomPrevNextButton from '../../common/components/bottom-prev-next-button/BottomPrevNextButton';
+// hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
+// types
+import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+// styles
 import styles from './surveyContent.module.scss';
 import { v4 as uuidv4 } from 'uuid';
-import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
 
 interface SurveyContentDegreeGradationProps {
   question: SurveyContentObjectType;

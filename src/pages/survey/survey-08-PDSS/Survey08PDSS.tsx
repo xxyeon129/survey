@@ -1,6 +1,6 @@
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import SurveyContentDegreeGradation from '../common/components/survey-contents/survey-contents-degree-gradation/SurveyContent';
+import SurveyContentDegreeGradation from './components/SurveyContent';
 // states
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
