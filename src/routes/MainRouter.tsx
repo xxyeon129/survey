@@ -4,7 +4,7 @@ import Layout from 'common/layout/Layout';
 // pages
 import LoginPage from 'pages/login/LoginPage';
 import MainPage from 'pages/main/MainPage';
-import Test from 'pages/Test';
+import Test from 'pages/test/Test';
 import NotFound from 'pages/error/NotFound';
 import PersonalInfo from 'pages/survey/personalInfo/PersonalInfo';
 import Survey01UPDRS from 'pages/survey/survey-01-UPDRS/Survey01UPDRS';
