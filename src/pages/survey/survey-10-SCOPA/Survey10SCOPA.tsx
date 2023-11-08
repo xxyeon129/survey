@@ -9,6 +9,7 @@ import {
   survey11CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey10SCOPA_responseSelector } from './survey10SCOPA.selector';
+import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -54,6 +55,11 @@ export default function Survey10SCOPA() {
   // for explain text box before question number 8~13, 22~23, 24
   const explainSectionList = useExplainSectionElements();
 
+  // for apply uploaded excel file response
+  const uploadedExcelFileDataList = useRecoilValue(
+    uploadedResponseStates(SURVEY_TITLE_LIST[10].TITLE)
+  );
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {SCOPA_QUESTIONS.length}개의 문항으로 이루어진{' '}
@@ -85,6 +91,8 @@ export default function Survey10SCOPA() {
             currentPageFirstQuestionNumber={currentPageQuestions[0].No}
             currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
             responseStateList={responseStateList}
+            // for apply uploaded excel file progress
+            uploadedExcelFileDataList={uploadedExcelFileDataList}
             key={uuidv4()}
           />
         ))}

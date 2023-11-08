@@ -86,7 +86,7 @@ export default function Survey01UPDRS() {
               }
               responseStateList={responseStateList}
               // for apply uploaded excel file progress
-              uploadedExcelFileData={uploadedExcelFileData}
+              // uploadedExcelFileData={uploadedExcelFileData}
               key={uuidv4()}
             />
           ))}

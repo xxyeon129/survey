@@ -76,8 +76,15 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
   const [uploadedExcelDataAnswer, setUploadedExcelDataAnswer] = useState('');
   useEffect(() => {
     if (props.uploadedExcelFileDataList.length > 0 && responseValue.length === 0) {
-      setUploadedExcelDataAnswer(props.uploadedExcelFileDataList[props.question.No].응답내용);
-      setResponseValue(props.uploadedExcelFileDataList[props.question.No].응답내용);
+      if (props.havePreQuestion) {
+        // for survey-05-RBD pre question index setting
+        setUploadedExcelDataAnswer(props.uploadedExcelFileDataList[props.question.No].응답내용);
+        setResponseValue(props.uploadedExcelFileDataList[props.question.No].응답내용);
+      } else {
+        // for not have pre question page index setting
+        setUploadedExcelDataAnswer(props.uploadedExcelFileDataList[props.question.No - 1].응답내용);
+        setResponseValue(props.uploadedExcelFileDataList[props.question.No - 1].응답내용);
+      }
     }
   }, []);
 
@@ -158,6 +165,7 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
       {props.question.No === props.questionWithInput?.No &&
         props.answerWithInputTitleList &&
         props.showInputCondition && (
+          // TO DO: survey-10-SCOPA input type 마지막 질문 엑셀 반영
           <AnswerWithInput
             answerWithInput={props.questionWithInput}
             answerWithInputTitleList={props.answerWithInputTitleList}
