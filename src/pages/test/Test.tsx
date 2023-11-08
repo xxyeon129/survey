@@ -6,6 +6,7 @@ import { uploadedResponseStates } from './uploadedResponseDataStates/uploadedRes
 import { survey01UPDRS_excelData } from './responseDataSelectors/survey01UPDRS_excelData';
 import { survey02FG_excelData } from './responseDataSelectors/survey02FG_excelData';
 import { survey03BAI_excelData } from './responseDataSelectors/survey03BAI_excelData';
+import { survey04BDI_excelData } from './responseDataSelectors/survey04BDI_excelData';
 import { survey05RBD_excelData } from './responseDataSelectors/survey05RBD_excelData';
 import { survey07PDQ_excelData } from './responseDataSelectors/survey07PDQ_excelData';
 import { survey09Tired_excelData } from './responseDataSelectors/survey09Tired_excelData';
@@ -17,6 +18,7 @@ export default function Test() {
   const survey01UPDRS_ResponseList = useRecoilValue(survey01UPDRS_excelData);
   const survey02FG_ResponseList = useRecoilValue(survey02FG_excelData);
   const survey03BAI_ResponseList = useRecoilValue(survey03BAI_excelData);
+  const survey04BDI_ResponseList = useRecoilValue(survey04BDI_excelData);
   const survey05RBD_ResponseList = useRecoilValue(survey05RBD_excelData);
   const survey09Tired_ResponseList = useRecoilValue(survey09Tired_excelData);
   const survey07PDQ_ResponseList = useRecoilValue(survey07PDQ_excelData);
@@ -34,6 +36,9 @@ export default function Test() {
   );
   const setUploadedSurvey03BAI = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[3].TITLE)
+  );
+  const setUploadedSurvey04BDI = useSetRecoilState(
+    uploadedResponseStates(SURVEY_TITLE_LIST[4].TITLE)
   );
   const setUploadedSurvey05RBD = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[5].TITLE)
@@ -60,6 +65,7 @@ export default function Test() {
   const worksheetSurvey01UPDRS = XLSX.utils.json_to_sheet(survey01UPDRS_ResponseList);
   const worksheetSurvey02FG = XLSX.utils.json_to_sheet(survey02FG_ResponseList);
   const worksheetSurvey03BAI = XLSX.utils.json_to_sheet(survey03BAI_ResponseList);
+  const worksheetSurvey04BDI = XLSX.utils.json_to_sheet(survey04BDI_ResponseList);
   const worksheetSurvey05RBD = XLSX.utils.json_to_sheet(survey05RBD_ResponseList);
   const worksheetSurvey07PDQ = XLSX.utils.json_to_sheet(survey07PDQ_ResponseList);
   const worksheetSurvey09Tired = XLSX.utils.json_to_sheet(survey09Tired_ResponseList);
@@ -71,6 +77,7 @@ export default function Test() {
     XLSX.utils.book_append_sheet(workbook, worksheetSurvey01UPDRS, SURVEY_TITLE_LIST[1].TITLE);
     XLSX.utils.book_append_sheet(workbook, worksheetSurvey02FG, SURVEY_TITLE_LIST[2].TITLE);
     XLSX.utils.book_append_sheet(workbook, worksheetSurvey03BAI, SURVEY_TITLE_LIST[3].TITLE);
+    XLSX.utils.book_append_sheet(workbook, worksheetSurvey04BDI, SURVEY_TITLE_LIST[4].TITLE);
     XLSX.utils.book_append_sheet(workbook, worksheetSurvey05RBD, SURVEY_TITLE_LIST[5].TITLE);
     XLSX.utils.book_append_sheet(workbook, worksheetSurvey07PDQ, SURVEY_TITLE_LIST[7].TITLE);
     XLSX.utils.book_append_sheet(workbook, worksheetSurvey09Tired, SURVEY_TITLE_LIST[9].TITLE);
@@ -120,31 +127,36 @@ export default function Test() {
             const survey03BAI_jsonData = XLSX.utils.sheet_to_json(survey03BAI_uploadedWorksheet);
             setUploadedSurvey03BAI(survey03BAI_jsonData);
 
-            const survey05RBD_sheetName = workbook.SheetNames[3];
+            const survey04BDI_sheetName = workbook.SheetNames[3];
+            const survey04BDI_uploadedWorksheet = workbook.Sheets[survey04BDI_sheetName];
+            const survey04BDI_jsonData = XLSX.utils.sheet_to_json(survey04BDI_uploadedWorksheet);
+            setUploadedSurvey04BDI(survey04BDI_jsonData);
+
+            const survey05RBD_sheetName = workbook.SheetNames[4];
             const survey05RBD_uploadedWorksheet = workbook.Sheets[survey05RBD_sheetName];
             const survey05RBD_jsonData = XLSX.utils.sheet_to_json(survey05RBD_uploadedWorksheet);
             setUploadedSurvey05RBD(survey05RBD_jsonData);
 
-            const survey07PDQ_sheetName = workbook.SheetNames[4];
+            const survey07PDQ_sheetName = workbook.SheetNames[5];
             const survey07PDQ_uploadedWorksheet = workbook.Sheets[survey07PDQ_sheetName];
             const survey07PDQ_jsonData = XLSX.utils.sheet_to_json(survey07PDQ_uploadedWorksheet);
             setUploadedSurvey07PDQ(survey07PDQ_jsonData);
 
-            const survey09Tired_sheetName = workbook.SheetNames[5];
+            const survey09Tired_sheetName = workbook.SheetNames[6];
             const survey09Tired_uploadedWorksheet = workbook.Sheets[survey09Tired_sheetName];
             const survey09Tired_jsonData = XLSX.utils.sheet_to_json(
               survey09Tired_uploadedWorksheet
             );
             setUploadedSurvey09Tired(survey09Tired_jsonData);
 
-            const survey10SCOPA_sheetName = workbook.SheetNames[6];
+            const survey10SCOPA_sheetName = workbook.SheetNames[7];
             const survey10SCOPA_uploadedWorksheet = workbook.Sheets[survey10SCOPA_sheetName];
             const survey10SCOPA_jsonData = XLSX.utils.sheet_to_json(
               survey10SCOPA_uploadedWorksheet
             );
             setUploadedSurvey10SCOPA(survey10SCOPA_jsonData);
 
-            const survey11Constipation_sheetName = workbook.SheetNames[7];
+            const survey11Constipation_sheetName = workbook.SheetNames[8];
             const survey11Constipation_uploadedWorksheet =
               workbook.Sheets[survey11Constipation_sheetName];
             const survey11Constipation_jsonData = XLSX.utils.sheet_to_json(
@@ -152,7 +164,7 @@ export default function Test() {
             );
             setUploadedSurvey11Constipation(survey11Constipation_jsonData);
 
-            const survey12Food_sheetName = workbook.SheetNames[8];
+            const survey12Food_sheetName = workbook.SheetNames[9];
             const survey12Food_uploadedWorksheet = workbook.Sheets[survey12Food_sheetName];
             const survey12Food_jsonData = XLSX.utils.sheet_to_json(survey12Food_uploadedWorksheet);
             setUploadedSurvey12Food(survey12Food_jsonData);
