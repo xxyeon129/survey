@@ -7,12 +7,14 @@ import { useRef } from 'react';
 import { uploadedResponseStates } from './uploadedResponseDataStates/uploadedResponseData.state';
 import { survey05RBD_excelData } from './responseDataSelectors/survey05RBD_excelData';
 import { survey10SCOPA_excelData } from './responseDataSelectors/survey10SCOPA_excelData';
+import { survey11Constipation_excelData } from './responseDataSelectors/survey11Constipation_excelData';
 
 export default function Test() {
   const survey01UPDRS_ResponseList = useRecoilValue(survey01UPDRS_excelData);
   const survey02FG_ResponseList = useRecoilValue(survey02FG_excelData);
   const survey05RBD_ResponseList = useRecoilValue(survey05RBD_excelData);
   const survey10SCOPA_ResponseList = useRecoilValue(survey10SCOPA_excelData);
+  const survey11Constipation_ResponseList = useRecoilValue(survey11Constipation_excelData);
 
   // console.log(survey02FG_ResponseList);
 
@@ -28,6 +30,9 @@ export default function Test() {
   const setUploadedSurvey10SCOPA = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[10].TITLE)
   );
+  const setUploadedSurvey11Constipation = useSetRecoilState(
+    uploadedResponseStates(SURVEY_TITLE_LIST[11].TITLE)
+  );
 
   // create excel file ------------------------------------------
   const workbook = XLSX.utils.book_new();
@@ -36,12 +41,18 @@ export default function Test() {
   const worksheetSurvey02FG = XLSX.utils.json_to_sheet(survey02FG_ResponseList);
   const worksheetSurvey05RBD = XLSX.utils.json_to_sheet(survey05RBD_ResponseList);
   const worksheetSurvey10SCOPA = XLSX.utils.json_to_sheet(survey10SCOPA_ResponseList);
+  const worksheetSurvey11Constipation = XLSX.utils.json_to_sheet(survey11Constipation_ResponseList);
 
   const downloadExcelFileHandler = () => {
     XLSX.utils.book_append_sheet(workbook, worksheetSurvey01UPDRS, SURVEY_TITLE_LIST[1].TITLE);
     XLSX.utils.book_append_sheet(workbook, worksheetSurvey02FG, SURVEY_TITLE_LIST[2].TITLE);
     XLSX.utils.book_append_sheet(workbook, worksheetSurvey05RBD, SURVEY_TITLE_LIST[5].TITLE);
     XLSX.utils.book_append_sheet(workbook, worksheetSurvey10SCOPA, SURVEY_TITLE_LIST[10].TITLE);
+    XLSX.utils.book_append_sheet(
+      workbook,
+      worksheetSurvey11Constipation,
+      SURVEY_TITLE_LIST[11].TITLE
+    );
 
     XLSX.writeFile(workbook, 'test.xlsx');
   };
@@ -94,6 +105,14 @@ export default function Test() {
               survey10SCOPA_uploadedWorksheet
             );
             setUploadedSurvey10SCOPA(survey10SCOPA_jsonData);
+
+            const survey11Constipation_sheetName = workbook.SheetNames[4];
+            const survey11Constipation_uploadedWorksheet =
+              workbook.Sheets[survey11Constipation_sheetName];
+            const survey11Constipation_jsonData = XLSX.utils.sheet_to_json(
+              survey11Constipation_uploadedWorksheet
+            );
+            setUploadedSurvey11Constipation(survey11Constipation_jsonData);
           }
         };
         reader.readAsArrayBuffer(uploadedFileValue);

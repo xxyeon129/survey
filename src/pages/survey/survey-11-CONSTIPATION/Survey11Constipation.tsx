@@ -23,6 +23,7 @@ import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
+import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
 
 export default function Survey11Constipation() {
   // pagination hook props
@@ -44,7 +45,11 @@ export default function Survey11Constipation() {
 
   // for bottom next button disabled
   const responseStateList = useRecoilValue(survey11Constipation_responseSelector);
-  console.log(responseStateList);
+
+  // for apply uploaded excel file response
+  const uploadedExcelFileDataList = useRecoilValue(
+    uploadedResponseStates(SURVEY_TITLE_LIST[11].TITLE)
+  );
 
   const surveyExplain = (
     <p className={styles.explain}>
@@ -74,6 +79,8 @@ export default function Survey11Constipation() {
             currentPageFirstQuestionNumber={currentPageQuestions[0].No}
             currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
             responseStateList={responseStateList}
+            // for apply uploaded excel file progress
+            uploadedExcelFileDataList={uploadedExcelFileDataList}
             key={uuidv4()}
           />
         ))}
