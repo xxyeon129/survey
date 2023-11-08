@@ -4,7 +4,7 @@ import PreQuestion from '../common/components/survey-contents/preQuestion/PreQue
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey01CurrentPageState,
   survey02CurrentPageState,
@@ -29,6 +29,9 @@ import useRouteToNextSurvey from './hooks/useRouteToNextSurvey';
 // styles
 import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
+import { responseState } from '../common/states/surveyResponse.state';
+import { useEffect, useState } from 'react';
+import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
 
 export default function Survey02FG() {
   // for route to next survey when click bottom next button in condition answered "없음" to pre-question
@@ -67,6 +70,39 @@ export default function Survey02FG() {
     routeToNextSurvey,
   });
 
+  // for apply uploaded excel file progress
+  const uploadedExcelFileRawData = useRecoilValue(
+    uploadedResponseStates(SURVEY_TITLE_LIST[2].TITLE)
+  );
+
+  const uploadedExcelFileDataList_NotTakeMedicine = [...uploadedExcelFileRawData];
+
+  // for separate uploaded excel file data list according to responded "복용 중이다" pre-question
+  const uploadedExcelFileDataList_TakeMedicine: (
+    | { [key: string]: string }
+    | [{ [key: string]: string }, { [key: string]: string }]
+  )[] = [uploadedExcelFileRawData[0]];
+  for (let i = 1; i <= uploadedExcelFileRawData.length; i += 2) {
+    uploadedExcelFileDataList_TakeMedicine.push([
+      uploadedExcelFileRawData[i],
+      uploadedExcelFileRawData[i + 1],
+    ]);
+  }
+
+  // for pre-question radio button checked according to uploaded excel file progress
+  const [preQuestionResponseValue, setPreQuestionResponseValue] = useRecoilState(
+    responseState(`${SURVEY_02_FG_STATE_KEYWORD}-pre`)
+  );
+  const [uploadedExcelDataPreQuestionAnswer, setUploadedExcelDataPreQuestionAnswer] = useState('');
+
+  useEffect(() => {
+    // for pre-question radio button checked according to uploaded excel file progress
+    if (uploadedExcelFileRawData.length > 0 && preQuestionResponseValue.length === 0) {
+      setUploadedExcelDataPreQuestionAnswer(uploadedExcelFileRawData[0].응답내용);
+      setPreQuestionResponseValue(uploadedExcelFileRawData[0].응답내용);
+    }
+  }, []);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {FG_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[2].TITLE.slice(0, 4)}에 관한
@@ -91,6 +127,9 @@ export default function Survey02FG() {
         clickedQuestionNumber="pre"
         surveyStateKeyword={SURVEY_02_FG_STATE_KEYWORD}
         routeToNextSurvey={routeToNextSurvey}
+        // for apply uploaded excel file progress
+        uploadedExcelDataPreQuestionAnswer={uploadedExcelDataPreQuestionAnswer}
+        setUploadedExcelDataPreQuestionAnswer={setUploadedExcelDataPreQuestionAnswer}
       />
 
       {/* for display questions only when answered "있다" in pre-question */}
@@ -109,6 +148,9 @@ export default function Survey02FG() {
                 currentPageQuestions[currentPageQuestions.length - 1].No
               }
               responseStateList={responseStateList}
+              // for apply uploaded excel file progress
+              uploadedExcelFileDataList_NotTakeMedicine={uploadedExcelFileDataList_NotTakeMedicine}
+              uploadedExcelFileDataList_TakeMedicine={uploadedExcelFileDataList_TakeMedicine}
               key={uuidv4()}
             />
           ))}

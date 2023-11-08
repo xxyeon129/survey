@@ -16,6 +16,7 @@ import { medicineDivisionList } from 'pages/survey/common/components/survey-cont
 export const survey02FG_excelData = selector({
   key: 'survey02FG_excelData',
   get: ({ get }) => {
+    // for pre question
     const takeMedicineResponse = get(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`));
     const haveFGSymptomResponse = get(responseState(`${SURVEY_02_FG_STATE_KEYWORD}-pre`));
     const responseList = [
@@ -25,7 +26,8 @@ export const survey02FG_excelData = selector({
         응답내용: haveFGSymptomResponse,
       },
     ];
-    // responded "없다" in pre-question
+
+    // responded "있다" in pre-question
     if (haveFGSymptomResponse === HAVE_FG_SYMPTOM) {
       for (let i = 1; i <= FG_QUESTIONS.length; i++) {
         if (takeMedicineResponse === TAKE_MEDICINE) {

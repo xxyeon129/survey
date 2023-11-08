@@ -22,6 +22,7 @@ import { UploadedResponseDataType } from 'pages/test/types/uploadedResponseData.
 // styles
 import styles from './surveyContent.module.scss';
 import { v4 as uuidv4 } from 'uuid';
+import { HAVE_FG_SYMPTOM } from 'pages/survey/survey-02-FG/survey.const';
 
 interface SurveyContentWithMedicineEffectProps {
   question: SurveyContentObjectType;
@@ -101,7 +102,8 @@ export default function SurveyContentWithMedicineEffect(
     if (
       takeMedicineResponse === NOT_TAKE_MEDICINE &&
       props.uploadedExcelFileDataList_NotTakeMedicine.length > 0 &&
-      props.uploadedExcelFileDataList_NotTakeMedicine[0].응답내용 === NOT_TAKE_MEDICINE &&
+      (props.uploadedExcelFileDataList_NotTakeMedicine[0].응답내용 === NOT_TAKE_MEDICINE ||
+        props.uploadedExcelFileDataList_NotTakeMedicine[0].응답내용 === HAVE_FG_SYMPTOM) &&
       notTakeMedicineResponseValue.length === 0
     ) {
       setUploadedExcelDataAnswer(
@@ -114,7 +116,8 @@ export default function SurveyContentWithMedicineEffect(
     if (
       takeMedicineResponse === TAKE_MEDICINE &&
       props.uploadedExcelFileDataList_TakeMedicine.length > 0 &&
-      props.uploadedExcelFileDataList_NotTakeMedicine[0].응답내용 === TAKE_MEDICINE
+      (props.uploadedExcelFileDataList_NotTakeMedicine[0].응답내용 === TAKE_MEDICINE ||
+        props.uploadedExcelFileDataList_NotTakeMedicine[0].응답내용 === HAVE_FG_SYMPTOM)
     ) {
       if (takeMedicineEffectTrueResponseValue.length === 0) {
         const response = props.uploadedExcelFileDataList_TakeMedicine[props.question.No][0] as {
