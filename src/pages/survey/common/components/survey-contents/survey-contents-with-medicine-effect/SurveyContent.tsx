@@ -1,11 +1,16 @@
+import { useEffect, useState } from 'react';
 // components
 import AnswerList from '../answerList/AnswerList';
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // constants
-import { medicineDivisionList } from './surveyContent.const';
+import {
+  MEDICINE_EFFECT_FALSE,
+  MEDICINE_EFFECT_TRUE,
+  medicineDivisionList,
+} from './surveyContent.const';
 import {
   NOT_TAKE_MEDICINE,
   SURVEY_01_UPDRS_STATE_KEYWORD,
@@ -13,6 +18,7 @@ import {
 } from 'pages/survey/survey-01-UPDRS/survey.const';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+import { UploadedResponseDataType } from 'pages/test/types/uploadedResponseData.type';
 // styles
 import styles from './surveyContent.module.scss';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,6 +34,10 @@ interface SurveyContentWithMedicineEffectProps {
   currentPageFirstQuestionNumber: number;
   currentPageLastQuestionNumber: number;
   responseStateList: string[];
+
+  // for apply uploaded excel file progress
+  uploadedExcelFileDataList_NotTakeMedicine: UploadedResponseDataType[];
+  uploadedExcelFileDataList_TakeMedicine: [UploadedResponseDataType, UploadedResponseDataType][];
 }
 
 // survey-01-UPDRS, survey-02-FG
@@ -69,6 +79,57 @@ export default function SurveyContentWithMedicineEffect(
 
   const nextBtnDisabledCondition = currentPageResponseList.includes('');
 
+  // for create responseState when uploaded excel file exist
+  const [notTakeMedicineResponseValue, setNotTakeMedicineResponseValue] = useRecoilState(
+    responseState(`${props.surveyStateKeyword}-${props.question.No}`)
+  );
+  const [takeMedicineEffectTrueResponseValue, setTakeMedicineEffectTrueResponseValue] =
+    useRecoilState(
+      responseState(`${props.surveyStateKeyword}-${props.question.No}-${MEDICINE_EFFECT_TRUE}`)
+    );
+  const [takeMedicineEffectFalseResponseValue, setTakeMedicineEffectFalseResponseValue] =
+    useRecoilState(
+      responseState(`${props.surveyStateKeyword}-${props.question.No}-${MEDICINE_EFFECT_FALSE}`)
+    );
+
+  // for radio button checked according to uploaded excel file progress
+  const [uploadedExcelDataAnswer, setUploadedExcelDataAnswer] = useState('');
+  useEffect(() => {
+    if (
+      takeMedicineResponse === NOT_TAKE_MEDICINE &&
+      props.uploadedExcelFileDataList_NotTakeMedicine.length > 0 &&
+      notTakeMedicineResponseValue.length === 0
+    ) {
+      setUploadedExcelDataAnswer(
+        props.uploadedExcelFileDataList_NotTakeMedicine[props.question.No - 1].응답내용
+      );
+      setNotTakeMedicineResponseValue(
+        props.uploadedExcelFileDataList_NotTakeMedicine[props.question.No - 1].응답내용
+      );
+    }
+    if (
+      takeMedicineResponse === TAKE_MEDICINE &&
+      props.uploadedExcelFileDataList_TakeMedicine.length > 0
+    ) {
+      if (takeMedicineEffectTrueResponseValue.length === 0) {
+        setUploadedExcelDataAnswer(
+          props.uploadedExcelFileDataList_TakeMedicine[props.question.No - 1][0].응답내용
+        );
+        setTakeMedicineEffectTrueResponseValue(
+          props.uploadedExcelFileDataList_TakeMedicine[props.question.No - 1][0].응답내용
+        );
+      }
+      if (takeMedicineEffectFalseResponseValue.length === 0) {
+        setUploadedExcelDataAnswer(
+          props.uploadedExcelFileDataList_TakeMedicine[props.question.No - 1][1].응답내용
+        );
+        setTakeMedicineEffectFalseResponseValue(
+          props.uploadedExcelFileDataList_TakeMedicine[props.question.No - 1][1].응답내용
+        );
+      }
+    }
+  }, []);
+
   return (
     <article className={styles['survey-content-container']}>
       <hr />
@@ -92,6 +153,9 @@ export default function SurveyContentWithMedicineEffect(
                     inputName={`${props.question.No}${list.radioBtnKeyword}`}
                     questionNumber={`${props.question.No}-${list.radioBtnKeyword}`}
                     surveyStateKeyword={props.surveyStateKeyword}
+                    // for apply uploaded excel file progress
+                    setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
+                    uploadedExcelDataAnswer={uploadedExcelDataAnswer}
                   />
                 )}
               </div>
@@ -105,6 +169,9 @@ export default function SurveyContentWithMedicineEffect(
                 inputName={`${props.question.No}`}
                 questionNumber={`${props.question.No}`}
                 surveyStateKeyword={props.surveyStateKeyword}
+                // for apply uploaded excel file progress
+                setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
+                uploadedExcelDataAnswer={uploadedExcelDataAnswer}
               />
             )}
           </>
@@ -129,6 +196,10 @@ interface AnswersUnorderedListProps {
 
   answersList: string[];
   inputName: string;
+
+  // for apply uploaded excel file progress
+  uploadedExcelDataAnswer: string;
+  setUploadedExcelDataAnswer: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function AnswersUnorderedList(props: AnswersUnorderedListProps) {
@@ -141,6 +212,9 @@ function AnswersUnorderedList(props: AnswersUnorderedListProps) {
           inputId={`${props.questionNumber}${answer}`}
           clickedQuestionNumber={props.questionNumber}
           surveyStateKeyword={props.surveyStateKeyword}
+          // for apply uploaded excel file progress
+          uploadedExcelDataAnswer={props.uploadedExcelDataAnswer}
+          setUploadedExcelDataAnswer={props.setUploadedExcelDataAnswer}
           key={uuidv4()}
         />
       ))}

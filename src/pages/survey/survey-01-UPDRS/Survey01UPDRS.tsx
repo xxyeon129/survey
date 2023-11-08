@@ -1,15 +1,17 @@
+import { useEffect, useState } from 'react';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
 // states
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey01CurrentPageState,
   survey02CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey01UPDRS_responseSelector } from './survey01UPDRS.selector';
 import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { responseState } from '../common/states/surveyResponse.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -20,6 +22,8 @@ import {
 } from './survey.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
+// types
+import { UploadedResponseDataType } from 'pages/test/types/uploadedResponseData.type';
 // styles
 import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
@@ -46,8 +50,37 @@ export default function Survey01UPDRS() {
   const preQuestionResponse = responseStateList[0];
 
   // for apply uploaded excel file progress
-  const uploadedExcelFileData = useRecoilValue(uploadedResponseStates(SURVEY_TITLE_LIST[1].TITLE));
-  console.log('업로드된 파일 -> ', uploadedExcelFileData);
+  const uploadedExcelFileRawData = useRecoilValue(
+    uploadedResponseStates(SURVEY_TITLE_LIST[1].TITLE)
+  );
+  const uploadedExcelFileDataWithoutPreQuestion = uploadedExcelFileRawData.slice(1);
+
+  const uploadedExcelFileDataList_NotTakeMedicine = uploadedExcelFileDataWithoutPreQuestion;
+  // for separate uploaded excel file data list according to responded "복용 중이다" pre-question
+  const uploadedExcelFileDataList_TakeMedicine: [
+    UploadedResponseDataType,
+    UploadedResponseDataType
+  ][] = [];
+  for (let i = 0; i < uploadedExcelFileDataWithoutPreQuestion.length; i += 2) {
+    uploadedExcelFileDataList_TakeMedicine.push([
+      uploadedExcelFileDataWithoutPreQuestion[i],
+      uploadedExcelFileDataWithoutPreQuestion[i + 1],
+    ]);
+  }
+
+  // for pre-question radio button checked according to uploaded excel file progress
+  const [preQuestionResponseValue, setPreQuestionResponseValue] = useRecoilState(
+    responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)
+  );
+  const [uploadedExcelDataPreQuestionAnswer, setUploadedExcelDataPreQuestionAnswer] = useState('');
+
+  useEffect(() => {
+    // for pre-question radio button checked according to uploaded excel file progress
+    if (uploadedExcelFileRawData.length > 0 && preQuestionResponseValue.length === 0) {
+      setUploadedExcelDataPreQuestionAnswer(uploadedExcelFileRawData[0].응답내용);
+      setPreQuestionResponseValue(uploadedExcelFileRawData[0].응답내용);
+    }
+  }, []);
 
   const surveyExplain = (
     <p className={styles.explain}>
@@ -67,6 +100,9 @@ export default function Survey01UPDRS() {
         question={UPDRS_PRE_QUESTION}
         clickedQuestionNumber="pre"
         surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
+        // for apply uploaded excel file progress
+        uploadedExcelDataPreQuestionAnswer={uploadedExcelDataPreQuestionAnswer}
+        setUploadedExcelDataPreQuestionAnswer={setUploadedExcelDataPreQuestionAnswer}
       />
 
       {/* for display questions only when answered pre-question */}
@@ -86,7 +122,8 @@ export default function Survey01UPDRS() {
               }
               responseStateList={responseStateList}
               // for apply uploaded excel file progress
-              // uploadedExcelFileData={uploadedExcelFileData}
+              uploadedExcelFileDataList_NotTakeMedicine={uploadedExcelFileDataList_NotTakeMedicine}
+              uploadedExcelFileDataList_TakeMedicine={uploadedExcelFileDataList_TakeMedicine}
               key={uuidv4()}
             />
           ))}
