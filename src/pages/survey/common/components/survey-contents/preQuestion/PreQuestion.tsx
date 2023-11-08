@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 import styles from './preQuestion.module.scss';
@@ -9,6 +10,10 @@ interface PreQuestionProps {
   // for radio button checked
   clickedQuestionNumber: string;
   surveyStateKeyword: string;
+
+  // for apply uploaded excel file progress
+  uploadedExcelDataPreQuestionAnswer: string;
+  setUploadedExcelDataPreQuestionAnswer: React.Dispatch<React.SetStateAction<string>>;
 
   // for survey-02-FG route to next survey
   routeToNextSurvey?: () => void;
@@ -25,6 +30,11 @@ export default function PreQuestion(props: PreQuestionProps) {
     clickedQuestionNumber,
     routeToNextSurvey,
   });
+
+  // for unchecked uploaded excel file progress checked state when edit response
+  useEffect(() => {
+    responseValue.length > 0 && props.setUploadedExcelDataPreQuestionAnswer('');
+  }, [responseValue]);
 
   return (
     <section className={styles['pre-question-container']}>
