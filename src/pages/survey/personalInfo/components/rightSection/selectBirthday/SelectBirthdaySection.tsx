@@ -14,6 +14,8 @@ import {
   selectedBirthMonthState,
   selectedBirthYearState,
 } from './selectBirthdaySection.state';
+import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 
 export default function SelectBirthdaySection() {
   const setBirthday = useSetRecoilState(personalInfoBirthdayState);
@@ -21,13 +23,32 @@ export default function SelectBirthdaySection() {
   const selectedBirthMonth = useRecoilValue(selectedBirthMonthState);
   const selectedBirthDay = useRecoilValue(selectedBirthDayState);
 
-  const selectBirthdayList = useSelectBirthdayList();
+  const { selectBirthdayList, setSelectedYear, setSelectedMonth, setSelectedDay } =
+    useSelectBirthdayList();
 
   useEffect(() => {
     if (selectedBirthYear !== 0 && selectedBirthMonth !== 0 && selectedBirthDay !== 0) {
       setBirthday(`${selectedBirthYear}.${selectedBirthMonth}.${selectedBirthDay}`);
     }
   }, [selectBirthdayList]);
+
+  // for apply uploaded excel file response
+  const uploadedExcelFileDataList = useRecoilValue(
+    uploadedResponseStates(SURVEY_TITLE_LIST[0].TITLE)
+  );
+  const uploadedExcelFileData = uploadedExcelFileDataList[0];
+
+  useEffect(() => {
+    if (uploadedExcelFileDataList.length > 0) {
+      const uploadedBirthDataList = uploadedExcelFileData.생년월일.split('.');
+      const uploadedBirthYear = uploadedBirthDataList[0];
+      setSelectedYear(uploadedBirthYear);
+      const uploadedBirthMonth = uploadedBirthDataList[1];
+      setSelectedMonth(uploadedBirthMonth);
+      const uploadedBirthDay = uploadedBirthDataList[2];
+      setSelectedDay(uploadedBirthDay);
+    }
+  }, []);
 
   return (
     <section>

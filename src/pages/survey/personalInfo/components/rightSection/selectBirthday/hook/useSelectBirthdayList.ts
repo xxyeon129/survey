@@ -48,5 +48,5 @@ export default function useSelectBirthdayList() {
     },
   ];
 
-  return selectBirthdayList;
+  return { selectBirthdayList, setSelectedYear, setSelectedMonth, setSelectedDay };
 }
