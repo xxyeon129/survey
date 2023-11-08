@@ -22,8 +22,6 @@ import {
 } from './survey.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
-// types
-import { UploadedResponseDataType } from 'pages/test/types/uploadedResponseData.type';
 // styles
 import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
@@ -53,18 +51,17 @@ export default function Survey01UPDRS() {
   const uploadedExcelFileRawData = useRecoilValue(
     uploadedResponseStates(SURVEY_TITLE_LIST[1].TITLE)
   );
-  const uploadedExcelFileDataWithoutPreQuestion = uploadedExcelFileRawData.slice(1);
 
-  const uploadedExcelFileDataList_NotTakeMedicine = uploadedExcelFileDataWithoutPreQuestion;
+  const uploadedExcelFileDataList_NotTakeMedicine = [...uploadedExcelFileRawData];
   // for separate uploaded excel file data list according to responded "복용 중이다" pre-question
-  const uploadedExcelFileDataList_TakeMedicine: [
-    UploadedResponseDataType,
-    UploadedResponseDataType
-  ][] = [];
-  for (let i = 0; i < uploadedExcelFileDataWithoutPreQuestion.length; i += 2) {
+  const uploadedExcelFileDataList_TakeMedicine: (
+    | { [key: string]: string }
+    | [{ [key: string]: string }, { [key: string]: string }]
+  )[] = [uploadedExcelFileRawData[0]];
+  for (let i = 1; i <= uploadedExcelFileRawData.length; i += 2) {
     uploadedExcelFileDataList_TakeMedicine.push([
-      uploadedExcelFileDataWithoutPreQuestion[i],
-      uploadedExcelFileDataWithoutPreQuestion[i + 1],
+      uploadedExcelFileRawData[i],
+      uploadedExcelFileRawData[i + 1],
     ]);
   }
 

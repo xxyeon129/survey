@@ -37,7 +37,10 @@ interface SurveyContentWithMedicineEffectProps {
 
   // for apply uploaded excel file progress
   uploadedExcelFileDataList_NotTakeMedicine: UploadedResponseDataType[];
-  uploadedExcelFileDataList_TakeMedicine: [UploadedResponseDataType, UploadedResponseDataType][];
+  uploadedExcelFileDataList_TakeMedicine: (
+    | { [key: string]: string }
+    | [{ [key: string]: string }, { [key: string]: string }]
+  )[];
 }
 
 // survey-01-UPDRS, survey-02-FG
@@ -98,34 +101,34 @@ export default function SurveyContentWithMedicineEffect(
     if (
       takeMedicineResponse === NOT_TAKE_MEDICINE &&
       props.uploadedExcelFileDataList_NotTakeMedicine.length > 0 &&
+      props.uploadedExcelFileDataList_NotTakeMedicine[0].응답내용 === NOT_TAKE_MEDICINE &&
       notTakeMedicineResponseValue.length === 0
     ) {
       setUploadedExcelDataAnswer(
-        props.uploadedExcelFileDataList_NotTakeMedicine[props.question.No - 1].응답내용
+        props.uploadedExcelFileDataList_NotTakeMedicine[props.question.No].응답내용
       );
       setNotTakeMedicineResponseValue(
-        props.uploadedExcelFileDataList_NotTakeMedicine[props.question.No - 1].응답내용
+        props.uploadedExcelFileDataList_NotTakeMedicine[props.question.No].응답내용
       );
     }
     if (
       takeMedicineResponse === TAKE_MEDICINE &&
-      props.uploadedExcelFileDataList_TakeMedicine.length > 0
+      props.uploadedExcelFileDataList_TakeMedicine.length > 0 &&
+      props.uploadedExcelFileDataList_NotTakeMedicine[0].응답내용 === TAKE_MEDICINE
     ) {
       if (takeMedicineEffectTrueResponseValue.length === 0) {
-        setUploadedExcelDataAnswer(
-          props.uploadedExcelFileDataList_TakeMedicine[props.question.No - 1][0].응답내용
-        );
-        setTakeMedicineEffectTrueResponseValue(
-          props.uploadedExcelFileDataList_TakeMedicine[props.question.No - 1][0].응답내용
-        );
+        const response = props.uploadedExcelFileDataList_TakeMedicine[props.question.No][0] as {
+          [key: string]: string;
+        };
+        setUploadedExcelDataAnswer(response.응답내용);
+        setTakeMedicineEffectTrueResponseValue(response.응답내용);
       }
       if (takeMedicineEffectFalseResponseValue.length === 0) {
-        setUploadedExcelDataAnswer(
-          props.uploadedExcelFileDataList_TakeMedicine[props.question.No - 1][1].응답내용
-        );
-        setTakeMedicineEffectFalseResponseValue(
-          props.uploadedExcelFileDataList_TakeMedicine[props.question.No - 1][1].응답내용
-        );
+        const response = props.uploadedExcelFileDataList_TakeMedicine[props.question.No][1] as {
+          [key: string]: string;
+        };
+        setUploadedExcelDataAnswer(response.응답내용);
+        setTakeMedicineEffectFalseResponseValue(response.응답내용);
       }
     }
   }, []);
