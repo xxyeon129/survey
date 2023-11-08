@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // states
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import { questionScoreState } from '../survey06NMS.state';
 // components
 import AnswerList from 'pages/survey/common/components/survey-contents/answerList/AnswerList';
+import BottomPrevNextButton from 'pages/survey/common/components/bottom-prev-next-button/BottomPrevNextButton';
 // constants
 import {
   NMS_ANSWER_DEGREE,
@@ -20,10 +21,10 @@ import useGetTotalScore from '../hooks/useGetTotalScroe';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import { ExplainTextObjectType } from '../survey06NMS.type';
+import { UploadedResponseDataType } from 'pages/test/types/uploadedResponseData.type';
 // styles
 import styles from './surveyContentWithScore.module.scss';
 import { v4 as uuidv4 } from 'uuid';
-import BottomPrevNextButton from 'pages/survey/common/components/bottom-prev-next-button/BottomPrevNextButton';
 
 interface SurveyContentWithScoreProps {
   question: SurveyContentObjectType;
@@ -39,6 +40,9 @@ interface SurveyContentWithScoreProps {
   currentPageFirstQuestionNumber: number;
   currentPageLastQuestionNumber: number;
   responseStateList: string[];
+
+  // for apply uploaded excel file progress
+  uploadedExcelFileDataList: [UploadedResponseDataType, UploadedResponseDataType][];
 }
 
 export default function SurveyContentWithScore(props: SurveyContentWithScoreProps) {
@@ -91,6 +95,8 @@ export default function SurveyContentWithScore(props: SurveyContentWithScoreProp
             answerList={NMS_ANSWER_DEGREE}
             explainTextList={NMS_ANSWER_DEGREE_EXPLAIN_TEXT_LIST}
             surveyStateKeyword={props.surveyStateKeyword}
+            // for apply uploaded excel file progress
+            uploadedExcelFileDataList={props.uploadedExcelFileDataList}
           />
           <DegreeFrequencyAnswer
             degreeOrFrequencyTitle="빈도"
@@ -98,6 +104,8 @@ export default function SurveyContentWithScore(props: SurveyContentWithScoreProp
             answerList={NMS_ANSWER_FREQUENCY}
             explainTextList={NMS_ANSWER_FREQUENCY_EXPLAIN_TEXT_LIST}
             surveyStateKeyword={props.surveyStateKeyword}
+            // for apply uploaded excel file progress
+            uploadedExcelFileDataList={props.uploadedExcelFileDataList}
           />
         </article>
       </section>
@@ -143,17 +151,20 @@ interface DegreeFrequencyAnswerProps {
   answerList: string[];
   explainTextList?: ExplainTextObjectType[];
   surveyStateKeyword: string;
+
+  // for apply uploaded excel file progress
+  uploadedExcelFileDataList: [UploadedResponseDataType, UploadedResponseDataType][];
 }
 
 function DegreeFrequencyAnswer(props: DegreeFrequencyAnswerProps) {
   const setQuestionScore = useSetRecoilState(questionScoreState(props.questionNumber));
 
-  const responseDegreeAnswer = useRecoilValue(
+  const [responseDegreeAnswer, setResponseDegreeAnswer] = useRecoilState(
     responseState(`${props.surveyStateKeyword}-${props.questionNumber}중증도`)
   );
-  const responseFrequencyAnswer = useRecoilValue(
+  const [responseFrequencyAnswer, setResponseFrequencyAnswer] = useRecoilState(
     responseState(`${props.surveyStateKeyword}-${props.questionNumber}빈도`)
-  ).slice(0, 1);
+  );
 
   const responseDegreeScore = parseInt(responseDegreeAnswer.slice(0, 1));
   const responseFrequencyScore = parseInt(responseFrequencyAnswer.slice(0, 1));
@@ -168,6 +179,27 @@ function DegreeFrequencyAnswer(props: DegreeFrequencyAnswerProps) {
     }
   }, [responseDegreeAnswer, responseFrequencyAnswer]);
 
+  // for radio button checked according to uploaded excel file progress
+  const [uploadedExcelDataAnswer, setUploadedExcelDataAnswer] = useState('');
+  useEffect(() => {
+    if (props.uploadedExcelFileDataList.length > 0 && responseDegreeAnswer.length === 0) {
+      setUploadedExcelDataAnswer(
+        props.uploadedExcelFileDataList[props.questionNumber - 1][0].응답내용
+      );
+      setResponseDegreeAnswer(
+        props.uploadedExcelFileDataList[props.questionNumber - 1][0].응답내용
+      );
+    }
+    if (props.uploadedExcelFileDataList.length > 0 && responseFrequencyAnswer.length === 0) {
+      setUploadedExcelDataAnswer(
+        props.uploadedExcelFileDataList[props.questionNumber - 1][1].응답내용
+      );
+      setResponseFrequencyAnswer(
+        props.uploadedExcelFileDataList[props.questionNumber - 1][1].응답내용
+      );
+    }
+  }, []);
+
   return (
     <section className={styles['degree-frequency-section']}>
       <h3 className={styles['degree-frequency-section-title']}>{props.degreeOrFrequencyTitle}</h3>
@@ -180,6 +212,9 @@ function DegreeFrequencyAnswer(props: DegreeFrequencyAnswerProps) {
           explainTextList={props.explainTextList}
           clickedQuestionNumber={`${props.questionNumber}${props.degreeOrFrequencyTitle}`}
           surveyStateKeyword={SURVEY_06_NMS_STATE_KEYWORD}
+          // for apply uploaded excel file progress
+          setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
+          uploadedExcelDataAnswer={uploadedExcelDataAnswer}
           key={uuidv4()}
         />
       ))}
