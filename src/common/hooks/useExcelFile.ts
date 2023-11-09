@@ -140,32 +140,36 @@ export default function useExcelFile() {
   const fileRef = useRef<HTMLInputElement | null>(null);
 
   const uploadExcelFileHandler = () => {
-    const uploadedFile = fileRef.current;
+    return new Promise((resolve) => {
+      const uploadedFile = fileRef.current;
 
-    if (uploadedFile) {
-      const uploadedFileValue = uploadedFile.files?.[0];
+      if (uploadedFile) {
+        const uploadedFileValue = uploadedFile.files?.[0];
 
-      if (uploadedFileValue) {
-        const reader = new FileReader();
+        if (uploadedFileValue) {
+          const reader = new FileReader();
 
-        reader.onload = (file) => {
-          const result = file.target?.result;
+          reader.onload = (file) => {
+            const result = file.target?.result;
 
-          if (result) {
-            const workbook = XLSX.read(result, { type: 'array' });
+            if (result) {
+              const workbook = XLSX.read(result, { type: 'array' });
 
-            // for get json data from uploaded excel sheet
-            for (let i = 0; i < worksheetTotalCount; i++) {
-              const sheetName = workbook.SheetNames[i];
-              const uploadedWorksheet = workbook.Sheets[sheetName];
-              const jsonData = XLSX.utils.sheet_to_json(uploadedWorksheet);
-              sessinStorageStatesSetterList[i](jsonData);
+              // for get json data from uploaded excel sheet
+              for (let i = 0; i < worksheetTotalCount; i++) {
+                const sheetName = workbook.SheetNames[i];
+                const uploadedWorksheet = workbook.Sheets[sheetName];
+                const jsonData = XLSX.utils.sheet_to_json(uploadedWorksheet);
+                sessinStorageStatesSetterList[i](jsonData);
+              }
+
+              resolve(undefined);
             }
-          }
-        };
-        reader.readAsArrayBuffer(uploadedFileValue);
+          };
+          reader.readAsArrayBuffer(uploadedFileValue);
+        }
       }
-    }
+    });
   };
 
   return { uploadExcelFileHandler, downloadExcelFileHandler, fileRef };

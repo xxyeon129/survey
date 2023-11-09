@@ -76,11 +76,11 @@ function UploadExcelFileBox({ routeBoxesItem }: { routeBoxesItem: { [key: string
   const navigate = useNavigate();
   const { uploadExcelFileHandler, fileRef } = useExcelFile();
 
-  const onClickExcelBox = () => {
-    uploadExcelFileHandler();
+  const onClickExcelBox = async () => {
+    await uploadExcelFileHandler();
     // TO DO: 작성한 부분까지 페이지 이동
-    navigate(PATH_URL.SURVEY['01_UPDRS']);
     setHeaderCurrentPage(1);
+    navigate(PATH_URL.SURVEY['01_UPDRS']);
   };
 
   return (
