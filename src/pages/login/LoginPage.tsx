@@ -50,7 +50,11 @@ export default function LoginPage() {
           </div>
           <p className={styles['top-contents-explain-text']}>
             총 12 단계, {totalPagesCount} 페이지의 설문으로 이루어진 이상운동질환 비운동증상
-            전자설문입니다. <br /> 관련 내용 작성 어쩌고 어쩌고
+            전자설문입니다. <br /> 작성하신 설문 내용은 창을 닫아도 동일한 기기에서는
+            임시저장됩니다.
+            <br />
+            다른 기기에서 이어서 설문을 작성하실 경우 설문 페이지의 우측 상단 메일 전송 버튼을
+            클릭해주세요.
           </p>
         </article>
 
@@ -65,8 +69,7 @@ export default function LoginPage() {
           <article className={styles['bottom-login-input-container']}>
             <p className={styles['bottom-login-explain-text']}>
               아이디와 비밀번호를 입력해주세요. <br />
-              아이디와 비밀번호를 모를 경우 담당자에게 문의 바랍니다. <br />
-              ex) 담당자 이메일 / 전화번호
+              아이디와 비밀번호를 모르실 경우 담당자에게 문의해 주시기 바랍니다. <br />
             </p>
             <hr className={styles['bottom-login-divide-column-line']} />
             <span className={styles['input-wrapper']}>
