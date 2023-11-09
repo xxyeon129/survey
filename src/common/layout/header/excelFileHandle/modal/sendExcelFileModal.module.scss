@@ -19,7 +19,13 @@
       margin-top: 1rem;
       width: 100%;
       display: flex;
-      column-gap: 1rem;
+      column-gap: 2rem;
+
+      .download-mail-btn {
+        color: $main-blue-color;
+        font-weight: $text-semi-bold;
+        cursor: pointer;
+      }
 
       .send-mail-btn {
         color: $main-blue-color;

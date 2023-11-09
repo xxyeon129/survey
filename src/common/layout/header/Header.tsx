@@ -1,19 +1,21 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { headerCurrentPageState } from './pagination/headerPageState';
-import logo from 'assets/header-logo.svg';
-import styles from './header.module.scss';
 import usePathCheck from 'common/hooks/usePathCheck';
 // components
 import ProgressBar from './ProgressBar';
+import SendExcelFileBtn from './excelFileHandle/button/sendExcelFileBtn';
+import ModalPortal from '../modalPortal';
+import SendExcelFileModal from './excelFileHandle/modal/sendExcelFileModal';
+// states
+import { headerCurrentPageState } from './pagination/headerPageState';
 // constants
 import { SURVEY_NAME } from 'common/constants/survey.const';
 import { totalPagesCount } from './pagination/totalPages.const';
 import { PATH_URL } from 'common/constants/path.const';
-import SendExcelFileBtn from './excelFileHandle/sendExcelFileBtn';
-import { useState } from 'react';
-import ModalPortal from '../modalPortal';
-import SendExcelFileModal from './excelFileHandle/components/sendExcelFileModal';
+// styles
+import logo from 'assets/header-logo.svg';
+import styles from './header.module.scss';
 
 export default function Header() {
   const headerCurrentPage = useRecoilValue(headerCurrentPageState);
