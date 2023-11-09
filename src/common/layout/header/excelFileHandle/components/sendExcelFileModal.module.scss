@@ -1,0 +1,31 @@
+.modal {
+  position: fixed;
+  top: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.3);
+
+  .modal-content {
+    background-color: white;
+    padding: 3rem;
+    border-radius: 1rem;
+    line-height: 175%;
+
+    .btn-container {
+      margin-top: 1rem;
+      width: 100%;
+      display: flex;
+      column-gap: 1rem;
+
+      .send-mail-btn {
+        color: $main-blue-color;
+        font-weight: $text-semi-bold;
+        cursor: pointer;
+      }
+    }
+  }
+}
