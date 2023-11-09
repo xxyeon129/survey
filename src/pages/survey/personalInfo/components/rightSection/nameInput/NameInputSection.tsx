@@ -21,20 +21,20 @@ export default function NameInputSection() {
   const uploadedExcelFileData = uploadedExcelFileDataList[0];
   useEffect(() => {
     if (uploadedExcelFileDataList.length > 0) {
-      setName(uploadedExcelFileData.성함);
+      setName(uploadedExcelFileData.성명);
     }
   }, []);
 
   return (
     <section>
-      <label htmlFor="name">성함</label>
+      <label htmlFor="name">성명</label>
       <input
         className={styles['name-input']}
         type="text"
         id="name"
         value={name}
         onChange={onChangeNameInput}
-        placeholder="설문 대상 환자의 성함을 입력해주세요."
+        placeholder="설문 대상 환자의 성명을 입력해주세요."
       />
     </section>
   );

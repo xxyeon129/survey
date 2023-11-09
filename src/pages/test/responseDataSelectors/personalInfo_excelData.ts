@@ -14,7 +14,7 @@ export const personalInfo_excelData = selector({
 
     const responseList = [
       {
-        성함: name,
+        성명: name,
         생년월일: birthday,
         성별: gender,
       },
