@@ -39,7 +39,6 @@ import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/up
 import {
   UploadedResponseDataGroupedListType,
   UploadedResponseDataListType,
-  UploadedResponseDataType,
 } from 'pages/test/types/uploadedResponseData.type';
 
 export default function Survey02FG() {
@@ -131,7 +130,7 @@ export default function Survey02FG() {
       if (survey01UPDRS_uploadedExcelFilePreQuestion === TAKE_MEDICINE) {
         const questionGroupArray: UploadedResponseDataGroupedListType = [];
         for (let i = 1; i <= uploadedExcelFileRawData.length; i += 2) {
-          const questionGroup: [UploadedResponseDataType, UploadedResponseDataType] = [
+          const questionGroup: UploadedResponseDataListType = [
             uploadedExcelFileRawData[i],
             uploadedExcelFileRawData[i + 1],
           ];

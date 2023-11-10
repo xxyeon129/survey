@@ -11,6 +11,7 @@ import {
 } from '../common/surveyPaginationStates';
 import { survey01UPDRS_responseSelector } from './survey01UPDRS.selector';
 import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { responseState } from '../common/states/surveyResponse.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -27,12 +28,10 @@ import usePagination from '../common/hooks/usePagination';
 import {
   UploadedResponseDataGroupedListType,
   UploadedResponseDataListType,
-  UploadedResponseDataType,
 } from 'pages/test/types/uploadedResponseData.type';
 // styles
 import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
-import { responseState } from '../common/states/surveyResponse.state';
 
 export default function Survey01UPDRS() {
   // pagination hook props
@@ -56,16 +55,16 @@ export default function Survey01UPDRS() {
   // for display questions only when answered pre-question
   const respondedPreQuestionResponse = responseStateList[0] !== '';
 
-  // for apply uploaded excel file progress
+  // for get uploaded excel file response data
   const uploadedExcelFileRawData = useRecoilValue(
     uploadedResponseStates(SURVEY_TITLE_LIST[1].TITLE)
   );
 
-  // for pre-question radio button checked according to uploaded excel file progress
+  // for make uploaded excel file pre-question response data to recoil state (localStorage)
   const [preQuestionResponseValue, setPreQuestionResponseValue] = useRecoilState(
     responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)
   );
-
+  // for pre-question radio button checked according to uploaded excel file response data
   const [uploadedExcelDataPreQuestionAnswer, setUploadedExcelDataPreQuestionAnswer] = useState('');
 
   // for separate uploaded excel file raw data according to pre question answer
@@ -75,7 +74,7 @@ export default function Survey01UPDRS() {
   const uploadedExcelFilePreQuestion = uploadedExcelFileRawData[0];
 
   useEffect(() => {
-    // for pre-question radio button checked according to uploaded excel file progress
+    // for pre-question radio button checked according to uploaded excel file response data
     if (uploadedExcelFileRawData.length > 0 && preQuestionResponseValue.length === 0) {
       setUploadedExcelDataPreQuestionAnswer(uploadedExcelFileRawData[0].응답내용);
       setPreQuestionResponseValue(uploadedExcelFileRawData[0].응답내용);
@@ -90,7 +89,7 @@ export default function Survey01UPDRS() {
       if (uploadedExcelFilePreQuestion.응답내용 === TAKE_MEDICINE) {
         const questionGroupArray: UploadedResponseDataGroupedListType = [];
         for (let i = 1; i <= uploadedExcelFileRawData.length; i += 2) {
-          const questionGroup: [UploadedResponseDataType, UploadedResponseDataType] = [
+          const questionGroup: UploadedResponseDataListType = [
             uploadedExcelFileRawData[i],
             uploadedExcelFileRawData[i + 1],
           ];

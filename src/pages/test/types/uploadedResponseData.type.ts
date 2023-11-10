@@ -2,5 +2,5 @@ export interface UploadedResponseDataType {
   [key: string]: string;
 }
 
-export type UploadedResponseDataListType = Array<UploadedResponseDataType>;
-export type UploadedResponseDataGroupedListType = Array<UploadedResponseDataType[]>;
+export type UploadedResponseDataListType = UploadedResponseDataType[];
+export type UploadedResponseDataGroupedListType = UploadedResponseDataListType[];

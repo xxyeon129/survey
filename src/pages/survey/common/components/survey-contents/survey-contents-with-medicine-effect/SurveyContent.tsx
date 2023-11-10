@@ -122,7 +122,13 @@ export default function SurveyContentWithMedicineEffect(
           // take medicine - when have medicine effect
           const uploadedExcelDataResponse: UploadedResponseDataGroupedListType =
             props.uploadedExcelFileDataList[props.question.No - 1];
-          if (uploadedExcelDataResponse !== undefined && uploadedExcelDataResponse.length > 0) {
+          if (
+            uploadedExcelDataResponse !== undefined &&
+            uploadedExcelDataResponse.length > 0 &&
+            // for prevent typescript error
+            '응답내용' in uploadedExcelDataResponse[0] &&
+            typeof uploadedExcelDataResponse[0].응답내용 === 'string'
+          ) {
             setMedicineEffectTrue_responseValue(uploadedExcelDataResponse[0].응답내용);
             setUploadedExcelDataAnswer(uploadedExcelDataResponse[0].응답내용);
           }
@@ -131,7 +137,13 @@ export default function SurveyContentWithMedicineEffect(
           // take medicine - when no medicine effect
           const uploadedExcelDataResponse: UploadedResponseDataGroupedListType =
             props.uploadedExcelFileDataList[props.question.No - 1];
-          if (uploadedExcelDataResponse !== undefined && uploadedExcelDataResponse.length > 0) {
+          if (
+            uploadedExcelDataResponse !== undefined &&
+            uploadedExcelDataResponse.length > 0 &&
+            // for prevent typescript error
+            '응답내용' in uploadedExcelDataResponse[1] &&
+            typeof uploadedExcelDataResponse[1].응답내용 === 'string'
+          ) {
             setMedicineEffectFalse_responseValue(uploadedExcelDataResponse[1].응답내용);
             setUploadedExcelDataAnswer(uploadedExcelDataResponse[1].응답내용);
           }
