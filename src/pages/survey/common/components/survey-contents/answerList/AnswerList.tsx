@@ -37,7 +37,7 @@ export default function AnswerList(props: AnswerLiProps) {
 
   // for unchecked uploaded excel file progress checked state when edit response
   useEffect(() => {
-    responseValue.length > 0 && props.setUploadedExcelDataAnswer('');
+    responseValue !== undefined && responseValue.length > 0 && props.setUploadedExcelDataAnswer('');
   }, [responseValue]);
 
   return (

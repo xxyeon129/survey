@@ -11,7 +11,7 @@ interface PreQuestionProps {
   clickedQuestionNumber: string;
   surveyStateKeyword: string;
 
-  // for apply uploaded excel file progress
+  // for apply uploaded excel file response data
   uploadedExcelDataPreQuestionAnswer: string;
   setUploadedExcelDataPreQuestionAnswer: React.Dispatch<React.SetStateAction<string>>;
 
