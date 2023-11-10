@@ -16,6 +16,7 @@ import { survey11Constipation_excelData } from './responseDataSelectors/survey11
 import { survey12Food_excelData } from './responseDataSelectors/survey12Food_excelData';
 import { survey08PDSS_excelData } from './responseDataSelectors/survey08PDSS_excelData';
 import { survey06NMS_excelData } from './responseDataSelectors/survey06NMS_excelData';
+import axios, { AxiosError } from 'axios';
 
 export default function Test() {
   const personalInfo_ResponseList = useRecoilValue(personalInfo_excelData);
@@ -89,7 +90,7 @@ export default function Test() {
   const worksheetSurvey11Constipation = XLSX.utils.json_to_sheet(survey11Constipation_ResponseList);
   const worksheetSurvey12Food = XLSX.utils.json_to_sheet(survey12Food_ResponseList);
 
-  const downloadExcelFileHandler = () => {
+  const bookAppendSheetHandler = () => {
     XLSX.utils.book_append_sheet(workbook, worksheetPersonalInfo, SURVEY_TITLE_LIST[0].TITLE);
     XLSX.utils.book_append_sheet(workbook, worksheetSurvey01UPDRS, SURVEY_TITLE_LIST[1].TITLE);
     XLSX.utils.book_append_sheet(workbook, worksheetSurvey02FG, SURVEY_TITLE_LIST[2].TITLE);
@@ -107,6 +108,10 @@ export default function Test() {
       SURVEY_TITLE_LIST[11].TITLE
     );
     XLSX.utils.book_append_sheet(workbook, worksheetSurvey12Food, SURVEY_TITLE_LIST[12].TITLE);
+  };
+
+  const downloadExcelFileHandler = () => {
+    bookAppendSheetHandler();
 
     XLSX.writeFile(workbook, 'test.xlsx');
   };
@@ -209,6 +214,29 @@ export default function Test() {
     }
   };
 
+  // send email ----------------------------------------------
+  const sendFile = () => {
+    bookAppendSheetHandler();
+    const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+    const blob = new Blob([new Uint8Array(wbout)], { type: 'application/octet-stream' });
+    const formdata = new FormData();
+    formdata.append('file', blob, 'sendFileTest.xlsx');
+
+    try {
+      axios
+        .post(`${import.meta.env.VITE_APP_SERVER_URL}/upload`, formdata, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => console.log(res.data))
+        .catch((error: AxiosError) => console.error('파일 업로드 실패: ', error));
+    } catch (error) {
+      console.error('파일 업로드 중 오류: ', error);
+    }
+  };
+
   return (
     <>
       <button onClick={() => downloadExcelFileHandler()}>Excel 다운로드</button>
@@ -219,6 +247,8 @@ export default function Test() {
         ref={fileRef}
         onChange={uploadExcelFileHandler}
       />
+      <hr />
+      <button onClick={() => sendFile()}>이메일 전송</button>
     </>
   );
 }
