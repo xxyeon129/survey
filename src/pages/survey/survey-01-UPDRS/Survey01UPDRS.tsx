@@ -119,7 +119,7 @@ export default function Survey01UPDRS() {
         question={UPDRS_PRE_QUESTION}
         clickedQuestionNumber="pre"
         surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
-        // for apply uploaded excel file progress
+        // for edit checked uploaded excel file response button
         uploadedExcelDataPreQuestionAnswer={uploadedExcelDataPreQuestionAnswer}
         setUploadedExcelDataPreQuestionAnswer={setUploadedExcelDataPreQuestionAnswer}
       />
@@ -142,7 +142,7 @@ export default function Survey01UPDRS() {
               responseStateList={responseStateList}
               // for apply uploaded excel file progress
               uploadedExcelFileDataList={uploadedExcelFileDataList}
-              preQuestionResponseValue={preQuestionResponseValue}
+              uploadedExcelDataPreQuestionAnswer={uploadedExcelDataPreQuestionAnswer}
               key={uuidv4()}
             />
           ))}

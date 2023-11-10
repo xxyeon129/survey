@@ -41,7 +41,8 @@ interface SurveyContentWithMedicineEffectProps {
 
   // for apply uploaded excel file progress
   uploadedExcelFileDataList: UploadedResponseDataListType | UploadedResponseDataGroupedListType;
-  preQuestionResponseValue: string;
+  // preQuestionResponseValue: string;
+  uploadedExcelDataPreQuestionAnswer: string;
 }
 
 // survey-01-UPDRS, survey-02-FG
@@ -97,15 +98,13 @@ export default function SurveyContentWithMedicineEffect(
     responseState(`${props.surveyStateKeyword}-${props.question.No}-${MEDICINE_EFFECT_FALSE}`)
   );
 
-  console.log(`문항번호: ${props.question.No}`);
-
   // for radio button checked according to uploaded excel file progress
   const [uploadedExcelDataAnswer, setUploadedExcelDataAnswer] = useState('');
   useEffect(() => {
     if (props.uploadedExcelFileDataList.length > 0) {
       if (
         // not take medicine
-        props.preQuestionResponseValue === NOT_TAKE_MEDICINE
+        props.uploadedExcelDataPreQuestionAnswer === NOT_TAKE_MEDICINE
       ) {
         const uploadedExcelDataResponse = props.uploadedExcelFileDataList[
           props.question.No
@@ -116,7 +115,7 @@ export default function SurveyContentWithMedicineEffect(
         }
       } else if (
         // take medicine
-        props.preQuestionResponseValue === TAKE_MEDICINE &&
+        props.uploadedExcelDataPreQuestionAnswer === TAKE_MEDICINE &&
         Array.isArray(props.uploadedExcelFileDataList[props.question.No - 1])
       ) {
         if (medicineEffectTrue_responseValue.length === 0) {

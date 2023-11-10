@@ -11,7 +11,7 @@ interface PreQuestionProps {
   clickedQuestionNumber: string;
   surveyStateKeyword: string;
 
-  // for apply uploaded excel file response data
+  // for edit checked uploaded excel file response button
   uploadedExcelDataPreQuestionAnswer: string;
   setUploadedExcelDataPreQuestionAnswer: React.Dispatch<React.SetStateAction<string>>;
 
@@ -33,7 +33,8 @@ export default function PreQuestion(props: PreQuestionProps) {
 
   // for unchecked uploaded excel file progress checked state when edit response
   useEffect(() => {
-    responseValue.length > 0 && props.setUploadedExcelDataPreQuestionAnswer('');
+    if (responseValue.length > 0 && props.uploadedExcelDataPreQuestionAnswer.length > 0)
+      props.setUploadedExcelDataPreQuestionAnswer('');
   }, [responseValue]);
 
   return (
