@@ -105,7 +105,11 @@ export default function Survey02FG() {
 
   useEffect(() => {
     // for survey-01-UPDRS pre-question uploaded excel file setting
-    if ('응답내용' in survey01UPDRS_uploadedExcelFilePreQuestionRawData) {
+    if (
+      survey01UPDRS_uploadedExcelFilePreQuestionRawData !== undefined &&
+      survey01UPDRS_uploadedExcelFilePreQuestionRawData.length > 0 &&
+      '응답내용' in survey01UPDRS_uploadedExcelFilePreQuestionRawData
+    ) {
       setSurvey01UPDRS_uploadedExcelFilePreQuestion(
         survey01UPDRS_uploadedExcelFilePreQuestionRawData.응답내용
       );
