@@ -17,6 +17,10 @@ import { survey12Food_excelData } from './responseDataSelectors/survey12Food_exc
 import { survey08PDSS_excelData } from './responseDataSelectors/survey08PDSS_excelData';
 import { survey06NMS_excelData } from './responseDataSelectors/survey06NMS_excelData';
 import axios, { AxiosError } from 'axios';
+import {
+  personalInfoBirthdayState,
+  personalInfoNameState,
+} from 'pages/survey/personalInfo/personalInfo.state';
 
 export default function Test() {
   const personalInfo_ResponseList = useRecoilValue(personalInfo_excelData);
@@ -215,13 +219,17 @@ export default function Test() {
   };
 
   // send email ----------------------------------------------
+  const personalInfoName = useRecoilValue(personalInfoNameState);
+  const birthday = useRecoilValue(personalInfoBirthdayState);
   const sendFile = () => {
     bookAppendSheetHandler();
     const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
 
-    const blob = new Blob([new Uint8Array(wbout)], { type: 'application/octet-stream' });
+    const blob = new Blob([new Uint8Array(wbout)], { type: 'multipart/form-data' });
     const formdata = new FormData();
     formdata.append('file', blob, 'sendFileTest.xlsx');
+    formdata.append('name', personalInfoName);
+    formdata.append('birthday', birthday);
 
     try {
       axios
