@@ -1,15 +1,15 @@
+import { v4 as uuidv4 } from 'uuid';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithShortAnswers from '../common/components/survey-contents/survey-contents-with-short-answers/SurveyContent';
 // states
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey09CurrentPageState,
   survey10CurrentPageState,
   survey11CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey10SCOPA_responseSelector } from './survey10SCOPA.selector';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -26,7 +26,6 @@ import useSeparateGender from './hooks/useSeparateGender';
 import useExplainSectionElements from './hooks/useExplainSectionElements';
 // styles
 import styles from '../common/survey.module.scss';
-import { v4 as uuidv4 } from 'uuid';
 
 export default function Survey10SCOPA() {
   // pagination hook props
@@ -54,11 +53,6 @@ export default function Survey10SCOPA() {
 
   // for explain text box before question number 8~13, 22~23, 24
   const explainSectionList = useExplainSectionElements();
-
-  // for apply uploaded excel file response
-  const uploadedExcelFileDataList = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[10].TITLE)
-  );
 
   const surveyExplain = (
     <p className={styles.explain}>
@@ -91,8 +85,6 @@ export default function Survey10SCOPA() {
             currentPageFirstQuestionNumber={currentPageQuestions[0].No}
             currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
             responseStateList={responseStateList}
-            // for apply uploaded excel file progress
-            uploadedExcelFileDataList={uploadedExcelFileDataList}
             key={uuidv4()}
           />
         ))}
