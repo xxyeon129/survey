@@ -1,16 +1,32 @@
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { PATH_URL } from 'common/constants/path.const';
+import Redirection01UPDRS from './components/Redirection01UPDRS';
 import useUploadedPersonalInfo from './hooks/useUploadedPersonalInfo';
+import Redirection02FG from './components/Redirection02FG';
 
 export default function RedirectionForUploadFile() {
+  // personal info
   const { nameData, birthData, genderData, setSelectedName, setSelectedBirth, setSeclectedGender } =
     useUploadedPersonalInfo();
 
-  // personal info
   useEffect(() => {
     nameData.length > 0 && setSelectedName(nameData);
     birthData.length > 0 && setSelectedBirth(birthData);
     genderData.length > 0 && setSeclectedGender(genderData);
   }, [nameData, birthData, genderData]);
 
-  return <></>;
+  const navigate = useNavigate();
+
+  setTimeout(() => {
+    navigate(PATH_URL.SURVEY['01_UPDRS']);
+  }, 2000);
+
+  return (
+    <>
+      {/* TO DO : spinner */}
+      <Redirection01UPDRS />
+      <Redirection02FG />
+    </>
+  );
 }
