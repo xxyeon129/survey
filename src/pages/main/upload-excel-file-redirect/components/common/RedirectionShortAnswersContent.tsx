@@ -20,17 +20,18 @@ export default function RedirectionShortAnswersContent(props: RedirectionShortAn
 
   // for radio button checked according to uploaded excel file progress
   useEffect(() => {
-    const existConditionUploadedFileResponseData =
-      (props.uploadedExcelFileDataList[props.question.No] !== undefined ||
-        props.uploadedExcelFileDataList[props.question.No - 1] !== undefined) &&
-      (props.uploadedExcelFileDataList[props.question.No].응답내용.length > 0 ||
-        props.uploadedExcelFileDataList[props.question.No - 1].응답내용.length > 0);
-
-    if (props.uploadedExcelFileDataList.length > 0 && existConditionUploadedFileResponseData) {
-      if (props.havePreQuestion) {
+    if (props.uploadedExcelFileDataList.length > 0) {
+      if (
+        props.havePreQuestion &&
+        props.uploadedExcelFileDataList[props.question.No] !== undefined &&
+        props.uploadedExcelFileDataList[props.question.No].응답내용.length > 0
+      ) {
         // for survey-05-RBD pre question index setting
         setResponseValue(props.uploadedExcelFileDataList[props.question.No].응답내용);
-      } else {
+      } else if (
+        props.uploadedExcelFileDataList[props.question.No - 1] !== undefined &&
+        props.uploadedExcelFileDataList[props.question.No - 1].응답내용.length > 0
+      ) {
         // for not have pre question page index setting
         setResponseValue(props.uploadedExcelFileDataList[props.question.No - 1].응답내용);
       }
