@@ -6,7 +6,7 @@ export default function SendExcelFileModal({ onClose }: { onClose: () => void })
     e.stopPropagation();
   };
 
-  const { downloadExcelFileHandler } = useExcelFile();
+  const { downloadExcelFileHandler, sendFile } = useExcelFile();
 
   const onClickdownloadExcelFileBtn = () => {
     downloadExcelFileHandler();
@@ -28,7 +28,9 @@ export default function SendExcelFileModal({ onClose }: { onClose: () => void })
           <button className={styles['download-mail-btn']} onClick={onClickdownloadExcelFileBtn}>
             작성 내용 엑셀 파일로 다운로드
           </button>
-          <button className={styles['send-mail-btn']}>작성 내용 메일 전송</button>
+          <button className={styles['send-mail-btn']} onClick={sendFile}>
+            작성 내용 메일 전송
+          </button>
           <button type="button" onClick={onClose}>
             닫기
           </button>
