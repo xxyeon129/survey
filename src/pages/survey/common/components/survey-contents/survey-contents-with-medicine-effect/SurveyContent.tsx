@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import AnswerList from '../answerList/AnswerList';
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // constants
 import {
@@ -86,7 +86,7 @@ export default function SurveyContentWithMedicineEffect(
 
   // for create responseState when uploaded excel file exist
   // not take medicine
-  const [notTakeMedicine_responseValue, setNotTakeMedicine_responseValue] = useRecoilState(
+  const setNotTakeMedicine_responseValue = useSetRecoilState(
     responseState(`${props.surveyStateKeyword}-${props.question.No}`)
   );
   // take medicine - when have medicine effect
@@ -120,10 +120,10 @@ export default function SurveyContentWithMedicineEffect(
       ) {
         if (medicineEffectTrue_responseValue.length === 0) {
           // take medicine - when have medicine effect
-          const uploadedExcelDataResponse: UploadedResponseDataGroupedListType =
-            props.uploadedExcelFileDataList[props.question.No - 1];
+          const uploadedExcelDataResponse = props.uploadedExcelFileDataList[props.question.No - 1];
           if (
             uploadedExcelDataResponse !== undefined &&
+            Array.isArray(uploadedExcelDataResponse) &&
             uploadedExcelDataResponse.length > 0 &&
             // for prevent typescript error
             '응답내용' in uploadedExcelDataResponse[0] &&
@@ -135,10 +135,10 @@ export default function SurveyContentWithMedicineEffect(
         }
         if (medicineEffectFalse_responseValue.length === 0) {
           // take medicine - when no medicine effect
-          const uploadedExcelDataResponse: UploadedResponseDataGroupedListType =
-            props.uploadedExcelFileDataList[props.question.No - 1];
+          const uploadedExcelDataResponse = props.uploadedExcelFileDataList[props.question.No - 1];
           if (
             uploadedExcelDataResponse !== undefined &&
+            Array.isArray(uploadedExcelDataResponse) &&
             uploadedExcelDataResponse.length > 0 &&
             // for prevent typescript error
             '응답내용' in uploadedExcelDataResponse[1] &&
