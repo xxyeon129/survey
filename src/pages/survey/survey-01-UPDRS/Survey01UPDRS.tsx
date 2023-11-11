@@ -4,7 +4,7 @@ import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
 // states
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'; // useRecoilState,
+import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'; // useRecoilState,
 import {
   survey01CurrentPageState,
   survey02CurrentPageState,
@@ -32,6 +32,7 @@ import {
 // styles
 import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
+import { surveyCurrentPageStates } from 'common/layout/sidebar/surveyCurrentPageStates.const';
 
 export default function Survey01UPDRS() {
   // pagination hook props
@@ -99,6 +100,16 @@ export default function Survey01UPDRS() {
       }
     }
   }, []);
+
+  // for display first page when change pre-question response
+  const surveyPageStateResetterList = surveyCurrentPageStates.map(useResetRecoilState);
+  const indexSurvey01UPDRS = 1;
+  useEffect(() => {
+    surveyPageStateResetterList.forEach(
+      (reset, resetterIndex) => resetterIndex + 1 === indexSurvey01UPDRS && reset()
+    );
+    window.scrollTo(0, 0);
+  }, [preQuestionResponseValue]);
 
   const surveyExplain = (
     <p className={styles.explain}>
