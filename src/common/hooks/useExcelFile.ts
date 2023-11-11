@@ -1,7 +1,12 @@
-import * as XLSX from 'xlsx';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { useRef } from 'react';
+import * as XLSX from 'xlsx';
+import axios, { AxiosError } from 'axios';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
+import {
+  personalInfoBirthdayState,
+  personalInfoNameState,
+} from 'pages/survey/personalInfo/personalInfo.state';
 import { personalInfo_excelData } from '../../pages/test/responseDataSelectors/personalInfo_excelData';
 import { survey01UPDRS_excelData } from '../../pages/test/responseDataSelectors/survey01UPDRS_excelData';
 import { survey02FG_excelData } from '../../pages/test/responseDataSelectors/survey02FG_excelData';
@@ -124,13 +129,17 @@ export default function useExcelFile() {
   ];
   const worksheetTotalCount = worksheetList.length;
 
-  const downloadExcelFileHandler = () => {
+  const bookAppendSheetHandler = () => {
     const bookAppendSheet = (worksheetTotalCount: number) => {
       for (let i = 0; i < worksheetTotalCount; i++) {
         XLSX.utils.book_append_sheet(workbook, worksheetList[i], SURVEY_TITLE_LIST[i].TITLE);
       }
     };
     bookAppendSheet(worksheetTotalCount);
+  };
+
+  const downloadExcelFileHandler = () => {
+    bookAppendSheetHandler();
 
     // TO DO: 파일명 변경
     XLSX.writeFile(workbook, 'test.xlsx');
@@ -172,5 +181,32 @@ export default function useExcelFile() {
     });
   };
 
-  return { uploadExcelFileHandler, downloadExcelFileHandler, fileRef };
+  // send email ----------------------------------------------
+  const personalInfoName = useRecoilValue(personalInfoNameState);
+  const birthday = useRecoilValue(personalInfoBirthdayState);
+  const sendFile = () => {
+    bookAppendSheetHandler();
+    const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+    const blob = new Blob([new Uint8Array(wbout)], { type: 'multipart/form-data' });
+    const formdata = new FormData();
+    formdata.append('file', blob, 'sendFileTest.xlsx');
+    formdata.append('name', personalInfoName);
+    formdata.append('birthday', birthday);
+
+    try {
+      axios
+        .post(`${import.meta.env.VITE_APP_SERVER_URL}/upload`, formdata, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        })
+        .then((res) => console.log(res.data))
+        .catch((error: AxiosError) => console.error('파일 업로드 실패: ', error));
+    } catch (error) {
+      console.error('파일 업로드 중 오류: ', error);
+    }
+  };
+
+  return { uploadExcelFileHandler, downloadExcelFileHandler, sendFile, fileRef };
 }
