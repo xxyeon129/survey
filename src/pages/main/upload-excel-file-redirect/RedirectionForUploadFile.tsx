@@ -4,6 +4,7 @@ import { PATH_URL } from 'common/constants/path.const';
 import Redirection01UPDRS from './components/Redirection01UPDRS';
 import useUploadedPersonalInfo from './hooks/useUploadedPersonalInfo';
 import Redirection02FG from './components/Redirection02FG';
+import Redirection04BDI from './components/Redirection04BDI';
 
 export default function RedirectionForUploadFile() {
   // personal info
@@ -27,6 +28,7 @@ export default function RedirectionForUploadFile() {
       {/* TO DO : spinner */}
       <Redirection01UPDRS />
       <Redirection02FG />
+      <Redirection04BDI />
     </>
   );
 }
