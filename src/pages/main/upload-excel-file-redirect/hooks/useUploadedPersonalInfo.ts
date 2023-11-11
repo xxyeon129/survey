@@ -35,8 +35,12 @@ export default function useUploadedPersonalInfo() {
       setNameData(personalInfo_excelFileDataObject.성명);
       setBirthData(personalInfo_excelFileDataObject.생년월일);
       setGenderData(personalInfo_excelFileDataObject.성별);
+    }
+  }, []);
 
-      // for display uploaded data in select UI
+  // for display uploaded data in select UI
+  useEffect(() => {
+    if (birthData.length > 0) {
       const uploadedBirthDataList = birthData.split('.');
       const uploadedBirthYear = uploadedBirthDataList[0];
       setSelectedYear(uploadedBirthYear);
@@ -45,7 +49,7 @@ export default function useUploadedPersonalInfo() {
       const uploadedBirthDay = uploadedBirthDataList[2];
       setSelectedDay(uploadedBirthDay);
     }
-  }, []);
+  }, [birthData]);
 
   return { nameData, birthData, genderData, setSelectedName, setSelectedBirth, setSeclectedGender };
 }
