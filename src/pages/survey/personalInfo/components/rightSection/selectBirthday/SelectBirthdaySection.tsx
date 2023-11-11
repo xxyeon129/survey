@@ -1,54 +1,33 @@
+import { useEffect } from 'react';
 // components
 import SelectDropdown from './component/SelectDropdown';
 // states
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { personalInfoBirthdayState } from 'pages/survey/personalInfo/personalInfo.state';
-// hooks
-import useSelectBirthdayList from './hook/useSelectBirthdayList';
-// styles
-import styles from './selectBirthdaySection.module.scss';
-import { v4 as uuidv4 } from 'uuid';
-import { useEffect } from 'react';
 import {
   selectedBirthDayState,
   selectedBirthMonthState,
   selectedBirthYearState,
 } from './selectBirthdaySection.state';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
-import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
+// hooks
+import useSelectBirthdayList from './hook/useSelectBirthdayList';
+// styles
+import styles from './selectBirthdaySection.module.scss';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function SelectBirthdaySection() {
-  const [birthday, setBirthday] = useRecoilState(personalInfoBirthdayState);
+  const setBirthday = useSetRecoilState(personalInfoBirthdayState);
   const selectedBirthYear = useRecoilValue(selectedBirthYearState);
   const selectedBirthMonth = useRecoilValue(selectedBirthMonthState);
   const selectedBirthDay = useRecoilValue(selectedBirthDayState);
 
-  const { selectBirthdayList, setSelectedYear, setSelectedMonth, setSelectedDay } =
-    useSelectBirthdayList();
+  const { selectBirthdayList } = useSelectBirthdayList();
 
   useEffect(() => {
     if (selectedBirthYear !== 0 && selectedBirthMonth !== 0 && selectedBirthDay !== 0) {
       setBirthday(`${selectedBirthYear}.${selectedBirthMonth}.${selectedBirthDay}`);
     }
   }, [selectBirthdayList]);
-
-  // for apply uploaded excel file response
-  const uploadedExcelFileDataList = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[0].TITLE)
-  );
-  const uploadedExcelFileData = uploadedExcelFileDataList[0];
-
-  useEffect(() => {
-    if (uploadedExcelFileDataList.length > 0 && birthday.length === 0) {
-      const uploadedBirthDataList = uploadedExcelFileData.생년월일.split('.');
-      const uploadedBirthYear = uploadedBirthDataList[0];
-      setSelectedYear(uploadedBirthYear);
-      const uploadedBirthMonth = uploadedBirthDataList[1];
-      setSelectedMonth(uploadedBirthMonth);
-      const uploadedBirthDay = uploadedBirthDataList[2];
-      setSelectedDay(uploadedBirthDay);
-    }
-  }, []);
 
   return (
     <section>

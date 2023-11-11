@@ -20,6 +20,7 @@ import Survey10SCOPA from 'pages/survey/survey-10-SCOPA/Survey10SCOPA';
 import Survey11Constipation from 'pages/survey/survey-11-CONSTIPATION/Survey11Constipation';
 import Survey12Food from 'pages/survey/survey-12-FOOD/Survey12Food';
 import EndPage from 'pages/end/EndPage';
+import RedirectionForUploadFile from 'pages/main/upload-excel-file-redirect/RedirectionForUploadFile';
 import PreventRootNavigation from './PreventRootNavigation';
 
 export default function MainRouter() {
@@ -45,6 +46,7 @@ export default function MainRouter() {
           <Route path={PATH_URL.SURVEY['11_CONSTIPATION']} element={<Survey11Constipation />} />
           <Route path={PATH_URL.SURVEY['12_FOOD']} element={<Survey12Food />} />
           <Route path={PATH_URL.END} element={<EndPage />} />
+          <Route path={PATH_URL.REDIRECT} element={<RedirectionForUploadFile />} />
           <Route path={PATH_URL.TEST} element={<Test />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

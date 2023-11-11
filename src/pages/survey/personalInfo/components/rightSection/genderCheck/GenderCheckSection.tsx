@@ -1,5 +1,5 @@
 // states
-import { useRecoilState, useRecoilValue, useResetRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 import { personalInfoGenderState } from 'pages/survey/personalInfo/personalInfo.state';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // constants
@@ -7,9 +7,6 @@ import { FEMALE, GENDER, MALE } from './genderCheckSection.const';
 import { SURVEY_10_SCOPA_STATE_KEYWORD } from 'pages/survey/survey-10-SCOPA/survey.const';
 // styles
 import styles from './genderCheckSection.module.scss';
-import { useEffect } from 'react';
-import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
 
 interface GenderCheckSection {
   isSurveyPage?: boolean;
@@ -35,18 +32,6 @@ export default function GenderCheckSection(props: GenderCheckSection) {
       resetSurvey10SCOPA_genderQuestion23ResponseState();
     }
   };
-
-  // for apply uploaded excel file response
-  const uploadedExcelFileDataList = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[0].TITLE)
-  );
-
-  const uploadedExcelFileData = uploadedExcelFileDataList[0];
-  useEffect(() => {
-    if (uploadedExcelFileDataList.length > 0 && selectedGender.length === 0) {
-      setSeclectedGender(uploadedExcelFileData.성별);
-    }
-  }, []);
 
   return (
     <section>

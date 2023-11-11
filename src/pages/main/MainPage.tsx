@@ -80,7 +80,8 @@ function UploadExcelFileBox({ routeBoxesItem }: { routeBoxesItem: { [key: string
     await uploadExcelFileHandler();
     // TO DO: 작성한 부분까지 페이지 이동
     setHeaderCurrentPage(1);
-    navigate(PATH_URL.SURVEY['01_UPDRS']);
+    // navigate(PATH_URL.SURVEY['01_UPDRS']);
+    navigate(PATH_URL.REDIRECT);
   };
 
   return (

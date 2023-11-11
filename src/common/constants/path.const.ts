@@ -17,5 +17,6 @@ export const PATH_URL = {
     '12_FOOD': '/survey/12',
   },
   END: '/end',
+  REDIRECT: '/main/redirect',
   TEST: '/test',
 };
