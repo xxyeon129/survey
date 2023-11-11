@@ -1,7 +1,7 @@
 // components
 import SelectDropdown from './component/SelectDropdown';
 // states
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { personalInfoBirthdayState } from 'pages/survey/personalInfo/personalInfo.state';
 // hooks
 import useSelectBirthdayList from './hook/useSelectBirthdayList';
@@ -18,7 +18,7 @@ import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/up
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 
 export default function SelectBirthdaySection() {
-  const setBirthday = useSetRecoilState(personalInfoBirthdayState);
+  const [birthday, setBirthday] = useRecoilState(personalInfoBirthdayState);
   const selectedBirthYear = useRecoilValue(selectedBirthYearState);
   const selectedBirthMonth = useRecoilValue(selectedBirthMonthState);
   const selectedBirthDay = useRecoilValue(selectedBirthDayState);
@@ -39,7 +39,7 @@ export default function SelectBirthdaySection() {
   const uploadedExcelFileData = uploadedExcelFileDataList[0];
 
   useEffect(() => {
-    if (uploadedExcelFileDataList.length > 0) {
+    if (uploadedExcelFileDataList.length > 0 && birthday.length === 0) {
       const uploadedBirthDataList = uploadedExcelFileData.생년월일.split('.');
       const uploadedBirthYear = uploadedBirthDataList[0];
       setSelectedYear(uploadedBirthYear);

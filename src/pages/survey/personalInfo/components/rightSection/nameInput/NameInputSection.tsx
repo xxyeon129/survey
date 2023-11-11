@@ -20,7 +20,7 @@ export default function NameInputSection() {
 
   const uploadedExcelFileData = uploadedExcelFileDataList[0];
   useEffect(() => {
-    if (uploadedExcelFileDataList.length > 0) {
+    if (uploadedExcelFileDataList.length > 0 && name.length === 0) {
       setName(uploadedExcelFileData.성명);
     }
   }, []);

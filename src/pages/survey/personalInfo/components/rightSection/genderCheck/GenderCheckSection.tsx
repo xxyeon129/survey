@@ -43,7 +43,7 @@ export default function GenderCheckSection(props: GenderCheckSection) {
 
   const uploadedExcelFileData = uploadedExcelFileDataList[0];
   useEffect(() => {
-    if (uploadedExcelFileDataList.length > 0) {
+    if (uploadedExcelFileDataList.length > 0 && selectedGender.length === 0) {
       setSeclectedGender(uploadedExcelFileData.성별);
     }
   }, []);
