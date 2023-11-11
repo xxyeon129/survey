@@ -1,5 +1,5 @@
 // states
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey04CurrentPageState,
   survey05CurrentPageState,
@@ -24,9 +24,6 @@ import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
-import { useEffect, useState } from 'react';
-import { responseState } from '../common/states/surveyResponse.state';
 
 export default function Survey05RBD() {
   // pagination hook props
@@ -49,22 +46,22 @@ export default function Survey05RBD() {
   // for bottom next button disabled
   const responseStateList = useRecoilValue(survey05RBD_responseSelector);
 
-  // for apply uploaded excel file progress
-  const uploadedExcelFileDataList = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[5].TITLE)
-  );
+  // // for apply uploaded excel file progress
+  // const uploadedExcelFileDataList = useRecoilValue(
+  //   uploadedResponseStates(SURVEY_TITLE_LIST[5].TITLE)
+  // );
 
-  // for pre-question radio button checked according to uploaded excel file progress
-  const [responseValue, setResponseValue] = useRecoilState(
-    responseState(`${SURVEY_05_RBD_STATE_KEYWORD}-pre`)
-  );
-  const [uploadedExcelDataPreQuestionAnswer, setUploadedExcelDataPreQuestionAnswer] = useState('');
-  useEffect(() => {
-    if (uploadedExcelFileDataList.length > 0 && responseValue.length === 0) {
-      setUploadedExcelDataPreQuestionAnswer(uploadedExcelFileDataList[0].응답내용);
-      setResponseValue(uploadedExcelFileDataList[0].응답내용);
-    }
-  }, []);
+  // // for pre-question radio button checked according to uploaded excel file progress
+  // const [responseValue, setResponseValue] = useRecoilState(
+  //   responseState(`${SURVEY_05_RBD_STATE_KEYWORD}-pre`)
+  // );
+  // const [uploadedExcelDataPreQuestionAnswer, setUploadedExcelDataPreQuestionAnswer] = useState('');
+  // useEffect(() => {
+  //   if (uploadedExcelFileDataList.length > 0 && responseValue.length === 0) {
+  //     setUploadedExcelDataPreQuestionAnswer(uploadedExcelFileDataList[0].응답내용);
+  //     setResponseValue(uploadedExcelFileDataList[0].응답내용);
+  //   }
+  // }, []);
 
   const surveyExplain = (
     <p className={styles.explain}>
@@ -84,9 +81,9 @@ export default function Survey05RBD() {
         // for radio button checked
         clickedQuestionNumber="pre"
         surveyStateKeyword={SURVEY_05_RBD_STATE_KEYWORD}
-        // for apply uploaded excel file progress
-        uploadedExcelDataPreQuestionAnswer={uploadedExcelDataPreQuestionAnswer}
-        setUploadedExcelDataPreQuestionAnswer={setUploadedExcelDataPreQuestionAnswer}
+        // // for apply uploaded excel file progress
+        // uploadedExcelDataPreQuestionAnswer={uploadedExcelDataPreQuestionAnswer}
+        // setUploadedExcelDataPreQuestionAnswer={setUploadedExcelDataPreQuestionAnswer}
       />
 
       <ul>
@@ -103,7 +100,7 @@ export default function Survey05RBD() {
             responseStateList={responseStateList}
             havePreQuestion={true}
             // for apply uploaded excel file progress
-            uploadedExcelFileDataList={uploadedExcelFileDataList}
+            // uploadedExcelFileDataList={uploadedExcelFileDataList}
             key={uuidv4()}
           />
         ))}

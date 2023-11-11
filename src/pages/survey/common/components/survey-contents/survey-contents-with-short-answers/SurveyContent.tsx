@@ -1,20 +1,15 @@
-import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 // components
 import AnswerList from '../answerList/AnswerList';
 import AnswerWithInput from '../answerWithInput/AnswerWithInput';
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
-// states
-import { useRecoilState } from 'recoil';
-import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
-import { UploadedResponseDataType } from 'pages/test/types/uploadedResponseData.type';
 // styles
 import styles from 'pages/survey/common/survey.module.scss';
 import contentStyles from './surveyContent.module.scss';
-import { v4 as uuidv4 } from 'uuid';
 
 type ImageSelectAnswerListType = { key: number; imgSrc: string; explain: string; alt: string }[];
 
@@ -31,9 +26,6 @@ interface SurveyContentWithShortAnswersProps {
   currentPageFirstQuestionNumber: number;
   currentPageLastQuestionNumber: number;
   responseStateList: string[];
-
-  // for apply uploaded excel file progress
-  uploadedExcelFileDataList: UploadedResponseDataType[];
 
   // for survey-05-RBD bottom next button disabled
   havePreQuestion?: boolean;
@@ -66,27 +58,6 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
   }
 
   const nextBtnDisabledCondition = currentPageResponseList.includes('');
-
-  // for create responseState when uploaded excel file exist
-  const [responseValue, setResponseValue] = useRecoilState(
-    responseState(`${props.surveyStateKeyword}-${props.question.No}`)
-  );
-
-  // for radio button checked according to uploaded excel file progress
-  const [uploadedExcelDataAnswer, setUploadedExcelDataAnswer] = useState('');
-  useEffect(() => {
-    if (props.uploadedExcelFileDataList.length > 0 && responseValue.length === 0) {
-      if (props.havePreQuestion) {
-        // for survey-05-RBD pre question index setting
-        setUploadedExcelDataAnswer(props.uploadedExcelFileDataList[props.question.No].응답내용);
-        setResponseValue(props.uploadedExcelFileDataList[props.question.No].응답내용);
-      } else {
-        // for not have pre question page index setting
-        setUploadedExcelDataAnswer(props.uploadedExcelFileDataList[props.question.No - 1].응답내용);
-        setResponseValue(props.uploadedExcelFileDataList[props.question.No - 1].응답내용);
-      }
-    }
-  }, []);
 
   return (
     <li className={contentStyles['questions-li']}>
@@ -134,9 +105,6 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
             inputId={`${props.question.No}${answer}`}
             clickedQuestionNumber={`${props.question.No}`}
             surveyStateKeyword={props.surveyStateKeyword}
-            // for apply uploaded excel file progress
-            setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
-            uploadedExcelDataAnswer={uploadedExcelDataAnswer}
             key={uuidv4()}
           />
         ))}
@@ -153,9 +121,6 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
                 // for radio button checked
                 clickedQuestionNumber={`${props.question.No}`}
                 surveyStateKeyword={props.surveyStateKeyword}
-                // for apply uploaded excel file progress
-                setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
-                uploadedExcelDataAnswer={uploadedExcelDataAnswer}
                 key={uuidv4()}
               />
             ))

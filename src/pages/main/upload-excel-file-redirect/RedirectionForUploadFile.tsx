@@ -5,6 +5,7 @@ import Redirection01UPDRS from './components/Redirection01UPDRS';
 import useUploadedPersonalInfo from './hooks/useUploadedPersonalInfo';
 import Redirection02FG from './components/Redirection02FG';
 import Redirection04BDI from './components/Redirection04BDI';
+import Redirection05RBD from './components/Redirection05RBD';
 
 export default function RedirectionForUploadFile() {
   // personal info
@@ -29,6 +30,7 @@ export default function RedirectionForUploadFile() {
       <Redirection01UPDRS />
       <Redirection02FG />
       <Redirection04BDI />
+      <Redirection05RBD />
     </>
   );
 }
