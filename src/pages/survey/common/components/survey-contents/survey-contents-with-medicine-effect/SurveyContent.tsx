@@ -1,16 +1,11 @@
-import { useEffect, useState } from 'react';
 // components
 import AnswerList from '../answerList/AnswerList';
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // constants
-import {
-  MEDICINE_EFFECT_FALSE,
-  MEDICINE_EFFECT_TRUE,
-  medicineDivisionList,
-} from './surveyContent.const';
+import { medicineDivisionList } from './surveyContent.const';
 import {
   NOT_TAKE_MEDICINE,
   SURVEY_01_UPDRS_STATE_KEYWORD,
@@ -21,11 +16,6 @@ import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 // styles
 import styles from './surveyContent.module.scss';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  UploadedResponseDataGroupedListType,
-  UploadedResponseDataListType,
-  UploadedResponseDataType,
-} from 'pages/test/types/uploadedResponseData.type';
 
 interface SurveyContentWithMedicineEffectProps {
   question: SurveyContentObjectType;
@@ -39,10 +29,10 @@ interface SurveyContentWithMedicineEffectProps {
   currentPageLastQuestionNumber: number;
   responseStateList: string[];
 
-  // for apply uploaded excel file progress
-  uploadedExcelFileDataList: UploadedResponseDataListType | UploadedResponseDataGroupedListType;
-  // preQuestionResponseValue: string;
-  uploadedExcelDataPreQuestionAnswer: string;
+  // // for apply uploaded excel file progress
+  // uploadedExcelFileDataList: UploadedResponseDataListType | UploadedResponseDataGroupedListType;
+  // // preQuestionResponseValue: string;
+  // uploadedExcelDataPreQuestionAnswer: string;
 }
 
 // survey-01-UPDRS, survey-02-FG
@@ -84,73 +74,73 @@ export default function SurveyContentWithMedicineEffect(
 
   const nextBtnDisabledCondition = currentPageResponseList.includes('');
 
-  // for create responseState when uploaded excel file exist
-  // not take medicine
-  const setNotTakeMedicine_responseValue = useSetRecoilState(
-    responseState(`${props.surveyStateKeyword}-${props.question.No}`)
-  );
-  // take medicine - when have medicine effect
-  const [medicineEffectTrue_responseValue, setMedicineEffectTrue_responseValue] = useRecoilState(
-    responseState(`${props.surveyStateKeyword}-${props.question.No}-${MEDICINE_EFFECT_TRUE}`)
-  );
-  // take medicine - when no medicine effect
-  const [medicineEffectFalse_responseValue, setMedicineEffectFalse_responseValue] = useRecoilState(
-    responseState(`${props.surveyStateKeyword}-${props.question.No}-${MEDICINE_EFFECT_FALSE}`)
-  );
+  // // for create responseState when uploaded excel file exist
+  // // not take medicine
+  // const setNotTakeMedicine_responseValue = useSetRecoilState(
+  //   responseState(`${props.surveyStateKeyword}-${props.question.No}`)
+  // );
+  // // take medicine - when have medicine effect
+  // const [medicineEffectTrue_responseValue, setMedicineEffectTrue_responseValue] = useRecoilState(
+  //   responseState(`${props.surveyStateKeyword}-${props.question.No}-${MEDICINE_EFFECT_TRUE}`)
+  // );
+  // // take medicine - when no medicine effect
+  // const [medicineEffectFalse_responseValue, setMedicineEffectFalse_responseValue] = useRecoilState(
+  //   responseState(`${props.surveyStateKeyword}-${props.question.No}-${MEDICINE_EFFECT_FALSE}`)
+  // );
 
-  // for radio button checked according to uploaded excel file progress
-  const [uploadedExcelDataAnswer, setUploadedExcelDataAnswer] = useState('');
-  useEffect(() => {
-    if (props.uploadedExcelFileDataList.length > 0) {
-      if (
-        // not take medicine
-        props.uploadedExcelDataPreQuestionAnswer === NOT_TAKE_MEDICINE
-      ) {
-        const uploadedExcelDataResponse = props.uploadedExcelFileDataList[
-          props.question.No
-        ] as UploadedResponseDataType;
-        if (uploadedExcelDataResponse !== undefined) {
-          setNotTakeMedicine_responseValue(uploadedExcelDataResponse.응답내용);
-          setUploadedExcelDataAnswer(uploadedExcelDataResponse.응답내용);
-        }
-      } else if (
-        // take medicine
-        props.uploadedExcelDataPreQuestionAnswer === TAKE_MEDICINE &&
-        Array.isArray(props.uploadedExcelFileDataList[props.question.No - 1])
-      ) {
-        if (medicineEffectTrue_responseValue.length === 0) {
-          // take medicine - when have medicine effect
-          const uploadedExcelDataResponse = props.uploadedExcelFileDataList[props.question.No - 1];
-          if (
-            uploadedExcelDataResponse !== undefined &&
-            Array.isArray(uploadedExcelDataResponse) &&
-            uploadedExcelDataResponse.length > 0 &&
-            // for prevent typescript error
-            '응답내용' in uploadedExcelDataResponse[0] &&
-            typeof uploadedExcelDataResponse[0].응답내용 === 'string'
-          ) {
-            setMedicineEffectTrue_responseValue(uploadedExcelDataResponse[0].응답내용);
-            setUploadedExcelDataAnswer(uploadedExcelDataResponse[0].응답내용);
-          }
-        }
-        if (medicineEffectFalse_responseValue.length === 0) {
-          // take medicine - when no medicine effect
-          const uploadedExcelDataResponse = props.uploadedExcelFileDataList[props.question.No - 1];
-          if (
-            uploadedExcelDataResponse !== undefined &&
-            Array.isArray(uploadedExcelDataResponse) &&
-            uploadedExcelDataResponse.length > 0 &&
-            // for prevent typescript error
-            '응답내용' in uploadedExcelDataResponse[1] &&
-            typeof uploadedExcelDataResponse[1].응답내용 === 'string'
-          ) {
-            setMedicineEffectFalse_responseValue(uploadedExcelDataResponse[1].응답내용);
-            setUploadedExcelDataAnswer(uploadedExcelDataResponse[1].응답내용);
-          }
-        }
-      }
-    }
-  }, []);
+  // // for radio button checked according to uploaded excel file progress
+  // const [uploadedExcelDataAnswer, setUploadedExcelDataAnswer] = useState('');
+  // useEffect(() => {
+  //   if (props.uploadedExcelFileDataList.length > 0) {
+  //     if (
+  //       // not take medicine
+  //       props.uploadedExcelDataPreQuestionAnswer === NOT_TAKE_MEDICINE
+  //     ) {
+  //       const uploadedExcelDataResponse = props.uploadedExcelFileDataList[
+  //         props.question.No
+  //       ] as UploadedResponseDataType;
+  //       if (uploadedExcelDataResponse !== undefined) {
+  //         setNotTakeMedicine_responseValue(uploadedExcelDataResponse.응답내용);
+  //         setUploadedExcelDataAnswer(uploadedExcelDataResponse.응답내용);
+  //       }
+  //     } else if (
+  //       // take medicine
+  //       props.uploadedExcelDataPreQuestionAnswer === TAKE_MEDICINE &&
+  //       Array.isArray(props.uploadedExcelFileDataList[props.question.No - 1])
+  //     ) {
+  //       if (medicineEffectTrue_responseValue.length === 0) {
+  //         // take medicine - when have medicine effect
+  //         const uploadedExcelDataResponse = props.uploadedExcelFileDataList[props.question.No - 1];
+  //         if (
+  //           uploadedExcelDataResponse !== undefined &&
+  //           Array.isArray(uploadedExcelDataResponse) &&
+  //           uploadedExcelDataResponse.length > 0 &&
+  //           // for prevent typescript error
+  //           '응답내용' in uploadedExcelDataResponse[0] &&
+  //           typeof uploadedExcelDataResponse[0].응답내용 === 'string'
+  //         ) {
+  //           setMedicineEffectTrue_responseValue(uploadedExcelDataResponse[0].응답내용);
+  //           setUploadedExcelDataAnswer(uploadedExcelDataResponse[0].응답내용);
+  //         }
+  //       }
+  //       if (medicineEffectFalse_responseValue.length === 0) {
+  //         // take medicine - when no medicine effect
+  //         const uploadedExcelDataResponse = props.uploadedExcelFileDataList[props.question.No - 1];
+  //         if (
+  //           uploadedExcelDataResponse !== undefined &&
+  //           Array.isArray(uploadedExcelDataResponse) &&
+  //           uploadedExcelDataResponse.length > 0 &&
+  //           // for prevent typescript error
+  //           '응답내용' in uploadedExcelDataResponse[1] &&
+  //           typeof uploadedExcelDataResponse[1].응답내용 === 'string'
+  //         ) {
+  //           setMedicineEffectFalse_responseValue(uploadedExcelDataResponse[1].응답내용);
+  //           setUploadedExcelDataAnswer(uploadedExcelDataResponse[1].응답내용);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }, []);
 
   return (
     <article className={styles['survey-content-container']}>
@@ -176,8 +166,8 @@ export default function SurveyContentWithMedicineEffect(
                     questionNumber={`${props.question.No}-${list.radioBtnKeyword}`}
                     surveyStateKeyword={props.surveyStateKeyword}
                     // for apply uploaded excel file progress
-                    setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
-                    uploadedExcelDataAnswer={uploadedExcelDataAnswer}
+                    // setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
+                    // uploadedExcelDataAnswer={uploadedExcelDataAnswer}
                   />
                 )}
               </div>
@@ -192,8 +182,8 @@ export default function SurveyContentWithMedicineEffect(
                 questionNumber={`${props.question.No}`}
                 surveyStateKeyword={props.surveyStateKeyword}
                 // for apply uploaded excel file progress
-                setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
-                uploadedExcelDataAnswer={uploadedExcelDataAnswer}
+                // setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
+                // uploadedExcelDataAnswer={uploadedExcelDataAnswer}
               />
             )}
           </>
@@ -220,8 +210,8 @@ interface AnswersUnorderedListProps {
   inputName: string;
 
   // for apply uploaded excel file progress
-  uploadedExcelDataAnswer: string;
-  setUploadedExcelDataAnswer: React.Dispatch<React.SetStateAction<string>>;
+  // uploadedExcelDataAnswer: string;
+  // setUploadedExcelDataAnswer: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function AnswersUnorderedList(props: AnswersUnorderedListProps) {
@@ -235,8 +225,8 @@ function AnswersUnorderedList(props: AnswersUnorderedListProps) {
           clickedQuestionNumber={props.questionNumber}
           surveyStateKeyword={props.surveyStateKeyword}
           // for apply uploaded excel file progress
-          uploadedExcelDataAnswer={props.uploadedExcelDataAnswer}
-          setUploadedExcelDataAnswer={props.setUploadedExcelDataAnswer}
+          // uploadedExcelDataAnswer={props.uploadedExcelDataAnswer}
+          // setUploadedExcelDataAnswer={props.setUploadedExcelDataAnswer}
           key={uuidv4()}
         />
       ))}

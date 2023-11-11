@@ -1,23 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
 // states
-import { useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'; // useRecoilState,
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'; // useRecoilState,
 import {
   survey01CurrentPageState,
   survey02CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey01UPDRS_responseSelector } from './survey01UPDRS.selector';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
 import { responseState } from '../common/states/surveyResponse.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
-  NOT_TAKE_MEDICINE,
   SURVEY_01_UPDRS_STATE_KEYWORD,
-  TAKE_MEDICINE,
   UPDRS_PRE_QUESTION,
   UPDRS_QUESTIONS,
   UPDRS_QUESTIONS_PER_PAGE,
@@ -25,10 +22,6 @@ import {
 // hooks
 import usePagination from '../common/hooks/usePagination';
 // types
-import {
-  UploadedResponseDataGroupedListType,
-  UploadedResponseDataListType,
-} from 'pages/test/types/uploadedResponseData.type';
 // styles
 import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
@@ -56,50 +49,9 @@ export default function Survey01UPDRS() {
   // for display questions only when answered pre-question
   const respondedPreQuestionResponse = responseStateList[0] !== '';
 
-  // for get uploaded excel file response data
-  const uploadedExcelFileRawData = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[1].TITLE)
-  );
-
-  // for make uploaded excel file pre-question response data to recoil state (localStorage)
-  const [preQuestionResponseValue, setPreQuestionResponseValue] = useRecoilState(
+  const preQuestionResponseValue = useRecoilValue(
     responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)
   );
-  // for pre-question radio button checked according to uploaded excel file response data
-  const [uploadedExcelDataPreQuestionAnswer, setUploadedExcelDataPreQuestionAnswer] = useState('');
-
-  // for separate uploaded excel file raw data according to pre question answer
-  const [uploadedExcelFileDataList, setUploadedExcelFileDataList] = useState<
-    UploadedResponseDataListType | UploadedResponseDataGroupedListType
-  >([]);
-  const uploadedExcelFilePreQuestion = uploadedExcelFileRawData[0];
-
-  useEffect(() => {
-    // for pre-question radio button checked according to uploaded excel file response data
-    if (uploadedExcelFileRawData.length > 0 && preQuestionResponseValue.length === 0) {
-      setUploadedExcelDataPreQuestionAnswer(uploadedExcelFileRawData[0].응답내용);
-      setPreQuestionResponseValue(uploadedExcelFileRawData[0].응답내용);
-
-      // for separate uploaded excel file raw data according to pre question answer
-      // in case take medicine - uploadedExcelFileDataList setting
-      if (uploadedExcelFilePreQuestion.응답내용 === NOT_TAKE_MEDICINE) {
-        const excelFileDataWithoutPreQuestion = uploadedExcelFileRawData.slice(1);
-        setUploadedExcelFileDataList(excelFileDataWithoutPreQuestion);
-      }
-      // in case not take medicine - uploadedExcelFileDataList setting
-      if (uploadedExcelFilePreQuestion.응답내용 === TAKE_MEDICINE) {
-        const questionGroupArray: UploadedResponseDataGroupedListType = [];
-        for (let i = 1; i <= uploadedExcelFileRawData.length; i += 2) {
-          const questionGroup: UploadedResponseDataListType = [
-            uploadedExcelFileRawData[i],
-            uploadedExcelFileRawData[i + 1],
-          ];
-          questionGroupArray.push(questionGroup);
-        }
-        setUploadedExcelFileDataList(questionGroupArray);
-      }
-    }
-  }, []);
 
   // for display first page when change pre-question response
   const surveyPageStateResetterList = surveyCurrentPageStates.map(useResetRecoilState);
@@ -129,9 +81,6 @@ export default function Survey01UPDRS() {
         question={UPDRS_PRE_QUESTION}
         clickedQuestionNumber="pre"
         surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
-        // for edit checked uploaded excel file response button
-        uploadedExcelDataPreQuestionAnswer={uploadedExcelDataPreQuestionAnswer}
-        setUploadedExcelDataPreQuestionAnswer={setUploadedExcelDataPreQuestionAnswer}
       />
 
       {/* for display questions only when answered pre-question */}
@@ -150,9 +99,6 @@ export default function Survey01UPDRS() {
                 currentPageQuestions[currentPageQuestions.length - 1].No
               }
               responseStateList={responseStateList}
-              // for apply uploaded excel file progress
-              uploadedExcelFileDataList={uploadedExcelFileDataList}
-              uploadedExcelDataPreQuestionAnswer={uploadedExcelDataPreQuestionAnswer}
               key={uuidv4()}
             />
           ))}

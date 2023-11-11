@@ -30,7 +30,6 @@ export default function useUploadedPersonalInfo() {
     // get data from uploaded raw data file
     if (personalInfo_excelFileRawData.length > 0) {
       const personalInfo_excelFileDataObject = personalInfo_excelFileRawData[0];
-      console.log(personalInfo_excelFileDataObject);
 
       setNameData(personalInfo_excelFileDataObject.성명);
       setBirthData(personalInfo_excelFileDataObject.생년월일);

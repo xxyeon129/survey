@@ -4,7 +4,7 @@ import PreQuestion from '../common/components/survey-contents/preQuestion/PreQue
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey01CurrentPageState,
   survey02CurrentPageState,
@@ -21,11 +21,7 @@ import {
   HAVE_NO_FG_SYMPTOM,
   SURVEY_02_FG_STATE_KEYWORD,
 } from './survey.const';
-import {
-  NOT_TAKE_MEDICINE,
-  SURVEY_01_UPDRS_TOTAL_PAGES,
-  TAKE_MEDICINE,
-} from '../survey-01-UPDRS/survey.const';
+import { SURVEY_01_UPDRS_TOTAL_PAGES } from '../survey-01-UPDRS/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
@@ -33,13 +29,6 @@ import useRouteToNextSurvey from './hooks/useRouteToNextSurvey';
 // styles
 import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
-import { responseState } from '../common/states/surveyResponse.state';
-import { useEffect, useState } from 'react';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
-import {
-  UploadedResponseDataGroupedListType,
-  UploadedResponseDataListType,
-} from 'pages/test/types/uploadedResponseData.type';
 
 export default function Survey02FG() {
   // for route to next survey when click bottom next button in condition answered "없음" to pre-question
@@ -78,73 +67,6 @@ export default function Survey02FG() {
     routeToNextSurvey,
   });
 
-  // for get uploaded excel file response data
-  const uploadedExcelFileRawData = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[2].TITLE)
-  );
-
-  // for make uploaded excel file pre-question response data to recoil state (localStorage)
-  const [preQuestionResponseValue, setPreQuestionResponseValue] = useRecoilState(
-    responseState(`${SURVEY_02_FG_STATE_KEYWORD}-pre`)
-  );
-  // for pre-question radio button checked according to uploaded excel response data
-  const [uploadedExcelDataPreQuestionAnswer, setUploadedExcelDataPreQuestionAnswer] = useState('');
-
-  // for separate uploaded excel file raw data according to pre question answer
-  const [uploadedExcelFileDataList, setUploadedExcelFileDataList] = useState<
-    UploadedResponseDataListType | UploadedResponseDataGroupedListType
-  >([]);
-  const [
-    survey01UPDRS_uploadedExcelFilePreQuestion,
-    setSurvey01UPDRS_uploadedExcelFilePreQuestion,
-  ] = useState('');
-
-  const survey01UPDRS_uploadedExcelFilePreQuestionRawData = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[1].TITLE)
-  )[0];
-
-  useEffect(() => {
-    // for survey-01-UPDRS pre-question uploaded excel file setting
-    if (
-      survey01UPDRS_uploadedExcelFilePreQuestionRawData !== undefined &&
-      survey01UPDRS_uploadedExcelFilePreQuestionRawData.length > 0 &&
-      '응답내용' in survey01UPDRS_uploadedExcelFilePreQuestionRawData
-    ) {
-      setSurvey01UPDRS_uploadedExcelFilePreQuestion(
-        survey01UPDRS_uploadedExcelFilePreQuestionRawData.응답내용
-      );
-    }
-
-    // for pre-question radio button checked according to uploaded excel response data
-    if (uploadedExcelFileRawData.length > 0 && preQuestionResponseValue.length === 0) {
-      setUploadedExcelDataPreQuestionAnswer(uploadedExcelFileRawData[0].응답내용);
-      setPreQuestionResponseValue(uploadedExcelFileRawData[0].응답내용);
-    }
-  }, []);
-
-  // for separate uploaded excel file raw data according to pre question answer
-  useEffect(() => {
-    if (uploadedExcelFileRawData.length > 0) {
-      // in case take medicine - uploadedExcelFileDataList setting
-      if (survey01UPDRS_uploadedExcelFilePreQuestion === NOT_TAKE_MEDICINE) {
-        const excelFileDataWithoutPreQuestion = uploadedExcelFileRawData.slice(1);
-        setUploadedExcelFileDataList(excelFileDataWithoutPreQuestion);
-      }
-      // in case not take medicine - uploadedExcelFileDataList setting
-      if (survey01UPDRS_uploadedExcelFilePreQuestion === TAKE_MEDICINE) {
-        const questionGroupArray: UploadedResponseDataGroupedListType = [];
-        for (let i = 1; i <= uploadedExcelFileRawData.length; i += 2) {
-          const questionGroup: UploadedResponseDataListType = [
-            uploadedExcelFileRawData[i],
-            uploadedExcelFileRawData[i + 1],
-          ];
-          questionGroupArray.push(questionGroup);
-        }
-        setUploadedExcelFileDataList(questionGroupArray);
-      }
-    }
-  }, [survey01UPDRS_uploadedExcelFilePreQuestion]);
-
   const surveyExplain = (
     <p className={styles.explain}>
       총 {FG_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[2].TITLE.slice(0, 4)}에 관한
@@ -169,9 +91,6 @@ export default function Survey02FG() {
         clickedQuestionNumber="pre"
         surveyStateKeyword={SURVEY_02_FG_STATE_KEYWORD}
         routeToNextSurvey={routeToNextSurvey}
-        // for apply uploaded excel file progress
-        uploadedExcelDataPreQuestionAnswer={uploadedExcelDataPreQuestionAnswer}
-        setUploadedExcelDataPreQuestionAnswer={setUploadedExcelDataPreQuestionAnswer}
       />
 
       {/* for display questions only when answered "있다" in pre-question */}
@@ -190,9 +109,6 @@ export default function Survey02FG() {
                 currentPageQuestions[currentPageQuestions.length - 1].No
               }
               responseStateList={responseStateList}
-              // for apply uploaded excel file response data
-              uploadedExcelFileDataList={uploadedExcelFileDataList}
-              uploadedExcelDataPreQuestionAnswer={survey01UPDRS_uploadedExcelFilePreQuestion}
               key={uuidv4()}
             />
           ))}

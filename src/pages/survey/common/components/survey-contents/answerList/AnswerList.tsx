@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { ExplainTextObjectType } from 'pages/survey/survey-06-NMS/survey06NMS.type';
 import styles from './answerList.module.scss';
 import { v4 as uuidv4 } from 'uuid';
@@ -14,8 +13,8 @@ interface AnswerLiProps {
   surveyStateKeyword: string;
 
   // for apply uploaded excel file progress
-  uploadedExcelDataAnswer: string;
-  setUploadedExcelDataAnswer: React.Dispatch<React.SetStateAction<string>>;
+  // uploadedExcelDataAnswer: string;
+  // setUploadedExcelDataAnswer: React.Dispatch<React.SetStateAction<string>>;
 
   // for survey-06-NMS additional explain text
   explainTextList?: ExplainTextObjectType[];
@@ -36,9 +35,9 @@ export default function AnswerList(props: AnswerLiProps) {
   });
 
   // for unchecked uploaded excel file progress checked state when edit response
-  useEffect(() => {
-    responseValue !== undefined && responseValue.length > 0 && props.setUploadedExcelDataAnswer('');
-  }, [responseValue]);
+  // useEffect(() => {
+  //   responseValue !== undefined && responseValue.length > 0 && props.setUploadedExcelDataAnswer('');
+  // }, [responseValue]);
 
   return (
     <li className={styles['answer-li']}>
