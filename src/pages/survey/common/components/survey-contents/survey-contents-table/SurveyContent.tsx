@@ -1,14 +1,9 @@
-import { useEffect, useState } from 'react';
 // components
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
-// states
-import { useRecoilState } from 'recoil';
-import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
-import { UploadedResponseDataType } from 'pages/test/types/uploadedResponseData.type';
 // styles
 import styles from './surveyContent.module.scss';
 import { v4 as uuidv4 } from 'uuid';
@@ -28,9 +23,6 @@ interface SurveyContentTableProps {
   currentPageFirstQuestionNumber: number;
   currentPageLastQuestionNumber: number;
   responseStateList: string[];
-
-  // for apply uploaded excel file progress
-  uploadedExcelFileDataList: UploadedResponseDataType[];
 
   // for survey-07-PDQ
   additionalCheckQuestionNo?: number;
@@ -71,7 +63,6 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
               question={question}
               radioBtnValues={props.radioBtnValues}
               surveyStateKeyword={props.surveyStateKeyword}
-              uploadedExcelFileDataList={props.uploadedExcelFileDataList}
               // for survey-07-PDQ
               additionalCheckQuestionNo={props.additionalCheckQuestionNo}
               additionalCheckQuestion={props.additionalCheckQuestion}
@@ -106,9 +97,6 @@ interface QuestionsTableRowProps {
   // for radio button checked
   surveyStateKeyword: string;
 
-  // for apply uploaded excel file progress
-  uploadedExcelFileDataList: UploadedResponseDataType[];
-
   // for survey-07-PDQ
   additionalCheckQuestionNo?: number;
   additionalCheckQuestion?: string;
@@ -118,20 +106,6 @@ interface QuestionsTableRowProps {
 }
 
 function QuestionsTableRow(props: QuestionsTableRowProps) {
-  // for create responseState when uploaded excel file exist
-  const [responseValue, setResponseValue] = useRecoilState(
-    responseState(`${props.surveyStateKeyword}-${props.question.No}`)
-  );
-
-  // for radio button checked according to uploaded excel file progress
-  const [uploadedExcelDataAnswer, setUploadedExcelDataAnswer] = useState('');
-  useEffect(() => {
-    if (props.uploadedExcelFileDataList.length > 0 && responseValue.length === 0) {
-      setUploadedExcelDataAnswer(props.uploadedExcelFileDataList[props.question.No - 1].응답내용);
-      setResponseValue(props.uploadedExcelFileDataList[props.question.No - 1].응답내용);
-    }
-  }, []);
-
   return (
     <tr className={styles['questions-table-row']} key={uuidv4()}>
       {/* question */}
@@ -165,18 +139,12 @@ function QuestionsTableRow(props: QuestionsTableRowProps) {
             clickedQuestionNumber={props.question.No}
             radioBtnValue={radioBtnValue}
             nonGradationStyle={props.nonGradationStyle}
-            // for apply uploaded excel file progress
-            setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
-            uploadedExcelDataAnswer={uploadedExcelDataAnswer}
           />
         ) : (
           <TableRadioBtn
             surveyStateKeyword={props.surveyStateKeyword}
             clickedQuestionNumber={props.question.No}
             radioBtnValue={radioBtnValue}
-            // for apply uploaded excel file progress
-            setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
-            uploadedExcelDataAnswer={uploadedExcelDataAnswer}
           />
         )
       )}
@@ -188,10 +156,6 @@ interface TableRadioBtnProps {
   surveyStateKeyword: string;
   clickedQuestionNumber: number;
   radioBtnValue: string;
-
-  // for apply uploaded excel file progress
-  uploadedExcelDataAnswer: string;
-  setUploadedExcelDataAnswer: React.Dispatch<React.SetStateAction<string>>;
 
   // for survey-12-FOOD
   nonGradationStyle?: boolean;
@@ -205,11 +169,6 @@ function TableRadioBtn(props: TableRadioBtnProps) {
     surveyStateKeyword,
     clickedQuestionNumber,
   });
-
-  // for unchecked uploaded excel file progress checked state when edit response
-  useEffect(() => {
-    responseValue.length > 0 && props.setUploadedExcelDataAnswer('');
-  }, [responseValue]);
 
   return (
     <td className={styles['question-td-radio-button-container']} key={uuidv4()}>
