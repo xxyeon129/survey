@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithScore from './components/SurveyContentWithScore';
@@ -9,18 +10,14 @@ import {
   survey07CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey06NMS_responseSelector } from './survey06NMS.selector';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { NMS_QUESTIONS, NMS_QUESTIONS_PER_PAGE, SURVEY_06_NMS_STATE_KEYWORD } from './survey.const';
 import { SURVEY_05_RBD_TOTAL_PAGES } from '../survey-05-RBD/survey.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
-// types
-import { UploadedResponseDataType } from 'pages/test/types/uploadedResponseData.type';
 // styles
 import styles from '../common/survey.module.scss';
-import { v4 as uuidv4 } from 'uuid';
 
 export default function Survey06NMS() {
   // pagination hook props
@@ -43,18 +40,18 @@ export default function Survey06NMS() {
   // for bottom next button disabled
   const responseStateList = useRecoilValue(survey06NMS_responseSelector);
 
-  // for apply uploaded excel file response
-  const uploadedExcelFileRawData = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[6].TITLE)
-  );
-  const totalScoreElementIndex = uploadedExcelFileRawData.length - 1;
-  const uploadedExcelFileData = uploadedExcelFileRawData.slice(0, totalScoreElementIndex);
+  // // for apply uploaded excel file response
+  // const uploadedExcelFileRawData = useRecoilValue(
+  //   uploadedResponseStates(SURVEY_TITLE_LIST[6].TITLE)
+  // );
+  // const totalScoreElementIndex = uploadedExcelFileRawData.length - 1;
+  // const uploadedExcelFileData = uploadedExcelFileRawData.slice(0, totalScoreElementIndex);
 
-  // for question pair degree, frequency
-  const uploadedExcelFileDataList: [UploadedResponseDataType, UploadedResponseDataType][] = [];
-  for (let i = 0; i < uploadedExcelFileData.length; i += 2) {
-    uploadedExcelFileDataList.push([uploadedExcelFileData[i], uploadedExcelFileData[i + 1]]);
-  }
+  // // for question pair degree, frequency
+  // const uploadedExcelFileDataList: [UploadedResponseDataType, UploadedResponseDataType][] = [];
+  // for (let i = 0; i < uploadedExcelFileData.length; i += 2) {
+  //   uploadedExcelFileDataList.push([uploadedExcelFileData[i], uploadedExcelFileData[i + 1]]);
+  // }
 
   const surveyExplain = (
     <p className={styles.explain}>
@@ -84,8 +81,8 @@ export default function Survey06NMS() {
             currentPageFirstQuestionNumber={currentPageQuestions[0].No}
             currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
             responseStateList={responseStateList}
-            // for apply uploaded excel file progress
-            uploadedExcelFileDataList={uploadedExcelFileDataList}
+            // // for apply uploaded excel file progress
+            // uploadedExcelFileDataList={uploadedExcelFileDataList}
             key={uuidv4()}
           />
         ))}
