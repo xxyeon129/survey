@@ -1,8 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
-// states
-// import { useSetRecoilState } from 'recoil';
-// import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 // constants
 import { MAIN_PAGE_CONTINUE, MAIN_PAGE_CREATE, MAIN_PAGE_EXCEL, routeItems } from './main.const';
 import { HOSPITAL_NAME, SURVEY_NAME } from 'common/constants/survey.const';
@@ -11,9 +8,25 @@ import { PATH_URL } from 'common/constants/path.const';
 import useExcelFile from 'common/hooks/useExcelFile';
 // styles
 import styles from './main.module.scss';
+import { useState } from 'react';
+import ModalPortal from 'common/layout/modalPortal';
+import CreateNewSurveyModal from './modal/CreateNewSurveyModal';
+import { useRecoilValue } from 'recoil';
+import { responseState } from 'pages/survey/common/states/surveyResponse.state';
+import { SURVEY_01_UPDRS_STATE_KEYWORD } from 'pages/survey/survey-01-UPDRS/survey.const';
 
 export default function MainPage() {
   const navigate = useNavigate();
+
+  // for check responded - create new survey condition
+  const firstQuestionResponse = useRecoilValue(
+    responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)
+  );
+
+  const [createBoxModalOpen, setCreateBoxModalOpen] = useState(false);
+  const closeCreateBoxModalHandler = () => {
+    setCreateBoxModalOpen(false);
+  };
 
   const handleRouteBoxClick = (id: string) => {
     switch (id) {
@@ -34,8 +47,11 @@ export default function MainPage() {
   };
 
   const onClickCreateBox = () => {
-    // TO DO: 웹스토리지에 저장된 내용이 있는지 확인 -> 있으면 임시저장된 작성 내용이 있습니다. 초기화하시겠습니까? 이어 작성하기 + 초기화 버튼 팝업창
-    navigate(PATH_URL.PERSONAL);
+    if (firstQuestionResponse.length > 0) {
+      setCreateBoxModalOpen(true);
+    } else {
+      navigate(PATH_URL.PERSONAL);
+    }
   };
 
   const routeBoxes = routeItems.map((routeBoxesItem) => (
@@ -67,6 +83,12 @@ export default function MainPage() {
         <h1>{SURVEY_NAME} 전자설문</h1>
       </hgroup>
       <ul className={styles['route-container']}>{routeBoxes}</ul>
+
+      {createBoxModalOpen && (
+        <ModalPortal>
+          <CreateNewSurveyModal onClose={closeCreateBoxModalHandler} />
+        </ModalPortal>
+      )}
     </article>
   );
 }
@@ -78,9 +100,8 @@ function UploadExcelFileBox({ routeBoxesItem }: { routeBoxesItem: { [key: string
 
   const onClickExcelBox = async () => {
     await uploadExcelFileHandler();
-    // TO DO: 작성한 부분까지 페이지 이동
+    // TO DO: 작성한 부분까지 페이지 이동, 헤더 현재 페이지 업데이트
     // setHeaderCurrentPage(1);
-    // navigate(PATH_URL.SURVEY['01_UPDRS']);
     navigate(PATH_URL.REDIRECT);
   };
 

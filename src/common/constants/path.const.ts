@@ -18,5 +18,6 @@ export const PATH_URL = {
   },
   END: '/end',
   REDIRECT: '/main/redirect',
+  RESET: '/main/reset',
   TEST: '/test',
 };
