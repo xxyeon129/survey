@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 // components
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
 // hooks
@@ -6,7 +7,6 @@ import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadio
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 // styles
 import styles from './surveyContent.module.scss';
-import { v4 as uuidv4 } from 'uuid';
 
 interface SurveyContentTableProps {
   questions: SurveyContentObjectType[];
@@ -83,6 +83,7 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
               handleNextPage={props.handleNextPage}
               handlePrevPage={props.handlePrevPage}
               nextBtnDisabledCondition={nextBtnDisabledCondition}
+              key={uuidv4()}
             />
           )
       )}
@@ -139,12 +140,14 @@ function QuestionsTableRow(props: QuestionsTableRowProps) {
             clickedQuestionNumber={props.question.No}
             radioBtnValue={radioBtnValue}
             nonGradationStyle={props.nonGradationStyle}
+            key={uuidv4()}
           />
         ) : (
           <TableRadioBtn
             surveyStateKeyword={props.surveyStateKeyword}
             clickedQuestionNumber={props.question.No}
             radioBtnValue={radioBtnValue}
+            key={uuidv4()}
           />
         )
       )}
