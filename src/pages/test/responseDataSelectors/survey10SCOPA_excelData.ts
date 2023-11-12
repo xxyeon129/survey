@@ -83,7 +83,7 @@ export const survey10SCOPA_excelData = selector({
             응답내용: inputCheckResponseValue,
           });
           responseList.push({
-            문항번호: `${i}`,
+            문항번호: `${i}-약 이름`,
             질문내용: `${SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST[j]}-약 이름`,
             응답내용: inputTextResponseValue,
           });
