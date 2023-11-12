@@ -130,7 +130,6 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
       {props.question.No === props.questionWithInput?.No &&
         props.answerWithInputTitleList &&
         props.showInputCondition && (
-          // TO DO: survey-10-SCOPA input type 마지막 질문 엑셀 반영
           <AnswerWithInput
             answerWithInput={props.questionWithInput}
             answerWithInputTitleList={props.answerWithInputTitleList}

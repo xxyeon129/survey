@@ -21,9 +21,9 @@ export default function RedirectionForUploadFile() {
 
   const navigate = useNavigate();
 
-  setTimeout(() => {
-    navigate(PATH_URL.SURVEY['01_UPDRS']);
-  }, 2000);
+  // setTimeout(() => {
+  //   navigate(PATH_URL.SURVEY['01_UPDRS']);
+  // }, 2000);
 
   return (
     <>

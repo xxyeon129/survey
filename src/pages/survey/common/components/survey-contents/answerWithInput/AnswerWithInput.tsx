@@ -60,21 +60,25 @@ function RadioBtnSection(props: RadioBtnSectionProps) {
     responseState(`${props.surveyStateKeyword}-${props.clickedQuestionNumber}-${props.answerTitle}`)
   );
 
-  const handleRadioBtnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectValue = e.target.value;
-    setResponseValue(selectValue);
-  };
-
-  useEffect(() => {
-    props.showInputCondition === responseValue ? setShowInput(true) : setShowInput(false);
-  }, [responseValue]);
-
   // for medicine input state
   const [responseMedicineInputValue, setResponseMedicineInputValue] = useRecoilState(
     responseState(
       `${props.surveyStateKeyword}-${props.clickedQuestionNumber}-${props.answerTitle}-medicineName`
     )
   );
+
+  const handleRadioBtnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectValue = e.target.value;
+    setResponseValue(selectValue);
+
+    // for reset input text when click "아니오"
+    selectValue !== props.showInputCondition && setResponseMedicineInputValue('');
+  };
+
+  // for show input
+  useEffect(() => {
+    props.showInputCondition === responseValue ? setShowInput(true) : setShowInput(false);
+  }, [responseValue]);
 
   const onChangeMedicineInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
