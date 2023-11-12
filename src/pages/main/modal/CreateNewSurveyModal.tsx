@@ -12,7 +12,9 @@ export default function CreateNewSurveyModal({ onClose }: { onClose: () => void 
     navigate(PATH_URL.RESET);
   };
 
-  const continueBtnClick = () => {};
+  const continueBtnClick = () => {
+    navigate(PATH_URL.SURVEY['01_UPDRS']);
+  };
 
   return (
     <div className={styles['modal']} onClick={onClose}>

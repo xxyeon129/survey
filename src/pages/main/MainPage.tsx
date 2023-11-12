@@ -43,7 +43,11 @@ export default function MainPage() {
 
   const onClickContinueBox = () => {
     // TO DO: 웹스토리지에 저장된 내용 있는지 확인 -> 있으면 설문 페이지로 이동, 없으면 작성된 내용 없습니다 + 새로 작성하시겠습니까 버튼 팝업창
-    console.log('작성 내용 이어서 작성');
+    if (firstQuestionResponse.length > 0) {
+      navigate(PATH_URL.SURVEY['01_UPDRS']);
+    } else {
+      navigate(PATH_URL.PERSONAL);
+    }
   };
 
   const onClickCreateBox = () => {
