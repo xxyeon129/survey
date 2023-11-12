@@ -13,6 +13,7 @@ import Redirection03BAI from './components/Redirection03BAI';
 import Redirection07PDQ from './components/Redirection07PDQ';
 import Redirection09Tired from './components/Redirection09Tired';
 import Redirection12Food from './components/Redirection12Food';
+import Redirection08PDSS from './components/Redirection08PDSS';
 
 export default function RedirectionForUploadFile() {
   // personal info
@@ -27,9 +28,9 @@ export default function RedirectionForUploadFile() {
 
   const navigate = useNavigate();
 
-  // setTimeout(() => {
-  //   navigate(PATH_URL.SURVEY['01_UPDRS']);
-  // }, 2000);
+  setTimeout(() => {
+    navigate(PATH_URL.SURVEY['01_UPDRS']);
+  }, 1000);
 
   return (
     <>
@@ -40,6 +41,7 @@ export default function RedirectionForUploadFile() {
       <Redirection04BDI />
       <Redirection06NMS />
       <Redirection07PDQ />
+      <Redirection08PDSS />
       <Redirection05RBD />
       <Redirection09Tired />
       <Redirection10SCOPA />

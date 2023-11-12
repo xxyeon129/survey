@@ -1,17 +1,12 @@
-import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 // components
 import BottomPrevNextButton from '../../common/components/bottom-prev-next-button/BottomPrevNextButton';
-// states
-import { useRecoilState } from 'recoil';
-import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
-import { UploadedResponseDataType } from 'pages/test/types/uploadedResponseData.type';
 // styles
 import styles from './surveyContent.module.scss';
-import { v4 as uuidv4 } from 'uuid';
 
 interface SurveyContentDegreeGradationProps {
   question: SurveyContentObjectType;
@@ -26,9 +21,6 @@ interface SurveyContentDegreeGradationProps {
   currentPageFirstQuestionNumber: number;
   currentPageLastQuestionNumber: number;
   responseStateList: string[];
-
-  // for apply uploaded excel file progress
-  uploadedExcelFileDataList: UploadedResponseDataType[];
 
   // for button checked
   surveyStateKeyword: string;
@@ -45,20 +37,6 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
   );
   const nextBtnDisabledCondition = currentPageResponseList.includes('');
 
-  // for create responseState when uploaded excel file exist
-  const [responseValue, setResponseValue] = useRecoilState(
-    responseState(`${props.surveyStateKeyword}-${props.question.No}`)
-  );
-
-  // for radio button checked according to uploaded excel file progress
-  const [uploadedExcelDataAnswer, setUploadedExcelDataAnswer] = useState('');
-  useEffect(() => {
-    if (props.uploadedExcelFileDataList.length > 0 && responseValue.length === 0) {
-      setUploadedExcelDataAnswer(props.uploadedExcelFileDataList[props.question.No - 1].응답내용);
-      setResponseValue(props.uploadedExcelFileDataList[props.question.No - 1].응답내용);
-    }
-  }, []);
-
   return (
     <article className={styles['survey-content-container']}>
       <h3 className={styles['question-h3']}>
@@ -71,9 +49,6 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
               questionNumber={props.question.No}
               surveyStateKeyword={props.surveyStateKeyword}
               degree={degree}
-              // for apply uploaded excel file progress
-              setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
-              uploadedExcelDataAnswer={uploadedExcelDataAnswer}
             />
 
             {/* for bottom degree explain text */}
@@ -129,10 +104,6 @@ interface DegreeBtnProps {
   questionNumber: number;
   surveyStateKeyword: string;
   degree: number;
-
-  // for apply uploaded excel file progress
-  uploadedExcelDataAnswer: string;
-  setUploadedExcelDataAnswer: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function DegreeBtn(props: DegreeBtnProps) {
@@ -142,11 +113,6 @@ function DegreeBtn(props: DegreeBtnProps) {
     surveyStateKeyword,
     clickedQuestionNumber,
   });
-
-  // for unchecked uploaded excel file progress checked state when edit response
-  useEffect(() => {
-    responseValue.length > 0 && props.setUploadedExcelDataAnswer('');
-  }, [responseValue]);
 
   return (
     <label className={styles['degree-li-label']}>
