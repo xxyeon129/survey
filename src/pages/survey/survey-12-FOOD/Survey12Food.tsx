@@ -8,7 +8,6 @@ import {
   survey12CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey12Food_responseSelector } from './survey12Food.selector';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -43,11 +42,6 @@ export default function Survey12Food() {
   // for bottom next button disabled
   const responseStateList = useRecoilValue(survey12Food_responseSelector);
 
-  // for apply uploaded excel file response
-  const uploadedExcelFileDataList = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[12].TITLE)
-  );
-
   const surveyExplain = (
     <p className={styles.explain}>
       총 {FOOD_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[12].TITLE}에 관한
@@ -77,8 +71,6 @@ export default function Survey12Food() {
           currentPageFirstQuestionNumber={currentPageQuestions[0].No}
           currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
           responseStateList={responseStateList}
-          // for apply uploaded excel file progress
-          uploadedExcelFileDataList={uploadedExcelFileDataList}
         />
       </section>
     </article>

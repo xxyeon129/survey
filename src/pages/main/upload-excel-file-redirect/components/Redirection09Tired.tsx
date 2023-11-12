@@ -5,18 +5,18 @@ import RedirectionTableContent from './common/RedirectionTableContent';
 // states
 import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
 // constants
-import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
-  BAI_QUESTIONS,
-  SURVEY_03_BAI_STATE_KEYWORD,
-} from 'pages/survey/survey-03-BAI/survey.const';
+  SURVEY_09_TIRED_STATE_KEYWORD,
+  TIRED_QUESTIONS,
+} from 'pages/survey/survey-09-TIRED/survey.const';
+import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 
-export default function Redirection03BAI() {
-  const questions = BAI_QUESTIONS;
+export default function Redirection09Tired() {
+  const questions = TIRED_QUESTIONS;
 
   // for apply uploaded excel file response
   const uploadedExcelFileDataList = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[3].TITLE)
+    uploadedResponseStates(SURVEY_TITLE_LIST[9].TITLE)
   );
 
   return (
@@ -24,7 +24,7 @@ export default function Redirection03BAI() {
       {questions.map((question) => (
         <RedirectionTableContent
           question={question}
-          surveyStateKeyword={SURVEY_03_BAI_STATE_KEYWORD}
+          surveyStateKeyword={SURVEY_09_TIRED_STATE_KEYWORD}
           uploadedExcelFileDataList={uploadedExcelFileDataList}
           key={uuidv4()}
         />

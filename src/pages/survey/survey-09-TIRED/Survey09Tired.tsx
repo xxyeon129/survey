@@ -9,7 +9,6 @@ import {
   survey10CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey09Tired_responseSelector } from './survey09Tired.selector';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -46,11 +45,6 @@ export default function Survey09Tired() {
   // for bottom next button disabled
   const responseStateList = useRecoilValue(survey09Tired_responseSelector);
 
-  // for apply uploaded excel file response
-  const uploadedExcelFileDataList = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[9].TITLE)
-  );
-
   const surveyExplain = (
     <p className={styles.explain}>
       총 {TIRED_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[9].TITLE}에 관한
@@ -78,8 +72,6 @@ export default function Survey09Tired() {
           currentPageFirstQuestionNumber={currentPageQuestions[0].No}
           currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
           responseStateList={responseStateList}
-          // for apply uploaded excel file progress
-          uploadedExcelFileDataList={uploadedExcelFileDataList}
         />
       </section>
     </article>
