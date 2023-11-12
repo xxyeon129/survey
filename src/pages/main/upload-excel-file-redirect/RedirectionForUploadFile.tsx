@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PATH_URL } from 'common/constants/path.const';
 import Redirection01UPDRS from './components/Redirection01UPDRS';
 import useUploadedPersonalInfo from './hooks/useUploadedPersonalInfo';
 import Redirection02FG from './components/Redirection02FG';
@@ -14,6 +13,7 @@ import Redirection07PDQ from './components/Redirection07PDQ';
 import Redirection09Tired from './components/Redirection09Tired';
 import Redirection12Food from './components/Redirection12Food';
 import Redirection08PDSS from './components/Redirection08PDSS';
+import useCheckSurveyResponded from '../hooks/useCheckSurveyResponded';
 
 export default function RedirectionForUploadFile() {
   // personal info
@@ -26,10 +26,18 @@ export default function RedirectionForUploadFile() {
     genderData.length > 0 && setSeclectedGender(genderData);
   }, [nameData, birthData, genderData]);
 
+  // for navigate to not responded page
   const navigate = useNavigate();
 
+  const isRespondedSurveyList = useCheckSurveyResponded();
+
   setTimeout(() => {
-    navigate(PATH_URL.SURVEY['01_UPDRS']);
+    for (let i = 0; i < isRespondedSurveyList.length; i++) {
+      if (isRespondedSurveyList[i].isNotResponded) {
+        navigate(isRespondedSurveyList[i].path);
+        break;
+      }
+    }
   }, 1000);
 
   return (

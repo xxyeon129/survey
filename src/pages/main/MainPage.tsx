@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 // states
-import { useSetRecoilState } from 'recoil';
-import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+// import { useSetRecoilState } from 'recoil';
+// import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 // constants
 import { MAIN_PAGE_CONTINUE, MAIN_PAGE_CREATE, MAIN_PAGE_EXCEL, routeItems } from './main.const';
 import { HOSPITAL_NAME, SURVEY_NAME } from 'common/constants/survey.const';
@@ -72,14 +72,14 @@ export default function MainPage() {
 }
 
 function UploadExcelFileBox({ routeBoxesItem }: { routeBoxesItem: { [key: string]: string } }) {
-  const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  // const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
   const navigate = useNavigate();
   const { uploadExcelFileHandler, fileRef } = useExcelFile();
 
   const onClickExcelBox = async () => {
     await uploadExcelFileHandler();
     // TO DO: 작성한 부분까지 페이지 이동
-    setHeaderCurrentPage(1);
+    // setHeaderCurrentPage(1);
     // navigate(PATH_URL.SURVEY['01_UPDRS']);
     navigate(PATH_URL.REDIRECT);
   };
