@@ -28,6 +28,5 @@ export default function RedirectionTableContent(props: RedirectionTableContentPr
     }
   }, []);
 
-  // TO DO: for survey-07-PDQ additional question "배우자나 같이 사는 사람이 없음" value
   return <></>;
 }
