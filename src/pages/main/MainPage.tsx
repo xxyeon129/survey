@@ -11,9 +11,10 @@ import styles from './main.module.scss';
 import { useState } from 'react';
 import ModalPortal from 'common/layout/modalPortal';
 import CreateNewSurveyModal from './modal/CreateNewSurveyModal';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import { SURVEY_01_UPDRS_STATE_KEYWORD } from 'pages/survey/survey-01-UPDRS/survey.const';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -27,6 +28,8 @@ export default function MainPage() {
   const closeCreateBoxModalHandler = () => {
     setCreateBoxModalOpen(false);
   };
+
+  const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
 
   const handleRouteBoxClick = (id: string) => {
     switch (id) {
@@ -45,6 +48,7 @@ export default function MainPage() {
     // TO DO: 웹스토리지에 저장된 내용 있는지 확인 -> 있으면 설문 페이지로 이동, 없으면 작성된 내용 없습니다 + 새로 작성하시겠습니까 버튼 팝업창
     if (firstQuestionResponse.length > 0) {
       navigate(PATH_URL.SURVEY['01_UPDRS']);
+      setHeaderCurrentPage(1);
     } else {
       navigate(PATH_URL.PERSONAL);
     }
@@ -54,6 +58,7 @@ export default function MainPage() {
     if (firstQuestionResponse.length > 0) {
       setCreateBoxModalOpen(true);
     } else {
+      setHeaderCurrentPage(1);
       navigate(PATH_URL.PERSONAL);
     }
   };
@@ -105,7 +110,6 @@ function UploadExcelFileBox({ routeBoxesItem }: { routeBoxesItem: { [key: string
   const onClickExcelBox = async () => {
     await uploadExcelFileHandler();
     // TO DO: 작성한 부분까지 페이지 이동, 헤더 현재 페이지 업데이트
-    // setHeaderCurrentPage(1);
     navigate(PATH_URL.REDIRECT);
   };
 
