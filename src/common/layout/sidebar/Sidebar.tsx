@@ -9,6 +9,7 @@ import { SURVEY_NAME, SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { totalPagesList } from '../header/pagination/totalPages.const';
 import { surveyCurrentPageStates } from './surveyCurrentPageStates.const';
 import { PATH_URL } from 'common/constants/path.const';
+import useCheckRespondedForSidebar from './hooks/useCheckRespondedForSidebar';
 
 export default function Sidebar() {
   const [checkedIndex, setCheckedIndex] = useState(0);
@@ -22,10 +23,97 @@ export default function Sidebar() {
   const { pathname } = useLocation();
   const location = +pathname.substring(8);
 
+  // for prevent move when not responded survey
+  const {
+    notAllowedClick02FG,
+    notAllowedClick03BAI,
+    notAllowedClick04BDI,
+    notAllowedClick05RBD,
+    notAllowedClick06NMS,
+    notAllowedClick07PDQ,
+    notAllowedClick08PDSS,
+    notAllowedClick09Tired,
+    notAllowedClick10SCOPA,
+    notAllowedClick11Constipation,
+    notAllowedClick12Food,
+  } = useCheckRespondedForSidebar();
+
   const handleClick = (index: number) => {
     if (index === 0) {
       navigate(PATH_URL.PERSONAL);
       return;
+    }
+
+    // for prevent move when not responded survey
+    switch (index) {
+      case 2:
+        if (notAllowedClick02FG) {
+          alert('이전 설문의 모든 질문에 응답 후 이동이 가능합니다.');
+          return;
+        }
+        break;
+      case 3:
+        if (notAllowedClick03BAI) {
+          alert('이전 설문의 모든 질문에 응답 후 이동이 가능합니다.');
+          return;
+        }
+        break;
+      case 4:
+        if (notAllowedClick04BDI) {
+          alert('이전 설문의 모든 질문에 응답 후 이동이 가능합니다.');
+          return;
+        }
+        break;
+      case 5:
+        if (notAllowedClick05RBD) {
+          alert('이전 설문의 모든 질문에 응답 후 이동이 가능합니다.');
+          return;
+        }
+        break;
+      case 6:
+        if (notAllowedClick06NMS) {
+          alert('이전 설문의 모든 질문에 응답 후 이동이 가능합니다.');
+          return;
+        }
+        break;
+      case 7:
+        if (notAllowedClick07PDQ) {
+          alert('이전 설문의 모든 질문에 응답 후 이동이 가능합니다.');
+          return;
+        }
+        break;
+      case 8:
+        if (notAllowedClick08PDSS) {
+          alert('이전 설문의 모든 질문에 응답 후 이동이 가능합니다.');
+          return;
+        }
+        break;
+      case 9:
+        if (notAllowedClick09Tired) {
+          alert('이전 설문의 모든 질문에 응답 후 이동이 가능합니다.');
+          return;
+        }
+        break;
+      case 10:
+        if (notAllowedClick10SCOPA) {
+          alert('이전 설문의 모든 질문에 응답 후 이동이 가능합니다.');
+          return;
+        }
+        break;
+      case 11:
+        if (notAllowedClick11Constipation) {
+          alert('이전 설문의 모든 질문에 응답 후 이동이 가능합니다.');
+          return;
+        }
+        break;
+      case 12:
+        if (notAllowedClick12Food) {
+          alert('이전 설문의 모든 질문에 응답 후 이동이 가능합니다.');
+          return;
+        }
+        break;
+      default:
+        break;
     }
 
     navigate(`/survey/${index}`);
