@@ -20,6 +20,9 @@ interface usePaginationProps {
   routeToNextSurvey?: () => void;
   conditionToSetPrevSurveyFirstPage?: boolean;
   setPrevSurveyFirstPage?: () => void;
+
+  // for survey-12-Food last page modal
+  onClickLastPageNextBtnHandler?: () => void;
 }
 
 export default function usePagination(props: usePaginationProps) {
@@ -64,6 +67,12 @@ export default function usePagination(props: usePaginationProps) {
     // for route to next survey when answered "없다" in survey-02-FG pre-question
     if (props.conditionToRouteNextSurvey) {
       props.routeToNextSurvey && props.routeToNextSurvey();
+      return;
+    }
+
+    // for last page
+    if (currentPage === currentSurveyTotalPages) {
+      props.onClickLastPageNextBtnHandler && props.onClickLastPageNextBtnHandler();
       return;
     }
 

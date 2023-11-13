@@ -21,9 +21,13 @@ import { survey10SCOPA_excelData } from '../../pages/test/responseDataSelectors/
 import { survey11Constipation_excelData } from '../../pages/test/responseDataSelectors/survey11Constipation_excelData';
 import { survey12Food_excelData } from '../../pages/test/responseDataSelectors/survey12Food_excelData';
 import { uploadedResponseStates } from '../../pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { useNavigate } from 'react-router-dom';
+import { PATH_URL } from 'common/constants/path.const';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
+  // for survey-12-Fodd
+  isLastPage?: boolean;
 }
 
 export default function useExcelFile(props: UseExcelFileProps) {
@@ -188,6 +192,8 @@ export default function useExcelFile(props: UseExcelFileProps) {
   // send email ----------------------------------------------
   const personalInfoName = useRecoilValue(personalInfoNameState);
   const birthday = useRecoilValue(personalInfoBirthdayState);
+  // for survey-12-Food
+  const navigate = useNavigate();
   const sendFile = () => {
     bookAppendSheetHandler();
     const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
@@ -207,6 +213,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
         })
         .then((res) => {
           console.log(res.data);
+          props.isLastPage && navigate(PATH_URL.MAIN);
           props.onCloseModal && props.onCloseModal();
           alert('전송이 완료되었습니다.');
         })

@@ -50,7 +50,7 @@ export default function RedirectionMedicineEffectContent(
         const uploadedExcelDataResponse = props.uploadedExcelFileDataList[
           props.question.No
         ] as UploadedResponseDataType;
-        if (uploadedExcelDataResponse !== undefined) {
+        if (uploadedExcelDataResponse !== undefined && '응답내용' in uploadedExcelDataResponse) {
           setNotTakeMedicine_responseValue(uploadedExcelDataResponse.응답내용);
         }
       } else if (
