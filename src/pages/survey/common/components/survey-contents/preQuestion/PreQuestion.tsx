@@ -10,9 +10,8 @@ interface PreQuestionProps {
   clickedQuestionNumber: string;
   surveyStateKeyword: string;
 
-  // for edit checked uploaded excel file response button
-  // uploadedExcelDataPreQuestionAnswer: string;
-  // setUploadedExcelDataPreQuestionAnswer: React.Dispatch<React.SetStateAction<string>>;
+  // for survey-01-UPDRS setting header current page 1
+  isUPDRSPreQuestion?: boolean;
 
   // for survey-02-FG route to next survey
   routeToNextSurvey?: () => void;
@@ -23,18 +22,15 @@ export default function PreQuestion(props: PreQuestionProps) {
   const clickedQuestionNumber = props.clickedQuestionNumber;
   // for survey-02-FG route to next survey
   const routeToNextSurvey = props.routeToNextSurvey;
+  // for survey-01-UPDRS setting header current page 1
+  const isUPDRSPreQuestion = props.isUPDRSPreQuestion;
 
   const { responseValue, handleRadioBtnChange } = useClickedRadioBtnChecked({
     surveyStateKeyword,
     clickedQuestionNumber,
     routeToNextSurvey,
+    isUPDRSPreQuestion,
   });
-
-  // for unchecked uploaded excel file progress checked state when edit response
-  // useEffect(() => {
-  //   if (responseValue.length > 0 && props.uploadedExcelDataPreQuestionAnswer.length > 0)
-  //     props.setUploadedExcelDataPreQuestionAnswer('');
-  // }, [responseValue]);
 
   return (
     <section className={styles['pre-question-container']}>

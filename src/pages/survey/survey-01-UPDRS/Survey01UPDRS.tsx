@@ -1,16 +1,18 @@
 import { useEffect } from 'react';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
 // states
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil'; // useRecoilState,
 import {
   survey01CurrentPageState,
   survey02CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey01UPDRS_responseSelector } from './survey01UPDRS.selector';
 import { responseState } from '../common/states/surveyResponse.state';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -19,14 +21,11 @@ import {
   UPDRS_QUESTIONS,
   UPDRS_QUESTIONS_PER_PAGE,
 } from './survey.const';
+import { surveyCurrentPageStates } from 'common/layout/sidebar/surveyCurrentPageStates.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
-// types
 // styles
 import styles from '../common/survey.module.scss';
-import { v4 as uuidv4 } from 'uuid';
-import { surveyCurrentPageStates } from 'common/layout/sidebar/surveyCurrentPageStates.const';
-import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function Survey01UPDRS() {
   // pagination hook props
@@ -91,6 +90,8 @@ export default function Survey01UPDRS() {
         question={UPDRS_PRE_QUESTION}
         clickedQuestionNumber="pre"
         surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
+        // for survey-01-UPDRS setting header current page 1
+        isUPDRSPreQuestion={true}
       />
 
       {/* for display questions only when answered pre-question */}
