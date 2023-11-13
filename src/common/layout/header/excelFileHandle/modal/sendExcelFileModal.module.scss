@@ -16,20 +16,26 @@
     line-height: 175%;
 
     .btn-container {
-      margin-top: 1rem;
+      margin-top: 3rem;
       width: 100%;
       display: flex;
-      column-gap: 2rem;
+      flex-direction: column;
+      row-gap: 2rem;
 
       .download-mail-btn {
         color: $main-blue-color;
         font-weight: $text-semi-bold;
+        font-size: 1.1rem;
         cursor: pointer;
       }
 
       .send-mail-btn {
-        color: $main-blue-color;
+        color: white;
+        border-radius: 0.5rem;
+        padding: 0.8rem 0;
         font-weight: $text-semi-bold;
+        background-color: $main-blue-color;
+        font-size: 1.1rem;
         cursor: pointer;
       }
     }

@@ -100,7 +100,7 @@ export default function MainPage() {
 function UploadExcelFileBox({ routeBoxesItem }: { routeBoxesItem: { [key: string]: string } }) {
   // const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
   const navigate = useNavigate();
-  const { uploadExcelFileHandler, fileRef } = useExcelFile();
+  const { uploadExcelFileHandler, fileRef } = useExcelFile({});
 
   const onClickExcelBox = async () => {
     await uploadExcelFileHandler();

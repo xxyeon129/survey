@@ -22,7 +22,11 @@ import { survey11Constipation_excelData } from '../../pages/test/responseDataSel
 import { survey12Food_excelData } from '../../pages/test/responseDataSelectors/survey12Food_excelData';
 import { uploadedResponseStates } from '../../pages/test/uploadedResponseDataStates/uploadedResponseData.state';
 
-export default function useExcelFile() {
+interface UseExcelFileProps {
+  onCloseModal?: () => void;
+}
+
+export default function useExcelFile(props: UseExcelFileProps) {
   // create recoil state in session storage
   const setUploadedPersonalInfo = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[0].TITLE)
@@ -201,10 +205,20 @@ export default function useExcelFile() {
             'Content-Type': 'multipart/form-data',
           },
         })
-        .then((res) => console.log(res.data))
-        .catch((error: AxiosError) => console.error('파일 업로드 실패: ', error));
+        .then((res) => {
+          console.log(res.data);
+          props.onCloseModal && props.onCloseModal();
+          alert('전송이 완료되었습니다.');
+        })
+        .catch((error: AxiosError) => {
+          console.error('파일 업로드 실패: ', error);
+          props.onCloseModal && props.onCloseModal();
+          alert('서버 문제로 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+        });
     } catch (error) {
-      console.error('파일 업로드 중 오류: ', error);
+      console.log('파일 업로드 중 오류: ', error);
+      props.onCloseModal && props.onCloseModal();
+      alert('서버 문제로 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.');
     }
   };
 
