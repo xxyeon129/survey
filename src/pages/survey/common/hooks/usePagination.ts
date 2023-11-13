@@ -4,6 +4,7 @@ import { headerCurrentPageState } from 'common/layout/header/pagination/headerPa
 import { PATH_URL } from 'common/constants/path.const';
 import useCurrentSurveyPagePath from 'pages/survey/common/hooks/useCurrentSurveyPagePath';
 import { SurveyContentObjectType } from '../types/surveyTypes';
+import { totalPagesCount } from 'common/layout/header/pagination/totalPages.const';
 
 interface usePaginationProps {
   // for prev survey type last page / next survey type first page
@@ -71,7 +72,7 @@ export default function usePagination(props: usePaginationProps) {
     }
 
     // for last page
-    if (currentPage === currentSurveyTotalPages) {
+    if (currentPage === totalPagesCount) {
       props.onClickLastPageNextBtnHandler && props.onClickLastPageNextBtnHandler();
       return;
     }
