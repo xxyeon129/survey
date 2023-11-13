@@ -17,10 +17,20 @@
 
   h1 {
     font-size: 1.7rem;
+
+    @media screen and (min-width: 1900px) {
+      transition: 0.5s;
+      font-size: 2.5rem;
+    }
   }
   h4 {
     color: $text-light-grey-color;
     font-size: 1.2rem;
+
+    @media screen and (min-width: 1900px) {
+      transition: 0.5s;
+      font-size: 1.9rem;
+    }
   }
 }
 
@@ -78,6 +88,13 @@
       height: 55%;
       display: flex;
       align-items: center;
+
+      @media screen and (min-width: 1900px) {
+        transition: 0.5s;
+        img {
+          width: 9rem;
+        }
+      }
     }
 
     .route-box-text-wrapper {
@@ -88,6 +105,12 @@
       text-align: center;
       color: white;
       font-size: 1rem;
+
+      @media screen and (min-width: 1900px) {
+        transition: 0.5s;
+        font-size: 1.5rem;
+        line-height: 175%;
+      }
 
       .route-box-description {
         white-space: pre-line;
