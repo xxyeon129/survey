@@ -1,20 +1,26 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
+// components
+import ModalPortal from 'common/layout/modalPortal';
+import CreateNewSurveyModal from './modal/CreateNewSurveyModal';
+// states
+import { responseState } from 'pages/survey/common/states/surveyResponse.state';
+import {
+  personalInfoBirthdayState,
+  personalInfoGenderState,
+  personalInfoNameState,
+} from 'pages/survey/personalInfo/personalInfo.state';
 // constants
 import { MAIN_PAGE_CONTINUE, MAIN_PAGE_CREATE, MAIN_PAGE_EXCEL, routeItems } from './main.const';
 import { HOSPITAL_NAME, SURVEY_NAME } from 'common/constants/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
+import { SURVEY_01_UPDRS_STATE_KEYWORD } from 'pages/survey/survey-01-UPDRS/survey.const';
 // hooks
 import useExcelFile from 'common/hooks/useExcelFile';
 // styles
 import styles from './main.module.scss';
-import { useState } from 'react';
-import ModalPortal from 'common/layout/modalPortal';
-import CreateNewSurveyModal from './modal/CreateNewSurveyModal';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { responseState } from 'pages/survey/common/states/surveyResponse.state';
-import { SURVEY_01_UPDRS_STATE_KEYWORD } from 'pages/survey/survey-01-UPDRS/survey.const';
-import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function MainPage() {
   const navigate = useNavigate();
@@ -24,12 +30,16 @@ export default function MainPage() {
     responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)
   );
 
+  // for modal when click create box
   const [createBoxModalOpen, setCreateBoxModalOpen] = useState(false);
   const closeCreateBoxModalHandler = () => {
     setCreateBoxModalOpen(false);
   };
 
-  const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  // for check personal info responses -> to navigate personal page when only responded personal page
+  const respondedPersonalInfoName = useRecoilValue(personalInfoNameState);
+  const respondedPersonalInfoBirthday = useRecoilValue(personalInfoBirthdayState);
+  const respondedPersonalInfoGender = useRecoilValue(personalInfoGenderState);
 
   const handleRouteBoxClick = (id: string) => {
     switch (id) {
@@ -44,21 +54,36 @@ export default function MainPage() {
     }
   };
 
+  // for navigate personal info page
+  // 1. when click continue box
+  // 2. when click create box -> continue-response modal open -> continue-response button click
+  const notRespondedPersonalInfo =
+    respondedPersonalInfoName.length === 0 ||
+    respondedPersonalInfoBirthday.length === 0 ||
+    respondedPersonalInfoGender.length === 0;
+
   const onClickContinueBox = () => {
     // TO DO: 웹스토리지에 저장된 내용 있는지 확인 -> 있으면 설문 페이지로 이동, 없으면 작성된 내용 없습니다 + 새로 작성하시겠습니까 버튼 팝업창
-    if (firstQuestionResponse.length > 0) {
-      navigate(PATH_URL.SURVEY['01_UPDRS']);
-      setHeaderCurrentPage(1);
-    } else {
+    if (notRespondedPersonalInfo) {
       navigate(PATH_URL.PERSONAL);
+      return;
+    } else {
+      navigate(PATH_URL.SURVEY['01_UPDRS']);
+      return;
     }
   };
 
+  // for navigate personal info page - when click create box - open continue-response modal
+  const respondedPersonalInfo =
+    respondedPersonalInfoName.length > 0 ||
+    respondedPersonalInfoBirthday.length > 0 ||
+    respondedPersonalInfoGender.length > 0;
+
   const onClickCreateBox = () => {
-    if (firstQuestionResponse.length > 0) {
+    if (firstQuestionResponse.length > 0 || respondedPersonalInfo) {
+      // when have response data open modal
       setCreateBoxModalOpen(true);
     } else {
-      setHeaderCurrentPage(1);
       navigate(PATH_URL.PERSONAL);
     }
   };
@@ -95,7 +120,10 @@ export default function MainPage() {
 
       {createBoxModalOpen && (
         <ModalPortal>
-          <CreateNewSurveyModal onClose={closeCreateBoxModalHandler} />
+          <CreateNewSurveyModal
+            onClose={closeCreateBoxModalHandler}
+            notRespondedPersonalInfo={notRespondedPersonalInfo}
+          />
         </ModalPortal>
       )}
     </article>

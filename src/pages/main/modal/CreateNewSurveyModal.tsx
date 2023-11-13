@@ -2,7 +2,12 @@ import { PATH_URL } from 'common/constants/path.const';
 import styles from './createNewSurveyModal.module.scss';
 import { useNavigate } from 'react-router-dom';
 
-export default function CreateNewSurveyModal({ onClose }: { onClose: () => void }) {
+interface CreateNewSurveyModalProps {
+  onClose: () => void;
+  notRespondedPersonalInfo: boolean;
+}
+
+export default function CreateNewSurveyModal(props: CreateNewSurveyModalProps) {
   const navigate = useNavigate();
 
   const keepModalOpen = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -13,11 +18,16 @@ export default function CreateNewSurveyModal({ onClose }: { onClose: () => void 
   };
 
   const continueBtnClick = () => {
-    navigate(PATH_URL.SURVEY['01_UPDRS']);
+    // when have blank in personal info page
+    if (props.notRespondedPersonalInfo) {
+      navigate(PATH_URL.PERSONAL);
+    } else {
+      navigate(PATH_URL.SURVEY['01_UPDRS']);
+    }
   };
 
   return (
-    <div className={styles['modal']} onClick={onClose}>
+    <div className={styles['modal']} onClick={props.onClose}>
       <div className={styles['modal-content']} onClick={keepModalOpen}>
         <h3>
           자동 저장된 작성 내용이 있습니다.
