@@ -2,11 +2,19 @@ import { SURVEY_NAME } from 'common/constants/survey.const';
 import { SURVEY_NAME_FIRST, SURVEY_NAME_SECOND } from '../../personalInfo.const';
 import logo from 'assets/login-personalinfo-page-logo.svg';
 import styles from './leftBlueBoxSection.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { PATH_URL } from 'common/constants/path.const';
 
 export default function LeftBlueBoxSection() {
+  const navigate = useNavigate();
+
+  const navigateToMain = () => {
+    navigate(PATH_URL.MAIN);
+  };
+
   return (
     <section className={styles['left-blue-section']}>
-      <img src={logo} alt="hospital logo" className={styles.logo} />
+      <img src={logo} alt="hospital logo" className={styles.logo} onClick={navigateToMain} />
       <h1 className={styles['left-blue-section-h1']}>
         {SURVEY_NAME_FIRST}
         <br />
