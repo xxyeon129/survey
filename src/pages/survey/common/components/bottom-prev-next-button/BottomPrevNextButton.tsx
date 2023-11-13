@@ -21,7 +21,6 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
     } else {
       props.handleNextPage && props.handleNextPage();
     }
-    console.log('??');
   };
 
   return (
