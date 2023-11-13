@@ -26,6 +26,7 @@ import usePagination from '../common/hooks/usePagination';
 import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
 import { surveyCurrentPageStates } from 'common/layout/sidebar/surveyCurrentPageStates.const';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function Survey01UPDRS() {
   // pagination hook props
@@ -62,6 +63,15 @@ export default function Survey01UPDRS() {
     );
     window.scrollTo(0, 0);
   }, [preQuestionResponseValue]);
+
+  // for updata header current page
+  const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+
+  useEffect(() => {
+    if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
+      setHeaderCurrentPage(1);
+    }
+  }, []);
 
   const surveyExplain = (
     <p className={styles.explain}>

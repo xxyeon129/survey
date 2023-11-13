@@ -23,6 +23,8 @@ import { SURVEY_08_PDSS_TOTAL_PAGES } from '../survey-08-PDSS/survey.const';
 import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
+import { useEffect } from 'react';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function Survey09Tired() {
   // pagination hook props
@@ -44,6 +46,14 @@ export default function Survey09Tired() {
 
   // for bottom next button disabled
   const responseStateList = useRecoilValue(survey09Tired_responseSelector);
+
+  // for updata header current page
+  const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  useEffect(() => {
+    if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
+      setHeaderCurrentPage(34);
+    }
+  }, []);
 
   const surveyExplain = (
     <p className={styles.explain}>

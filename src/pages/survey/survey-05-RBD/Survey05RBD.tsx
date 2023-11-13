@@ -24,6 +24,8 @@ import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
+import { useEffect } from 'react';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function Survey05RBD() {
   // pagination hook props
@@ -46,22 +48,13 @@ export default function Survey05RBD() {
   // for bottom next button disabled
   const responseStateList = useRecoilValue(survey05RBD_responseSelector);
 
-  // // for apply uploaded excel file progress
-  // const uploadedExcelFileDataList = useRecoilValue(
-  //   uploadedResponseStates(SURVEY_TITLE_LIST[5].TITLE)
-  // );
-
-  // // for pre-question radio button checked according to uploaded excel file progress
-  // const [responseValue, setResponseValue] = useRecoilState(
-  //   responseState(`${SURVEY_05_RBD_STATE_KEYWORD}-pre`)
-  // );
-  // const [uploadedExcelDataPreQuestionAnswer, setUploadedExcelDataPreQuestionAnswer] = useState('');
-  // useEffect(() => {
-  //   if (uploadedExcelFileDataList.length > 0 && responseValue.length === 0) {
-  //     setUploadedExcelDataPreQuestionAnswer(uploadedExcelFileDataList[0].응답내용);
-  //     setResponseValue(uploadedExcelFileDataList[0].응답내용);
-  //   }
-  // }, []);
+  // for updata header current page
+  const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  useEffect(() => {
+    if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
+      setHeaderCurrentPage(17);
+    }
+  }, []);
 
   const surveyExplain = (
     <p className={styles.explain}>

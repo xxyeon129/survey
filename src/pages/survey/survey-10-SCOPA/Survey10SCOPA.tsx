@@ -26,6 +26,8 @@ import useSeparateGender from './hooks/useSeparateGender';
 import useExplainSectionElements from './hooks/useExplainSectionElements';
 // styles
 import styles from '../common/survey.module.scss';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import { useEffect } from 'react';
 
 export default function Survey10SCOPA() {
   // pagination hook props
@@ -53,6 +55,14 @@ export default function Survey10SCOPA() {
 
   // for explain text box before question number 8~13, 22~23, 24
   const explainSectionList = useExplainSectionElements();
+
+  // for updata header current page
+  const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  useEffect(() => {
+    if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
+      setHeaderCurrentPage(37);
+    }
+  }, []);
 
   const surveyExplain = (
     <p className={styles.explain}>

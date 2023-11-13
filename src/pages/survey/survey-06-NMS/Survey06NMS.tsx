@@ -18,6 +18,8 @@ import { SURVEY_05_RBD_TOTAL_PAGES } from '../survey-05-RBD/survey.const';
 import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
+import { useEffect } from 'react';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function Survey06NMS() {
   // pagination hook props
@@ -40,18 +42,13 @@ export default function Survey06NMS() {
   // for bottom next button disabled
   const responseStateList = useRecoilValue(survey06NMS_responseSelector);
 
-  // // for apply uploaded excel file response
-  // const uploadedExcelFileRawData = useRecoilValue(
-  //   uploadedResponseStates(SURVEY_TITLE_LIST[6].TITLE)
-  // );
-  // const totalScoreElementIndex = uploadedExcelFileRawData.length - 1;
-  // const uploadedExcelFileData = uploadedExcelFileRawData.slice(0, totalScoreElementIndex);
-
-  // // for question pair degree, frequency
-  // const uploadedExcelFileDataList: [UploadedResponseDataType, UploadedResponseDataType][] = [];
-  // for (let i = 0; i < uploadedExcelFileData.length; i += 2) {
-  //   uploadedExcelFileDataList.push([uploadedExcelFileData[i], uploadedExcelFileData[i + 1]]);
-  // }
+  // for updata header current page
+  const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  useEffect(() => {
+    if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
+      setHeaderCurrentPage(18);
+    }
+  }, []);
 
   const surveyExplain = (
     <p className={styles.explain}>

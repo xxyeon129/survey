@@ -27,6 +27,8 @@ import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
 import surveyStyles from './surveyBDI.module.scss';
+import { useEffect } from 'react';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function Survey04BDI() {
   // pagination hook props
@@ -48,6 +50,14 @@ export default function Survey04BDI() {
 
   // for bottom next button disabled
   const responseStateList = useRecoilValue(survey04BDI_responseSelector);
+
+  // for updata header current page
+  const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  useEffect(() => {
+    if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
+      setHeaderCurrentPage(12);
+    }
+  }, []);
 
   const surveyExplain = (
     <p className={styles.explain}>

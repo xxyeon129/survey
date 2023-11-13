@@ -26,6 +26,8 @@ import usePagination from '../common/hooks/usePagination';
 import useSetPrevSurveyFirstPage from './hooks/useSetPrevSurveyFirstPage';
 // styles
 import styles from '../common/survey.module.scss';
+import { useEffect } from 'react';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function Survey03BAI() {
   // for set survey-02-FG first page when click bottom prev button in condition answered "없음" to FG symptom pre-question
@@ -64,6 +66,14 @@ export default function Survey03BAI() {
 
   // for bottom next button disabled
   const responseStateList = useRecoilValue(survey03BAI_responseSelector);
+
+  // for updata header current page
+  const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  useEffect(() => {
+    if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
+      setHeaderCurrentPage(8);
+    }
+  }, []);
 
   const surveyExplain = (
     <p className={styles.explain}>

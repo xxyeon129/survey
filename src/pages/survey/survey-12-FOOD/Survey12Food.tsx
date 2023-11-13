@@ -22,9 +22,10 @@ import { SURVEY_11_CONSTIPATION_TOTAL_PAGES } from '../survey-11-CONSTIPATION/su
 import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ModalPortal from 'common/layout/modalPortal';
 import LastPageModal from './components/LastPageModal';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function Survey12Food() {
   // for last page modal
@@ -55,6 +56,14 @@ export default function Survey12Food() {
 
   // for bottom next button disabled
   const responseStateList = useRecoilValue(survey12Food_responseSelector);
+
+  // for updata header current page
+  const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  useEffect(() => {
+    if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
+      setHeaderCurrentPage(43);
+    }
+  }, []);
 
   const surveyExplain = (
     <p className={styles.explain}>

@@ -29,6 +29,8 @@ import useRouteToNextSurvey from './hooks/useRouteToNextSurvey';
 // styles
 import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import { useEffect } from 'react';
 
 export default function Survey02FG() {
   // for route to next survey when click bottom next button in condition answered "없음" to pre-question
@@ -66,6 +68,15 @@ export default function Survey02FG() {
     conditionToRouteNextSurvey,
     routeToNextSurvey,
   });
+
+  // for updata header current page
+  const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+
+  useEffect(() => {
+    if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
+      setHeaderCurrentPage(6);
+    }
+  }, []);
 
   const surveyExplain = (
     <p className={styles.explain}>
