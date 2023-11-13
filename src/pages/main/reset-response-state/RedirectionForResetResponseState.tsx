@@ -64,6 +64,7 @@ import {
   selectedBirthMonthState,
   selectedBirthYearState,
 } from 'pages/survey/personalInfo/components/rightSection/selectBirthday/selectBirthdaySection.state';
+import RedirectionLoadingSpinner from '../loading-spinner/RedirectionLoadindSpinner';
 
 export default function RedirectionForResetResponseState() {
   const resetPersonalInfoName = useResetRecoilState(personalInfoNameState);
@@ -102,6 +103,7 @@ export default function RedirectionForResetResponseState() {
 
   return (
     <>
+      <RedirectionLoadingSpinner />
       <ResetPreQuestion surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD} />
       <ResetPreQuestion surveyStateKeyword={SURVEY_02_FG_STATE_KEYWORD} />
       <ResetPreQuestion surveyStateKeyword={SURVEY_05_RBD_STATE_KEYWORD} />

@@ -14,6 +14,7 @@ import Redirection09Tired from './components/Redirection09Tired';
 import Redirection12Food from './components/Redirection12Food';
 import Redirection08PDSS from './components/Redirection08PDSS';
 import useCheckSurveyResponded from '../hooks/useCheckSurveyResponded';
+import RedirectionLoadingSpinner from '../loading-spinner/RedirectionLoadindSpinner';
 
 export default function RedirectionForUploadFile() {
   // personal info
@@ -42,7 +43,7 @@ export default function RedirectionForUploadFile() {
 
   return (
     <>
-      {/* TO DO : spinner */}
+      <RedirectionLoadingSpinner />
       <Redirection01UPDRS />
       <Redirection02FG />
       <Redirection03BAI />
