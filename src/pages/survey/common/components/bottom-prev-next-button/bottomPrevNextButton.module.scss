@@ -3,7 +3,7 @@
   justify-content: space-between;
   margin-top: 6rem;
 
-  > button {
+  button {
     font-size: 1.1rem;
     font-weight: $text-semi-bold;
     display: flex;
@@ -42,12 +42,24 @@
       align-items: center;
       justify-content: center;
     }
+  }
+  .next-btn-disabled {
+    justify-content: space-between;
+    color: $text-input-label-color;
+    background-color: $sidebar-background-blue-color;
+    border-radius: 1.875rem;
+    min-width: 11.5rem;
+    padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+    cursor: not-allowed;
 
-    &:disabled {
-      background-color: $sidebar-background-blue-color;
-      .next-btn-icon-container {
-        background-color: #ebf0f7;
-      }
+    .next-btn-icon-container {
+      background-color: #ebf0f7;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }

@@ -15,6 +15,15 @@ interface BottomPrevNextButtonProps {
 export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
   const headerCurrentPage = useRecoilValue(headerCurrentPageState);
 
+  const onClickDisabledBtn = () => {
+    if (props.nextBtnDisabledCondition) {
+      alert('모든 질문에 답변해주세요.');
+    } else {
+      props.handleNextPage && props.handleNextPage();
+    }
+    console.log('??');
+  };
+
   return (
     <div className={styles['prev-next-btn-container']}>
       <button
@@ -25,16 +34,27 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
         <IoIosArrowBack />
         이전 페이지
       </button>
-      <button
-        className={styles['next-btn']}
-        onClick={props.handleNextPage}
-        disabled={props.nextBtnDisabledCondition}
-      >
-        다음 페이지
-        <div className={styles['next-btn-icon-container']}>
-          <IoMdArrowRoundForward />
-        </div>
-      </button>
+      <div onClick={onClickDisabledBtn}>
+        {props.nextBtnDisabledCondition ? (
+          <button
+            className={styles['next-btn-disabled']}
+            // onClick={props.handleNextPage}
+            // disabled={props.nextBtnDisabledCondition}
+          >
+            다음 페이지
+            <div className={styles['next-btn-icon-container']}>
+              <IoMdArrowRoundForward />
+            </div>
+          </button>
+        ) : (
+          <button className={styles['next-btn']}>
+            다음 페이지
+            <div className={styles['next-btn-icon-container']}>
+              <IoMdArrowRoundForward />
+            </div>
+          </button>
+        )}
+      </div>
     </div>
   );
 }
