@@ -146,11 +146,17 @@ export default function useExcelFile(props: UseExcelFileProps) {
     bookAppendSheet(worksheetTotalCount);
   };
 
+  // for file name, send mail
+  const personalInfoName = useRecoilValue(personalInfoNameState);
+  const birthday = useRecoilValue(personalInfoBirthdayState);
+
   const downloadExcelFileHandler = () => {
     bookAppendSheetHandler();
 
-    // TO DO: 파일명 변경
-    XLSX.writeFile(workbook, 'test.xlsx');
+    XLSX.writeFile(
+      workbook,
+      `이상운동질환 비운동증상 전자설문_${personalInfoName}_${birthday}.xlsx`
+    );
   };
 
   // upload excel file ------------------------------------------
@@ -190,8 +196,6 @@ export default function useExcelFile(props: UseExcelFileProps) {
   };
 
   // send email ----------------------------------------------
-  const personalInfoName = useRecoilValue(personalInfoNameState);
-  const birthday = useRecoilValue(personalInfoBirthdayState);
   // for survey-12-Food
   const navigate = useNavigate();
   const sendFile = () => {
