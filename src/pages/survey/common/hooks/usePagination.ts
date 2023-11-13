@@ -72,7 +72,7 @@ export default function usePagination(props: usePaginationProps) {
     }
 
     // for last page
-    if (currentPage === totalPagesCount) {
+    if (headerCurrentPage === totalPagesCount) {
       props.onClickLastPageNextBtnHandler && props.onClickLastPageNextBtnHandler();
       return;
     }
