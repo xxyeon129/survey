@@ -22,7 +22,7 @@ import Survey12Food from 'pages/survey/survey-12-FOOD/Survey12Food';
 import EndPage from 'pages/end/EndPage';
 import RedirectionForUploadFile from 'pages/main/upload-excel-file-redirect/RedirectionForUploadFile';
 import PreventRootNavigation from './PreventRootNavigation';
-import RedirectionForResetResponseState from 'pages/main/reset-response-state/RedirectionForResetResponseState';
+import RedirectionForResetResponseState from 'pages/main/reset-response-state-redirect/RedirectionForResetResponseState';
 
 export default function MainRouter() {
   return (
