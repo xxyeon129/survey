@@ -25,6 +25,7 @@ import usePagination from '../common/hooks/usePagination';
 import styles from '../common/survey.module.scss';
 import { useEffect } from 'react';
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import { respondedCheckObject11Constipation } from '../common/states/respondedCheckObjects.state';
 
 export default function Survey11Constipation() {
   // pagination hook props
@@ -55,6 +56,9 @@ export default function Survey11Constipation() {
     }
   }, []);
 
+  // for show not-responded question "!" icon, not-responded question number message
+  const respondedCheckObject = respondedCheckObject11Constipation;
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {CONSTIPATION_QUESTIONS.length}개의 문항으로 이루어진{' '}
@@ -83,6 +87,8 @@ export default function Survey11Constipation() {
             currentPageFirstQuestionNumber={currentPageQuestions[0].No}
             currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
             responseStateList={responseStateList}
+            // for show not-responded question "!" icon, not-responded question number message
+            respondedCheckObject={respondedCheckObject}
             key={uuidv4()}
           />
         ))}

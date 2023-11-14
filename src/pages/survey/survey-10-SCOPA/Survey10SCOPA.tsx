@@ -28,6 +28,7 @@ import useExplainSectionElements from './hooks/useExplainSectionElements';
 import styles from '../common/survey.module.scss';
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 import { useEffect } from 'react';
+import { respondedCheckObject10SCOPA } from '../common/states/respondedCheckObjects.state';
 
 export default function Survey10SCOPA() {
   // pagination hook props
@@ -64,6 +65,9 @@ export default function Survey10SCOPA() {
     }
   }, []);
 
+  // for show not-responded question "!" icon, not-responded question number message
+  const respondedCheckObject = respondedCheckObject10SCOPA;
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {SCOPA_QUESTIONS.length}개의 문항으로 이루어진{' '}
@@ -95,6 +99,7 @@ export default function Survey10SCOPA() {
             currentPageFirstQuestionNumber={currentPageQuestions[0].No}
             currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
             responseStateList={responseStateList}
+            respondedCheckObject={respondedCheckObject}
             key={uuidv4()}
           />
         ))}

@@ -1,3 +1,4 @@
+import { RecoilState, useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import AnswerList from '../answerList/AnswerList';
@@ -7,7 +8,9 @@ import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextBu
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respondedCheckObjectState.types';
 // styles
+import { BsExclamationCircleFill } from 'react-icons/bs';
 import styles from 'pages/survey/common/survey.module.scss';
 import contentStyles from './surveyContent.module.scss';
 
@@ -26,6 +29,9 @@ interface SurveyContentWithShortAnswersProps {
   currentPageFirstQuestionNumber: number;
   currentPageLastQuestionNumber: number;
   responseStateList: string[];
+
+  // for show not-responded question "!" icon, not-responded question number message
+  respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
 
   // for survey-05-RBD bottom next button disabled
   havePreQuestion?: boolean;
@@ -59,6 +65,12 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
 
   const nextBtnDisabledCondition = currentPageResponseList.includes('');
 
+  // for show not-responded question "!" icon, not-responded question number message
+  const respondedCheckObject: RespondedCheckObjectStateType = useRecoilValue(
+    props.respondedCheckObject
+  );
+  const surveyWithShortAnswersQuestionsPerPage = 5;
+
   return (
     <li className={contentStyles['questions-li']}>
       {/* for explain question section text box */}
@@ -78,16 +90,19 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
       <hr className={styles.hr} />
 
       <header className={contentStyles['questions-title']}>
-        <h4>
-          {props.question.No}. {props.question.Q}
-          {/* for additional categorized question (according to specific conditions) */}
-          {props.categorizedQuestionList?.map(
-            (categorizedQuestion) =>
-              props.question.No === categorizedQuestion.No && categorizedQuestion.Q
-          )}
-          {/* for with input type question */}
-          {props.question.No === props.questionWithInput?.No && props.questionWithInput.Q}
-        </h4>
+        <section className={contentStyles['question-title-text-section']}>
+          <h4>
+            {props.question.No}. {props.question.Q}
+            {/* for additional categorized question (according to specific conditions) */}
+            {props.categorizedQuestionList?.map(
+              (categorizedQuestion) =>
+                props.question.No === categorizedQuestion.No && categorizedQuestion.Q
+            )}
+            {/* for with input type question */}
+            {props.question.No === props.questionWithInput?.No && props.questionWithInput.Q}
+          </h4>
+          {respondedCheckObject[props.question.No] && <BsExclamationCircleFill />}
+        </section>
         {/* for question explain text */}
         {props.question.EXPLAIN && (
           <span className={contentStyles['question-title-explain']}>
@@ -105,6 +120,7 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
             inputId={`${props.question.No}${answer}`}
             clickedQuestionNumber={`${props.question.No}`}
             surveyStateKeyword={props.surveyStateKeyword}
+            respondedCheckObject={props.respondedCheckObject}
             key={uuidv4()}
           />
         ))}
@@ -121,6 +137,8 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
                 // for radio button checked
                 clickedQuestionNumber={`${props.question.No}`}
                 surveyStateKeyword={props.surveyStateKeyword}
+                // for show not-responded question "!" icon, not-responded question number message
+                respondedCheckObject={props.respondedCheckObject}
                 key={uuidv4()}
               />
             ))
@@ -148,6 +166,8 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
             imageSelectAnswersList={props.imageSelectAnswersList}
             surveyStateKeyword={props.surveyStateKeyword}
             clickedQuestionNumber={`${props.question.No}`}
+            // for hide question right not-responded "!" icon when checked
+            respondedCheckObject={props.respondedCheckObject}
           />
         )}
 
@@ -157,6 +177,14 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
           handleNextPage={props.handleNextPage}
           handlePrevPage={props.handlePrevPage}
           nextBtnDisabledCondition={nextBtnDisabledCondition}
+          // for show not-responded question "!" icon, not-responded question number message
+          respondedCheckObject={props.respondedCheckObject}
+          responseStateList={props.responseStateList}
+          currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
+          currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
+          surveyQuestionsPerPage={surveyWithShortAnswersQuestionsPerPage}
+          // for survey-05-RBD
+          havePreQuestion={props.havePreQuestion}
         />
       )}
     </li>
@@ -167,14 +195,21 @@ interface ImageSelectAnswersProps {
   imageSelectAnswersList: ImageSelectAnswerListType;
   surveyStateKeyword: string;
   clickedQuestionNumber: string;
+
+  // for hide question right not-responded "!" icon when checked
+  respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
 }
 
 function ImageSelectAnswers(props: ImageSelectAnswersProps) {
   const surveyStateKeyword = props.surveyStateKeyword;
   const clickedQuestionNumber = props.clickedQuestionNumber;
+  // for hide question right not-responded "!" icon when checked
+  const respondedCheckObject = props.respondedCheckObject;
   const { responseValue, handleRadioBtnChange } = useClickedRadioBtnChecked({
     surveyStateKeyword,
     clickedQuestionNumber,
+    // for hide question right not-responded "!" icon when checked
+    respondedCheckObject,
   });
 
   return (

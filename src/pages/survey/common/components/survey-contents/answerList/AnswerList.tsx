@@ -2,6 +2,8 @@ import { ExplainTextObjectType } from 'pages/survey/survey-06-NMS/survey06NMS.ty
 import styles from './answerList.module.scss';
 import { v4 as uuidv4 } from 'uuid';
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
+import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respondedCheckObjectState.types';
+import { RecoilState } from 'recoil';
 
 interface AnswerLiProps {
   answer: string;
@@ -12,9 +14,8 @@ interface AnswerLiProps {
   clickedQuestionNumber: string;
   surveyStateKeyword: string;
 
-  // for apply uploaded excel file progress
-  // uploadedExcelDataAnswer: string;
-  // setUploadedExcelDataAnswer: React.Dispatch<React.SetStateAction<string>>;
+  // for show not-responded question "!" icon, not-responded question number message
+  respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
 
   // for survey-06-NMS additional explain text
   explainTextList?: ExplainTextObjectType[];
@@ -29,15 +30,13 @@ export default function AnswerList(props: AnswerLiProps) {
   // for radio button checked
   const surveyStateKeyword = props.surveyStateKeyword;
   const clickedQuestionNumber = props.clickedQuestionNumber;
+  // for show not-responded question "!" icon, not-responded question number message
+  const respondedCheckObject = props.respondedCheckObject;
   const { responseValue, handleRadioBtnChange } = useClickedRadioBtnChecked({
     surveyStateKeyword,
     clickedQuestionNumber,
+    respondedCheckObject,
   });
-
-  // for unchecked uploaded excel file progress checked state when edit response
-  // useEffect(() => {
-  //   responseValue !== undefined && responseValue.length > 0 && props.setUploadedExcelDataAnswer('');
-  // }, [responseValue]);
 
   return (
     <li className={styles['answer-li']}>
