@@ -1,6 +1,7 @@
 import { PATH_URL } from 'common/constants/path.const';
 import styles from './createNewSurveyModal.module.scss';
 import { useNavigate } from 'react-router-dom';
+import useNaviateNotRespondedSurveyPage from '../hooks/useNavigateNotRespondedSurveyPage';
 
 interface CreateNewSurveyModalProps {
   onClose: () => void;
@@ -17,12 +18,15 @@ export default function CreateNewSurveyModal(props: CreateNewSurveyModalProps) {
     navigate(PATH_URL.RESET);
   };
 
+  // for navigate continue page
+  const naviageNotRespondedSurveyPage = useNaviateNotRespondedSurveyPage();
+
   const continueBtnClick = () => {
     // when have blank in personal info page
     if (props.notRespondedPersonalInfo) {
       navigate(PATH_URL.PERSONAL);
     } else {
-      navigate(PATH_URL.SURVEY['01_UPDRS']);
+      naviageNotRespondedSurveyPage();
     }
   };
 
