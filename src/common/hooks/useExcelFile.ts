@@ -149,13 +149,17 @@ export default function useExcelFile(props: UseExcelFileProps) {
   // for file name, send mail
   const personalInfoName = useRecoilValue(personalInfoNameState);
   const birthday = useRecoilValue(personalInfoBirthdayState);
+  const rawDate = new Date().toISOString();
+  const fileRawDate = rawDate.slice(0, 10);
+  const fileRawTime = rawDate.slice(10, 19).replace(/:/g, '-');
+  const fileDate = `${fileRawDate}${fileRawTime}`;
 
   const downloadExcelFileHandler = () => {
     bookAppendSheetHandler();
 
     XLSX.writeFile(
       workbook,
-      `이상운동질환 비운동증상 전자설문_${personalInfoName}_${birthday}.xlsx`
+      `이상운동질환 비운동증상 전자설문_${birthday}${personalInfoName}_${fileDate}.xlsx`
     );
   };
 
