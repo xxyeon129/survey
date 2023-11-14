@@ -1,3 +1,4 @@
+import { RecoilState, useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
@@ -5,7 +6,9 @@ import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextBu
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respondedCheckObjectState.types';
 // styles
+import { BsExclamationCircleFill } from 'react-icons/bs';
 import styles from './surveyContent.module.scss';
 
 interface SurveyContentTableProps {
@@ -23,6 +26,10 @@ interface SurveyContentTableProps {
   currentPageFirstQuestionNumber: number;
   currentPageLastQuestionNumber: number;
   responseStateList: string[];
+
+  // for show not-responded question "!" icon, not-responded question number message
+  respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
+  surveyQuestionsPerPage: number;
 
   // for survey-07-PDQ
   additionalCheckQuestionNo?: number;
@@ -63,6 +70,8 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
               question={question}
               radioBtnValues={props.radioBtnValues}
               surveyStateKeyword={props.surveyStateKeyword}
+              // for show not-responded question "!" icon, not-responded question number message
+              respondedCheckObject={props.respondedCheckObject}
               // for survey-07-PDQ
               additionalCheckQuestionNo={props.additionalCheckQuestionNo}
               additionalCheckQuestion={props.additionalCheckQuestion}
@@ -83,6 +92,12 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
               handleNextPage={props.handleNextPage}
               handlePrevPage={props.handlePrevPage}
               nextBtnDisabledCondition={nextBtnDisabledCondition}
+              // for show not-responded question "!" icon, not-responded question number message
+              respondedCheckObject={props.respondedCheckObject}
+              responseStateList={props.responseStateList}
+              currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
+              currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
+              surveyQuestionsPerPage={props.surveyQuestionsPerPage}
               key={uuidv4()}
             />
           )
@@ -98,6 +113,9 @@ interface QuestionsTableRowProps {
   // for radio button checked
   surveyStateKeyword: string;
 
+  // for hide question right not-responded "!" icon when checked
+  respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
+
   // for survey-07-PDQ
   additionalCheckQuestionNo?: number;
   additionalCheckQuestion?: string;
@@ -107,11 +125,18 @@ interface QuestionsTableRowProps {
 }
 
 function QuestionsTableRow(props: QuestionsTableRowProps) {
+  const respondedCheckObject: RespondedCheckObjectStateType = useRecoilValue(
+    props.respondedCheckObject
+  );
+
   return (
     <tr className={styles['questions-table-row']} key={uuidv4()}>
       {/* question */}
       <th className={styles['questions-table-header-text']}>
         <p className={styles['questions-table-header-text-p']}>
+          {respondedCheckObject[props.question.No] && (
+            <BsExclamationCircleFill className={styles['not-responded-icon']} />
+          )}
           {props.question.No}. {props.question.Q}
           {/* for survey-12-FOOD question explain text */}
           {props.questionExplain && (
@@ -129,6 +154,8 @@ function QuestionsTableRow(props: QuestionsTableRowProps) {
               additionalCheckQuestionNo={props.additionalCheckQuestionNo}
               additionalCheckQuestion={props.additionalCheckQuestion}
               surveyStateKeyword={props.surveyStateKeyword}
+              // for show not-responded question "!" icon, not-responded question number message
+              respondedCheckObject={props.respondedCheckObject}
             />
           )}
       </th>
@@ -140,6 +167,8 @@ function QuestionsTableRow(props: QuestionsTableRowProps) {
             clickedQuestionNumber={props.question.No}
             radioBtnValue={radioBtnValue}
             nonGradationStyle={props.nonGradationStyle}
+            // for hide question right not-responded "!" icon when checked
+            respondedCheckObject={props.respondedCheckObject}
             key={uuidv4()}
           />
         ) : (
@@ -147,6 +176,8 @@ function QuestionsTableRow(props: QuestionsTableRowProps) {
             surveyStateKeyword={props.surveyStateKeyword}
             clickedQuestionNumber={props.question.No}
             radioBtnValue={radioBtnValue}
+            // for hide question right not-responded "!" icon when checked
+            respondedCheckObject={props.respondedCheckObject}
             key={uuidv4()}
           />
         )
@@ -160,6 +191,9 @@ interface TableRadioBtnProps {
   clickedQuestionNumber: number;
   radioBtnValue: string;
 
+  // for hide question right not-responded "!" icon when checked
+  respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
+
   // for survey-12-FOOD
   nonGradationStyle?: boolean;
 }
@@ -168,9 +202,13 @@ function TableRadioBtn(props: TableRadioBtnProps) {
   // for radio button checked
   const surveyStateKeyword = props.surveyStateKeyword;
   const clickedQuestionNumber = `${props.clickedQuestionNumber}`;
+  // for hide question right not-responded "!" icon when checked
+  const respondedCheckObject = props.respondedCheckObject;
   const { responseValue, handleRadioBtnChange } = useClickedRadioBtnChecked({
     surveyStateKeyword,
     clickedQuestionNumber,
+    // for hide question right not-responded "!" icon when checked
+    respondedCheckObject,
   });
 
   return (
@@ -207,15 +245,21 @@ interface AdditionalCheckQuestionProps {
   additionalCheckQuestion: string;
   // for bottom next button disabled
   surveyStateKeyword: string;
+  // for hide question right not-responded "!" icon when checked
+  respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
 }
 
 function AdditionalCheckQuestion(props: AdditionalCheckQuestionProps) {
   // for radio button checked
   const surveyStateKeyword = props.surveyStateKeyword;
   const clickedQuestionNumber = `${props.additionalCheckQuestionNo}`;
+  // for hide question right not-responded "!" icon when checked
+  const respondedCheckObject = props.respondedCheckObject;
   const { responseValue, handleRadioBtnChange } = useClickedRadioBtnChecked({
     surveyStateKeyword,
     clickedQuestionNumber,
+    // for hide question right not-responded "!" icon when checked
+    respondedCheckObject,
   });
 
   return (

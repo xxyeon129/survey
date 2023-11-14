@@ -28,6 +28,7 @@ import useSetPrevSurveyFirstPage from './hooks/useSetPrevSurveyFirstPage';
 import styles from '../common/survey.module.scss';
 import { useEffect } from 'react';
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import { respondedCheckObject03BAI } from '../common/states/respondedCheckObjects.state';
 
 export default function Survey03BAI() {
   // for set survey-02-FG first page when click bottom prev button in condition answered "없음" to FG symptom pre-question
@@ -75,6 +76,9 @@ export default function Survey03BAI() {
     }
   }, []);
 
+  // for show not-responded question "!" icon, not-responded question number message
+  const respondedCheckObject = respondedCheckObject03BAI;
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {BAI_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[3].TITLE}에 관한
@@ -103,6 +107,9 @@ export default function Survey03BAI() {
           currentPageFirstQuestionNumber={currentPageQuestions[0].No}
           currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
           responseStateList={responseStateList}
+          // for show not-responded question "!" icon, not-responded question number message
+          respondedCheckObject={respondedCheckObject}
+          surveyQuestionsPerPage={BAI_QUESTIONS_PER_PAGE}
         />
       </section>
     </article>

@@ -9,6 +9,8 @@ import {
   survey08CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey07PDQ_responseSelector } from './survey07PDQ.selector';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import { respondedCheckObject07PDQ } from '../common/states/respondedCheckObjects.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -24,7 +26,6 @@ import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
 import { useEffect } from 'react';
-import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function Survey07PDQ() {
   // pagination hook props
@@ -55,6 +56,9 @@ export default function Survey07PDQ() {
     }
   }, []);
 
+  // for show not-responded question "!" icon, not-responded question number message
+  const respondedCheckObject = respondedCheckObject07PDQ;
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {PDQ_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[7].TITLE}에 관한
@@ -84,6 +88,9 @@ export default function Survey07PDQ() {
           currentPageFirstQuestionNumber={currentPageQuestions[0].No}
           currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
           responseStateList={responseStateList}
+          // for show not-responded question "!" icon, not-responded question number message
+          respondedCheckObject={respondedCheckObject}
+          surveyQuestionsPerPage={PDQ_QUESTIONS_PER_PAGE}
         />
       </section>
     </article>

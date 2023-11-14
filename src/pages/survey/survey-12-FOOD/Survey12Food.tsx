@@ -1,6 +1,9 @@
+import { useEffect, useState } from 'react';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
+import ModalPortal from 'common/layout/modalPortal';
+import LastPageModal from './components/LastPageModal';
 // states
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
@@ -8,6 +11,8 @@ import {
   survey12CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey12Food_responseSelector } from './survey12Food.selector';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import { respondedCheckObject12Food } from '../common/states/respondedCheckObjects.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -22,10 +27,6 @@ import { SURVEY_11_CONSTIPATION_TOTAL_PAGES } from '../survey-11-CONSTIPATION/su
 import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
-import { useEffect, useState } from 'react';
-import ModalPortal from 'common/layout/modalPortal';
-import LastPageModal from './components/LastPageModal';
-import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function Survey12Food() {
   // for last page modal
@@ -65,6 +66,9 @@ export default function Survey12Food() {
     }
   }, []);
 
+  // for show not-responded question "!" icon, not-responded question number message
+  const respondedCheckObject = respondedCheckObject12Food;
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {FOOD_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[12].TITLE}에 관한
@@ -94,6 +98,9 @@ export default function Survey12Food() {
           currentPageFirstQuestionNumber={currentPageQuestions[0].No}
           currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
           responseStateList={responseStateList}
+          // for show not-responded question "!" icon, not-responded question number message
+          respondedCheckObject={respondedCheckObject}
+          surveyQuestionsPerPage={FOOD_QUESTIONS_PER_PAGE}
         />
       </section>
       {modalOpen && (
