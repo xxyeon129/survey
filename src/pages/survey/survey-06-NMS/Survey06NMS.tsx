@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
@@ -10,6 +11,7 @@ import {
   survey07CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey06NMS_responseSelector } from './survey06NMS.selector';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { NMS_QUESTIONS, NMS_QUESTIONS_PER_PAGE, SURVEY_06_NMS_STATE_KEYWORD } from './survey.const';
@@ -18,8 +20,6 @@ import { SURVEY_05_RBD_TOTAL_PAGES } from '../survey-05-RBD/survey.const';
 import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
-import { useEffect } from 'react';
-import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function Survey06NMS() {
   // pagination hook props
@@ -78,8 +78,6 @@ export default function Survey06NMS() {
             currentPageFirstQuestionNumber={currentPageQuestions[0].No}
             currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
             responseStateList={responseStateList}
-            // // for apply uploaded excel file progress
-            // uploadedExcelFileDataList={uploadedExcelFileDataList}
             key={uuidv4()}
           />
         ))}

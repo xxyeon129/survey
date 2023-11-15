@@ -77,6 +77,13 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
             return { ...prev, [`${props.additionalQuestionRespondedCheckKey}`]: true };
           });
         }
+
+        // for survey-06-NMS
+        if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '-') {
+          setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+            return { ...prev, [currentPageQuestionNumberList[index]]: true };
+          });
+        }
       });
 
       alert('모든 질문에 답변해주세요.');
