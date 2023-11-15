@@ -87,11 +87,19 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
             )
         )}
 
-      <hr className={styles.hr} />
+      <hr
+        className={respondedCheckObject[props.question.No] ? styles['hr-not-responded'] : styles.hr}
+      />
 
       <header className={contentStyles['questions-title']}>
         <section className={contentStyles['question-title-text-section']}>
-          <h4>
+          <h4
+            className={
+              respondedCheckObject[props.question.No]
+                ? contentStyles['not-responded-question-text']
+                : ''
+            }
+          >
             {props.question.No}. {props.question.Q}
             {/* for additional categorized question (according to specific conditions) */}
             {props.categorizedQuestionList?.map(
