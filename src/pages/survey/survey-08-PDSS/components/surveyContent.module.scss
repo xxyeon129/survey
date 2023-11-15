@@ -1,8 +1,24 @@
 .survey-content-container {
   margin-top: 3rem;
 
-  .question-h3 {
-    line-height: 170%;
+  .question-text-section {
+    position: relative;
+
+    .question-h3 {
+      font-size: 1.3rem;
+      line-height: 170%;
+    }
+    .not-responded-question-h3 {
+      color: $warn-red;
+    }
+
+    .not-responded-icon {
+      position: absolute;
+      left: -3.2rem;
+      top: 0rem;
+      color: $warn-red;
+      font-size: 2.2rem;
+    }
   }
 
   .degrees-container-ul {

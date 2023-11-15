@@ -1,11 +1,18 @@
+import { RecoilState, useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import BottomPrevNextButton from '../../common/components/bottom-prev-next-button/BottomPrevNextButton';
+// states
+import { respondedCheckObject08PDSS } from 'pages/survey/common/states/respondedCheckObjects.state';
+// constants
+import { PDSS_QUESTIONS_PER_PAGE } from '../survey.const';
 // hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respondedCheckObjectState.types';
 // styles
+import { BsExclamationCircleFill } from 'react-icons/bs';
 import styles from './surveyContent.module.scss';
 
 interface SurveyContentDegreeGradationProps {
@@ -37,11 +44,27 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
   );
   const nextBtnDisabledCondition = currentPageResponseList.includes('');
 
+  // for show not-responded question "!" icon, not-responded question number message
+  const respondedCheckObject: RespondedCheckObjectStateType = useRecoilValue(
+    respondedCheckObject08PDSS
+  );
+
   return (
     <article className={styles['survey-content-container']}>
-      <h3 className={styles['question-h3']}>
-        {props.question.No}. {props.question.Q}
-      </h3>
+      <section className={styles['question-text-section']}>
+        <h3
+          className={
+            respondedCheckObject[props.question.No]
+              ? `${styles['question-h3']} ${styles['not-responded-question-h3']}`
+              : styles['question-h3']
+          }
+        >
+          {props.question.No}. {props.question.Q}
+        </h3>
+        {respondedCheckObject[props.question.No] && (
+          <BsExclamationCircleFill className={styles['not-responded-icon']} />
+        )}
+      </section>
       <ul className={styles['degrees-container-ul']}>
         {degreesList.map((degree) => (
           <li className={styles['degree-container-li']} key={uuidv4()}>
@@ -49,6 +72,8 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
               questionNumber={props.question.No}
               surveyStateKeyword={props.surveyStateKeyword}
               degree={degree}
+              // for hide question right not-responded "!" icon when checked
+              respondedCheckObject={respondedCheckObject08PDSS}
             />
 
             {/* for bottom degree explain text */}
@@ -94,6 +119,12 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
           handleNextPage={props.handleNextPage}
           handlePrevPage={props.handlePrevPage}
           nextBtnDisabledCondition={nextBtnDisabledCondition}
+          // for show not-responded question "!" icon, not-responded question number message
+          respondedCheckObject={respondedCheckObject08PDSS}
+          responseStateList={props.responseStateList}
+          currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
+          currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
+          surveyQuestionsPerPage={PDSS_QUESTIONS_PER_PAGE}
         />
       )}
     </article>
@@ -104,14 +135,22 @@ interface DegreeBtnProps {
   questionNumber: number;
   surveyStateKeyword: string;
   degree: number;
+
+  // for hide question right not-responded "!" icon when checked
+  respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
 }
 
 function DegreeBtn(props: DegreeBtnProps) {
   const surveyStateKeyword = props.surveyStateKeyword;
   const clickedQuestionNumber = `${props.questionNumber}`;
+  // for hide question right not-responded "!" icon when checked
+  const respondedCheckObject = props.respondedCheckObject;
+
   const { responseValue, handleRadioBtnChange } = useClickedRadioBtnChecked({
     surveyStateKeyword,
     clickedQuestionNumber,
+    // for hide question right not-responded "!" icon when checked
+    respondedCheckObject,
   });
 
   return (
