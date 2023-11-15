@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
@@ -13,10 +13,15 @@ import {
 import { survey01UPDRS_responseSelector } from './survey01UPDRS.selector';
 import { responseState } from '../common/states/surveyResponse.state';
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import {
+  respondedCheckObject01UPDRS,
+  takeMedicineRespondedCheckObject01UPDRS,
+} from '../common/states/respondedCheckObjects.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
   SURVEY_01_UPDRS_STATE_KEYWORD,
+  TAKE_MEDICINE,
   UPDRS_PRE_QUESTION,
   UPDRS_QUESTIONS,
   UPDRS_QUESTIONS_PER_PAGE,
@@ -72,6 +77,17 @@ export default function Survey01UPDRS() {
     }
   }, []);
 
+  // for show not-responded question "!" icon, not-responded question number message
+  const [respondedCheckObject, setRespondedCheckObject] = useState(respondedCheckObject01UPDRS);
+  const takeMedicineResponse = useRecoilValue(
+    responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)
+  );
+
+  useEffect(() => {
+    if (takeMedicineResponse === TAKE_MEDICINE)
+      setRespondedCheckObject(takeMedicineRespondedCheckObject01UPDRS);
+  }, [takeMedicineResponse]);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {UPDRS_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[1].TITLE}에 관한
@@ -90,6 +106,8 @@ export default function Survey01UPDRS() {
         question={UPDRS_PRE_QUESTION}
         clickedQuestionNumber="pre"
         surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
+        // for show not-responded question "!" icon, not-responded question number message
+        respondedCheckObject={respondedCheckObject}
         // for survey-01-UPDRS setting header current page 1
         isUPDRSPreQuestion={true}
       />
@@ -110,6 +128,8 @@ export default function Survey01UPDRS() {
                 currentPageQuestions[currentPageQuestions.length - 1].No
               }
               responseStateList={responseStateList}
+              // for show not-responded question "!" icon, not-responded question number message
+              respondedCheckObject={respondedCheckObject}
               key={uuidv4()}
             />
           ))}

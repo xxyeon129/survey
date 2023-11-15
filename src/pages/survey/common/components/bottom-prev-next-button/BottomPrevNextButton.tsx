@@ -1,9 +1,18 @@
 import { RecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+// states
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+// constants
+import { TAKE_MEDICINE } from 'pages/survey/survey-01-UPDRS/survey.const';
+// types
+import { RespondedCheckObjectStateType } from '../../types/respondedCheckObjectState.types';
+// styles
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
 import styles from './bottomPrevNextButton.module.scss';
-import { RespondedCheckObjectStateType } from '../../types/respondedCheckObjectState.types';
+import {
+  MEDICINE_EFFECT_FALSE,
+  MEDICINE_EFFECT_TRUE,
+} from '../survey-contents/survey-contents-with-medicine-effect/surveyContent.const';
 
 interface BottomPrevNextButtonProps {
   handlePrevPage?: () => void;
@@ -17,11 +26,14 @@ interface BottomPrevNextButtonProps {
   currentPageFirstQuestionNumber: number;
   currentPageLastQuestionNumber: number;
   surveyQuestionsPerPage: number;
+  // for survey-01-UPDRS, survey-02-FG
+  takeMedicineResponse?: string;
+  takeMaedicineResponseStateList?: string[];
   // for survey-04-BDI
   additionalQuestionNumberListIndex?: number;
   additionalQuestionResponseListIndex?: number;
   additionalQuestionRespondedCheckKey?: string;
-  // for suevey-05-RBD
+  // for survey-01-UPDRS, survey-02-FG, suevey-05-RBD
   havePreQuestion?: boolean;
 }
 
@@ -30,9 +42,22 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
 
   // for show not-responded question "!" icon, not-responded question number message
   const currentPageQuestionNumberList: number[] = [];
-  if (props.havePreQuestion) {
+  // for survey-01, 02 take medicine case
+  const takeMedicineResponseStateListRaw = props.responseStateList.slice(1);
+  const takeMedicineResponseStateList: Array<string>[] = [];
+  for (let i = 0; i < takeMedicineResponseStateListRaw.length; i += 2) {
+    takeMedicineResponseStateList.push([
+      takeMedicineResponseStateListRaw[i],
+      takeMedicineResponseStateListRaw[i + 1],
+    ]);
+  }
+  const takeMedicineCurrentPageQuestionNumberList: number[] = [];
+
+  // for survey-01-UPDRS, survey-02-FG, suevey-05-RBD pre-question
+  if (props.havePreQuestion && props.currentPageFirstQuestionNumber === 1) {
     currentPageQuestionNumberList.push(0);
   }
+
   for (
     let questionNumber = props.currentPageFirstQuestionNumber;
     questionNumber <= props.currentPageLastQuestionNumber;
@@ -44,47 +69,101 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
       currentPageQuestionNumberList.push(19.5);
   }
 
+  for (
+    let questionIndex = props.currentPageFirstQuestionNumber;
+    questionIndex <= props.currentPageLastQuestionNumber;
+    questionIndex++
+  ) {
+    takeMedicineCurrentPageQuestionNumberList.push(questionIndex);
+  }
+
   const setRespondedCheckObject = useSetRecoilState(props.respondedCheckObject);
 
   const onClickDisabledBtn = () => {
+    // for show not-responded question "!" icon, not-responded question number message
     if (props.nextBtnDisabledCondition) {
-      // for show not-responded question "!" icon, not-responded question number message
-      currentPageQuestionNumberList.forEach((_, index) => {
-        if (props.havePreQuestion) {
-          // for survey-05-RBD
-          if (props.responseStateList[currentPageQuestionNumberList[index]] === '') {
+      // for survey-01-UPDRS, survey-02-FG
+      if (props.takeMedicineResponse === TAKE_MEDICINE) {
+        takeMedicineCurrentPageQuestionNumberList.forEach((_, index) => {
+          for (let i = 0; i <= 1; i++) {
+            if (
+              i === 0 &&
+              takeMedicineResponseStateList[takeMedicineCurrentPageQuestionNumberList[index] - 1][
+                i
+              ] === ''
+            )
+              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                return {
+                  ...prev,
+                  [`${takeMedicineCurrentPageQuestionNumberList[index]}-${MEDICINE_EFFECT_TRUE}`]:
+                    true,
+                };
+              });
+
+            if (
+              i === 1 &&
+              takeMedicineResponseStateList[takeMedicineCurrentPageQuestionNumberList[index] - 1][
+                i
+              ] === ''
+            )
+              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                return {
+                  ...prev,
+                  [`${takeMedicineCurrentPageQuestionNumberList[index]}-${MEDICINE_EFFECT_FALSE}`]:
+                    true,
+                };
+              });
+          }
+        });
+      } else {
+        currentPageQuestionNumberList.forEach((_, index) => {
+          if (props.havePreQuestion) {
+            // for survey-01-UPDRS, survey-02-FG, suevey-05-RBD first page
+            if (props.responseStateList[currentPageQuestionNumberList[index]] === '') {
+              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                return { ...prev, [currentPageQuestionNumberList[index]]: true };
+              });
+            }
+          } else {
+            if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '') {
+              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                return { ...prev, [currentPageQuestionNumberList[index]]: true };
+              });
+            }
+          }
+
+          // for survey-01-UPDRS, survey-02-FG
+          // 효과있 첫 페이지 responseStateList 인덱스 1 3 5..
+          // 효과있 두번째부터 0, 2, 4..
+          if (props.takeMedicineResponse === TAKE_MEDICINE) {
+            if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '') {
+              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                return { ...prev, [currentPageQuestionNumberList[index]]: true };
+              });
+            }
+          }
+
+          // for survey-04-BDI
+          if (
+            props.currentPageFirstQuestionNumber === 16 &&
+            props.additionalQuestionResponseListIndex &&
+            props.additionalQuestionRespondedCheckKey &&
+            props.additionalQuestionNumberListIndex === index &&
+            props.responseStateList[props.additionalQuestionResponseListIndex] === ''
+          ) {
+            setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+              return { ...prev, [`${props.additionalQuestionRespondedCheckKey}`]: true };
+            });
+          }
+
+          // for survey-06-NMS
+          if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '-') {
             setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
               return { ...prev, [currentPageQuestionNumberList[index]]: true };
             });
           }
-        } else {
-          if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '') {
-            setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-              return { ...prev, [currentPageQuestionNumberList[index]]: true };
-            });
-          }
-        }
-
-        // for survey-04-BDI
-        if (
-          props.currentPageFirstQuestionNumber === 16 &&
-          props.additionalQuestionResponseListIndex &&
-          props.additionalQuestionRespondedCheckKey &&
-          props.additionalQuestionNumberListIndex === index &&
-          props.responseStateList[props.additionalQuestionResponseListIndex] === ''
-        ) {
-          setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-            return { ...prev, [`${props.additionalQuestionRespondedCheckKey}`]: true };
-          });
-        }
-
-        // for survey-06-NMS
-        if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '-') {
-          setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-            return { ...prev, [currentPageQuestionNumberList[index]]: true };
-          });
-        }
-      });
+        });
+      }
 
       alert('모든 질문에 답변해주세요.');
     } else {

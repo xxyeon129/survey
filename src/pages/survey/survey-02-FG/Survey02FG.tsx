@@ -21,7 +21,11 @@ import {
   HAVE_NO_FG_SYMPTOM,
   SURVEY_02_FG_STATE_KEYWORD,
 } from './survey.const';
-import { SURVEY_01_UPDRS_TOTAL_PAGES } from '../survey-01-UPDRS/survey.const';
+import {
+  SURVEY_01_UPDRS_STATE_KEYWORD,
+  SURVEY_01_UPDRS_TOTAL_PAGES,
+  TAKE_MEDICINE,
+} from '../survey-01-UPDRS/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
@@ -30,7 +34,12 @@ import useRouteToNextSurvey from './hooks/useRouteToNextSurvey';
 import styles from '../common/survey.module.scss';
 import { v4 as uuidv4 } from 'uuid';
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import {
+  respondedCheckObject02FG,
+  takeMedicineRespondedCheckObject02FG,
+} from '../common/states/respondedCheckObjects.state';
+import { responseState } from '../common/states/surveyResponse.state';
 
 export default function Survey02FG() {
   // for route to next survey when click bottom next button in condition answered "없음" to pre-question
@@ -78,6 +87,17 @@ export default function Survey02FG() {
     }
   }, []);
 
+  // for show not-responded question "!" icon, not-responded question number message
+  const [respondedCheckObject, setRespondedCheckObject] = useState(respondedCheckObject02FG);
+  const takeMedicineResponse = useRecoilValue(
+    responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)
+  );
+
+  useEffect(() => {
+    if (takeMedicineResponse === TAKE_MEDICINE)
+      setRespondedCheckObject(takeMedicineRespondedCheckObject02FG);
+  }, [takeMedicineResponse]);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {FG_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[2].TITLE.slice(0, 4)}에 관한
@@ -102,6 +122,8 @@ export default function Survey02FG() {
         clickedQuestionNumber="pre"
         surveyStateKeyword={SURVEY_02_FG_STATE_KEYWORD}
         routeToNextSurvey={routeToNextSurvey}
+        // for show not-responded question "!" icon, not-responded question number message
+        respondedCheckObject={respondedCheckObject}
       />
 
       {/* for display questions only when answered "있다" in pre-question */}
@@ -120,6 +142,8 @@ export default function Survey02FG() {
                 currentPageQuestions[currentPageQuestions.length - 1].No
               }
               responseStateList={responseStateList}
+              // for show not-responded question "!" icon, not-responded question number message
+              respondedCheckObject={respondedCheckObject}
               key={uuidv4()}
             />
           ))}
@@ -132,6 +156,13 @@ export default function Survey02FG() {
           handleNextPage={handleNextPage}
           handlePrevPage={handlePrevPage}
           nextBtnDisabledCondition={nextBtnDisabledCondition}
+          // for show not-responded question "!" icon, not-responded question number message
+          // TO DO: 조건부 bottom button 구현 - 아래 props 삭제
+          respondedCheckObject={respondedCheckObject}
+          responseStateList={responseStateList}
+          currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+          currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
+          surveyQuestionsPerPage={5}
         />
       )}
     </article>

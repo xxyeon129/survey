@@ -1,15 +1,34 @@
 .survey-content-container {
   margin-top: 5rem;
+  position: relative;
 
-  > hr {
-    border: 1px solid $main-blue-color;
+  .question-title-section {
+    .questionnaire-top-blue-hr {
+      border: 1.5px solid $main-blue-color;
+    }
+    .not-responded-top-red-hr {
+      border: 1.5px solid $text-warn-red-color;
+    }
+
+    .question-text {
+      font-size: 1.4rem;
+      padding-top: 0.5rem;
+      line-height: 170%;
+      margin-right: 3rem;
+    }
+    .not-responded-question-text {
+      color: $text-warn-red-color;
+    }
+
+    .not-responded-icon {
+      position: absolute;
+      top: 1rem;
+      right: 0.5rem;
+      color: $warn-red;
+      font-size: 2.2rem;
+    }
   }
 
-  .question {
-    font-size: 1.3rem;
-    padding-top: 0.5rem;
-    line-height: 170%;
-  }
   .answer-container {
     padding: 0.5rem 1rem;
     display: flex;
@@ -24,6 +43,9 @@
         text-decoration: underline;
         text-underline-position: under;
       }
+    }
+    .not-responded-medicine-text {
+      color: $warn-red;
     }
 
     .answer-ul {

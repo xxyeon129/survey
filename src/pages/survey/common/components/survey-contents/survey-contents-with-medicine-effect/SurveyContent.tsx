@@ -1,11 +1,16 @@
+import { RecoilState, useRecoilValue } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 // components
 import AnswerList from '../answerList/AnswerList';
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useRecoilValue } from 'recoil';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // constants
-import { medicineDivisionList } from './surveyContent.const';
+import {
+  MEDICINE_EFFECT_FALSE,
+  MEDICINE_EFFECT_TRUE,
+  medicineDivisionList,
+} from './surveyContent.const';
 import {
   NOT_TAKE_MEDICINE,
   SURVEY_01_UPDRS_STATE_KEYWORD,
@@ -13,9 +18,10 @@ import {
 } from 'pages/survey/survey-01-UPDRS/survey.const';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respondedCheckObjectState.types';
 // styles
+import { BsExclamationCircleFill } from 'react-icons/bs';
 import styles from './surveyContent.module.scss';
-import { v4 as uuidv4 } from 'uuid';
 
 interface SurveyContentWithMedicineEffectProps {
   question: SurveyContentObjectType;
@@ -29,10 +35,8 @@ interface SurveyContentWithMedicineEffectProps {
   currentPageLastQuestionNumber: number;
   responseStateList: string[];
 
-  // // for apply uploaded excel file progress
-  // uploadedExcelFileDataList: UploadedResponseDataListType | UploadedResponseDataGroupedListType;
-  // // preQuestionResponseValue: string;
-  // uploadedExcelDataPreQuestionAnswer: string;
+  // for show not-responded question "!" icon, not-responded question number message
+  respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
 }
 
 // survey-01-UPDRS, survey-02-FG
@@ -74,100 +78,101 @@ export default function SurveyContentWithMedicineEffect(
 
   const nextBtnDisabledCondition = currentPageResponseList.includes('');
 
-  // // for create responseState when uploaded excel file exist
-  // // not take medicine
-  // const setNotTakeMedicine_responseValue = useSetRecoilState(
-  //   responseState(`${props.surveyStateKeyword}-${props.question.No}`)
-  // );
-  // // take medicine - when have medicine effect
-  // const [medicineEffectTrue_responseValue, setMedicineEffectTrue_responseValue] = useRecoilState(
-  //   responseState(`${props.surveyStateKeyword}-${props.question.No}-${MEDICINE_EFFECT_TRUE}`)
-  // );
-  // // take medicine - when no medicine effect
-  // const [medicineEffectFalse_responseValue, setMedicineEffectFalse_responseValue] = useRecoilState(
-  //   responseState(`${props.surveyStateKeyword}-${props.question.No}-${MEDICINE_EFFECT_FALSE}`)
-  // );
-
-  // // for radio button checked according to uploaded excel file progress
-  // const [uploadedExcelDataAnswer, setUploadedExcelDataAnswer] = useState('');
-  // useEffect(() => {
-  //   if (props.uploadedExcelFileDataList.length > 0) {
-  //     if (
-  //       // not take medicine
-  //       props.uploadedExcelDataPreQuestionAnswer === NOT_TAKE_MEDICINE
-  //     ) {
-  //       const uploadedExcelDataResponse = props.uploadedExcelFileDataList[
-  //         props.question.No
-  //       ] as UploadedResponseDataType;
-  //       if (uploadedExcelDataResponse !== undefined) {
-  //         setNotTakeMedicine_responseValue(uploadedExcelDataResponse.응답내용);
-  //         setUploadedExcelDataAnswer(uploadedExcelDataResponse.응답내용);
-  //       }
-  //     } else if (
-  //       // take medicine
-  //       props.uploadedExcelDataPreQuestionAnswer === TAKE_MEDICINE &&
-  //       Array.isArray(props.uploadedExcelFileDataList[props.question.No - 1])
-  //     ) {
-  //       if (medicineEffectTrue_responseValue.length === 0) {
-  //         // take medicine - when have medicine effect
-  //         const uploadedExcelDataResponse = props.uploadedExcelFileDataList[props.question.No - 1];
-  //         if (
-  //           uploadedExcelDataResponse !== undefined &&
-  //           Array.isArray(uploadedExcelDataResponse) &&
-  //           uploadedExcelDataResponse.length > 0 &&
-  //           // for prevent typescript error
-  //           '응답내용' in uploadedExcelDataResponse[0] &&
-  //           typeof uploadedExcelDataResponse[0].응답내용 === 'string'
-  //         ) {
-  //           setMedicineEffectTrue_responseValue(uploadedExcelDataResponse[0].응답내용);
-  //           setUploadedExcelDataAnswer(uploadedExcelDataResponse[0].응답내용);
-  //         }
-  //       }
-  //       if (medicineEffectFalse_responseValue.length === 0) {
-  //         // take medicine - when no medicine effect
-  //         const uploadedExcelDataResponse = props.uploadedExcelFileDataList[props.question.No - 1];
-  //         if (
-  //           uploadedExcelDataResponse !== undefined &&
-  //           Array.isArray(uploadedExcelDataResponse) &&
-  //           uploadedExcelDataResponse.length > 0 &&
-  //           // for prevent typescript error
-  //           '응답내용' in uploadedExcelDataResponse[1] &&
-  //           typeof uploadedExcelDataResponse[1].응답내용 === 'string'
-  //         ) {
-  //           setMedicineEffectFalse_responseValue(uploadedExcelDataResponse[1].응답내용);
-  //           setUploadedExcelDataAnswer(uploadedExcelDataResponse[1].응답내용);
-  //         }
-  //       }
-  //     }
-  //   }
-  // }, []);
+  // for show not-responded question "!" icon, not-responded question number message
+  const respondedCheckObject = useRecoilValue(props.respondedCheckObject);
+  const surveyWithMedicineEffectQuestionsPerPage = 5;
 
   return (
     <article className={styles['survey-content-container']}>
-      <hr />
-      <h3 className={styles['question']}>
-        {props.question.No}. {props.question.Q}
-      </h3>
+      {takeMedicineResponse === NOT_TAKE_MEDICINE ? (
+        <section className={styles['question-title-section']}>
+          <hr
+            className={
+              respondedCheckObject[props.question.No]
+                ? styles['not-responded-top-red-hr']
+                : styles['questionnaire-top-blue-hr']
+            }
+          />
+          <h3
+            className={
+              respondedCheckObject[props.question.No]
+                ? `${styles['question-text']} ${styles['not-responded-question-text']}`
+                : styles['question-text']
+            }
+          >
+            {props.question.No}. {props.question.Q}
+          </h3>
+          {respondedCheckObject[props.question.No] && (
+            <span className={styles['not-responded-icon']}>
+              <BsExclamationCircleFill />
+            </span>
+          )}
+        </section>
+      ) : (
+        <section className={styles['question-title-section']}>
+          <hr
+            className={
+              respondedCheckObject[`${props.question.No}-${MEDICINE_EFFECT_TRUE}`] ||
+              respondedCheckObject[`${props.question.No}-${MEDICINE_EFFECT_FALSE}`]
+                ? styles['not-responded-top-red-hr']
+                : styles['questionnaire-top-blue-hr']
+            }
+          />
+          <h3
+            className={
+              respondedCheckObject[`${props.question.No}-${MEDICINE_EFFECT_TRUE}`] ||
+              respondedCheckObject[`${props.question.No}-${MEDICINE_EFFECT_FALSE}`]
+                ? `${styles['question-text']} ${styles['not-responded-question-text']}`
+                : styles['question-text']
+            }
+          >
+            {props.question.No}. {props.question.Q}
+          </h3>
+          {(respondedCheckObject[`${props.question.No}-${MEDICINE_EFFECT_TRUE}`] ||
+            respondedCheckObject[`${props.question.No}-${MEDICINE_EFFECT_FALSE}`]) && (
+            <BsExclamationCircleFill className={styles['not-responded-icon']} />
+          )}
+        </section>
+      )}
 
       <div className={styles['answer-container']}>
         {takeMedicineResponse === TAKE_MEDICINE ? (
           <>
             {medicineDivisionList.map((list) => (
               <div key={uuidv4()}>
-                <h3 className={styles['medicine-text']}>
-                  파킨슨병 약의 효과가{' '}
-                  <span className={styles['medicine-text-emphasize']}>{list.text}</span> 때 아래
-                  설문에 답변해 주세요.
-                </h3>
+                {list.radioBtnKeyword === MEDICINE_EFFECT_TRUE ? (
+                  <h3
+                    className={
+                      respondedCheckObject[`${props.question.No}-${MEDICINE_EFFECT_TRUE}`]
+                        ? `${styles['medicine-text']} ${styles['not-responded-medicine-text']}`
+                        : styles['medicine-text']
+                    }
+                  >
+                    파킨슨병 약의 효과가{' '}
+                    <span className={styles['medicine-text-emphasize']}>{list.text}</span> 때 아래
+                    설문에 답변해 주세요.
+                  </h3>
+                ) : (
+                  <h3
+                    className={
+                      respondedCheckObject[`${props.question.No}-${MEDICINE_EFFECT_FALSE}`]
+                        ? `${styles['medicine-text']} ${styles['not-responded-medicine-text']}`
+                        : styles['medicine-text']
+                    }
+                  >
+                    파킨슨병 약의 효과가{' '}
+                    <span className={styles['medicine-text-emphasize']}>{list.text}</span> 때 아래
+                    설문에 답변해 주세요.
+                  </h3>
+                )}
                 {props.question.A && (
                   <AnswersUnorderedList
                     answersList={props.question.A}
                     inputName={`${props.question.No}${list.radioBtnKeyword}`}
                     questionNumber={`${props.question.No}-${list.radioBtnKeyword}`}
                     surveyStateKeyword={props.surveyStateKeyword}
-                    // for apply uploaded excel file progress
-                    // setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
-                    // uploadedExcelDataAnswer={uploadedExcelDataAnswer}
+                    // for hide question right not-responded "!" icon when checked
+                    respondedCheckObject={props.respondedCheckObject}
                   />
                 )}
               </div>
@@ -181,9 +186,8 @@ export default function SurveyContentWithMedicineEffect(
                 inputName={`${props.question.No}`}
                 questionNumber={`${props.question.No}`}
                 surveyStateKeyword={props.surveyStateKeyword}
-                // for apply uploaded excel file progress
-                // setUploadedExcelDataAnswer={setUploadedExcelDataAnswer}
-                // uploadedExcelDataAnswer={uploadedExcelDataAnswer}
+                // for hide question right not-responded "!" icon when checked
+                respondedCheckObject={props.respondedCheckObject}
               />
             )}
           </>
@@ -196,6 +200,14 @@ export default function SurveyContentWithMedicineEffect(
           handleNextPage={props.handleNextPage}
           handlePrevPage={props.handlePrevPage}
           nextBtnDisabledCondition={nextBtnDisabledCondition}
+          // for show not-responded question "!" icon, not-responded question number message
+          respondedCheckObject={props.respondedCheckObject}
+          responseStateList={props.responseStateList}
+          currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
+          currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
+          surveyQuestionsPerPage={surveyWithMedicineEffectQuestionsPerPage}
+          takeMedicineResponse={takeMedicineResponse}
+          havePreQuestion={true}
         />
       )}
     </article>
@@ -209,9 +221,8 @@ interface AnswersUnorderedListProps {
   answersList: string[];
   inputName: string;
 
-  // for apply uploaded excel file progress
-  // uploadedExcelDataAnswer: string;
-  // setUploadedExcelDataAnswer: React.Dispatch<React.SetStateAction<string>>;
+  // for hide question right not-responded "!" icon when checked
+  respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
 }
 
 function AnswersUnorderedList(props: AnswersUnorderedListProps) {
@@ -224,9 +235,8 @@ function AnswersUnorderedList(props: AnswersUnorderedListProps) {
           inputId={`${props.questionNumber}${answer}`}
           clickedQuestionNumber={props.questionNumber}
           surveyStateKeyword={props.surveyStateKeyword}
-          // for apply uploaded excel file progress
-          // uploadedExcelDataAnswer={props.uploadedExcelDataAnswer}
-          // setUploadedExcelDataAnswer={props.setUploadedExcelDataAnswer}
+          // for hide question right not-responded "!" icon when checked
+          respondedCheckObject={props.respondedCheckObject}
           key={uuidv4()}
         />
       ))}

@@ -12,6 +12,10 @@ import { FG_QUESTIONS } from 'pages/survey/survey-02-FG/survey.const';
 import { BDI_QUESTIONS } from 'pages/survey/survey-04-BDI/survey.const';
 import { NMS_QUESTIONS } from 'pages/survey/survey-06-NMS/survey.const';
 import { PDSS_QUESTIONS } from 'pages/survey/survey-08-PDSS/survey.const';
+import {
+  MEDICINE_EFFECT_FALSE,
+  MEDICINE_EFFECT_TRUE,
+} from '../components/survey-contents/survey-contents-with-medicine-effect/surveyContent.const';
 
 const { persistAtom } = recoilPersist({
   key: 'responded-check-for-not-responded-icon',
@@ -26,10 +30,36 @@ export const respondedCheckObject01UPDRS = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
+export const takeMedicineRespondedCheckObject01UPDRS = atom({
+  key: 'take-medicine-responded-check-01UPDRS',
+  default: Object.fromEntries(
+    Array.from({ length: UPDRS_QUESTIONS.length * 2 }, (_, index) => [
+      `${Math.floor(index / 2) + 1}-${
+        index % 2 === 0 ? MEDICINE_EFFECT_TRUE : MEDICINE_EFFECT_FALSE
+      }`,
+      false,
+    ])
+  ),
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const respondedCheckObject02FG = atom({
   key: 'responded-check-survey02FG',
   default: Object.fromEntries(
     Array.from({ length: FG_QUESTIONS.length }, (_, index) => [index + 1, false])
+  ),
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const takeMedicineRespondedCheckObject02FG = atom({
+  key: 'take-medicine-responded-check-02FG',
+  default: Object.fromEntries(
+    Array.from({ length: FG_QUESTIONS.length * 2 }, (_, index) => [
+      `${Math.floor(index / 2) + 1}-${
+        index % 2 === 0 ? MEDICINE_EFFECT_TRUE : MEDICINE_EFFECT_FALSE
+      }`,
+      false,
+    ])
   ),
   effects_UNSTABLE: [persistAtom],
 });
