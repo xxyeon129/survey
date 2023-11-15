@@ -3,16 +3,16 @@ import { RecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 // constants
 import { TAKE_MEDICINE } from 'pages/survey/survey-01-UPDRS/survey.const';
+import {
+  MEDICINE_EFFECT_FALSE,
+  MEDICINE_EFFECT_TRUE,
+} from '../survey-contents/survey-contents-with-medicine-effect/surveyContent.const';
 // types
 import { RespondedCheckObjectStateType } from '../../types/respondedCheckObjectState.types';
 // styles
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
 import styles from './bottomPrevNextButton.module.scss';
-import {
-  MEDICINE_EFFECT_FALSE,
-  MEDICINE_EFFECT_TRUE,
-} from '../survey-contents/survey-contents-with-medicine-effect/surveyContent.const';
 
 interface BottomPrevNextButtonProps {
   handlePrevPage?: () => void;
@@ -143,17 +143,39 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
             }
           }
 
-          // for survey-04-BDI
+          // for survey-04-BDI additional question
           if (
-            props.currentPageFirstQuestionNumber === 16 &&
             props.additionalQuestionResponseListIndex &&
             props.additionalQuestionRespondedCheckKey &&
-            props.additionalQuestionNumberListIndex === index &&
-            props.responseStateList[props.additionalQuestionResponseListIndex] === ''
+            props.additionalQuestionNumberListIndex
           ) {
-            setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-              return { ...prev, [`${props.additionalQuestionRespondedCheckKey}`]: true };
-            });
+            // additional question
+            if (props.currentPageFirstQuestionNumber === 16) {
+              if (
+                index === props.additionalQuestionNumberListIndex &&
+                props.responseStateList[props.additionalQuestionResponseListIndex] === ''
+              ) {
+                setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                  return { ...prev, [`${props.additionalQuestionRespondedCheckKey}`]: true };
+                });
+              }
+              if (
+                index > props.additionalQuestionNumberListIndex &&
+                props.responseStateList[currentPageQuestionNumberList[index]].length > 0
+              ) {
+                setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                  return { ...prev, [currentPageQuestionNumberList[index]]: false };
+                });
+              }
+            } else if (
+              // after additional question page
+              props.currentPageFirstQuestionNumber > 16 &&
+              props.responseStateList[currentPageQuestionNumberList[index]] === ''
+            ) {
+              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                return { ...prev, [currentPageQuestionNumberList[index]]: true };
+              });
+            }
           }
 
           // for survey-06-NMS

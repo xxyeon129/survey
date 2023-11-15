@@ -25,13 +25,13 @@ import {
 import { SURVEY_03_BAI_TOTAL_PAGES } from '../survey-03-BAI/survey.const';
 // types
 import { SurveyContentObjectType } from '../common/types/surveyTypes';
+import { RespondedCheckObjectStateType } from '../common/types/respondedCheckObjectState.types';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 // styles
 import { BsExclamationCircleFill } from 'react-icons/bs';
 import styles from '../common/survey.module.scss';
 import surveyStyles from './surveyBDI.module.scss';
-import { RespondedCheckObjectStateType } from '../common/types/respondedCheckObjectState.types';
 
 export default function Survey04BDI() {
   // pagination hook props
@@ -136,35 +136,9 @@ function SurveyContent(props: SurveyContentProps) {
   // for show not-responded question "!" icon, not-responded question number message
   const respondedCheckObject = respondedCheckObject04BDI;
   const respondedCheckObjectValue = useRecoilValue(respondedCheckObject);
-  // for last question - because ("음식 조절로 체중 조절 예/아니오" additional question) index
-  const survey04BDI_lastQuestionNumber = 21;
+
   // for additional question
   const additionalQuestionRespondedCheckKey = '19-additional';
-
-  // for last question not responded UI - because ("음식 조절로 체중 조절 예/아니오" additional question) index
-  const notRespondedIcon = props.question.No !== survey04BDI_lastQuestionNumber &&
-    respondedCheckObjectValue[props.question.No] && (
-      <BsExclamationCircleFill className={surveyStyles['not-responded-icon']} />
-    );
-  const notRespondedIconForSurveyLastQuestion = props.question.No ===
-    survey04BDI_lastQuestionNumber &&
-    respondedCheckObjectValue[props.question.No + 1] && (
-      <BsExclamationCircleFill className={surveyStyles['not-responded-icon']} />
-    );
-  const hr =
-    props.question.No !== survey04BDI_lastQuestionNumber ? (
-      <hr
-        className={
-          respondedCheckObjectValue[props.question.No] ? styles['hr-not-responded'] : styles.hr
-        }
-      />
-    ) : (
-      <hr
-        className={
-          respondedCheckObjectValue[props.question.No + 1] ? styles['hr-not-responded'] : styles.hr
-        }
-      />
-    );
 
   return (
     <>
@@ -179,11 +153,15 @@ function SurveyContent(props: SurveyContentProps) {
           설문 {props.question.No}
         </h2>
 
-        {/* conditional */}
-        {notRespondedIcon}
-        {notRespondedIconForSurveyLastQuestion}
+        {respondedCheckObjectValue[props.question.No] && (
+          <BsExclamationCircleFill className={surveyStyles['not-responded-icon']} />
+        )}
 
-        {hr}
+        <hr
+          className={
+            respondedCheckObjectValue[props.question.No] ? styles['hr-not-responded'] : styles.hr
+          }
+        />
 
         <ul className={surveyStyles['answers-ul']}>
           {props.question.A?.map((answer) => (
