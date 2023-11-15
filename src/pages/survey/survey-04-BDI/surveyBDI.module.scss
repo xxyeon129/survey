@@ -1,10 +1,22 @@
 .questions-li {
   margin-top: 5rem;
+  position: relative;
+
+  .not-responded-icon {
+    position: absolute;
+    color: $warn-red;
+    font-size: 2.2rem;
+    top: -0.2rem;
+    right: 1rem;
+  }
 
   .questions-title {
     padding-left: 1rem;
     padding-bottom: 0.5rem;
     color: $main-blue-color;
+  }
+  .questions-title-not-responded {
+    color: $warn-red;
   }
 
   .answers-ul {
@@ -18,9 +30,21 @@
   margin-left: 1rem;
   display: flex;
   align-items: center;
+  position: relative;
+
+  .additional-question-not-responded-icon {
+    position: absolute;
+    color: $warn-red;
+    font-size: 2.2rem;
+    left: -3.5rem;
+  }
 
   .questions-title-additional-question {
     color: $main-blue-color;
+    font-size: 1.3rem;
+  }
+  .questions-title-additional-question-not-responded {
+    color: $warn-red;
     font-size: 1.3rem;
   }
 

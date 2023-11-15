@@ -17,6 +17,10 @@ interface BottomPrevNextButtonProps {
   currentPageFirstQuestionNumber: number;
   currentPageLastQuestionNumber: number;
   surveyQuestionsPerPage: number;
+  // for survey-04-BDI
+  additionalQuestionNumberListIndex?: number;
+  additionalQuestionResponseListIndex?: number;
+  additionalQuestionRespondedCheckKey?: string;
   // for suevey-05-RBD
   havePreQuestion?: boolean;
 }
@@ -35,6 +39,9 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
     questionNumber++
   ) {
     currentPageQuestionNumberList.push(questionNumber);
+    // for survey-04-BDI additional question
+    if (questionNumber === props.additionalQuestionResponseListIndex)
+      currentPageQuestionNumberList.push(19.5);
   }
 
   const setRespondedCheckObject = useSetRecoilState(props.respondedCheckObject);
@@ -43,20 +50,8 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
     if (props.nextBtnDisabledCondition) {
       // for show not-responded question "!" icon, not-responded question number message
       currentPageQuestionNumberList.forEach((_, index) => {
-        // console.log(
-        //   `forEach 내부 currentPageQuestionNumberList: ${currentPageQuestionNumberList} / index: ${index}
-        //   / 현재 문제 번호 currentPageQuestionNumberList[index]: ${
-        //     currentPageQuestionNumberList[index]
-        //   }
-        //   / 현재 답변 내용 : ${props.responseStateList[currentPageQuestionNumberList[index] - 1]}
-        //   / if문 조건부 결과: ${
-        //     props.responseStateList[currentPageQuestionNumberList[index] - 1] === ''
-        //   }
-        //   / recoil 오브젝트에서 바꿔야 하는 번호: ${currentPageQuestionNumberList[index]}
-        //   }`
-        // );
         if (props.havePreQuestion) {
-          // survey-05-RBD
+          // for survey-05-RBD
           if (props.responseStateList[currentPageQuestionNumberList[index]] === '') {
             setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
               return { ...prev, [currentPageQuestionNumberList[index]]: true };
@@ -68,6 +63,19 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
               return { ...prev, [currentPageQuestionNumberList[index]]: true };
             });
           }
+        }
+
+        // for survey-04-BDI
+        if (
+          props.currentPageFirstQuestionNumber === 16 &&
+          props.additionalQuestionResponseListIndex &&
+          props.additionalQuestionRespondedCheckKey &&
+          props.additionalQuestionNumberListIndex === index &&
+          props.responseStateList[props.additionalQuestionResponseListIndex] === ''
+        ) {
+          setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+            return { ...prev, [`${props.additionalQuestionRespondedCheckKey}`]: true };
+          });
         }
       });
 

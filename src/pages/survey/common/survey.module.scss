@@ -10,6 +10,9 @@
 .hr {
   border: 1.5px solid $main-blue-color;
 }
+.hr-not-responded {
+  border: 1.5px solid $warn-red;
+}
 
 .explain {
   color: $text-grey-color;

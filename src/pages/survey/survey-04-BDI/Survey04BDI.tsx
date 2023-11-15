@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
@@ -11,6 +12,8 @@ import {
   survey05CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey04BDI_responseSelector } from './survey04BDI.selector';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import { respondedCheckObject04BDI } from '../common/states/respondedCheckObjects.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -25,10 +28,10 @@ import { SurveyContentObjectType } from '../common/types/surveyTypes';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 // styles
+import { BsExclamationCircleFill } from 'react-icons/bs';
 import styles from '../common/survey.module.scss';
 import surveyStyles from './surveyBDI.module.scss';
-import { useEffect } from 'react';
-import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import { RespondedCheckObjectStateType } from '../common/types/respondedCheckObjectState.types';
 
 export default function Survey04BDI() {
   // pagination hook props
@@ -57,6 +60,14 @@ export default function Survey04BDI() {
     if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
       setHeaderCurrentPage(12);
     }
+  }, []);
+
+  // for additional question not responded + disabled button click UI
+  const setRespondedCheckObject = useSetRecoilState(respondedCheckObject04BDI);
+  useEffect(() => {
+    setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+      return { ...prev, ['19-additional']: false };
+    });
   }, []);
 
   const surveyExplain = (
@@ -122,11 +133,58 @@ function SurveyContent(props: SurveyContentProps) {
 
   const nextBtnDisabledCondition = currentPageResponseList.includes('');
 
+  // for show not-responded question "!" icon, not-responded question number message
+  const respondedCheckObject = respondedCheckObject04BDI;
+  const respondedCheckObjectValue = useRecoilValue(respondedCheckObject);
+  // for last question - because ("음식 조절로 체중 조절 예/아니오" additional question) index
+  const survey04BDI_lastQuestionNumber = 21;
+  // for additional question
+  const additionalQuestionRespondedCheckKey = '19-additional';
+
+  // for last question not responded UI - because ("음식 조절로 체중 조절 예/아니오" additional question) index
+  const notRespondedIcon = props.question.No !== survey04BDI_lastQuestionNumber &&
+    respondedCheckObjectValue[props.question.No] && (
+      <BsExclamationCircleFill className={surveyStyles['not-responded-icon']} />
+    );
+  const notRespondedIconForSurveyLastQuestion = props.question.No ===
+    survey04BDI_lastQuestionNumber &&
+    respondedCheckObjectValue[props.question.No + 1] && (
+      <BsExclamationCircleFill className={surveyStyles['not-responded-icon']} />
+    );
+  const hr =
+    props.question.No !== survey04BDI_lastQuestionNumber ? (
+      <hr
+        className={
+          respondedCheckObjectValue[props.question.No] ? styles['hr-not-responded'] : styles.hr
+        }
+      />
+    ) : (
+      <hr
+        className={
+          respondedCheckObjectValue[props.question.No + 1] ? styles['hr-not-responded'] : styles.hr
+        }
+      />
+    );
+
   return (
     <>
       <li className={surveyStyles['questions-li']}>
-        <h2 className={surveyStyles['questions-title']}>설문 {props.question.No}</h2>
-        <hr className={styles.hr} />
+        <h2
+          className={
+            respondedCheckObjectValue[props.question.No]
+              ? `${surveyStyles['questions-title']} ${surveyStyles['questions-title-not-responded']}`
+              : surveyStyles['questions-title']
+          }
+        >
+          설문 {props.question.No}
+        </h2>
+
+        {/* conditional */}
+        {notRespondedIcon}
+        {notRespondedIconForSurveyLastQuestion}
+
+        {hr}
+
         <ul className={surveyStyles['answers-ul']}>
           {props.question.A?.map((answer) => (
             <AnswerList
@@ -135,6 +193,8 @@ function SurveyContent(props: SurveyContentProps) {
               inputId={`${props.question.No}${answer}`}
               clickedQuestionNumber={`${props.question.No}`}
               surveyStateKeyword={SURVEY_04_BDI_STATE_KEYWORD}
+              // for show not-responded question "!" icon, not-responded question number message
+              respondedCheckObject={respondedCheckObject}
               key={uuidv4()}
             />
           ))}
@@ -144,7 +204,18 @@ function SurveyContent(props: SurveyContentProps) {
       {/* for additional question */}
       {props.question.No === 19 && (
         <li className={surveyStyles['questions-li-additional-question']}>
-          <h3 className={surveyStyles['questions-title-additional-question']}>
+          {respondedCheckObjectValue[additionalQuestionRespondedCheckKey] && (
+            <BsExclamationCircleFill
+              className={surveyStyles['additional-question-not-responded-icon']}
+            />
+          )}
+          <h3
+            className={
+              respondedCheckObjectValue[additionalQuestionRespondedCheckKey]
+                ? surveyStyles['questions-title-additional-question-not-responded']
+                : surveyStyles['questions-title-additional-question']
+            }
+          >
             * {BDI_ADDITIONAL_QUESTIONS_19.Q}
           </h3>
           <ul className={surveyStyles['answers-ul-additional-question']}>
@@ -155,6 +226,8 @@ function SurveyContent(props: SurveyContentProps) {
                 clickedQuestionNumber={`${props.question.No}-additional`}
                 surveyStateKeyword={SURVEY_04_BDI_STATE_KEYWORD}
                 inputId={`${props.question.No}${answer}`}
+                // for show not-responded question "!" icon, not-responded question number message
+                respondedCheckObject={respondedCheckObject}
                 key={uuidv4()}
               />
             ))}
@@ -168,6 +241,15 @@ function SurveyContent(props: SurveyContentProps) {
           handleNextPage={props.handleNextPage}
           handlePrevPage={props.handlePrevPage}
           nextBtnDisabledCondition={nextBtnDisabledCondition}
+          // for show not-responded question "!" icon, not-responded question number message
+          respondedCheckObject={respondedCheckObject}
+          responseStateList={props.responseStateList}
+          currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
+          currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
+          surveyQuestionsPerPage={BDI_QUESTIONS_PER_PAGE}
+          additionalQuestionNumberListIndex={4}
+          additionalQuestionResponseListIndex={19}
+          additionalQuestionRespondedCheckKey={additionalQuestionRespondedCheckKey}
         />
       )}
     </>
