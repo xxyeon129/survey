@@ -13,6 +13,8 @@ import { RespondedCheckObjectStateType } from '../../types/respondedCheckObjectS
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
 import styles from './bottomPrevNextButton.module.scss';
+import useSnackbarPopup from 'common/layout/snackbar/useSnackbarPopup';
+import SnackbarPopup from 'common/layout/snackbar/SnackbarPopup';
 
 interface BottomPrevNextButtonProps {
   handlePrevPage?: () => void;
@@ -41,6 +43,8 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
   const headerCurrentPage = useRecoilValue(headerCurrentPageState);
 
   // for show not-responded question "!" icon, not-responded question number message
+  const { isSnackbarVisible, showSnackbarPopup } = useSnackbarPopup();
+
   const currentPageQuestionNumberList: number[] = [];
   // for survey-01, 02 take medicine case
   const takeMedicineResponseStateListRaw = props.responseStateList.slice(1);
@@ -187,7 +191,7 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
         });
       }
 
-      alert('모든 질문에 답변해주세요.');
+      showSnackbarPopup();
     } else {
       props.handleNextPage && props.handleNextPage();
     }
@@ -220,6 +224,9 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
           </button>
         )}
       </div>
+      {isSnackbarVisible && (
+        <SnackbarPopup text="모든 질문에 답변해 주세요!" isSnackbarVisible={isSnackbarVisible} />
+      )}
     </div>
   );
 }
