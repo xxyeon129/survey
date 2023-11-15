@@ -48,7 +48,7 @@ export default function useClickedRadioBtnChecked(props: ClickedRadioBtnCheckedP
       }
 
       return { ...prev, [objectKey]: false };
-    }); // TO DO: 10SCOPA의 경우 마지막 약 질문 예/아니오 모두 체크 시 사라지도록
+    });
   };
 
   return { responseValue, handleRadioBtnChange };

@@ -1,9 +1,12 @@
-import { RecoilState, useRecoilValue } from 'recoil';
+import { useEffect } from 'react';
+import { RecoilState, useRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import AnswerList from '../answerList/AnswerList';
 import AnswerWithInput from '../answerWithInput/AnswerWithInput';
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
+// constants
+import { SURVEY_10_SCOPA_STATE_KEYWORD } from 'pages/survey/survey-10-SCOPA/survey.const';
 // hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 // types
@@ -66,10 +69,24 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
   const nextBtnDisabledCondition = currentPageResponseList.includes('');
 
   // for show not-responded question "!" icon, not-responded question number message
-  const respondedCheckObject: RespondedCheckObjectStateType = useRecoilValue(
-    props.respondedCheckObject
-  );
+  const [respondedCheckObject, setRespondedCheckObject] =
+    useRecoilState<RespondedCheckObjectStateType>(props.respondedCheckObject);
   const surveyWithShortAnswersQuestionsPerPage = 5;
+  // for survey-10-SCOPA input type question not-responded UI
+  useEffect(() => {
+    if (
+      props.surveyStateKeyword === SURVEY_10_SCOPA_STATE_KEYWORD &&
+      props.currentPageFirstQuestionNumber === 21
+    ) {
+      const inputTypeQuestion = props.responseStateList.slice(23);
+      const inputTypeQuestionAllResponded = !inputTypeQuestion.some((response) => response === '');
+
+      inputTypeQuestionAllResponded &&
+        setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+          return { ...prev, [24]: false };
+        });
+    }
+  }, []);
 
   return (
     <li className={contentStyles['questions-li']}>
