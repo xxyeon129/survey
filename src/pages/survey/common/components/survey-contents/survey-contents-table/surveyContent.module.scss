@@ -60,6 +60,10 @@
             color: #919191;
           }
         }
+        .not-responded-questions-table-header-text-p {
+          font-weight: $text-semi-bold;
+          color: $text-warn-red-color;
+        }
       }
 
       .question-td-radio-button-container {

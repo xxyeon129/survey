@@ -133,7 +133,13 @@ function QuestionsTableRow(props: QuestionsTableRowProps) {
     <tr className={styles['questions-table-row']} key={uuidv4()}>
       {/* question */}
       <th className={styles['questions-table-header-text']}>
-        <p className={styles['questions-table-header-text-p']}>
+        <p
+          className={
+            respondedCheckObject[props.question.No]
+              ? `${styles['questions-table-header-text-p']} ${styles['not-responded-questions-table-header-text-p']}`
+              : styles['questions-table-header-text-p']
+          }
+        >
           {respondedCheckObject[props.question.No] && (
             <BsExclamationCircleFill className={styles['not-responded-icon']} />
           )}
