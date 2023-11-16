@@ -146,7 +146,13 @@ function QuestionsTableRow(props: QuestionsTableRowProps) {
           {props.question.No}. {props.question.Q}
           {/* for survey-12-FOOD question explain text */}
           {props.questionExplain && (
-            <p className={styles['question-table-header-text-explain']}>
+            <p
+              className={
+                respondedCheckObject[props.question.No]
+                  ? `${styles['not-responded-question-table-header-text-explain']} ${styles['question-table-header-text-explain']}`
+                  : styles['question-table-header-text-explain']
+              }
+            >
               {props.question.EXPLAIN && `(${props.question.EXPLAIN})`}
             </p>
           )}

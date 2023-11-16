@@ -8,9 +8,15 @@
   .pre-question-title-section {
     position: relative;
 
-    .pre-question-h3 {
+    h3 {
       font-size: 1.3rem;
+    }
+
+    .pre-question-h3 {
       color: $main-blue-color;
+    }
+    .not-responded-pre-question-h3 {
+      color: $text-warn-red-color;
     }
 
     svg {

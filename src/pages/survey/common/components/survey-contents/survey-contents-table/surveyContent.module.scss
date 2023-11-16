@@ -59,6 +59,9 @@
             line-height: 160%;
             color: #919191;
           }
+          .not-responded-question-table-header-text-explain {
+            color: $warn-red;
+          }
         }
         .not-responded-questions-table-header-text-p {
           font-weight: $text-semi-bold;

@@ -1,4 +1,6 @@
 import { RecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+// components
+import SnackbarPopup from 'common/layout/snackbar/SnackbarPopup';
 // states
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 // constants
@@ -7,14 +9,15 @@ import {
   MEDICINE_EFFECT_FALSE,
   MEDICINE_EFFECT_TRUE,
 } from '../survey-contents/survey-contents-with-medicine-effect/surveyContent.const';
+// hooks
+import useSnackbarPopup from 'common/layout/snackbar/useSnackbarPopup';
 // types
 import { RespondedCheckObjectStateType } from '../../types/respondedCheckObjectState.types';
 // styles
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
 import styles from './bottomPrevNextButton.module.scss';
-import useSnackbarPopup from 'common/layout/snackbar/useSnackbarPopup';
-import SnackbarPopup from 'common/layout/snackbar/SnackbarPopup';
+import { useState } from 'react';
 
 interface BottomPrevNextButtonProps {
   handlePrevPage?: () => void;
@@ -44,8 +47,10 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
 
   // for show not-responded question "!" icon, not-responded question number message
   const { isSnackbarVisible, showSnackbarPopup } = useSnackbarPopup();
+  const [snackbarTextRow2, setSnackbarTextRow2] = useState('');
 
   const currentPageQuestionNumberList: number[] = [];
+  const notRespondedQuestionNumberList: string[] = [];
   // for survey-01, 02 take medicine case
   const takeMedicineResponseStateListRaw = props.responseStateList.slice(1);
   const takeMedicineResponseStateList: Array<string>[] = [];
@@ -127,18 +132,31 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
               setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
                 return { ...prev, [currentPageQuestionNumberList[index]]: true };
               });
+              if (currentPageQuestionNumberList[index] === 0) {
+                notRespondedQuestionNumberList.push(`사전 질문`);
+              } else {
+                notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
+              }
             }
           } else {
             if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '') {
               setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
                 return { ...prev, [currentPageQuestionNumberList[index]]: true };
               });
+              // for survey-04-BDI additional question snackbar popup
+              if (
+                props.additionalQuestionNumberListIndex &&
+                props.currentPageFirstQuestionNumber === 16 &&
+                currentPageQuestionNumberList[index] === 20
+              ) {
+                notRespondedQuestionNumberList.push(`19번 추가 질문`);
+              } else {
+                notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
+              }
             }
           }
 
           // for survey-01-UPDRS, survey-02-FG
-          // 효과있 첫 페이지 responseStateList 인덱스 1 3 5..
-          // 효과있 두번째부터 0, 2, 4..
           if (props.takeMedicineResponse === TAKE_MEDICINE) {
             if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '') {
               setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
@@ -171,6 +189,13 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
                   return { ...prev, [currentPageQuestionNumberList[index]]: false };
                 });
               }
+              // for after additional question snackbar popup
+              if (
+                index > props.additionalQuestionNumberListIndex &&
+                props.responseStateList[currentPageQuestionNumberList[index]].length === 0
+              ) {
+                notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
+              }
             } else if (
               // after additional question page
               props.currentPageFirstQuestionNumber > 16 &&
@@ -179,6 +204,8 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
               setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
                 return { ...prev, [currentPageQuestionNumberList[index]]: true };
               });
+
+              notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
             }
           }
 
@@ -191,6 +218,10 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
         });
       }
 
+      // for snackbar popup
+      const notRespondedQuestionNumbersString = notRespondedQuestionNumberList.join(', ');
+      notRespondedQuestionNumbersString.length > 0 &&
+        setSnackbarTextRow2(`${notRespondedQuestionNumbersString} 설문에 응답하지 않으셨습니다.`);
       showSnackbarPopup();
     } else {
       props.handleNextPage && props.handleNextPage();
@@ -225,7 +256,11 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
         )}
       </div>
       {isSnackbarVisible && (
-        <SnackbarPopup text="모든 질문에 답변해 주세요!" isSnackbarVisible={isSnackbarVisible} />
+        <SnackbarPopup
+          text="모든 질문에 답변해 주세요!"
+          textRow2={snackbarTextRow2}
+          isSnackbarVisible={isSnackbarVisible}
+        />
       )}
     </div>
   );

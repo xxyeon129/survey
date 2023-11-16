@@ -4,12 +4,14 @@ import styles from './snackbarPopup.module.scss';
 
 interface SnackbarPopupProps {
   text: string;
+  textRow2?: string;
   iconType?: string;
   isSnackbarVisible: boolean;
 }
 
 export default function SnackbarPopup({
   text,
+  textRow2,
   iconType = 'exclamation',
   isSnackbarVisible,
 }: SnackbarPopupProps) {
@@ -28,7 +30,10 @@ export default function SnackbarPopup({
           <MdCheckCircle className={styles['check-icon']} />
         )}
       </div>
-      <h4 className={styles['text']}>{text}</h4>
+      <hgroup className={styles['text-container']}>
+        <h4 className={styles['text-row-1']}>{text}</h4>
+        {textRow2 && <p className={styles['text-row-2']}>{textRow2}</p>}
+      </hgroup>
     </div>
   );
 }

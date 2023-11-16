@@ -47,7 +47,15 @@ export default function PreQuestion(props: PreQuestionProps) {
   return (
     <section className={styles['pre-question-container']}>
       <section className={styles['pre-question-title-section']}>
-        <h3 className={styles['pre-question-h3']}>{props.question.Q}</h3>
+        <h3
+          className={
+            respondedCheckObjectValue[0]
+              ? styles['not-responded-pre-question-h3']
+              : styles['pre-question-h3']
+          }
+        >
+          {props.question.Q}
+        </h3>
         {respondedCheckObjectValue[0] && <BsExclamationCircleFill />}
       </section>
 

@@ -2,26 +2,30 @@
   visibility: hidden;
   position: fixed;
   display: flex;
-  align-items: center;
   z-index: 999;
   right: 2%;
   bottom: 2rem;
   min-width: 16rem;
   border-radius: 6px;
   padding: 1.25rem;
+  padding-right: 1.5rem;
   font-size: 1.1rem;
 
   .icon-wrapper {
     font-size: 1.438rem;
-    display: flex;
-    align-items: center;
     svg {
       font-size: inherit;
       margin-right: 0.8rem;
     }
-    .text {
-      margin-left: 1rem;
-    }
+  }
+  .text-row-1 {
+    margin-top: 0.1rem;
+    font-weight: $text-semi-bold;
+  }
+
+  .text-row-2 {
+    margin-top: 0.7rem;
+    font-weight: $text-medium;
   }
 }
 
