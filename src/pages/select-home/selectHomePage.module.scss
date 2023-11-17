@@ -1,0 +1,153 @@
+.select-page-container {
+  margin-top: -4.563rem; // header height size
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .top-logo {
+    position: fixed;
+    top: 0.6rem;
+    left: 2.5rem;
+    width: 10.25rem;
+    opacity: 0.9;
+  }
+
+  .top-title-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    row-gap: 1.3rem;
+
+    .top-title-h1 {
+      font-size: 2.3rem;
+
+      @media screen and (min-width: 1900px) {
+        transition: 0.5s;
+        font-size: 2.5rem;
+      }
+    }
+    .top-sub-title-h3 {
+      color: $main-blue-color;
+      font-size: 1.2rem;
+
+      @media screen and (min-width: 1900px) {
+        transition: 0.5s;
+        font-size: 1.9rem;
+      }
+    }
+  }
+
+  .select-boxes-container-section {
+    display: flex;
+    margin-top: 4rem;
+    column-gap: 2.5rem;
+
+    .select-box {
+      padding: 2rem 0 4rem 0;
+      border-radius: 20px;
+      background-color: white;
+      box-shadow: rgba(100, 100, 111, 0.25) 0px 7px 29px 0px;
+      cursor: pointer;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      row-gap: 1rem;
+
+      width: 25rem;
+
+      .icon-circle-wrapper {
+        width: 7rem;
+        height: 7rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .icon {
+          color: white;
+          width: 50%;
+          height: 50%;
+        }
+      }
+      .icon-circle-wrapper-patient {
+        background-color: $main-blue-color;
+      }
+      .icon-circle-wrapper-hospital {
+        background-color: $main-skyblue-color;
+      }
+
+      .select-box-text-container {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1.2rem;
+        .select-box-title-text {
+          font-size: 1.6rem;
+          text-align: center;
+          line-height: 125%;
+        }
+
+        .select-box-explain-text {
+          color: $text-light-grey-color;
+          font-weight: 520;
+          font-size: 1.2rem;
+          text-align: center;
+          line-height: 135%;
+        }
+      }
+
+      .select-box-bottom-btn {
+        margin-top: 2rem;
+        padding: 1rem;
+        font-size: 1.2rem;
+        font-weight: $text-bold;
+        min-width: 18rem;
+        border-radius: 3.125rem;
+        color: white;
+        position: relative;
+        cursor: pointer;
+
+        .bottom-button-arrow-icon {
+          position: absolute;
+          top: 0.75rem;
+          right: 1rem;
+          font-size: 2rem;
+          color: white;
+          opacity: 0.7;
+        }
+      }
+      .patient-button {
+        background-color: $main-blue-color;
+      }
+      .hospital-button {
+        background-color: $main-skyblue-color;
+      }
+    }
+    .select-box-patient {
+      &:hover {
+        transition: 0.5s;
+        outline: 3px solid $main-blue-color;
+      }
+    }
+    .select-box-hospital {
+      &:hover {
+        transition: 0.5s;
+        outline: 3px solid $main-skyblue-color;
+      }
+    }
+  }
+
+  .background-img {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
+    object-fit: cover;
+  }
+}

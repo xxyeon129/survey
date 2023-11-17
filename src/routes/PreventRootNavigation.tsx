@@ -1,17 +1,19 @@
-import { Outlet, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { useRecoilValue } from 'recoil';
-import { loginState } from 'pages/login/loginState';
-import { PATH_URL } from 'common/constants/path.const';
+/* UNUSED FILE: for login page */
 
-// for redirect to main page when enter root path(login page) while logged in
-export default function PreventRootNavigation() {
-  const navigate = useNavigate();
-  const isLogin = useRecoilValue(loginState);
+// import { Outlet, useNavigate } from 'react-router-dom';
+// import { useEffect } from 'react';
+// import { useRecoilValue } from 'recoil';
+// import { loginState } from 'pages/login/loginState';
+// import { PATH_URL } from 'common/constants/path.const';
 
-  useEffect(() => {
-    isLogin && navigate(PATH_URL.MAIN);
-  }, [navigate]);
+// // for redirect to main page when enter root path(login page) while logged in
+// export default function PreventRootNavigation() {
+//   const navigate = useNavigate();
+//   const isLogin = useRecoilValue(loginState);
 
-  return <Outlet />;
-}
+//   useEffect(() => {
+//     isLogin && navigate(PATH_URL.MAIN);
+//   }, [navigate]);
+
+//   return <Outlet />;
+// }

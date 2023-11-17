@@ -1,195 +1,197 @@
-.login-page-container {
-  margin-top: -4.563rem; // header height size
-  width: 100vw;
-  height: 100vh;
+/* UNUSED FILE: for login page */
 
-  /* top contents */
-  .top-contents-container {
-    margin: 0;
-    width: 100%;
-    height: 85%;
-    position: relative;
+// .login-page-container {
+//   margin-top: -4.563rem; // header height size
+//   width: 100vw;
+//   height: 100vh;
 
-    .top-contents-text-container {
-      padding: 2rem 5.5rem;
+//   /* top contents */
+//   .top-contents-container {
+//     margin: 0;
+//     width: 100%;
+//     height: 85%;
+//     position: relative;
 
-      .logo {
-        width: 10.25rem;
-      }
+//     .top-contents-text-container {
+//       padding: 2rem 5.5rem;
 
-      > header {
-        margin-top: 5rem;
-        font-size: 4rem;
-        line-height: 110%;
-        color: white;
+//       .logo {
+//         width: 10.25rem;
+//       }
 
-        @media screen and (min-width: 1900px) {
-          transition: 0.5s;
-          margin-top: 15rem;
-          font-size: 5.5rem;
-        }
+//       > header {
+//         margin-top: 5rem;
+//         font-size: 4rem;
+//         line-height: 110%;
+//         color: white;
 
-        .h1-hospital-color-emphasis {
-          color: $sub-skyblue-color;
-        }
-      }
+//         @media screen and (min-width: 1900px) {
+//           transition: 0.5s;
+//           margin-top: 15rem;
+//           font-size: 5.5rem;
+//         }
 
-      .top-contents-divide-line-container {
-        position: relative;
-        width: 100%;
+//         .h1-hospital-color-emphasis {
+//           color: $sub-skyblue-color;
+//         }
+//       }
 
-        .top-contents-divide-line {
-          position: absolute;
-          top: 1rem;
-          width: 99%;
-          border-top: 0.25rem solid white;
-        }
+//       .top-contents-divide-line-container {
+//         position: relative;
+//         width: 100%;
 
-        .top-contents-divide-line-circle {
-          position: absolute;
-          top: 1rem;
-          right: 0;
-          width: 1.2rem;
-          height: 1.2rem;
-          background-color: white;
-          border-radius: 50%;
-        }
-      }
+//         .top-contents-divide-line {
+//           position: absolute;
+//           top: 1rem;
+//           width: 99%;
+//           border-top: 0.25rem solid white;
+//         }
 
-      .top-contents-explain-text {
-        color: white;
-        line-height: 175%;
-        font-size: 1.15rem;
-        margin-top: 4rem;
+//         .top-contents-divide-line-circle {
+//           position: absolute;
+//           top: 1rem;
+//           right: 0;
+//           width: 1.2rem;
+//           height: 1.2rem;
+//           background-color: white;
+//           border-radius: 50%;
+//         }
+//       }
 
-        @media screen and (min-width: 1900px) {
-          transition: 0.5s;
-          font-size: 1.7rem;
-        }
-      }
-    }
+//       .top-contents-explain-text {
+//         color: white;
+//         line-height: 175%;
+//         font-size: 1.15rem;
+//         margin-top: 4rem;
 
-    .background-overlay {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background-color: black;
-      opacity: 0.7;
-    }
+//         @media screen and (min-width: 1900px) {
+//           transition: 0.5s;
+//           font-size: 1.7rem;
+//         }
+//       }
+//     }
 
-    .background-img {
-      position: absolute;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      object-fit: cover;
-    }
-  }
+//     .background-overlay {
+//       position: absolute;
+//       top: 0;
+//       width: 100%;
+//       height: 100%;
+//       z-index: -1;
+//       background-color: black;
+//       opacity: 0.7;
+//     }
 
-  /* bottom contents */
-  .bottom-login-container {
-    width: 100vw;
-    height: calc(100vh - 85%);
-    display: flex;
-    margin: 0;
+//     .background-img {
+//       position: absolute;
+//       top: 0;
+//       width: 100%;
+//       height: 100%;
+//       z-index: -2;
+//       object-fit: cover;
+//     }
+//   }
 
-    .bottom-login-container-right-blue-box {
-      height: 100%;
-      width: 2rem;
-      background-color: $main-blue-color;
-    }
+//   /* bottom contents */
+//   .bottom-login-container {
+//     width: 100vw;
+//     height: calc(100vh - 85%);
+//     display: flex;
+//     margin: 0;
 
-    > form {
-      display: flex;
-      align-items: center;
-      width: 100%;
+//     .bottom-login-container-right-blue-box {
+//       height: 100%;
+//       width: 2rem;
+//       background-color: $main-blue-color;
+//     }
 
-      .bottom-login-input-container {
-        display: flex;
-        justify-content: space-between;
-        width: 83%;
-        height: 100%;
-        padding: 0 2.5rem;
+//     > form {
+//       display: flex;
+//       align-items: center;
+//       width: 100%;
 
-        .bottom-login-divide-column-line {
-          width: 0.12rem;
-          background-color: $progressbar-grey-color;
-          border: none;
-        }
-        .bottom-login-explain-text {
-          display: flex;
-          align-items: center;
-          color: $text-input-label-color;
-          line-height: 155%;
+//       .bottom-login-input-container {
+//         display: flex;
+//         justify-content: space-between;
+//         width: 83%;
+//         height: 100%;
+//         padding: 0 2.5rem;
 
-          @media screen and (min-width: 1900px) {
-            transition: 0.5s;
-            font-size: 1.5rem;
-          }
-        }
+//         .bottom-login-divide-column-line {
+//           width: 0.12rem;
+//           background-color: $progressbar-grey-color;
+//           border: none;
+//         }
+//         .bottom-login-explain-text {
+//           display: flex;
+//           align-items: center;
+//           color: $text-input-label-color;
+//           line-height: 155%;
 
-        .input-wrapper {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          row-gap: 0.5rem;
+//           @media screen and (min-width: 1900px) {
+//             transition: 0.5s;
+//             font-size: 1.5rem;
+//           }
+//         }
 
-          label {
-            color: $text-input-label-color;
-            font-weight: $text-semi-bold;
-            font-size: 1.1rem;
-            @media screen and (min-width: 1900px) {
-              transition: 0.5s;
-              font-size: 1.5rem;
-            }
-          }
-          input {
-            height: 2.5rem;
-            font-size: 1.12rem;
-            border-radius: 0.625rem;
-            outline: 0.1rem solid $checkbox-grey-color;
-            padding: 0 0.5rem;
-            min-width: 15rem;
-            @media screen and (min-width: 1900px) {
-              transition: 0.5s;
-              min-width: 20rem;
-              font-size: 1.5rem;
-            }
-            @media screen and (max-width: 1201px) {
-              transition: 0.5s;
-              min-width: 10rem;
-            }
-          }
-        }
-      }
+//         .input-wrapper {
+//           display: flex;
+//           flex-direction: column;
+//           justify-content: center;
+//           row-gap: 0.5rem;
 
-      > button {
-        height: 100%;
-        font-size: 1.15rem;
-        font-weight: $text-semi-bold;
-        width: 17%;
-        background-color: $sub-skyblue-color;
-        color: white;
-        cursor: pointer;
+//           label {
+//             color: $text-input-label-color;
+//             font-weight: $text-semi-bold;
+//             font-size: 1.1rem;
+//             @media screen and (min-width: 1900px) {
+//               transition: 0.5s;
+//               font-size: 1.5rem;
+//             }
+//           }
+//           input {
+//             height: 2.5rem;
+//             font-size: 1.12rem;
+//             border-radius: 0.625rem;
+//             outline: 0.1rem solid $checkbox-grey-color;
+//             padding: 0 0.5rem;
+//             min-width: 15rem;
+//             @media screen and (min-width: 1900px) {
+//               transition: 0.5s;
+//               min-width: 20rem;
+//               font-size: 1.5rem;
+//             }
+//             @media screen and (max-width: 1201px) {
+//               transition: 0.5s;
+//               min-width: 10rem;
+//             }
+//           }
+//         }
+//       }
 
-        @media screen and (max-width: 1201px) {
-          transition: 0.5s;
-          font-size: 1.5rem;
-        }
+//       > button {
+//         height: 100%;
+//         font-size: 1.15rem;
+//         font-weight: $text-semi-bold;
+//         width: 17%;
+//         background-color: $sub-skyblue-color;
+//         color: white;
+//         cursor: pointer;
 
-        @media screen and (min-width: 1900px) {
-          transition: 0.5s;
-          font-size: 1.5rem;
-        }
+//         @media screen and (max-width: 1201px) {
+//           transition: 0.5s;
+//           font-size: 1.5rem;
+//         }
 
-        &:hover {
-          background-color: $main-blue-color;
-          transition: 0.5s;
-        }
-      }
-    }
-  }
-}
+//         @media screen and (min-width: 1900px) {
+//           transition: 0.5s;
+//           font-size: 1.5rem;
+//         }
+
+//         &:hover {
+//           background-color: $main-blue-color;
+//           transition: 0.5s;
+//         }
+//       }
+//     }
+//   }
+// }

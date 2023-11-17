@@ -1,13 +1,15 @@
-import { atom } from 'recoil';
-import { recoilPersist } from 'recoil-persist';
+/* UNUSED FILE: for login page */
 
-const { persistAtom } = recoilPersist({
-  key: 'login',
-  storage: sessionStorage,
-});
+// import { atom } from 'recoil';
+// import { recoilPersist } from 'recoil-persist';
 
-export const loginState = atom({
-  key: 'loginState',
-  default: false,
-  effects_UNSTABLE: [persistAtom],
-});
+// const { persistAtom } = recoilPersist({
+//   key: 'login',
+//   storage: sessionStorage,
+// });
+
+// export const loginState = atom({
+//   key: 'loginState',
+//   default: false,
+//   effects_UNSTABLE: [persistAtom],
+// });

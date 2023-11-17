@@ -1,15 +1,17 @@
+import { useRecoilValue } from 'recoil';
+import { useLocation } from 'react-router-dom';
 // components
 import Sidebar from 'common/layout/sidebar/Sidebar';
 import Header from './header/Header';
+// state - for login page display
+import { userState } from 'pages/select-home/selectHomePage.state';
+// import { loginState } from 'pages/login/loginState';
+// constants
+import { PATH_URL } from 'common/constants/path.const';
 // hooks
 import usePathCheck from 'common/hooks/usePathCheck';
-// state - for login page display
-import { useRecoilValue } from 'recoil';
-import { loginState } from 'pages/login/loginState';
 // styles
 import styles from './layout.module.scss';
-import { useLocation } from 'react-router-dom';
-import { PATH_URL } from 'common/constants/path.const';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -17,7 +19,10 @@ interface LayoutProps {
 
 export default function Layout(props: LayoutProps) {
   // for login page - no header
-  const isLogin = useRecoilValue(loginState);
+  // const isLogin = useRecoilValue(loginState);
+
+  // for home page - no header
+  const haveSelectUser = useRecoilValue(userState);
 
   // for personal info page - no header
   const location = useLocation();
@@ -28,7 +33,7 @@ export default function Layout(props: LayoutProps) {
 
   return (
     <>
-      {isLogin && isNotPersonalInfoPage && <Header />}
+      {haveSelectUser.length > 0 && isNotPersonalInfoPage && <Header />}
       <main>
         {isSurveyPage && <Sidebar />}
         <section
