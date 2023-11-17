@@ -21,7 +21,7 @@ import EndPage from 'pages/end/EndPage';
 import RedirectionForUploadFile from 'pages/main/upload-excel-file-redirect/RedirectionForUploadFile';
 import NotFound from 'pages/error/NotFound';
 import Test from 'pages/test/Test';
-import RedirectionForResetResponseState from 'pages/main/reset-response-state-redirect/RedirectionForResetResponseState';
+import RedirectionForResetResponseState from 'pages/main/components/reset-response-state-redirect/RedirectionForResetResponseState';
 
 export default function MainRouter() {
   return (

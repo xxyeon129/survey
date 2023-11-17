@@ -1,7 +1,7 @@
 import { PATH_URL } from 'common/constants/path.const';
 import styles from './createNewSurveyModal.module.scss';
 import { useNavigate } from 'react-router-dom';
-import useNaviateNotRespondedSurveyPage from '../hooks/useNavigateNotRespondedSurveyPage';
+import useNaviateNotRespondedSurveyPage from '../../hooks/useNavigateNotRespondedSurveyPage';
 
 interface CreateNewSurveyModalProps {
   onClose: () => void;
