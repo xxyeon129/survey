@@ -3,9 +3,8 @@ import { useLocation } from 'react-router-dom';
 // components
 import Sidebar from 'common/layout/sidebar/Sidebar';
 import Header from './header/Header';
-// state - for login page display
+// state
 import { userState } from 'pages/select-home/selectHomePage.state';
-// import { loginState } from 'pages/login/loginState';
 // constants
 import { PATH_URL } from 'common/constants/path.const';
 // hooks
@@ -18,9 +17,6 @@ interface LayoutProps {
 }
 
 export default function Layout(props: LayoutProps) {
-  // for login page - no header
-  // const isLogin = useRecoilValue(loginState);
-
   // for home page - no header
   const haveSelectUser = useRecoilValue(userState);
 
@@ -28,12 +24,14 @@ export default function Layout(props: LayoutProps) {
   const location = useLocation();
   const isNotPersonalInfoPage = location.pathname !== PATH_URL.PERSONAL;
 
-  // for non-survey page css styling
+  const showHeader = haveSelectUser.length > 0 && isNotPersonalInfoPage;
+
+  // for non-survey page hide sidebar
   const isSurveyPage = usePathCheck();
 
   return (
     <>
-      {haveSelectUser.length > 0 && isNotPersonalInfoPage && <Header />}
+      {showHeader && <Header />}
       <main>
         {isSurveyPage && <Sidebar />}
         <section
