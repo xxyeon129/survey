@@ -2,10 +2,9 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PATH_URL } from '../common/constants/path.const';
 import Layout from 'common/layout/Layout';
 // pages
-import LoginPage from 'pages/login/LoginPage';
+// import LoginPage from 'pages/login/LoginPage';
+import SelectHomePage from 'pages/select-home/SelectHomePage';
 import MainPage from 'pages/main/MainPage';
-import Test from 'pages/test/Test';
-import NotFound from 'pages/error/NotFound';
 import PersonalInfo from 'pages/survey/personalInfo/PersonalInfo';
 import Survey01UPDRS from 'pages/survey/survey-01-UPDRS/Survey01UPDRS';
 import Survey02FG from 'pages/survey/survey-02-FG/Survey02FG';
@@ -21,7 +20,9 @@ import Survey11Constipation from 'pages/survey/survey-11-CONSTIPATION/Survey11Co
 import Survey12Food from 'pages/survey/survey-12-FOOD/Survey12Food';
 import EndPage from 'pages/end/EndPage';
 import RedirectionForUploadFile from 'pages/main/upload-excel-file-redirect/RedirectionForUploadFile';
-import PreventRootNavigation from './PreventRootNavigation';
+// import PreventRootNavigation from './PreventRootNavigation';
+import NotFound from 'pages/error/NotFound';
+import Test from 'pages/test/Test';
 import RedirectionForResetResponseState from 'pages/main/reset-response-state-redirect/RedirectionForResetResponseState';
 
 export default function MainRouter() {
@@ -29,9 +30,10 @@ export default function MainRouter() {
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<PreventRootNavigation />}>
+          {/* <Route path="/" element={<PreventRootNavigation />}>
             <Route index element={<LoginPage />} />
-          </Route>
+          </Route> */}
+          <Route path="/" element={<SelectHomePage />} />
           <Route path={PATH_URL.MAIN} element={<MainPage />} />
           <Route path={PATH_URL.PERSONAL} element={<PersonalInfo />} />
           <Route path={PATH_URL.SURVEY['01_UPDRS']} element={<Survey01UPDRS />} />

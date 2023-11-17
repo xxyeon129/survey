@@ -12,7 +12,6 @@ import { headerCurrentPageState } from './pagination/headerPageState';
 // constants
 import { SURVEY_NAME } from 'common/constants/survey.const';
 import { totalPagesCount } from './pagination/totalPages.const';
-import { PATH_URL } from 'common/constants/path.const';
 // styles
 import logo from 'assets/header-logo.svg';
 import styles from './header.module.scss';
@@ -45,7 +44,7 @@ export default function Header() {
   return (
     <header className={styles['header']}>
       <div className={styles['header-contents']}>
-        <Link to={PATH_URL.MAIN}>
+        <Link to="/">
           <img src={logo} alt="header 좌측 병원 로고" />
         </Link>
         <div className={styles['header-right-contents']}>{rightContent}</div>
