@@ -1,4 +1,11 @@
+import { useRecoilValue } from 'recoil';
+// states
+import { userState } from 'pages/select-home/selectHomePage.state';
+// constants
+import { USER_HOSPITAL } from 'pages/select-home/selectHomeUser.const';
+// hooks
 import useExcelFile from 'common/hooks/useExcelFile';
+// styles
 import styles from './sendExcelFileModal.module.scss';
 
 export default function SendExcelFileModal({ onClose }: { onClose: () => void }) {
@@ -14,9 +21,9 @@ export default function SendExcelFileModal({ onClose }: { onClose: () => void })
     onClose();
   };
 
-  // TO DO: 환자로 접속 시, 병원에서 접속 시에 따라 구분
-  // 환자로 접속 -> 이메일 전송만 표시
-  // 병원에서 접속 -> 이메일 전송, 엑셀 파일 다운로드 모두 표시
+  // for patient user - hide excel file download button
+  const user = useRecoilValue(userState);
+
   return (
     <div className={styles['modal']} onClick={onClose}>
       <div className={styles['modal-content']} onClick={keepModalOpen}>
@@ -26,12 +33,15 @@ export default function SendExcelFileModal({ onClose }: { onClose: () => void })
           다른 기기에서 이어서 작성하실 예정일 경우"작성 내용 메일 전송" 버튼을 눌러주세요.
         </h3>
         <section className={styles['btn-container']}>
-          <button className={styles['download-mail-btn']} onClick={onClickdownloadExcelFileBtn}>
-            작성 내용 엑셀 파일로 다운로드
-          </button>
+          {user === USER_HOSPITAL && (
+            <button className={styles['download-mail-btn']} onClick={onClickdownloadExcelFileBtn}>
+              작성 내용 엑셀 파일로 다운로드
+            </button>
+          )}
           <button className={styles['send-mail-btn']} onClick={sendFile}>
             작성 내용 메일 전송
           </button>
+          {/* TO DO: 모달창 리디자인, 닫기 버튼 */}
           {/* <button type="button" onClick={onClose}>
             닫기
           </button> */}
