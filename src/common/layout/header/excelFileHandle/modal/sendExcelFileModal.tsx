@@ -30,7 +30,7 @@ export default function SendExcelFileModal({ onClose }: { onClose: () => void })
         <h3>
           현재 기기에서 작성하신 내용은 창을 닫아도 임시저장됩니다.
           <br />
-          다른 기기에서 이어서 작성하실 예정일 경우"작성 내용 메일 전송" 버튼을 눌러주세요.
+          다른 기기에서 이어서 작성하실 예정일 경우"작성 내용 병원 전송에 동의" 버튼을 눌러주세요.
         </h3>
         <section className={styles['btn-container']}>
           {user === USER_HOSPITAL && (
@@ -39,7 +39,7 @@ export default function SendExcelFileModal({ onClose }: { onClose: () => void })
             </button>
           )}
           <button className={styles['send-mail-btn']} onClick={sendFile}>
-            작성 내용 메일 전송
+            작성 내용 병원 전송에 동의
           </button>
           {/* TO DO: 모달창 리디자인, 닫기 버튼 */}
           {/* <button type="button" onClick={onClose}>
