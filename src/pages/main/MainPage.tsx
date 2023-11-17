@@ -21,7 +21,13 @@ export default function MainPage() {
         <h4>{HOSPITAL_NAME}</h4>
         <h1>{SURVEY_NAME} 전자설문</h1>
       </hgroup>
-      <ul className={styles['route-container']}>
+      <ul
+        className={
+          user === USER_HOSPITAL
+            ? `${styles['route-container']} ${styles['route-container-hospital']}`
+            : `${styles['route-container']} ${styles['route-container-patient']}`
+        }
+      >
         <ContinueBox />
         <CreateBox />
         {user === USER_HOSPITAL && <UploadExcelFileBox />}
