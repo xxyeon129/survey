@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PATH_URL } from '../common/constants/path.const';
 import Layout from 'common/layout/Layout';
 // pages
-// import LoginPage from 'pages/login/LoginPage';
 import SelectHomePage from 'pages/select-home/SelectHomePage';
 import MainPage from 'pages/main/MainPage';
 import PersonalInfo from 'pages/survey/personalInfo/PersonalInfo';
@@ -20,7 +19,6 @@ import Survey11Constipation from 'pages/survey/survey-11-CONSTIPATION/Survey11Co
 import Survey12Food from 'pages/survey/survey-12-FOOD/Survey12Food';
 import EndPage from 'pages/end/EndPage';
 import RedirectionForUploadFile from 'pages/main/upload-excel-file-redirect/RedirectionForUploadFile';
-// import PreventRootNavigation from './PreventRootNavigation';
 import NotFound from 'pages/error/NotFound';
 import Test from 'pages/test/Test';
 import RedirectionForResetResponseState from 'pages/main/reset-response-state-redirect/RedirectionForResetResponseState';
@@ -30,9 +28,6 @@ export default function MainRouter() {
     <BrowserRouter>
       <Layout>
         <Routes>
-          {/* <Route path="/" element={<PreventRootNavigation />}>
-            <Route index element={<LoginPage />} />
-          </Route> */}
           <Route path="/" element={<SelectHomePage />} />
           <Route path={PATH_URL.MAIN} element={<MainPage />} />
           <Route path={PATH_URL.PERSONAL} element={<PersonalInfo />} />
