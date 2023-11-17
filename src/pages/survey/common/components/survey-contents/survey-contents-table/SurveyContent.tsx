@@ -10,6 +10,7 @@ import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respond
 // styles
 import { BsExclamationCircleFill } from 'react-icons/bs';
 import styles from './surveyContent.module.scss';
+import { SURVEY_12_FOOD_STATE_KEYWORD } from 'pages/survey/survey-12-FOOD/survey.const';
 
 interface SurveyContentTableProps {
   questions: SurveyContentObjectType[];
@@ -53,6 +54,11 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
       {answerText}
     </th>
   ));
+
+  // for survey-12-Food last page
+  const isLastPage =
+    props.surveyStateKeyword === SURVEY_12_FOOD_STATE_KEYWORD &&
+    props.currentPageLastQuestionNumber === 20;
 
   return (
     <article className={styles['survey-content-container']}>
@@ -98,6 +104,7 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
               currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
               currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
               surveyQuestionsPerPage={props.surveyQuestionsPerPage}
+              isLastPage={isLastPage}
               key={uuidv4()}
             />
           )

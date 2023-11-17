@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { RecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 // components
 import SnackbarPopup from 'common/layout/snackbar/SnackbarPopup';
@@ -17,7 +18,6 @@ import { RespondedCheckObjectStateType } from '../../types/respondedCheckObjectS
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoMdArrowRoundForward } from 'react-icons/io';
 import styles from './bottomPrevNextButton.module.scss';
-import { useState } from 'react';
 
 interface BottomPrevNextButtonProps {
   handlePrevPage?: () => void;
@@ -40,6 +40,8 @@ interface BottomPrevNextButtonProps {
   additionalQuestionRespondedCheckKey?: string;
   // for survey-01-UPDRS, survey-02-FG, suevey-05-RBD
   havePreQuestion?: boolean;
+  // for last page
+  isLastPage?: boolean;
 }
 
 export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
@@ -241,14 +243,14 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
       <div onClick={onClickDisabledBtn}>
         {props.nextBtnDisabledCondition ? (
           <button className={styles['next-btn-disabled']}>
-            다음 페이지
+            {props.isLastPage ? '설문 종료하기' : '다음 페이지'}
             <div className={styles['next-btn-icon-container']}>
               <IoMdArrowRoundForward />
             </div>
           </button>
         ) : (
           <button className={styles['next-btn']}>
-            다음 페이지
+            {props.isLastPage ? '설문 종료하기' : '다음 페이지'}
             <div className={styles['next-btn-icon-container']}>
               <IoMdArrowRoundForward />
             </div>
