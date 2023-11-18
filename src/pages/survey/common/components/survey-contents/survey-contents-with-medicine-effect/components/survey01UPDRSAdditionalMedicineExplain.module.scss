@@ -1,0 +1,21 @@
+.take-medicine-additional-explain-container {
+  margin-top: 3rem;
+  margin-bottom: -3rem;
+  background-color: $sidebar-background-blue-color;
+  border-radius: 0.625rem;
+
+  display: flex;
+  column-gap: 0.5rem;
+  padding: 1rem 1.5rem;
+
+  color: $main-blue-color;
+  // font-weight: $text-semi-light-bold;
+  font-size: 1.4rem;
+  line-height: 175%;
+
+  .explain-emphasize {
+    text-decoration: underline;
+    text-underline-position: under;
+    font-weight: $text-semi-bold;
+  }
+}
