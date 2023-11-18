@@ -1,4 +1,4 @@
-.modal {
+.modal-background {
   position: fixed;
   top: 0;
   z-index: 9999;
@@ -10,10 +10,52 @@
   background-color: rgba(0, 0, 0, 0.3);
 
   .modal-content {
+    min-width: 30rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     background-color: white;
-    padding: 3rem;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px,
+      rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
+      rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    padding: 3rem 8rem;
     border-radius: 1rem;
-    line-height: 175%;
+    position: relative;
+
+    .modal-top-blue-icon-box {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      min-height: 6rem;
+      border-top-left-radius: 1rem;
+      border-top-right-radius: 1rem;
+      background-color: $main-blue-color;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .check-icon {
+        color: white;
+        font-size: 3.5rem;
+      }
+    }
+
+    .modal-text-h3 {
+      margin-top: 7rem;
+      font-size: 1.7rem;
+      font-weight: $text-bold;
+    }
+
+    .modal-text-explain-p {
+      margin-top: 2rem;
+      font-size: 1.3rem;
+      font-weight: $text-semi-light-bold;
+      line-height: 175%;
+      text-align: center;
+      color: $text-light-grey-color;
+    }
 
     .btn-container {
       margin-top: 3rem;
@@ -30,12 +72,12 @@
       }
 
       .send-mail-btn {
-        color: white;
-        border-radius: 0.5rem;
-        padding: 0.8rem 0;
-        font-weight: $text-semi-bold;
-        background-color: $main-blue-color;
-        font-size: 1.1rem;
+        color: $main-blue-color;
+        border: 3.5px solid $main-blue-color;
+        border-radius: 1rem; // 3.125
+        padding: 1rem;
+        font-weight: $text-bold;
+        font-size: 1.3rem;
         cursor: pointer;
       }
     }

@@ -22,7 +22,6 @@ interface usePaginationProps {
   conditionToSetPrevSurveyFirstPage?: boolean;
   setPrevSurveyFirstPage?: () => void;
 
-  // TO DO: finish page 완성 후 삭제, 컴포넌트 props 전달도 삭제
   // for survey-12-Food last page modal
   onClickLastPageNextBtnHandler?: () => void;
 }
@@ -74,8 +73,7 @@ export default function usePagination(props: usePaginationProps) {
 
     // for last page
     if (headerCurrentPage === totalPagesCount) {
-      // props.onClickLastPageNextBtnHandler && props.onClickLastPageNextBtnHandler();
-      navigate(PATH_URL.FINISH);
+      props.onClickLastPageNextBtnHandler && props.onClickLastPageNextBtnHandler();
       return;
     }
 
