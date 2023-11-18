@@ -42,14 +42,15 @@
       }
     }
 
-    .modal-text-h3 {
+    .modal-thanks-title {
       margin-top: 7rem;
+      margin-bottom: 2rem;
       font-size: 1.7rem;
       font-weight: $text-bold;
     }
 
-    .modal-text-explain-p {
-      margin-top: 2rem;
+    /* modal content */
+    .patient-modal-text-explain-p {
       font-size: 1.3rem;
       font-weight: $text-semi-light-bold;
       line-height: 175%;
@@ -57,28 +58,91 @@
       color: $text-light-grey-color;
     }
 
-    .btn-container {
-      margin-top: 3rem;
-      width: 100%;
+    .hospital-user-download-send-container {
       display: flex;
-      flex-direction: column;
-      row-gap: 2rem;
 
-      .download-mail-btn {
-        color: $main-blue-color;
-        font-weight: $text-semi-bold;
-        font-size: 1.1rem;
-        cursor: pointer;
-      }
-
-      .send-mail-btn {
-        color: $main-blue-color;
-        border: 3.5px solid $main-blue-color;
-        border-radius: 1rem; // 3.125
+      .hospital-user-download-send-btn {
         padding: 1rem;
-        font-weight: $text-bold;
-        font-size: 1.3rem;
+        display: flex;
+        flex-direction: column;
+        row-gap: 1rem;
         cursor: pointer;
+
+        &:first-child {
+          margin-right: 1rem;
+        }
+
+        &:last-child {
+          margin-left: 1rem;
+        }
+
+        .hospital-user-download-send-icon-container {
+          margin: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          .hospital-user-download-send-icon {
+            font-size: 3.5rem;
+            color: $main-blue-color;
+          }
+        }
+
+        .hospital-user-download-send-h3 {
+          font-size: 1.5rem;
+          font-weight: $text-semi-bold;
+          color: $main-blue-color;
+        }
+        .hospital-user-download-send-p {
+          font-size: 1.2rem;
+          color: $text-light-grey-color;
+          line-height: 135%;
+        }
+
+        &:hover {
+          .hospital-user-download-send-icon {
+            transition: 0.8s;
+            color: $point-green-color;
+          }
+          .hospital-user-download-send-h3 {
+            transition: 0.8s;
+            color: $point-green-color;
+          }
+        }
+      }
+    }
+
+    /* bottom button */
+    .patient-send-mail-btn {
+      margin-top: 3rem;
+      color: $main-blue-color;
+      border: 3.5px solid $main-blue-color;
+      border-radius: 1rem; // 3.125
+      padding: 1rem 1.5rem;
+      font-weight: $text-bold;
+      font-size: 1.3rem;
+      cursor: pointer;
+
+      &:hover {
+        transition: 0.5s;
+        color: white;
+        background-color: $main-blue-color;
+      }
+    }
+
+    .hospital-user-home-btn {
+      margin-top: 3rem;
+      border-radius: 1rem;
+      padding: 1rem 3rem;
+      background-color: $main-blue-color;
+      color: white;
+      font-weight: $text-semi-bold;
+      font-size: 1.2rem;
+      cursor: pointer;
+
+      &:hover {
+        transition: 0.8s;
+        background-color: $point-green-color;
       }
     }
   }
