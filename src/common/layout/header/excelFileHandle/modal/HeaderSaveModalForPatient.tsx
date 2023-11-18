@@ -6,7 +6,7 @@ import { USER_HOSPITAL } from 'pages/select-home/selectHomeUser.const';
 // hooks
 import useExcelFile from 'common/hooks/useExcelFile';
 // styles
-import styles from './sendExcelFileModal.module.scss';
+import styles from './HeaderSaveModalForPatient.module.scss';
 
 export default function SendExcelFileModal({ onClose }: { onClose: () => void }) {
   const keepModalOpen = (e: React.MouseEvent<HTMLDivElement>) => {

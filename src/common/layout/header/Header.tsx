@@ -6,7 +6,7 @@ import usePathCheck from 'common/hooks/usePathCheck';
 import ProgressBar from './ProgressBar';
 import SendExcelFileBtn from './excelFileHandle/button/sendExcelFileBtn';
 import ModalPortal from '../modalPortal';
-import SendExcelFileModal from './excelFileHandle/modal/sendExcelFileModal';
+import HeaderSaveModalForPatient from './excelFileHandle/modal/HeaderSaveModalForPatient';
 // states
 import { headerCurrentPageState } from './pagination/headerPageState';
 // constants
@@ -52,7 +52,7 @@ export default function Header() {
       {isSurveyPage && <ProgressBar />}
       {modalOpen && (
         <ModalPortal>
-          <SendExcelFileModal onClose={closeModalHandler} />
+          <HeaderSaveModalForPatient onClose={closeModalHandler} />
         </ModalPortal>
       )}
     </header>
