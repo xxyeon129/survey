@@ -3,7 +3,6 @@ import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
 // states
 import {
@@ -22,7 +21,6 @@ import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
   SURVEY_01_UPDRS_STATE_KEYWORD,
   TAKE_MEDICINE,
-  UPDRS_PRE_QUESTION,
   UPDRS_QUESTIONS,
   UPDRS_QUESTIONS_PER_PAGE,
 } from './survey.const';
@@ -100,17 +98,6 @@ export default function Survey01UPDRS() {
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[1].TITLE} subTitle={SURVEY_TITLE_LIST[1].SUB_TITLE} />
       {surveyExplain}
-
-      {/* for pre-question */}
-      <PreQuestion
-        question={UPDRS_PRE_QUESTION}
-        clickedQuestionNumber="pre"
-        surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
-        // for show not-responded question "!" icon, not-responded question number message
-        respondedCheckObject={respondedCheckObject}
-        // for survey-01-UPDRS setting header current page 1
-        isUPDRSPreQuestion={true}
-      />
 
       {/* for display questions only when answered pre-question */}
       {respondedPreQuestionResponse && (
