@@ -1,4 +1,4 @@
-.modal {
+.modal-background {
   position: fixed;
   top: 0;
   z-index: 9999;
@@ -10,34 +10,54 @@
   background-color: rgba(0, 0, 0, 0.3);
 
   .modal-content {
+    display: flex;
+    flex-direction: column;
+    row-gap: 3rem;
     background-color: white;
-    padding: 3rem;
+    padding: 3rem 5rem;
     border-radius: 1rem;
-    line-height: 175%;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px,
+      rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
+      rgba(0, 0, 0, 0.09) 0px -3px 5px;
 
-    .btn-container {
-      margin-top: 3rem;
+    .top-icon-wrapper {
+      margin: 0;
       width: 100%;
       display: flex;
-      flex-direction: column;
-      row-gap: 2rem;
-
-      .download-mail-btn {
+      justify-content: center;
+      .top-icon {
+        font-size: 5rem;
         color: $main-blue-color;
-        font-weight: $text-semi-bold;
-        font-size: 1.1rem;
-        cursor: pointer;
       }
+    }
 
-      .send-mail-btn {
-        color: white;
-        border-radius: 0.5rem;
-        padding: 0.8rem 0;
-        font-weight: $text-semi-bold;
-        background-color: $main-blue-color;
-        font-size: 1.1rem;
-        cursor: pointer;
+    .text-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      row-gap: 1.5rem;
+      .title-text {
+        font-size: 1.8rem;
       }
+      .explain-text {
+        font-size: 1.4rem;
+        line-height: 155%;
+        color: $text-light-grey-color;
+        text-align: center;
+      }
+    }
+
+    .send-mail-btn {
+      margin-top: 0.5rem;
+      width: 100%;
+      border-radius: 1.25rem;
+      padding: 1.5rem 0;
+      background-color: $main-blue-color;
+
+      font-size: 1.5rem;
+      color: white;
+      font-weight: $text-semi-bold;
+      cursor: pointer;
     }
   }
 }
