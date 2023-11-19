@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
 // states
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey02CurrentPageState,
   survey03CurrentPageState,
@@ -10,6 +11,8 @@ import {
 } from '../common/surveyPaginationStates';
 import { haveFGSymptomState } from '../survey-02-FG/Survey02FG.state';
 import { survey03BAI_responseSelector } from './survey03BAI.selector';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import { respondedCheckObject03BAI } from '../common/states/respondedCheckObjects.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -21,14 +24,12 @@ import {
 } from './survey.const';
 import { HAVE_NO_FG_SYMPTOM, SURVEY_02_FG_TOTAL_PAGES } from '../survey-02-FG/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
+import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 import useSetPrevSurveyFirstPage from './hooks/useSetPrevSurveyFirstPage';
 // styles
 import styles from '../common/survey.module.scss';
-import { useEffect } from 'react';
-import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
-import { respondedCheckObject03BAI } from '../common/states/respondedCheckObjects.state';
 
 export default function Survey03BAI() {
   // for set survey-02-FG first page when click bottom prev button in condition answered "없음" to FG symptom pre-question
@@ -70,9 +71,12 @@ export default function Survey03BAI() {
 
   // for updata header current page
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  const survey03BAI_totalPagesListIndex = 2;
+  const prevPagesList = totalPagesList.slice(0, survey03BAI_totalPagesListIndex);
+  const prevPagesCount = prevPagesList.reduce((acc, cur) => acc + cur, 1);
   useEffect(() => {
     if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
-      setHeaderCurrentPage(8);
+      setHeaderCurrentPage(prevPagesCount);
     }
   }, []);
 

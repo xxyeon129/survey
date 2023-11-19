@@ -145,10 +145,11 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
               setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
                 return { ...prev, [currentPageQuestionNumberList[index]]: true };
               });
+
               // for survey-04-BDI additional question snackbar popup
               if (
                 props.additionalQuestionNumberListIndex &&
-                props.currentPageFirstQuestionNumber === 16 &&
+                props.currentPageFirstQuestionNumber === 15 &&
                 currentPageQuestionNumberList[index] === 20
               ) {
                 notRespondedQuestionNumberList.push(`19번 추가 질문`);
@@ -174,7 +175,7 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
             props.additionalQuestionNumberListIndex
           ) {
             // additional question
-            if (props.currentPageFirstQuestionNumber === 16) {
+            if (props.currentPageFirstQuestionNumber === 15) {
               if (
                 index === props.additionalQuestionNumberListIndex &&
                 props.responseStateList[props.additionalQuestionResponseListIndex] === ''
@@ -200,7 +201,7 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
               }
             } else if (
               // after additional question page
-              props.currentPageFirstQuestionNumber > 16 &&
+              props.currentPageFirstQuestionNumber > 15 &&
               props.responseStateList[currentPageQuestionNumberList[index]] === ''
             ) {
               setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {

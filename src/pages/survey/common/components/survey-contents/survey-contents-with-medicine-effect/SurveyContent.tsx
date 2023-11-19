@@ -38,6 +38,7 @@ interface SurveyContentWithMedicineEffectProps {
 
   // for show not-responded question "!" icon, not-responded question number message
   respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
+  surveyQuestionsPerPage: number;
 }
 
 // survey-01-UPDRS, survey-02-FG
@@ -81,7 +82,6 @@ export default function SurveyContentWithMedicineEffect(
 
   // for show not-responded question "!" icon, not-responded question number message
   const respondedCheckObject = useRecoilValue(props.respondedCheckObject);
-  const surveyWithMedicineEffectQuestionsPerPage = 5;
 
   return (
     <>
@@ -214,7 +214,7 @@ export default function SurveyContentWithMedicineEffect(
             responseStateList={props.responseStateList}
             currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
             currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
-            surveyQuestionsPerPage={surveyWithMedicineEffectQuestionsPerPage}
+            surveyQuestionsPerPage={props.surveyQuestionsPerPage}
             takeMedicineResponse={takeMedicineResponse}
             havePreQuestion={true}
           />

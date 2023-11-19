@@ -16,6 +16,7 @@ import { headerCurrentPageState } from 'common/layout/header/pagination/headerPa
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { NMS_QUESTIONS, NMS_QUESTIONS_PER_PAGE, SURVEY_06_NMS_STATE_KEYWORD } from './survey.const';
 import { SURVEY_05_RBD_TOTAL_PAGES } from '../survey-05-RBD/survey.const';
+import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 // styles
@@ -44,9 +45,12 @@ export default function Survey06NMS() {
 
   // for updata header current page
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  const survey06NMS_totalPagesListIndex = 5;
+  const prevPagesList = totalPagesList.slice(0, survey06NMS_totalPagesListIndex);
+  const prevPagesCount = prevPagesList.reduce((acc, cur) => acc + cur, 1);
   useEffect(() => {
     if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
-      setHeaderCurrentPage(18);
+      setHeaderCurrentPage(prevPagesCount);
     }
   }, []);
 

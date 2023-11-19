@@ -23,6 +23,7 @@ import {
   SURVEY_05_RBD_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_04_BDI_TOTAL_PAGES } from '../survey-04-BDI/survey.const';
+import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 // styles
@@ -51,9 +52,12 @@ export default function Survey05RBD() {
 
   // for updata header current page
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  const survey05RBD_totalPagesListIndex = 4;
+  const prevPagesList = totalPagesList.slice(0, survey05RBD_totalPagesListIndex);
+  const prevPagesCount = prevPagesList.reduce((acc, cur) => acc + cur, 1);
   useEffect(() => {
     if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
-      setHeaderCurrentPage(17);
+      setHeaderCurrentPage(prevPagesCount);
     }
   }, []);
 

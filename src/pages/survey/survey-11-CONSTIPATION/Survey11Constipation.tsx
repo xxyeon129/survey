@@ -1,5 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
+import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithShortAnswers from '../common/components/survey-contents/survey-contents-with-short-answers/SurveyContent';
@@ -10,6 +11,8 @@ import {
   survey12CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey11Constipation_responseSelector } from './survey11Constipation.selector';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import { respondedCheckObject11Constipation } from '../common/states/respondedCheckObjects.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -19,13 +22,11 @@ import {
   SURVEY_11_CONSTIPATION_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_10_SCOPA_TOTAL_PAGES } from '../survey-10-SCOPA/survey.const';
+import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
-import { useEffect } from 'react';
-import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
-import { respondedCheckObject11Constipation } from '../common/states/respondedCheckObjects.state';
 
 export default function Survey11Constipation() {
   // pagination hook props
@@ -50,9 +51,12 @@ export default function Survey11Constipation() {
 
   // for updata header current page
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  const survey11Constipation_totalPagesListIndex = 10;
+  const prevPagesList = totalPagesList.slice(0, survey11Constipation_totalPagesListIndex);
+  const prevPagesCount = prevPagesList.reduce((acc, cur) => acc + cur, 1);
   useEffect(() => {
     if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
-      setHeaderCurrentPage(42);
+      setHeaderCurrentPage(prevPagesCount);
     }
   }, []);
 

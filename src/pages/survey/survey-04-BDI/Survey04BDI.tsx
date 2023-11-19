@@ -23,6 +23,7 @@ import {
   SURVEY_04_BDI_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_03_BAI_TOTAL_PAGES } from '../survey-03-BAI/survey.const';
+import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // types
 import { SurveyContentObjectType } from '../common/types/surveyTypes';
 import { RespondedCheckObjectStateType } from '../common/types/respondedCheckObjectState.types';
@@ -56,9 +57,12 @@ export default function Survey04BDI() {
 
   // for updata header current page
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  const survey04BDI_totalPagesListIndex = 3;
+  const prevPagesList = totalPagesList.slice(0, survey04BDI_totalPagesListIndex);
+  const prevPagesCount = prevPagesList.reduce((acc, cur) => acc + cur, 1);
   useEffect(() => {
     if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
-      setHeaderCurrentPage(12);
+      setHeaderCurrentPage(prevPagesCount);
     }
   }, []);
 
@@ -84,7 +88,7 @@ export default function Survey04BDI() {
 
       <ul className={surveyStyles['questions-ul']}>
         {currentPageQuestions.map((question) => (
-          <SurveyContent
+          <SurveyContent_Survey04BDI
             question={question}
             surveyStateKeyword={SURVEY_04_BDI_STATE_KEYWORD}
             // for bottom prev/next button
@@ -116,7 +120,7 @@ interface SurveyContentProps {
   responseStateList: string[];
 }
 
-function SurveyContent(props: SurveyContentProps) {
+function SurveyContent_Survey04BDI(props: SurveyContentProps) {
   let currentPageResponseList = props.responseStateList.slice(
     props.currentPageFirstQuestionNumber - 1,
     props.currentPageLastQuestionNumber
@@ -225,7 +229,7 @@ function SurveyContent(props: SurveyContentProps) {
           currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
           currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
           surveyQuestionsPerPage={BDI_QUESTIONS_PER_PAGE}
-          additionalQuestionNumberListIndex={4}
+          additionalQuestionNumberListIndex={5}
           additionalQuestionResponseListIndex={19}
           additionalQuestionRespondedCheckKey={additionalQuestionRespondedCheckKey}
         />

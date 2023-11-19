@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentDegreeGradation from './components/SurveyContent';
@@ -9,6 +11,7 @@ import {
   survey09CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey08PDSS_responseSelector } from './survey08PDSS.selector';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -19,13 +22,11 @@ import {
   SURVEY_08_PDSS_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_07_PDQ_TOTAL_PAGES } from '../survey-07-PDQ/survey.const';
+import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
-import { v4 as uuidv4 } from 'uuid';
-import { useEffect } from 'react';
-import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 
 export default function Survey08PDSS() {
   // pagination hook props
@@ -50,9 +51,12 @@ export default function Survey08PDSS() {
 
   // for updata header current page
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  const survey08PDSS_totalPagesListIndex = 7;
+  const prevPagesList = totalPagesList.slice(0, survey08PDSS_totalPagesListIndex);
+  const prevPagesCount = prevPagesList.reduce((acc, cur) => acc + cur, 1);
   useEffect(() => {
     if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
-      setHeaderCurrentPage(31);
+      setHeaderCurrentPage(prevPagesCount);
     }
   }, []);
 

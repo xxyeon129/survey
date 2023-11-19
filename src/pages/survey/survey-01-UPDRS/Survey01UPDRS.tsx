@@ -138,6 +138,7 @@ export default function Survey01UPDRS() {
               responseStateList={responseStateList}
               // for show not-responded question "!" icon, not-responded question number message
               respondedCheckObject={respondedCheckObject}
+              surveyQuestionsPerPage={UPDRS_QUESTIONS_PER_PAGE}
               key={uuidv4()}
             />
           ))}

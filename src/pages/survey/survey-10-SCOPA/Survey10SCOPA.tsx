@@ -1,5 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
+import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithShortAnswers from '../common/components/survey-contents/survey-contents-with-short-answers/SurveyContent';
@@ -10,6 +11,8 @@ import {
   survey11CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey10SCOPA_responseSelector } from './survey10SCOPA.selector';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import { respondedCheckObject10SCOPA } from '../common/states/respondedCheckObjects.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -20,15 +23,13 @@ import {
   SURVEY_10_SCOPA_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_09_TIRED_TOTAL_PAGES } from '../survey-09-TIRED/survey.const';
+import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 import useSeparateGender from './hooks/useSeparateGender';
 import useExplainSectionElements from './hooks/useExplainSectionElements';
 // styles
 import styles from '../common/survey.module.scss';
-import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
-import { useEffect } from 'react';
-import { respondedCheckObject10SCOPA } from '../common/states/respondedCheckObjects.state';
 
 export default function Survey10SCOPA() {
   // pagination hook props
@@ -59,9 +60,12 @@ export default function Survey10SCOPA() {
 
   // for updata header current page
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  const survey10SCOPA_totalPagesListIndex = 9;
+  const prevPagesList = totalPagesList.slice(0, survey10SCOPA_totalPagesListIndex);
+  const prevPagesCount = prevPagesList.reduce((acc, cur) => acc + cur, 1);
   useEffect(() => {
     if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
-      setHeaderCurrentPage(37);
+      setHeaderCurrentPage(prevPagesCount);
     }
   }, []);
 

@@ -23,6 +23,7 @@ import {
   SURVEY_12_FOOD_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_11_CONSTIPATION_TOTAL_PAGES } from '../survey-11-CONSTIPATION/survey.const';
+import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 // styles
@@ -60,9 +61,12 @@ export default function Survey12Food() {
 
   // for updata header current page
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  const survey12Food_totalPagesListIndex = 11;
+  const prevPagesList = totalPagesList.slice(0, survey12Food_totalPagesListIndex);
+  const prevPagesCount = prevPagesList.reduce((acc, cur) => acc + cur, 1);
   useEffect(() => {
     if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
-      setHeaderCurrentPage(43);
+      setHeaderCurrentPage(prevPagesCount);
     }
   }, []);
 

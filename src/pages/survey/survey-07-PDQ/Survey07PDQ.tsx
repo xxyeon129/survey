@@ -1,8 +1,9 @@
+import { useEffect } from 'react';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
 // states
-import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey06CurrentPageState,
   survey07CurrentPageState,
@@ -21,11 +22,11 @@ import {
   SURVEY_07_PDQ_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_06_NMS_TOTAL_PAGES } from '../survey-06-NMS/survey.const';
+import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 // styles
 import styles from '../common/survey.module.scss';
-import { useEffect } from 'react';
 
 export default function Survey07PDQ() {
   // pagination hook props
@@ -50,9 +51,12 @@ export default function Survey07PDQ() {
 
   // for updata header current page
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  const survey07PDQ_totalPagesListIndex = 6;
+  const prevPagesList = totalPagesList.slice(0, survey07PDQ_totalPagesListIndex);
+  const prevPagesCount = prevPagesList.reduce((acc, cur) => acc + cur, 1);
   useEffect(() => {
     if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
-      setHeaderCurrentPage(23);
+      setHeaderCurrentPage(prevPagesCount);
     }
   }, []);
 

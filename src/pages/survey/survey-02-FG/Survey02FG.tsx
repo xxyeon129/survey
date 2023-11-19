@@ -144,6 +144,7 @@ export default function Survey02FG() {
               responseStateList={responseStateList}
               // for show not-responded question "!" icon, not-responded question number message
               respondedCheckObject={respondedCheckObject}
+              surveyQuestionsPerPage={FG_QUESTIONS_PER_PAGE}
               key={uuidv4()}
             />
           ))}
@@ -162,7 +163,7 @@ export default function Survey02FG() {
           responseStateList={responseStateList}
           currentPageFirstQuestionNumber={currentPageQuestions[0].No}
           currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
-          surveyQuestionsPerPage={5}
+          surveyQuestionsPerPage={FG_QUESTIONS_PER_PAGE}
         />
       )}
     </article>
