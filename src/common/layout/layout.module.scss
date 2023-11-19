@@ -9,4 +9,8 @@ main {
 
 .survey-page {
   margin-left: 16.25rem; // sidebar width size
+
+  @media screen and (min-width: 1900px) {
+    margin-left: 19rem;
+  }
 }

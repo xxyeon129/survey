@@ -9,6 +9,10 @@
   padding: 2rem 1.25rem;
   margin-top: 4.563rem; // header height size
 
+  @media screen and (min-width: 1900px) {
+    max-width: 19rem;
+  }
+
   ul {
     display: flex;
     flex-direction: column;
@@ -26,6 +30,10 @@
       padding: 0.625rem 0.313rem 0.625rem 1.875rem;
       border-radius: 0.313rem;
       cursor: pointer;
+
+      @media screen and (min-width: 1900px) {
+        font-size: 1rem;
+      }
 
       &:not(:first-child, .checked) {
         &:hover {
