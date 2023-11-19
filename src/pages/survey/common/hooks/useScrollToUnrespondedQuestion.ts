@@ -1,10 +1,15 @@
 import { MutableRefObject, useRef } from 'react';
 import { RespondedCheckObjectStateType } from '../types/respondedCheckObjectState.types';
 
-export default function useScrollToUnrespondedQuestion(props: {
+interface ScrollToUnrespondedQuestionProps {
   respondedCheckObjectAfterChange: RespondedCheckObjectStateType;
-}) {
+  scrollIdKeyword: string;
+}
+
+export default function useScrollToUnrespondedQuestion(props: ScrollToUnrespondedQuestionProps) {
   const scrollElementRef: MutableRefObject<HTMLElement | null> = useRef(null);
+
+  // for element id
 
   const getUnrespondedFirstQuestionNumber = () => {
     let unrespondedFirstQuestionNumber = Infinity;
@@ -26,8 +31,9 @@ export default function useScrollToUnrespondedQuestion(props: {
 
     if (unrespondedFirstQuestionNumber !== null) {
       const unrespondedFirstQuestionElement = document.getElementById(
-        `scroll-${unrespondedFirstQuestionNumber}`
+        `scroll-${props.scrollIdKeyword}-${unrespondedFirstQuestionNumber}`
       );
+
       if (unrespondedFirstQuestionElement !== null) {
         scrollElementRef.current = unrespondedFirstQuestionElement as HTMLElement;
 

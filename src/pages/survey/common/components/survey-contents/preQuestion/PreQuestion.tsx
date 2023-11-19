@@ -45,7 +45,10 @@ export default function PreQuestion(props: PreQuestionProps) {
   const respondedCheckObjectValue = useRecoilValue(props.respondedCheckObject);
 
   return (
-    <section className={styles['pre-question-container']} id={`scroll-0`}>
+    <section
+      className={styles['pre-question-container']}
+      id={`scroll-${props.surveyStateKeyword}-0`}
+    >
       <section className={styles['pre-question-title-section']}>
         <h3
           className={

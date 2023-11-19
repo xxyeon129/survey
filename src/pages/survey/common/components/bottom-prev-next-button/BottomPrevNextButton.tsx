@@ -27,6 +27,8 @@ interface BottomPrevNextButtonProps {
   currentPageFirstQuestionNumber: number;
   currentPageLastQuestionNumber: number;
   surveyQuestionsPerPage: number;
+  // for scroll unresponded question when click disabled next button
+  scrollIdKeyword: string;
   // for survey-01-UPDRS, survey-02-FG
   takeMedicineResponse?: string;
   takeMaedicineResponseStateList?: string[];
@@ -85,6 +87,7 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
   // for scroll first unresponded question when click disabled button
   const scrollToUnrespondedQuestion = useScrollToUnrespondedQuestion({
     respondedCheckObjectAfterChange,
+    scrollIdKeyword: props.scrollIdKeyword,
   });
 
   useEffect(() => {

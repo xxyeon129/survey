@@ -22,7 +22,7 @@ type ImageSelectAnswerListType = { key: number; imgSrc: string; explain: string;
 interface SurveyContentWithShortAnswersProps {
   question: SurveyContentObjectType;
 
-  // for radio button checked
+  // for radio button checked, scroll unresponded question
   surveyStateKeyword: string;
 
   // for bottom prev/next pagination button
@@ -106,7 +106,7 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
 
       <hr
         className={respondedCheckObject[props.question.No] ? styles['hr-not-responded'] : styles.hr}
-        id={`scroll-${props.question.No}`}
+        id={`scroll-${props.surveyStateKeyword}-${props.question.No}`}
       />
 
       <header className={contentStyles['questions-title']}>
@@ -209,6 +209,8 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
           currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
           currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
           surveyQuestionsPerPage={surveyWithShortAnswersQuestionsPerPage}
+          // for scroll unresponded question when click disabled next button
+          scrollIdKeyword={props.surveyStateKeyword}
           // for survey-05-RBD
           havePreQuestion={props.havePreQuestion}
         />
