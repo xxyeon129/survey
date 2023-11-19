@@ -2,6 +2,10 @@
   margin-top: 5rem;
   position: relative;
 
+  @media screen and (min-width: 1900px) {
+    margin-top: 8rem;
+  }
+
   .question-title-section {
     .questionnaire-top-blue-hr {
       border: 1.5px solid $main-blue-color;
@@ -11,10 +15,14 @@
     }
 
     .question-text {
-      font-size: 1.4rem;
+      font-size: 1.8rem;
       padding-top: 0.5rem;
       line-height: 170%;
       margin-right: 3rem;
+
+      @media screen and (min-width: 1900px) {
+        font-size: 2.2rem;
+      }
     }
     .not-responded-question-text {
       color: $text-warn-red-color;
@@ -34,6 +42,11 @@
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    font-size: 1.4rem;
+
+    @media screen and (min-width: 1900px) {
+      font-size: 1.7rem;
+    }
 
     .medicine-text {
       color: $main-blue-color;

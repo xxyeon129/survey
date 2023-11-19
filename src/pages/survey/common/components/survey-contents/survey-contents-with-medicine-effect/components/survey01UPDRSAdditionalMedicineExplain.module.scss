@@ -9,9 +9,12 @@
   padding: 1rem 1.5rem;
 
   color: $main-blue-color;
-  // font-weight: $text-semi-light-bold;
   font-size: 1.4rem;
   line-height: 175%;
+
+  @media screen and (min-width: 1900px) {
+    font-size: 1.7rem;
+  }
 
   .explain-emphasize {
     text-decoration: underline;
