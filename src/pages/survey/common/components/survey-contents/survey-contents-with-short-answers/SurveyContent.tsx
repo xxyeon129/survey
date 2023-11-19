@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { MutableRefObject, useEffect, useRef } from 'react';
 import { RecoilState, useRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
@@ -88,6 +88,39 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
     }
   }, []);
 
+  // for scroll when click disabled button
+  const scrollElementRef: MutableRefObject<HTMLElement | null> = useRef(null);
+
+  const getUnrespondedFirstQuestionNumber = () => {
+    let unrespondedFirstQuestionNumber = Infinity;
+
+    for (const key in respondedCheckObject) {
+      if (respondedCheckObject[key] === true && parseInt(key) < unrespondedFirstQuestionNumber) {
+        unrespondedFirstQuestionNumber = parseInt(key);
+      }
+    }
+
+    return unrespondedFirstQuestionNumber === Infinity ? null : unrespondedFirstQuestionNumber;
+  };
+
+  const scrollToUnrespondedQuestion = () => {
+    const unrespondedFirstQuestionNumber = getUnrespondedFirstQuestionNumber();
+
+    if (unrespondedFirstQuestionNumber !== null) {
+      const unrespondedFirstQuestionElement = document.getElementById(
+        `scroll-${unrespondedFirstQuestionNumber}`
+      );
+      if (unrespondedFirstQuestionElement !== null) {
+        // unrespondedFirstQuestionElement.scrollIntoView({ behavior: 'smooth' });
+        scrollElementRef.current = unrespondedFirstQuestionElement as HTMLElement;
+        window.scrollTo({
+          behavior: 'smooth',
+          top: unrespondedFirstQuestionElement.offsetTop - 100,
+        });
+      }
+    }
+  };
+
   return (
     <li className={contentStyles['questions-li']}>
       {/* for explain question section text box */}
@@ -106,6 +139,7 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
 
       <hr
         className={respondedCheckObject[props.question.No] ? styles['hr-not-responded'] : styles.hr}
+        id={`scroll-${props.question.No}`}
       />
 
       <header className={contentStyles['questions-title']}>
@@ -210,6 +244,8 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
           surveyQuestionsPerPage={surveyWithShortAnswersQuestionsPerPage}
           // for survey-05-RBD
           havePreQuestion={props.havePreQuestion}
+          // for scroll first unresponded question when click disabled button
+          scrollToUnrespondedQuestion={scrollToUnrespondedQuestion}
         />
       )}
     </li>

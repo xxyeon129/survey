@@ -42,6 +42,9 @@ interface BottomPrevNextButtonProps {
   havePreQuestion?: boolean;
   // for last page
   isLastPage?: boolean;
+
+  // for scroll when click disabled next button
+  scrollToUnrespondedQuestion?: () => void;
 }
 
 export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
@@ -229,6 +232,9 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
     } else {
       props.handleNextPage && props.handleNextPage();
     }
+
+    // for scroll first unresponded question
+    props.scrollToUnrespondedQuestion && props.scrollToUnrespondedQuestion();
   };
 
   return (
