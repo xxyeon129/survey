@@ -19,7 +19,11 @@
   padding-right: 58px;
 
   img {
-    width: 164px;
+    width: 10.25rem;
+
+    @media screen and (min-width: 1900px) {
+      width: 11rem;
+    }
   }
 
   .header-right-contents {
@@ -32,6 +36,10 @@
       color: $text-grey-color;
       padding-top: 3.5px;
       padding-right: 15px;
+
+      @media screen and (min-width: 1900px) {
+        font-size: 1.2rem;
+      }
     }
   }
 }

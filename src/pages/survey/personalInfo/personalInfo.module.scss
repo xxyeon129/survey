@@ -8,13 +8,23 @@
   .right-section {
     width: 55%; // left-section width 45%
     padding: 3.5rem 2.5rem 3.5rem 5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 
     .right-section-h1 {
       font-size: 2rem;
+      @media screen and (min-width: 1900px) {
+        font-size: 3rem;
+      }
     }
     .right-section-h3 {
       margin-top: 0.8rem;
       line-height: 145%;
+      @media screen and (min-width: 1900px) {
+        margin-top: 1rem;
+        font-size: 1.8rem;
+      }
     }
 
     > form {
@@ -23,14 +33,26 @@
       row-gap: 2rem;
       margin-top: 4rem;
 
+      @media screen and (min-width: 1900px) {
+        row-gap: 4rem;
+      }
+
       > section {
         display: flex;
         flex-direction: column;
         row-gap: 0.7rem;
 
+        @media screen and (min-width: 1900px) {
+          row-gap: 1rem;
+        }
+
         > label {
           color: $text-input-label-dark-grey-color;
           font-weight: $text-semi-bold;
+
+          @media screen and (min-width: 1900px) {
+            font-size: 1.7rem;
+          }
         }
       }
     }

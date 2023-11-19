@@ -12,4 +12,9 @@
   &:focus {
     border: 0.2rem solid $main-blue-color;
   }
+
+  @media screen and (min-width: 1900px) {
+    height: 6rem;
+    font-size: 2rem;
+  }
 }

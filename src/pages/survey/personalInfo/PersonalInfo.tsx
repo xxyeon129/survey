@@ -24,8 +24,8 @@ export default function PersonalInfo() {
           <NameInputSection />
           <SelectBirthdaySection />
           <GenderCheckSection />
-          <BottomStartBtn />
         </form>
+        <BottomStartBtn />
       </section>
     </article>
   );

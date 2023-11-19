@@ -22,7 +22,15 @@
       .selected-value {
         font-size: 1.1rem;
         padding-top: 2px;
+
+        @media screen and (min-width: 1900px) {
+          font-size: 2rem;
+        }
       }
+    }
+
+    @media screen and (min-width: 1900px) {
+      height: 6rem;
     }
   }
 
@@ -39,7 +47,7 @@
 
     .dropdown-li {
       cursor: pointer;
-      padding: 9px 20px;
+      padding: 0.563rem 1.25rem;
 
       &:hover {
         background-color: $progressbar-grey-color;
@@ -53,6 +61,13 @@
         border-radius: 0 0 7px 7px;
         padding-bottom: 17px;
       }
+      @media screen and (min-width: 1900px) {
+        padding: 0.8rem 1.4rem;
+      }
+    }
+    @media screen and (min-width: 1900px) {
+      font-size: 2rem;
+      height: 18.5rem;
     }
   }
 }
