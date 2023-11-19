@@ -58,6 +58,7 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
               ? `${styles['question-h3']} ${styles['not-responded-question-h3']}`
               : styles['question-h3']
           }
+          id={`scroll-${props.surveyStateKeyword}-${props.question.No}`}
         >
           {props.question.No}. {props.question.Q}
         </h3>
@@ -125,6 +126,8 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
           currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
           currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
           surveyQuestionsPerPage={PDSS_QUESTIONS_PER_PAGE}
+          // for scroll unresponded question when click disabled next button
+          scrollIdKeyword={props.surveyStateKeyword}
         />
       )}
     </article>
