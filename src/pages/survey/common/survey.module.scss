@@ -17,7 +17,7 @@
 .explain {
   color: $text-grey-color;
   line-height: 175%;
-  font-size: 1.75rem;
+  font-size: 1.4rem;
   padding: 0.7rem 0;
 
   .explain-emphasize {
@@ -25,5 +25,9 @@
     text-decoration: underline;
     text-underline-position: under;
     font-weight: $text-semi-bold;
+  }
+
+  @media screen and (min-width: 1900px) {
+    font-size: 1.75rem;
   }
 }
