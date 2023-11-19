@@ -96,6 +96,7 @@ export default function SurveyContentWithScore(props: SurveyContentWithScoreProp
               ? styles['not-responded-top-red-hr']
               : styles['questionnaire-top-blue-hr']
           }
+          id={`scroll-${props.surveyStateKeyword}-${props.question.No}`}
         />
         <header className={styles['questionnaire-question-and-score-container']}>
           {respondedCheckObjectValue[props.question.No] && (
@@ -181,6 +182,8 @@ export default function SurveyContentWithScore(props: SurveyContentWithScoreProp
           currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
           currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
           surveyQuestionsPerPage={NMS_QUESTIONS_PER_PAGE}
+          // for scroll unresponded question when click disabled next button
+          scrollIdKeyword={props.surveyStateKeyword}
         />
       )}
     </article>
