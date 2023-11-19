@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import AnswerList from 'pages/survey/common/components/survey-contents/answerList/AnswerList';
 import BottomPrevNextButton from 'pages/survey/common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { RecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { RecoilState, useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import { questionScoreState } from '../survey06NMS.state';
 import { respondedCheckObject06NMS } from 'pages/survey/common/states/respondedCheckObjects.state';
@@ -204,10 +204,10 @@ interface DegreeFrequencyAnswerProps {
 function DegreeFrequencyAnswer(props: DegreeFrequencyAnswerProps) {
   const setQuestionScore = useSetRecoilState(questionScoreState(props.questionNumber));
 
-  const responseDegreeAnswer = useRecoilValue(
+  const [responseDegreeAnswer, setResponseDegreeAnswer] = useRecoilState(
     responseState(`${props.surveyStateKeyword}-${props.questionNumber}중증도`)
   );
-  const responseFrequencyAnswer = useRecoilValue(
+  const [responseFrequencyAnswer, setResponseFrequencyAnswer] = useRecoilState(
     responseState(`${props.surveyStateKeyword}-${props.questionNumber}빈도`)
   );
 
@@ -218,6 +218,14 @@ function DegreeFrequencyAnswer(props: DegreeFrequencyAnswerProps) {
   const haveResponseFrequencyScore = !isNaN(responseFrequencyScore);
 
   useEffect(() => {
+    // for set 0 score
+    if (responseDegreeScore === 0 && responseFrequencyAnswer === '') {
+      setResponseFrequencyAnswer(responseDegreeAnswer);
+    }
+    if (responseFrequencyScore === 0 && responseDegreeAnswer === '') {
+      setResponseDegreeAnswer(responseFrequencyAnswer);
+    }
+
     if (haveResponseDegreeScore && haveResponseFrequencyScore) {
       const calculateScore = responseDegreeScore * responseFrequencyScore;
       setQuestionScore(calculateScore);
