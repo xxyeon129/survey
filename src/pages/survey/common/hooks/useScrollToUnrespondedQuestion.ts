@@ -9,8 +9,6 @@ interface ScrollToUnrespondedQuestionProps {
 export default function useScrollToUnrespondedQuestion(props: ScrollToUnrespondedQuestionProps) {
   const scrollElementRef: MutableRefObject<HTMLElement | null> = useRef(null);
 
-  // for element id
-
   const getUnrespondedFirstQuestionNumber = () => {
     let unrespondedFirstQuestionNumber = Infinity;
 
@@ -37,9 +35,12 @@ export default function useScrollToUnrespondedQuestion(props: ScrollToUnresponde
       if (unrespondedFirstQuestionElement !== null) {
         scrollElementRef.current = unrespondedFirstQuestionElement as HTMLElement;
 
+        const elementRect = unrespondedFirstQuestionElement.getBoundingClientRect();
+        const offsetTop = window.pageYOffset + elementRect.top - 150;
+
         window.scrollTo({
           behavior: 'smooth',
-          top: unrespondedFirstQuestionElement.offsetTop - 100,
+          top: offsetTop,
         });
       }
     }
