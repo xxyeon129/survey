@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { RecoilState, useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
@@ -83,6 +84,13 @@ export default function SurveyContentWithMedicineEffect(
   // for show not-responded question "!" icon, not-responded question number message
   const respondedCheckObject = useRecoilValue(props.respondedCheckObject);
 
+  // for scroll when click disabled next button
+  const [scrollIdKeyword, setScrollIdKeyword] = useState(props.surveyStateKeyword);
+  useEffect(() => {
+    takeMedicineResponse === TAKE_MEDICINE &&
+      setScrollIdKeyword(`${props.surveyStateKeyword}-take-medicine`);
+  }, [takeMedicineResponse]);
+
   return (
     <>
       {/* show additional explain when responded take medicine in pre-question */}
@@ -101,6 +109,7 @@ export default function SurveyContentWithMedicineEffect(
                   ? styles['not-responded-top-red-hr']
                   : styles['questionnaire-top-blue-hr']
               }
+              id={`scroll-${props.surveyStateKeyword}-${props.question.No}`}
             />
             <h3
               className={
@@ -126,6 +135,7 @@ export default function SurveyContentWithMedicineEffect(
                   ? styles['not-responded-top-red-hr']
                   : styles['questionnaire-top-blue-hr']
               }
+              id={`scroll-${props.surveyStateKeyword}-take-medicine-${props.question.No}`}
             />
             <h3
               className={
@@ -216,6 +226,8 @@ export default function SurveyContentWithMedicineEffect(
             currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
             surveyQuestionsPerPage={props.surveyQuestionsPerPage}
             takeMedicineResponse={takeMedicineResponse}
+            // for scroll unresponded question when click disabled next button
+            scrollIdKeyword={scrollIdKeyword}
             havePreQuestion={true}
           />
         )}
