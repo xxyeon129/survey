@@ -164,6 +164,8 @@ export default function Survey02FG() {
           currentPageFirstQuestionNumber={currentPageQuestions[0].No}
           currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
           surveyQuestionsPerPage={FG_QUESTIONS_PER_PAGE}
+          // essential props
+          scrollIdKeyword={SURVEY_02_FG_STATE_KEYWORD}
         />
       )}
     </article>
