@@ -15,6 +15,11 @@
       .answers-table-header-text {
         width: 6.25rem;
         padding: 0 1rem 1rem 1rem;
+        font-size: 1.2rem;
+        line-height: 130%;
+        @media screen and (min-width: 1900px) {
+          font-size: 1.3rem;
+        }
       }
     }
 
@@ -54,6 +59,13 @@
           display: flex;
           align-items: center;
           column-gap: 0.5rem;
+          font-size: 1.5rem;
+          line-height: 150%;
+
+          @media screen and (min-width: 1900px) {
+            font-size: 1.7rem;
+          }
+
           .question-table-header-text-explain {
             font-size: 1rem;
             line-height: 160%;
