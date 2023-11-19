@@ -165,6 +165,7 @@ function SurveyContent_Survey04BDI(props: SurveyContentProps) {
           className={
             respondedCheckObjectValue[props.question.No] ? styles['hr-not-responded'] : styles.hr
           }
+          id={`scroll-${props.surveyStateKeyword}-${props.question.No}`}
         />
 
         <ul className={surveyStyles['answers-ul']}>
@@ -232,6 +233,8 @@ function SurveyContent_Survey04BDI(props: SurveyContentProps) {
           additionalQuestionNumberListIndex={5}
           additionalQuestionResponseListIndex={19}
           additionalQuestionRespondedCheckKey={additionalQuestionRespondedCheckKey}
+          // for scroll unresponded question when click disabled next button
+          scrollIdKeyword={props.surveyStateKeyword}
         />
       )}
     </>
