@@ -88,10 +88,6 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
     }
   }, []);
 
-  // for scroll when click disabled button
-  // const respondedCheckObjectProps = props.respondedCheckObject;
-  // const scrollToUnrespondedQuestion = useScrollToUnrespondedQuestion({ respondedCheckObjectProps });
-
   return (
     <li className={contentStyles['questions-li']}>
       {/* for explain question section text box */}
