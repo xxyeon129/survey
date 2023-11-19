@@ -105,6 +105,8 @@ export default function SurveyContentTable(props: SurveyContentTableProps) {
               currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
               surveyQuestionsPerPage={props.surveyQuestionsPerPage}
               isLastPage={isLastPage}
+              // for scroll unresponded question when click disabled next button
+              scrollIdKeyword={props.surveyStateKeyword}
               key={uuidv4()}
             />
           )
@@ -146,6 +148,7 @@ function QuestionsTableRow(props: QuestionsTableRowProps) {
               ? `${styles['questions-table-header-text-p']} ${styles['not-responded-questions-table-header-text-p']}`
               : styles['questions-table-header-text-p']
           }
+          id={`scroll-${props.surveyStateKeyword}-${props.question.No}`}
         >
           {respondedCheckObject[props.question.No] && (
             <BsExclamationCircleFill className={styles['not-responded-icon']} />
