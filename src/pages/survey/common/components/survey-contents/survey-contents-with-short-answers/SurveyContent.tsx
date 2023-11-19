@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { RecoilState, useRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
@@ -9,6 +9,7 @@ import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextBu
 import { SURVEY_10_SCOPA_STATE_KEYWORD } from 'pages/survey/survey-10-SCOPA/survey.const';
 // hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
+import useScrollToUnrespondedQuestion from 'pages/survey/common/hooks/useScrollToUnrespondedQuestion';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respondedCheckObjectState.types';
@@ -89,37 +90,8 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
   }, []);
 
   // for scroll when click disabled button
-  const scrollElementRef: MutableRefObject<HTMLElement | null> = useRef(null);
-
-  const getUnrespondedFirstQuestionNumber = () => {
-    let unrespondedFirstQuestionNumber = Infinity;
-
-    for (const key in respondedCheckObject) {
-      if (respondedCheckObject[key] === true && parseInt(key) < unrespondedFirstQuestionNumber) {
-        unrespondedFirstQuestionNumber = parseInt(key);
-      }
-    }
-
-    return unrespondedFirstQuestionNumber === Infinity ? null : unrespondedFirstQuestionNumber;
-  };
-
-  const scrollToUnrespondedQuestion = () => {
-    const unrespondedFirstQuestionNumber = getUnrespondedFirstQuestionNumber();
-
-    if (unrespondedFirstQuestionNumber !== null) {
-      const unrespondedFirstQuestionElement = document.getElementById(
-        `scroll-${unrespondedFirstQuestionNumber}`
-      );
-      if (unrespondedFirstQuestionElement !== null) {
-        // unrespondedFirstQuestionElement.scrollIntoView({ behavior: 'smooth' });
-        scrollElementRef.current = unrespondedFirstQuestionElement as HTMLElement;
-        window.scrollTo({
-          behavior: 'smooth',
-          top: unrespondedFirstQuestionElement.offsetTop - 100,
-        });
-      }
-    }
-  };
+  const respondedCheckObjectProps = props.respondedCheckObject;
+  const scrollToUnrespondedQuestion = useScrollToUnrespondedQuestion({ respondedCheckObjectProps });
 
   return (
     <li className={contentStyles['questions-li']}>
