@@ -5,8 +5,12 @@
     position: relative;
 
     .question-h3 {
-      font-size: 1.3rem;
+      font-size: 1.7rem;
       line-height: 170%;
+
+      @media screen and (min-width: 1900px) {
+        font-size: 2rem;
+      }
     }
     .not-responded-question-h3 {
       color: $text-warn-red-color;
@@ -44,6 +48,11 @@
           height: 3.8rem;
           transition: border 0.5s ease-in-out;
           cursor: pointer;
+
+          @media screen and (min-width: 1900px) {
+            width: 5rem;
+            height: 5rem;
+          }
         }
       }
 
@@ -55,12 +64,26 @@
           &:checked {
             border: 1.2rem solid $checkbox-gradation-0-color;
           }
+
+          @media screen and (min-width: 1900px) {
+            border: 0.5rem solid $checkbox-gradation-0-color;
+            &:checked {
+              border: 1.5rem solid $checkbox-gradation-0-color;
+            }
+          }
         }
 
         .zero-degree-bottom-text {
           position: absolute;
           min-width: 8rem;
           top: 6.8rem;
+          font-size: 1.3rem;
+
+          @media screen and (min-width: 1900px) {
+            min-width: 10rem;
+            top: 8rem;
+            font-size: 1.5rem;
+          }
         }
       }
       &:nth-child(2) {
@@ -68,6 +91,13 @@
           border: 0.25rem solid $checkbox-gradation-1-color;
           &:checked {
             border: 1.2rem solid $checkbox-gradation-1-color;
+          }
+
+          @media screen and (min-width: 1900px) {
+            border: 0.5rem solid $checkbox-gradation-1-color;
+            &:checked {
+              border: 1.5rem solid $checkbox-gradation-1-color;
+            }
           }
         }
       }
@@ -77,6 +107,13 @@
           &:checked {
             border: 1.2rem solid $checkbox-gradation-2-color;
           }
+
+          @media screen and (min-width: 1900px) {
+            border: 0.5rem solid $checkbox-gradation-2-color;
+            &:checked {
+              border: 1.5rem solid $checkbox-gradation-2-color;
+            }
+          }
         }
       }
       &:nth-child(4) {
@@ -85,6 +122,13 @@
           &:checked {
             border: 1.2rem solid $checkbox-gradation-3-color;
           }
+
+          @media screen and (min-width: 1900px) {
+            border: 0.5rem solid $checkbox-gradation-3-color;
+            &:checked {
+              border: 1.5rem solid $checkbox-gradation-3-color;
+            }
+          }
         }
       }
       &:nth-child(5) {
@@ -92,6 +136,13 @@
           border: 0.25rem solid $checkbox-gradation-4-color;
           &:checked {
             border: 1.2rem solid $checkbox-gradation-4-color;
+          }
+
+          @media screen and (min-width: 1900px) {
+            border: 0.5rem solid $checkbox-gradation-4-color;
+            &:checked {
+              border: 1.5rem solid $checkbox-gradation-4-color;
+            }
           }
         }
       }
@@ -102,14 +153,29 @@
           &:checked {
             border: 1.2rem solid $checkbox-gradation-5-color;
           }
+
+          @media screen and (min-width: 1900px) {
+            border: 0.5rem solid $checkbox-gradation-5-color;
+            &:checked {
+              border: 1.5rem solid $checkbox-gradation-5-color;
+            }
+          }
         }
 
         .middle-degree-bottom-text {
           position: absolute;
-          min-width: 5rem;
+          min-width: 6.5rem;
           top: 6.8rem;
-          right: -0.5rem;
+          right: -1.1rem;
           text-align: center;
+          font-size: 1.3rem;
+
+          @media screen and (min-width: 1900px) {
+            min-width: 10rem;
+            top: 8rem;
+            right: -2.5rem;
+            font-size: 1.5rem;
+          }
         }
       }
       &:nth-child(7) {
@@ -117,6 +183,13 @@
           border: 0.25rem solid $checkbox-gradation-6-color;
           &:checked {
             border: 1.2rem solid $checkbox-gradation-6-color;
+          }
+
+          @media screen and (min-width: 1900px) {
+            border: 0.5rem solid $checkbox-gradation-6-color;
+            &:checked {
+              border: 1.5rem solid $checkbox-gradation-6-color;
+            }
           }
         }
       }
@@ -126,6 +199,13 @@
           &:checked {
             border: 1.2rem solid $checkbox-gradation-7-color;
           }
+
+          @media screen and (min-width: 1900px) {
+            border: 0.5rem solid $checkbox-gradation-7-color;
+            &:checked {
+              border: 1.5rem solid $checkbox-gradation-7-color;
+            }
+          }
         }
       }
       &:nth-child(9) {
@@ -134,6 +214,13 @@
           &:checked {
             border: 1.2rem solid $checkbox-gradation-8-color;
           }
+
+          @media screen and (min-width: 1900px) {
+            border: 0.5rem solid $checkbox-gradation-8-color;
+            &:checked {
+              border: 1.5rem solid $checkbox-gradation-8-color;
+            }
+          }
         }
       }
       &:nth-child(10) {
@@ -141,6 +228,13 @@
           border: 0.25rem solid $checkbox-gradation-9-color;
           &:checked {
             border: 1.2rem solid $checkbox-gradation-9-color;
+          }
+
+          @media screen and (min-width: 1900px) {
+            border: 0.5rem solid $checkbox-gradation-9-color;
+            &:checked {
+              border: 1.5rem solid $checkbox-gradation-9-color;
+            }
           }
         }
       }
@@ -151,13 +245,27 @@
           &:checked {
             border: 1.2rem solid $checkbox-gradation-10-color;
           }
+
+          @media screen and (min-width: 1900px) {
+            border: 0.5rem solid $checkbox-gradation-10-color;
+            &:checked {
+              border: 1.5rem solid $checkbox-gradation-10-color;
+            }
+          }
         }
         .last-degree-bottom-text {
           position: absolute;
-          min-width: 8rem;
+          min-width: 10rem;
           text-align: right;
           top: 6.8rem;
           right: 0;
+          font-size: 1.3rem;
+
+          @media screen and (min-width: 1900px) {
+            min-width: 10rem;
+            top: 8rem;
+            font-size: 1.5rem;
+          }
         }
       }
     }

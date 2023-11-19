@@ -2,8 +2,12 @@
   /* section title */
   .section-title {
     color: $main-blue-color;
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     margin-bottom: 1.5rem;
+
+    @media screen and (min-width: 1900px) {
+      font-size: 2.2rem;
+    }
   }
 
   /* question */
@@ -29,8 +33,12 @@
 
       .questionnaire-question-text {
         padding: 0 0.5rem;
-        font-size: 1.3rem;
+        font-size: 1.6rem;
         line-height: 175%;
+
+        @media screen and (min-width: 1900px) {
+          font-size: 2rem;
+        }
       }
       .not-responded-questionnaire-question-text {
         color: $text-warn-red-color;
@@ -43,10 +51,20 @@
         justify-content: right;
         align-items: baseline;
         column-gap: 0.5rem;
+        font-size: 1.3rem;
+
+        @media screen and (min-width: 1900px) {
+          width: 18rem;
+          font-size: 1.6rem;
+        }
 
         .score-emphasis {
           font-weight: $text-semi-bold;
-          font-size: 1.8rem;
+          font-size: 2.2rem;
+
+          @media screen and (min-width: 1900px) {
+            font-size: 2.5rem;
+          }
         }
       }
 
@@ -71,12 +89,24 @@
           color: $main-blue-color;
           padding-left: 1rem;
           margin-bottom: 0.7rem;
+          font-size: 1.6rem;
+          @media screen and (min-width: 1900px) {
+            font-size: 2rem;
+          }
         }
         .degree-frequency-hr {
           border: none;
           background-color: $checkbox-grey-color;
           width: 100%;
           height: 0.0625rem;
+        }
+
+        @media screen and (min-width: 1900px) {
+          .degree-frequency-ul {
+            display: flex;
+            flex-direction: column;
+            row-gap: 1rem;
+          }
         }
       }
     }
@@ -94,7 +124,7 @@
     .survey-section-bottom-score-text {
       margin-top: 1rem;
       width: 100%;
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       font-weight: $text-semi-bold;
       color: $text-grey-color;
       display: flex;
@@ -102,7 +132,14 @@
       align-items: baseline;
       column-gap: 0.5rem;
       .score-emphasis {
+        font-size: 2.2rem;
+      }
+
+      @media screen and (min-width: 1900px) {
         font-size: 1.8rem;
+        .score-emphasis {
+          font-size: 3rem;
+        }
       }
     }
   }
@@ -118,9 +155,9 @@
     color: $main-blue-color;
 
     .last-page-total-score-text {
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       .last-page-total-score-text-bold {
-        font-size: 1.2rem;
+        font-size: 2.2rem;
         font-weight: $text-semi-bold;
         .score-emphasis {
           margin-left: 0.5rem;

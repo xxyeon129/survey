@@ -251,20 +251,22 @@ function DegreeFrequencyAnswer(props: DegreeFrequencyAnswerProps) {
     <section className={styles['degree-frequency-section']}>
       <h3 className={styles['degree-frequency-section-title']}>{props.degreeOrFrequencyTitle}</h3>
       <hr className={styles['degree-frequency-hr']} />
-      {props.answerList.map((answer, index) => (
-        <AnswerList
-          answer={`${index}. ${answer}`}
-          inputName={`${props.questionNumber}${props.degreeOrFrequencyTitle}`}
-          inputId={`${props.questionNumber}${props.degreeOrFrequencyTitle}${answer}`}
-          explainTextList={props.explainTextList}
-          // for radio button checked
-          clickedQuestionNumber={`${props.questionNumber}${props.degreeOrFrequencyTitle}`}
-          surveyStateKeyword={SURVEY_06_NMS_STATE_KEYWORD}
-          // for show not-responded question "!" icon, not-responded question number message
-          respondedCheckObject={props.respondedCheckObject}
-          key={uuidv4()}
-        />
-      ))}
+      <ul className={styles['degree-frequency-ul']}>
+        {props.answerList.map((answer, index) => (
+          <AnswerList
+            answer={`${index}. ${answer}`}
+            inputName={`${props.questionNumber}${props.degreeOrFrequencyTitle}`}
+            inputId={`${props.questionNumber}${props.degreeOrFrequencyTitle}${answer}`}
+            explainTextList={props.explainTextList}
+            // for radio button checked
+            clickedQuestionNumber={`${props.questionNumber}${props.degreeOrFrequencyTitle}`}
+            surveyStateKeyword={SURVEY_06_NMS_STATE_KEYWORD}
+            // for show not-responded question "!" icon, not-responded question number message
+            respondedCheckObject={props.respondedCheckObject}
+            key={uuidv4()}
+          />
+        ))}
+      </ul>
     </section>
   );
 }

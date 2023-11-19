@@ -61,7 +61,11 @@
   }
   .questions-title-additional-question-not-responded {
     color: $warn-red;
-    font-size: 1.3rem;
+    font-size: 1.6rem;
+
+    @media screen and (min-width: 1900px) {
+      font-size: 2rem;
+    }
   }
 
   .answers-ul-additional-question {

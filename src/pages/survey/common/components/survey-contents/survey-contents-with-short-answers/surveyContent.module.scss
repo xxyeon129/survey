@@ -4,10 +4,12 @@
 
   .questions-title {
     padding: 0.5rem 0 0.2rem 0.7rem;
-    font-size: 1.3rem;
+    font-size: 1.7rem;
     line-height: 170%;
-    // TEST CODE: question-title-explain parallel display
-    // display: flex;
+
+    @media screen and (min-width: 1900px) {
+      font-size: 2rem;
+    }
 
     .question-title-text-section {
       position: relative;
@@ -30,9 +32,13 @@
     }
 
     .question-title-explain {
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       padding-left: 1.2rem;
       color: $text-grey-color;
+
+      @media screen and (min-width: 1900px) {
+        font-size: 1.8rem;
+      }
     }
   }
 
@@ -89,7 +95,7 @@
   .img-answers-ul {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(13.125rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
     grid-auto-rows: min-content;
     gap: 2.5rem;
 
@@ -108,6 +114,7 @@
           text-align: center;
           line-height: 135%;
           white-space: pre;
+          font-size: 1.5rem;
         }
       }
 
@@ -131,7 +138,7 @@
           border-radius: 100%;
           width: 1.7rem;
           height: 1.7rem;
-          top: 13rem;
+          top: 15rem;
           display: flex;
           align-items: center;
           justify-content: center;
