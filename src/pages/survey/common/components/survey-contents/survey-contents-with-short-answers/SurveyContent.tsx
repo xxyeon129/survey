@@ -9,7 +9,6 @@ import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextBu
 import { SURVEY_10_SCOPA_STATE_KEYWORD } from 'pages/survey/survey-10-SCOPA/survey.const';
 // hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
-import useScrollToUnrespondedQuestion from 'pages/survey/common/hooks/useScrollToUnrespondedQuestion';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respondedCheckObjectState.types';
@@ -90,8 +89,8 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
   }, []);
 
   // for scroll when click disabled button
-  const respondedCheckObjectProps = props.respondedCheckObject;
-  const scrollToUnrespondedQuestion = useScrollToUnrespondedQuestion({ respondedCheckObjectProps });
+  // const respondedCheckObjectProps = props.respondedCheckObject;
+  // const scrollToUnrespondedQuestion = useScrollToUnrespondedQuestion({ respondedCheckObjectProps });
 
   return (
     <li className={contentStyles['questions-li']}>
@@ -216,8 +215,6 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
           surveyQuestionsPerPage={surveyWithShortAnswersQuestionsPerPage}
           // for survey-05-RBD
           havePreQuestion={props.havePreQuestion}
-          // for scroll first unresponded question when click disabled button
-          scrollToUnrespondedQuestion={scrollToUnrespondedQuestion}
         />
       )}
     </li>

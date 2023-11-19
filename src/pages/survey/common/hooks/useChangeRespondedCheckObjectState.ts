@@ -1,5 +1,5 @@
 import { TAKE_MEDICINE } from 'pages/survey/survey-01-UPDRS/survey.const';
-import { RecoilState, useSetRecoilState } from 'recoil';
+import { RecoilState, useRecoilState } from 'recoil';
 import { RespondedCheckObjectStateType } from '../types/respondedCheckObjectState.types';
 import {
   MEDICINE_EFFECT_FALSE,
@@ -62,137 +62,146 @@ export default function useChangeRespondedCheckObjectState(
     takeMedicineCurrentPageQuestionNumberList.push(questionIndex);
   }
 
-  const setRespondedCheckObject = useSetRecoilState(props.respondedCheckObject);
+  const [respondedCheckObjectAfterChange, setRespondedCheckObject] = useRecoilState(
+    props.respondedCheckObject
+  );
 
-  const changeRespondedCheckObjectState = () => {
+  const changeRespondedCheckObjectState = async () => {
     // for survey-01-UPDRS, survey-02-FG
-    if (props.takeMedicineResponse === TAKE_MEDICINE) {
-      takeMedicineCurrentPageQuestionNumberList.forEach((_, index) => {
-        for (let i = 0; i <= 1; i++) {
-          if (
-            i === 0 &&
-            takeMedicineResponseStateList[takeMedicineCurrentPageQuestionNumberList[index] - 1][
-              i
-            ] === ''
-          )
-            setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-              return {
-                ...prev,
-                [`${takeMedicineCurrentPageQuestionNumberList[index]}-${MEDICINE_EFFECT_TRUE}`]:
-                  true,
-              };
-            });
-
-          if (
-            i === 1 &&
-            takeMedicineResponseStateList[takeMedicineCurrentPageQuestionNumberList[index] - 1][
-              i
-            ] === ''
-          )
-            setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-              return {
-                ...prev,
-                [`${takeMedicineCurrentPageQuestionNumberList[index]}-${MEDICINE_EFFECT_FALSE}`]:
-                  true,
-              };
-            });
-        }
-      });
-    } else {
-      currentPageQuestionNumberList.forEach((_, index) => {
-        if (props.havePreQuestion) {
-          // for survey-01-UPDRS, survey-02-FG, suevey-05-RBD first page
-          if (props.responseStateList[currentPageQuestionNumberList[index]] === '') {
-            setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-              return { ...prev, [currentPageQuestionNumberList[index]]: true };
-            });
-            if (currentPageQuestionNumberList[index] === 0) {
-              notRespondedQuestionNumberList.push(`사전 질문`);
-            } else {
-              notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
-            }
-          }
-        } else {
-          if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '') {
-            setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-              return { ...prev, [currentPageQuestionNumberList[index]]: true };
-            });
-
-            // for survey-04-BDI additional question snackbar popup
+    return new Promise<void>((resolve) => {
+      if (props.takeMedicineResponse === TAKE_MEDICINE) {
+        takeMedicineCurrentPageQuestionNumberList.forEach((_, index) => {
+          for (let i = 0; i <= 1; i++) {
             if (
-              props.additionalQuestionNumberListIndex &&
-              props.currentPageFirstQuestionNumber === 15 &&
-              currentPageQuestionNumberList[index] === 20
-            ) {
-              notRespondedQuestionNumberList.push(`19번 추가 질문`);
-            } else {
-              notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
-            }
-          }
-        }
-
-        // for survey-01-UPDRS, survey-02-FG
-        if (props.takeMedicineResponse === TAKE_MEDICINE) {
-          if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '') {
-            setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-              return { ...prev, [currentPageQuestionNumberList[index]]: true };
-            });
-          }
-        }
-
-        // for survey-04-BDI additional question
-        if (
-          props.additionalQuestionResponseListIndex &&
-          props.additionalQuestionRespondedCheckKey &&
-          props.additionalQuestionNumberListIndex
-        ) {
-          // additional question
-          if (props.currentPageFirstQuestionNumber === 15) {
-            if (
-              index === props.additionalQuestionNumberListIndex &&
-              props.responseStateList[props.additionalQuestionResponseListIndex] === ''
-            ) {
+              i === 0 &&
+              takeMedicineResponseStateList[takeMedicineCurrentPageQuestionNumberList[index] - 1][
+                i
+              ] === ''
+            )
               setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-                return { ...prev, [`${props.additionalQuestionRespondedCheckKey}`]: true };
+                return {
+                  ...prev,
+                  [`${takeMedicineCurrentPageQuestionNumberList[index]}-${MEDICINE_EFFECT_TRUE}`]:
+                    true,
+                };
+              });
+
+            if (
+              i === 1 &&
+              takeMedicineResponseStateList[takeMedicineCurrentPageQuestionNumberList[index] - 1][
+                i
+              ] === ''
+            )
+              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                return {
+                  ...prev,
+                  [`${takeMedicineCurrentPageQuestionNumberList[index]}-${MEDICINE_EFFECT_FALSE}`]:
+                    true,
+                };
+              });
+          }
+        });
+      } else {
+        currentPageQuestionNumberList.forEach((_, index) => {
+          if (props.havePreQuestion) {
+            // for survey-01-UPDRS, survey-02-FG, suevey-05-RBD first page
+            if (props.responseStateList[currentPageQuestionNumberList[index]] === '') {
+              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                return { ...prev, [currentPageQuestionNumberList[index]]: true };
+              });
+              if (currentPageQuestionNumberList[index] === 0) {
+                notRespondedQuestionNumberList.push(`사전 질문`);
+              } else {
+                notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
+              }
+            }
+          } else {
+            if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '') {
+              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                return { ...prev, [currentPageQuestionNumberList[index]]: true };
+              });
+
+              // for survey-04-BDI additional question snackbar popup
+              if (
+                props.additionalQuestionNumberListIndex &&
+                props.currentPageFirstQuestionNumber === 15 &&
+                currentPageQuestionNumberList[index] === 20
+              ) {
+                notRespondedQuestionNumberList.push(`19번 추가 질문`);
+              } else {
+                notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
+              }
+            }
+          }
+
+          // for survey-01-UPDRS, survey-02-FG
+          if (props.takeMedicineResponse === TAKE_MEDICINE) {
+            if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '') {
+              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                return { ...prev, [currentPageQuestionNumberList[index]]: true };
               });
             }
-            if (
-              index > props.additionalQuestionNumberListIndex &&
-              props.responseStateList[currentPageQuestionNumberList[index]].length > 0
-            ) {
-              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-                return { ...prev, [currentPageQuestionNumberList[index]]: false };
-              });
-            }
-            // for after additional question snackbar popup
-            if (
-              index > props.additionalQuestionNumberListIndex &&
-              props.responseStateList[currentPageQuestionNumberList[index]].length === 0
-            ) {
-              notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
-            }
-          } else if (
-            // after additional question page
-            props.currentPageFirstQuestionNumber > 15 &&
-            props.responseStateList[currentPageQuestionNumberList[index]] === ''
+          }
+
+          // for survey-04-BDI additional question
+          if (
+            props.additionalQuestionResponseListIndex &&
+            props.additionalQuestionRespondedCheckKey &&
+            props.additionalQuestionNumberListIndex
           ) {
+            // additional question
+            if (props.currentPageFirstQuestionNumber === 15) {
+              if (
+                index === props.additionalQuestionNumberListIndex &&
+                props.responseStateList[props.additionalQuestionResponseListIndex] === ''
+              ) {
+                setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                  return { ...prev, [`${props.additionalQuestionRespondedCheckKey}`]: true };
+                });
+              }
+              if (
+                index > props.additionalQuestionNumberListIndex &&
+                props.responseStateList[currentPageQuestionNumberList[index]].length > 0
+              ) {
+                setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                  return { ...prev, [currentPageQuestionNumberList[index]]: false };
+                });
+              }
+              // for after additional question snackbar popup
+              if (
+                index > props.additionalQuestionNumberListIndex &&
+                props.responseStateList[currentPageQuestionNumberList[index]].length === 0
+              ) {
+                notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
+              }
+            } else if (
+              // after additional question page
+              props.currentPageFirstQuestionNumber > 15 &&
+              props.responseStateList[currentPageQuestionNumberList[index]] === ''
+            ) {
+              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+                return { ...prev, [currentPageQuestionNumberList[index]]: true };
+              });
+
+              notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
+            }
+          }
+
+          // for survey-06-NMS
+          if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '-') {
             setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
               return { ...prev, [currentPageQuestionNumberList[index]]: true };
             });
-
-            notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
           }
-        }
-
-        // for survey-06-NMS
-        if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '-') {
-          setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-            return { ...prev, [currentPageQuestionNumberList[index]]: true };
-          });
-        }
-      });
-    }
+        });
+      }
+      resolve();
+    });
   };
 
-  return { changeRespondedCheckObjectState, notRespondedQuestionNumberList };
+  return {
+    respondedCheckObjectAfterChange,
+    changeRespondedCheckObjectState,
+    notRespondedQuestionNumberList,
+  };
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RecoilState, useRecoilValue } from 'recoil';
 // components
 import SnackbarPopup from 'common/layout/snackbar/SnackbarPopup';
@@ -7,6 +7,7 @@ import { headerCurrentPageState } from 'common/layout/header/pagination/headerPa
 // hooks
 import useSnackbarPopup from 'common/layout/snackbar/useSnackbarPopup';
 import useChangeRespondedCheckObjectState from '../../hooks/useChangeRespondedCheckObjectState';
+import useScrollToUnrespondedQuestion from '../../hooks/useScrollToUnrespondedQuestion';
 // types
 import { RespondedCheckObjectStateType } from '../../types/respondedCheckObjectState.types';
 // styles
@@ -50,18 +51,21 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
   const [snackbarTextRow2, setSnackbarTextRow2] = useState('');
 
   // for show not-responded question "!" icon, not-responded question number message
-  const { changeRespondedCheckObjectState, notRespondedQuestionNumberList } =
-    useChangeRespondedCheckObjectState({
-      responseStateList: props.responseStateList,
-      respondedCheckObject: props.respondedCheckObject,
-      currentPageFirstQuestionNumber: props.currentPageFirstQuestionNumber,
-      currentPageLastQuestionNumber: props.currentPageLastQuestionNumber,
-      takeMedicineResponse: props.takeMedicineResponse,
-      havePreQuestion: props.havePreQuestion,
-      additionalQuestionNumberListIndex: props.additionalQuestionNumberListIndex,
-      additionalQuestionResponseListIndex: props.additionalQuestionResponseListIndex,
-      additionalQuestionRespondedCheckKey: props.additionalQuestionRespondedCheckKey,
-    });
+  const {
+    respondedCheckObjectAfterChange,
+    changeRespondedCheckObjectState,
+    notRespondedQuestionNumberList,
+  } = useChangeRespondedCheckObjectState({
+    responseStateList: props.responseStateList,
+    respondedCheckObject: props.respondedCheckObject,
+    currentPageFirstQuestionNumber: props.currentPageFirstQuestionNumber,
+    currentPageLastQuestionNumber: props.currentPageLastQuestionNumber,
+    takeMedicineResponse: props.takeMedicineResponse,
+    havePreQuestion: props.havePreQuestion,
+    additionalQuestionNumberListIndex: props.additionalQuestionNumberListIndex,
+    additionalQuestionResponseListIndex: props.additionalQuestionResponseListIndex,
+    additionalQuestionRespondedCheckKey: props.additionalQuestionRespondedCheckKey,
+  });
 
   const onClickDisabledBtn = () => {
     if (props.nextBtnDisabledCondition) {
@@ -76,10 +80,16 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
     } else {
       props.handleNextPage && props.handleNextPage();
     }
-
-    // for scroll first unresponded question
-    props.scrollToUnrespondedQuestion && props.scrollToUnrespondedQuestion();
   };
+
+  // for scroll first unresponded question when click disabled button
+  const scrollToUnrespondedQuestion = useScrollToUnrespondedQuestion({
+    respondedCheckObjectAfterChange,
+  });
+
+  useEffect(() => {
+    scrollToUnrespondedQuestion();
+  }, [respondedCheckObjectAfterChange]);
 
   return (
     <div className={styles['prev-next-btn-container']}>

@@ -1,21 +1,19 @@
 import { MutableRefObject, useRef } from 'react';
-import { RecoilState, useRecoilValue } from 'recoil';
 import { RespondedCheckObjectStateType } from '../types/respondedCheckObjectState.types';
 
 export default function useScrollToUnrespondedQuestion(props: {
-  respondedCheckObjectProps: RecoilState<RespondedCheckObjectStateType>;
+  respondedCheckObjectAfterChange: RespondedCheckObjectStateType;
 }) {
-  const respondedCheckObject = useRecoilValue<RespondedCheckObjectStateType>(
-    props.respondedCheckObjectProps
-  );
-
   const scrollElementRef: MutableRefObject<HTMLElement | null> = useRef(null);
 
   const getUnrespondedFirstQuestionNumber = () => {
     let unrespondedFirstQuestionNumber = Infinity;
 
-    for (const key in respondedCheckObject) {
-      if (respondedCheckObject[key] === true && parseInt(key) < unrespondedFirstQuestionNumber) {
+    for (const key in props.respondedCheckObjectAfterChange) {
+      if (
+        props.respondedCheckObjectAfterChange[key] === true &&
+        parseInt(key) < unrespondedFirstQuestionNumber
+      ) {
         unrespondedFirstQuestionNumber = parseInt(key);
       }
     }
@@ -31,8 +29,8 @@ export default function useScrollToUnrespondedQuestion(props: {
         `scroll-${unrespondedFirstQuestionNumber}`
       );
       if (unrespondedFirstQuestionElement !== null) {
-        // unrespondedFirstQuestionElement.scrollIntoView({ behavior: 'smooth' });
         scrollElementRef.current = unrespondedFirstQuestionElement as HTMLElement;
+
         window.scrollTo({
           behavior: 'smooth',
           top: unrespondedFirstQuestionElement.offsetTop - 100,
