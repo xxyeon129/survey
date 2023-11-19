@@ -3,7 +3,6 @@ import { v4 as uuidv4 } from 'uuid';
 // components
 import AnswerList from '../answerList/AnswerList';
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
-import PreQuestion from '../preQuestion/PreQuestion';
 import Survey01UPDRSAdditionalMedicineExplain from './components/Survey01UPDRSAdditionalMedicineExplain';
 // states
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
@@ -17,7 +16,6 @@ import {
   NOT_TAKE_MEDICINE,
   SURVEY_01_UPDRS_STATE_KEYWORD,
   TAKE_MEDICINE,
-  UPDRS_PRE_QUESTION,
 } from 'pages/survey/survey-01-UPDRS/survey.const';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
@@ -87,20 +85,6 @@ export default function SurveyContentWithMedicineEffect(
 
   return (
     <>
-      {/* for survey-01-UPDRS show pre-question only first page */}
-      {props.surveyStateKeyword === SURVEY_01_UPDRS_STATE_KEYWORD && props.question.No === 1 && (
-        <>
-          <PreQuestion
-            question={UPDRS_PRE_QUESTION}
-            clickedQuestionNumber="pre"
-            surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
-            // for show not-responded question "!" icon, not-responded question number message
-            respondedCheckObject={props.respondedCheckObject}
-            // for survey-01-UPDRS setting header current page 1
-            isUPDRSPreQuestion={true}
-          />
-        </>
-      )}
       {/* show additional explain when responded take medicine in pre-question */}
       {props.surveyStateKeyword === SURVEY_01_UPDRS_STATE_KEYWORD &&
         takeMedicineResponse === TAKE_MEDICINE &&

@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
+import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
 // states
 import {
   survey01CurrentPageState,
@@ -21,6 +22,7 @@ import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
   SURVEY_01_UPDRS_STATE_KEYWORD,
   TAKE_MEDICINE,
+  UPDRS_PRE_QUESTION,
   UPDRS_QUESTIONS,
   UPDRS_QUESTIONS_PER_PAGE,
 } from './survey.const';
@@ -86,6 +88,10 @@ export default function Survey01UPDRS() {
       setRespondedCheckObject(takeMedicineRespondedCheckObject01UPDRS);
   }, [takeMedicineResponse]);
 
+  // for survey-01-UPDRS show pre-question only first page
+  const headerCurrentPage = useRecoilValue(headerCurrentPageState);
+  console.log('현재 몇페잊지여', headerCurrentPage);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {UPDRS_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[1].TITLE}에 관한
@@ -98,6 +104,21 @@ export default function Survey01UPDRS() {
     <article className={styles['survey-container']}>
       <SurveyTitle title={SURVEY_TITLE_LIST[1].TITLE} subTitle={SURVEY_TITLE_LIST[1].SUB_TITLE} />
       {surveyExplain}
+
+      {/* show pre-question only first page */}
+      {headerCurrentPage === 1 && (
+        <>
+          <PreQuestion
+            question={UPDRS_PRE_QUESTION}
+            clickedQuestionNumber="pre"
+            surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
+            // for show not-responded question "!" icon, not-responded question number message
+            respondedCheckObject={respondedCheckObject}
+            // for survey-01-UPDRS setting header current page 1
+            isUPDRSPreQuestion={true}
+          />
+        </>
+      )}
 
       {/* for display questions only when answered pre-question */}
       {respondedPreQuestionResponse && (
