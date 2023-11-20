@@ -21,6 +21,7 @@ import {
   BDI_QUESTIONS,
   BDI_QUESTIONS_PER_PAGE,
   SURVEY_04_BDI_STATE_KEYWORD,
+  SURVEY_04_BDI_TOTAL_PAGES,
 } from './survey.const';
 import { SURVEY_03_BAI_TOTAL_PAGES } from '../survey-03-BAI/survey.const';
 import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
@@ -125,14 +126,15 @@ function SurveyContent_Survey04BDI(props: SurveyContentProps) {
     props.currentPageFirstQuestionNumber - 1,
     props.currentPageLastQuestionNumber
   );
-  if (props.currentPageFirstQuestionNumber === 16) {
+
+  const survey04BDI_lastPageFirstQuestionNumber =
+    (SURVEY_04_BDI_TOTAL_PAGES - 1) * BDI_QUESTIONS_PER_PAGE + 1;
+
+  if (props.currentPageFirstQuestionNumber === survey04BDI_lastPageFirstQuestionNumber) {
     currentPageResponseList = props.responseStateList.slice(
       props.currentPageFirstQuestionNumber - 1,
       props.currentPageLastQuestionNumber + 1
     );
-  }
-  if (props.currentPageFirstQuestionNumber === props.currentPageLastQuestionNumber) {
-    currentPageResponseList = props.responseStateList.slice(props.currentPageLastQuestionNumber);
   }
 
   const nextBtnDisabledCondition = currentPageResponseList.includes('');
