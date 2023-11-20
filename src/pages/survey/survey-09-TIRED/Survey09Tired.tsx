@@ -68,7 +68,7 @@ export default function Survey09Tired() {
       총 {TIRED_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[9].TITLE}에 관한
       설문입니다. <br />
       <span className={styles['explain-emphasize']}>최근 한 달 동안의</span> 증상을 평가합니다. 각
-      질문에 대해 하나의 유형을 선택해 주십시오.
+      질문에 대해 하나의 유형을 선택해 주세요.
     </p>
   );
 

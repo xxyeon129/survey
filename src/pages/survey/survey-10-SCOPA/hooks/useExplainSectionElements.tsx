@@ -39,8 +39,9 @@ function Before22SectionExplain() {
         만약 지난 한 달간 성생활을 한 적이 없거나, 다른 이유로 답을 하기 어려운 경우에는{' '}
         <span className={styles['explain-emphasize']}>"해당 없음"</span>에 표시해 주세요.
         <br />
-        개인정보 입력 시 체크한 성별에 따라 다른 설문 내용으로 구성됩니다. 환자의 성별을 잘못
-        체크하셨다면 아래 버튼을 눌러 성별을 수정해주세요.
+        성생활에 대한 설문은 개인정보 입력 시 체크한 성별에 따라 다른 설문 내용으로 구성됩니다.
+        <br />
+        환자의 성별을 잘못 체크하셨다면 아래 버튼을 눌러 성별을 수정해 주세요.
       </p>
       <button
         className={styles['explain-gender-change-button']}

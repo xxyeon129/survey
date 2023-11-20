@@ -51,19 +51,19 @@
     flex-wrap: wrap;
   }
 
-  // for explain text box
+  // for explain text box (survey-10-SCOPA)
   .explain-section {
-    margin-top: 9rem;
-    margin-bottom: 1rem;
+    margin-top: 10rem;
+    margin-bottom: 1.5rem;
     background-color: $sidebar-background-blue-color;
     border-radius: 0.625rem;
 
     display: flex;
     column-gap: 0.5rem;
-    padding: 1rem 1.5rem;
+    padding: 1.5rem 2rem;
 
     color: $main-blue-color;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     line-height: 175%;
 
     .explain-emphasize {
@@ -74,12 +74,12 @@
 
     .explain-gender-change-button {
       margin-top: 0.5rem;
-      padding: 0.5rem 1rem;
+      padding: 0.8rem 1.5rem;
       border-radius: 0.5rem;
 
       background-color: $sidebar-checked-blue-color;
       color: $main-blue-color;
-      font-size: 1rem;
+      font-size: 1.4rem;
       font-weight: $text-semi-bold;
       cursor: pointer;
 
@@ -95,7 +95,7 @@
   .img-answers-ul {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
     grid-auto-rows: min-content;
     gap: 2.5rem;
 

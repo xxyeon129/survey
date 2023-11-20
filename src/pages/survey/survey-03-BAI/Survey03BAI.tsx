@@ -89,7 +89,7 @@ export default function Survey03BAI() {
       설문입니다.
       <br />각 문장을 자세히 읽어보시고 오늘을 포함해서{' '}
       <span className={styles['explain-emphasize']}>지난 한 주 동안</span> 자신의 상태를 가장 잘
-      나타낸다고 생각되는 유형을 선택하여 주십시오.
+      나타낸다고 생각되는 유형을 선택해 주세요.
     </p>
   );
 

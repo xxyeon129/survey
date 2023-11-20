@@ -64,10 +64,11 @@ export default function Survey08PDSS() {
     <p className={styles.explain}>
       총 {PDSS_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[8].TITLE}에 관한
       설문입니다. <br /> <span className={styles['explain-emphasize']}>지난 일주일 동안</span>{' '}
-      경험하였던 수면형태에 대해 해당하는 부분을 선택해 주십시오.{' '}
+      경험하였던 수면형태에 대해 해당하는 부분을 선택해 주세요.
+      <br />
       <span className={styles['explain-emphasize']}>좌측이 제일 안 좋은 경우</span>이고{' '}
       <span className={styles['explain-emphasize']}>우측이 가장 좋았던 경우</span>입니다. 그 사이에
-      환자의 상태에 따라 표시해 주십시오.
+      환자의 상태에 따라 표시해 주세요.
     </p>
   );
 

@@ -9,10 +9,11 @@
     border-radius: 0.625rem;
 
     .answer-with-input-header {
-      height: 4rem;
+      height: 5rem;
       background-color: $sidebar-background-blue-color;
       border-radius: 0.625rem 0.625rem 0rem 0rem;
       color: $main-blue-color;
+      font-size: 1.3rem;
       display: flex;
       align-items: center;
       padding-left: 3rem;
@@ -20,17 +21,17 @@
 
     // for RadioBtnSection component
     .answer-with-input-check-container {
-      height: calc(100% - 4rem);
+      height: calc(100% - 5rem);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 4rem;
+      padding: 0 5rem;
       white-space: pre-wrap;
 
       .answer-with-input-check-ul {
         display: flex;
         align-items: center;
-        column-gap: 4rem;
+        column-gap: 5rem;
 
         .answer-with-input-check-li {
           width: 5rem;
@@ -44,7 +45,7 @@
 
           > label {
             position: relative;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             z-index: 2;
             cursor: pointer;
 
@@ -56,7 +57,7 @@
               height: 1.7rem;
 
               top: -0.313rem;
-              left: -2.2rem;
+              left: -2.9rem;
               display: flex;
               align-items: center;
               justify-content: center;
@@ -104,14 +105,14 @@
         column-gap: 1rem;
 
         > label {
-          width: 4rem;
-          font-size: 1.1rem;
+          min-width: 4rem;
+          font-size: 1.3rem;
           color: $main-blue-color;
           font-weight: $text-semi-bold;
         }
         > input {
           width: 80%;
-          font-size: 1rem;
+          font-size: 1.3rem;
         }
       }
     }
