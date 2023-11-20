@@ -65,8 +65,7 @@ export default function Redirection02FG() {
     if (uploadedExcelFileRawData.length > 0) {
       // in case take medicine - uploadedExcelFileDataList setting
       if (survey01UPDRS_uploadedExcelFilePreQuestion === NOT_TAKE_MEDICINE) {
-        const excelFileDataWithoutPreQuestion = uploadedExcelFileRawData.slice(1);
-        setUploadedExcelFileDataList(excelFileDataWithoutPreQuestion);
+        setUploadedExcelFileDataList(uploadedExcelFileRawData);
       }
       // in case not take medicine - uploadedExcelFileDataList setting
       if (survey01UPDRS_uploadedExcelFilePreQuestion === TAKE_MEDICINE) {

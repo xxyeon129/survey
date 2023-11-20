@@ -54,8 +54,7 @@ export default function Redirection01UPDRS() {
     if (uploadedExcelFileRawData.length > 0) {
       // in case take medicine - uploadedExcelFileDataList setting
       if (uploadedExcelFilePreQuestion.응답내용 === NOT_TAKE_MEDICINE) {
-        const excelFileDataWithoutPreQuestion = uploadedExcelFileRawData.slice(1);
-        setUploadedExcelFileDataList(excelFileDataWithoutPreQuestion);
+        setUploadedExcelFileDataList(uploadedExcelFileRawData);
       }
       // in case not take medicine - uploadedExcelFileDataList setting
       if (uploadedExcelFilePreQuestion.응답내용 === TAKE_MEDICINE) {
