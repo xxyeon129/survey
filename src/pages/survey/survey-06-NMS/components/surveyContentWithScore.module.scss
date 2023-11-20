@@ -157,11 +157,21 @@
     .last-page-total-score-text {
       font-size: 1.3rem;
       .last-page-total-score-text-bold {
-        font-size: 2.2rem;
+        font-size: 2rem;
         font-weight: $text-semi-bold;
+        margin: 0 1rem;
         .score-emphasis {
-          margin-left: 0.5rem;
-          font-size: 1.8rem;
+          margin-left: 0.6rem;
+          font-size: 2.5rem;
+        }
+      }
+      @media screen and (min-width: 1900px) {
+        font-size: 1.5rem;
+        .last-page-total-score-text-bold {
+          font-size: 2.2rem;
+          .score-emphasis {
+            font-size: 3rem;
+          }
         }
       }
     }
