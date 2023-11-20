@@ -13,16 +13,19 @@
     justify-content: space-around;
 
     .right-section-h1 {
-      font-size: 2rem;
+      font-size: 2.5rem;
       @media screen and (min-width: 1900px) {
         font-size: 3rem;
       }
     }
     .right-section-h3 {
-      margin-top: 0.8rem;
+      margin-top: 1rem;
+      font-size: 1.5rem;
+      font-weight: $text-semi-light-bold;
       line-height: 145%;
+      color: $text-input-label-dark-grey-color;
       @media screen and (min-width: 1900px) {
-        margin-top: 1rem;
+        margin-top: 1.5rem;
         font-size: 1.8rem;
       }
     }
@@ -40,15 +43,16 @@
       > section {
         display: flex;
         flex-direction: column;
-        row-gap: 0.7rem;
+        row-gap: 1rem;
 
         @media screen and (min-width: 1900px) {
-          row-gap: 1rem;
+          row-gap: 1.2rem;
         }
 
         > label {
           color: $text-input-label-dark-grey-color;
-          font-weight: $text-semi-bold;
+          font-weight: $text-semi-light-bold;
+          font-size: 1.35rem;
 
           @media screen and (min-width: 1900px) {
             font-size: 1.7rem;

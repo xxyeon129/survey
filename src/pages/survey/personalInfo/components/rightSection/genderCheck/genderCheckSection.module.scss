@@ -18,7 +18,7 @@
       display: flex;
       align-items: center;
       position: relative;
-      font-size: 1.2rem;
+      font-size: 1.5rem;
       padding-left: 4.5rem;
       z-index: 2;
       border: 0.188rem solid $progressbar-grey-color;
@@ -29,9 +29,9 @@
         position: absolute;
         border: max(3px, 0.1em) solid $checkbox-grey-color;
         border-radius: 100%;
-        width: 1.7rem;
-        height: 1.7rem;
-        top: 1.3rem;
+        width: 1.85rem;
+        height: 1.85rem;
+        top: 1.2rem;
         left: 1.25rem;
         display: flex;
         align-items: center;
@@ -39,8 +39,8 @@
         transition: border 0.25s linear;
 
         .radio-button-checked-circle {
-          width: 0.8rem;
-          height: 0.8rem;
+          width: calc(100% - 0.4rem);
+          height: calc(100% - 0.4rem);
           border-radius: 100%;
         }
       }

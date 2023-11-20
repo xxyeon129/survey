@@ -25,9 +25,9 @@ export default function LeftBlueBoxSection() {
         <br />
         {SURVEY_NAME} 전자설문입니다.
         <br />
-        입력하신 개인정보는 설문 목적 이외로 사용하지 않으며,
+        입력하신 개인정보는 설문 목적 이외로 사용되지 않습니다.
         <br />
-        설문 제출 후 페이지에서 삭제됩니다.
+        성명과 생년월일, 성별을 입력해 주세요.
       </p>
     </section>
   );
