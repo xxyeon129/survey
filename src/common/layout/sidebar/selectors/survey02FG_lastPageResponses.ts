@@ -1,9 +1,11 @@
 import { selector } from 'recoil';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
-import { medicineDivisionList } from 'pages/survey/common/components/survey-contents/survey-contents-with-medicine-effect/surveyContent.const';
+import {
+  MEDICINE_EFFECT_FALSE,
+  MEDICINE_EFFECT_TRUE,
+} from 'pages/survey/common/components/survey-contents/survey-contents-with-medicine-effect/surveyContent.const';
 import {
   FG_QUESTIONS,
-  FG_QUESTIONS_PER_PAGE,
   HAVE_FG_SYMPTOM,
   HAVE_NO_FG_SYMPTOM,
   SURVEY_02_FG_STATE_KEYWORD,
@@ -23,24 +25,15 @@ export const survey02FG_lastPageResponses = selector({
     const lastPageResponseList = [];
 
     if (preQuestion === HAVE_FG_SYMPTOM) {
-      const lastPageQeustionStartIndex =
-        FG_QUESTIONS.length - (FG_QUESTIONS.length % FG_QUESTIONS_PER_PAGE) + 1;
-
-      for (
-        let questionNumber = lastPageQeustionStartIndex;
-        questionNumber <= FG_QUESTIONS.length;
-        questionNumber++
-      ) {
+      for (let questionNumber = 1; questionNumber <= FG_QUESTIONS.length; questionNumber++) {
         if (takeMedicineResponse === TAKE_MEDICINE) {
           // medicine effect true response
           const haveMedicineEffectResponseValue = get(
-            responseState(
-              `${SURVEY_02_FG_STATE_KEYWORD}-${questionNumber}-${medicineDivisionList[0].radioBtnKeyword}`
-            )
+            responseState(`${SURVEY_02_FG_STATE_KEYWORD}-${questionNumber}-${MEDICINE_EFFECT_TRUE}`)
           );
           const noMedicineEffectResponseValue = get(
             responseState(
-              `${SURVEY_02_FG_STATE_KEYWORD}-${questionNumber}-${medicineDivisionList[1].radioBtnKeyword}`
+              `${SURVEY_02_FG_STATE_KEYWORD}-${questionNumber}-${MEDICINE_EFFECT_FALSE}`
             )
           );
 
