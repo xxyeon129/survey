@@ -90,7 +90,6 @@ export default function Survey01UPDRS() {
 
   // for survey-01-UPDRS show pre-question only first page
   const headerCurrentPage = useRecoilValue(headerCurrentPageState);
-  console.log('현재 몇페잊지여', headerCurrentPage);
 
   const surveyExplain = (
     <p className={styles.explain}>

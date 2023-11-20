@@ -14,10 +14,22 @@ export default function useScrollToUnrespondedQuestion(props: ScrollToUnresponde
 
     for (const key in props.respondedCheckObjectAfterChange) {
       if (
+        key.length < 3 &&
         props.respondedCheckObjectAfterChange[key] === true &&
         parseInt(key) < unrespondedFirstQuestionNumber
       ) {
         unrespondedFirstQuestionNumber = parseInt(key);
+      }
+
+      // for survey-01-UPDRS, 02-FG
+      if (key.length > 2) {
+        const questionNumber = key.split('--')[0];
+        if (
+          props.respondedCheckObjectAfterChange[key] === true &&
+          parseInt(questionNumber) < unrespondedFirstQuestionNumber
+        ) {
+          unrespondedFirstQuestionNumber = parseInt(questionNumber);
+        }
       }
     }
 

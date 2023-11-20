@@ -71,13 +71,20 @@ export default function useChangeRespondedCheckObjectState(
     return new Promise<void>((resolve) => {
       if (props.takeMedicineResponse === TAKE_MEDICINE) {
         takeMedicineCurrentPageQuestionNumberList.forEach((_, index) => {
-          for (let i = 0; i <= 1; i++) {
+          // "약 효과가 없을/있을 때" haveMedicineEffectIndex 0 -> 있을 때, 1 -> 없을 때
+          for (
+            let haveMedicineEffectIndex = 0;
+            haveMedicineEffectIndex <= 1;
+            haveMedicineEffectIndex++
+          ) {
             if (
-              i === 0 &&
+              haveMedicineEffectIndex === 0 && // 약 효과가 있을 때
+              // [['효과있텍스트','없텍스트'], ['효과있텍스트','없텍스트'], ['효과있텍스트','없텍스트']...][[1,2,3,4,5][0~4] - 1] [1or2]
               takeMedicineResponseStateList[takeMedicineCurrentPageQuestionNumberList[index] - 1][
-                i
+                haveMedicineEffectIndex
               ] === ''
-            )
+            ) {
+              // [1,2,3,4,5][0~4]
               setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
                 return {
                   ...prev,
@@ -85,13 +92,17 @@ export default function useChangeRespondedCheckObjectState(
                     true,
                 };
               });
+              notRespondedQuestionNumberList.push(
+                `${takeMedicineCurrentPageQuestionNumberList[index]}번 약 효과가 있을 때`
+              );
+            }
 
             if (
-              i === 1 &&
+              haveMedicineEffectIndex === 1 && // 약 효과가 없을 때
               takeMedicineResponseStateList[takeMedicineCurrentPageQuestionNumberList[index] - 1][
-                i
+                haveMedicineEffectIndex
               ] === ''
-            )
+            ) {
               setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
                 return {
                   ...prev,
@@ -99,6 +110,11 @@ export default function useChangeRespondedCheckObjectState(
                     true,
                 };
               });
+
+              notRespondedQuestionNumberList.push(
+                `${takeMedicineCurrentPageQuestionNumberList[index]}번 약 효과가 없을 때`
+              );
+            }
           }
         });
       } else {

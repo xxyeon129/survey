@@ -6,6 +6,7 @@
   right: 2%;
   bottom: 2rem;
   min-width: 16rem;
+  max-width: 50rem;
   border-radius: 0.438rem;
   padding: 1.25rem;
   padding-right: 1.5rem;
@@ -37,6 +38,12 @@
   }
 
   .text-row-2 {
+    margin-top: 0.7rem;
+    font-weight: $text-medium;
+    line-height: 135%;
+  }
+
+  .text-row-3 {
     margin-top: 0.7rem;
     font-weight: $text-medium;
   }
