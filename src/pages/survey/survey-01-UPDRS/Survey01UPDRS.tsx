@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
@@ -26,7 +26,6 @@ import {
   UPDRS_QUESTIONS,
   UPDRS_QUESTIONS_PER_PAGE,
 } from './survey.const';
-import { surveyCurrentPageStates } from 'common/layout/sidebar/surveyCurrentPageStates.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 // styles
@@ -53,20 +52,6 @@ export default function Survey01UPDRS() {
 
   // for display questions only when answered pre-question
   const respondedPreQuestionResponse = responseStateList[0] !== '';
-
-  const preQuestionResponseValue = useRecoilValue(
-    responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)
-  );
-
-  // for display first page when change pre-question response
-  const surveyPageStateResetterList = surveyCurrentPageStates.map(useResetRecoilState);
-  const indexSurvey01UPDRS = 1;
-  useEffect(() => {
-    surveyPageStateResetterList.forEach(
-      (reset, resetterIndex) => resetterIndex + 1 === indexSurvey01UPDRS && reset()
-    );
-    window.scrollTo(0, 0);
-  }, [preQuestionResponseValue]);
 
   // for updata header current page
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
@@ -113,8 +98,6 @@ export default function Survey01UPDRS() {
             surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
             // for show not-responded question "!" icon, not-responded question number message
             respondedCheckObject={respondedCheckObject}
-            // for survey-01-UPDRS setting header current page 1
-            isUPDRSPreQuestion={true}
           />
         </>
       )}

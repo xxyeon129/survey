@@ -1,8 +1,11 @@
-import { v4 as uuidv4 } from 'uuid';
 import { RecoilState, useRecoilValue } from 'recoil';
-import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+import { v4 as uuidv4 } from 'uuid';
+// hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
+// types
+import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respondedCheckObjectState.types';
+// styles
 import styles from './preQuestion.module.scss';
 import { BsExclamationCircleFill } from 'react-icons/bs';
 
@@ -16,9 +19,6 @@ interface PreQuestionProps {
   // for show not-responded question "!" icon, not-responded question number message
   respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
 
-  // for survey-01-UPDRS setting header current page 1
-  isUPDRSPreQuestion?: boolean;
-
   // for survey-02-FG route to next survey
   routeToNextSurvey?: () => void;
 }
@@ -29,8 +29,7 @@ export default function PreQuestion(props: PreQuestionProps) {
 
   // for survey-02-FG route to next survey
   const routeToNextSurvey = props.routeToNextSurvey;
-  // for survey-01-UPDRS setting header current page 1
-  const isUPDRSPreQuestion = props.isUPDRSPreQuestion;
+
   // for hide question right not-responded "!" icon when checked
   const respondedCheckObject = props.respondedCheckObject;
 
@@ -38,7 +37,6 @@ export default function PreQuestion(props: PreQuestionProps) {
     surveyStateKeyword,
     clickedQuestionNumber,
     routeToNextSurvey,
-    isUPDRSPreQuestion,
     respondedCheckObject,
   });
 

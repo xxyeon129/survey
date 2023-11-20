@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
@@ -11,6 +13,12 @@ import {
   survey03CurrentPageState,
 } from '../common/surveyPaginationStates';
 import { survey02FG_responseSelector } from './survey02FG.selector';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import {
+  respondedCheckObject02FG,
+  takeMedicineRespondedCheckObject02FG,
+} from '../common/states/respondedCheckObjects.state';
+import { responseState } from '../common/states/surveyResponse.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -27,19 +35,12 @@ import {
   TAKE_MEDICINE,
 } from '../survey-01-UPDRS/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
+import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 import useRouteToNextSurvey from './hooks/useRouteToNextSurvey';
 // styles
 import styles from '../common/survey.module.scss';
-import { v4 as uuidv4 } from 'uuid';
-import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
-import { useEffect, useState } from 'react';
-import {
-  respondedCheckObject02FG,
-  takeMedicineRespondedCheckObject02FG,
-} from '../common/states/respondedCheckObjects.state';
-import { responseState } from '../common/states/surveyResponse.state';
 
 export default function Survey02FG() {
   // for route to next survey when click bottom next button in condition answered "없음" to pre-question
@@ -80,10 +81,12 @@ export default function Survey02FG() {
 
   // for updata header current page
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
-
+  const survey02FG_totalPagesListIndex = 1;
+  const prevPagesList = totalPagesList.slice(0, survey02FG_totalPagesListIndex);
+  const prevPagesCount = prevPagesList.reduce((acc, cur) => acc + cur, 1);
   useEffect(() => {
     if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
-      setHeaderCurrentPage(6);
+      setHeaderCurrentPage(prevPagesCount);
     }
   }, []);
 
