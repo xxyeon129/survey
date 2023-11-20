@@ -1,5 +1,4 @@
 import { GoAlertFill } from 'react-icons/go';
-
 import commonStyles from 'common/scss/common.module.scss';
 import styles from './sidebarMovePreventModal.module.scss';
 
@@ -10,7 +9,7 @@ export default function SidebarMovePreventModal({ onClose }: { onClose: () => vo
 
   return (
     <div className={commonStyles['modal-background']} onClick={onClose}>
-      <article className={styles['modal-content']} onClick={keepModalOpen}>
+      <article className={styles['modal']} onClick={keepModalOpen}>
         <section className={styles['modal-top-blue-icon-box']}>
           <GoAlertFill className={styles['top-alert-icon']} />
         </section>

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 // components
@@ -16,6 +15,7 @@ import { totalPagesCount } from './pagination/totalPages.const';
 import { USER_HOSPITAL } from 'pages/select-home/selectHomeUser.const';
 // hooks
 import usePathCheck from 'common/hooks/usePathCheck';
+import useModal from 'common/hooks/useModal';
 // styles
 import logo from 'assets/header-logo.svg';
 import styles from './header.module.scss';
@@ -27,22 +27,14 @@ export default function Header() {
   // for different modal content
   const user = useRecoilValue(userState);
 
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const onClickBtnHandler = () => {
-    setModalOpen(true);
-  };
-
-  const closeModalHandler = () => {
-    setModalOpen(false);
-  };
+  const { modalOpen, openModalHandler, closeModalHandler } = useModal();
 
   const rightContent = isSurveyPage ? (
     <>
       <span
         className={styles['header-right-text']}
       >{`설문 ${headerCurrentPage} / ${totalPagesCount} 페이지`}</span>
-      <SendExcelFileBtn onClickBtnHandler={onClickBtnHandler} />
+      <SendExcelFileBtn onClickBtnHandler={openModalHandler} />
     </>
   ) : (
     <span className={styles['header-right-text']}>{`${SURVEY_NAME} 전자설문`}</span>

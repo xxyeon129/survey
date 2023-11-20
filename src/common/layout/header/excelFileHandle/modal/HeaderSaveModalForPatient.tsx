@@ -2,6 +2,7 @@
 import useExcelFile from 'common/hooks/useExcelFile';
 // styles
 import { FaPaperPlane } from 'react-icons/fa';
+import commonStyles from 'common/scss/common.module.scss';
 import styles from './HeaderSaveModalForPatient.module.scss';
 
 export default function HeaderSaveModalForPatient({ onClose }: { onClose: () => void }) {
@@ -13,8 +14,8 @@ export default function HeaderSaveModalForPatient({ onClose }: { onClose: () => 
   const { sendFile } = useExcelFile({ onCloseModal });
 
   return (
-    <div className={styles['modal-background']} onClick={onClose}>
-      <article className={styles['modal-content']} onClick={keepModalOpen}>
+    <div className={commonStyles['modal-background']} onClick={onClose}>
+      <article className={styles['modal']} onClick={keepModalOpen}>
         <figure className={styles['top-icon-wrapper']}>
           <FaPaperPlane className={styles['top-icon']} />
         </figure>

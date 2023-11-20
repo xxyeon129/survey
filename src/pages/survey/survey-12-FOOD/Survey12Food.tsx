@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
@@ -26,19 +26,13 @@ import { SURVEY_11_CONSTIPATION_TOTAL_PAGES } from '../survey-11-CONSTIPATION/su
 import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
+import useModal from 'common/hooks/useModal';
 // styles
 import styles from '../common/survey.module.scss';
 
 export default function Survey12Food() {
   // for last page modal
-  const [modalOpen, setModalOpen] = useState(false);
-
-  const onClickLastPageNextBtnHandler = () => {
-    setModalOpen(true);
-  };
-  const closeModalHandler = () => {
-    setModalOpen(false);
-  };
+  const { modalOpen, openModalHandler, closeModalHandler } = useModal();
 
   // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey11CurrentPageState);
@@ -53,7 +47,7 @@ export default function Survey12Food() {
     currentPageState,
     questions,
     questionsPerPage,
-    onClickLastPageNextBtnHandler,
+    onClickLastPageNextBtnHandler: openModalHandler,
   });
 
   // for bottom next button disabled

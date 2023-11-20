@@ -3,6 +3,7 @@ import useExcelFile from 'common/hooks/useExcelFile';
 // styles
 import { FiDownload } from 'react-icons/fi';
 import { FaPaperPlane } from 'react-icons/fa';
+import commonStyles from 'common/scss/common.module.scss';
 import styles from './headerSaveModalForHospital.module.scss';
 
 export default function HeaderSaveModalForHospital({ onClose }: { onClose: () => void }) {
@@ -19,8 +20,8 @@ export default function HeaderSaveModalForHospital({ onClose }: { onClose: () =>
   };
 
   return (
-    <div className={styles['modal-background']} onClick={onClose}>
-      <article className={styles['modal-content']} onClick={keepModalOpen}>
+    <div className={commonStyles['modal-background']} onClick={onClose}>
+      <article className={styles['modal']} onClick={keepModalOpen}>
         <hgroup className={styles['text-container']}>
           <h1 className={styles['title-text']}>다른 기기에서 이어 작성하실 경우</h1>
           <h3 className={styles['explain-text']}>

@@ -9,6 +9,7 @@ import useExcelFile from 'common/hooks/useExcelFile';
 import { FiCheckCircle } from 'react-icons/fi';
 import { IoMdDownload } from 'react-icons/io';
 import { FaPaperPlane } from 'react-icons/fa';
+import commonStyles from 'common/scss/common.module.scss';
 import styles from './lastPageModal.module.scss';
 
 export default function LastPageModal({ onClose }: { onClose: () => void }) {
@@ -36,8 +37,8 @@ export default function LastPageModal({ onClose }: { onClose: () => void }) {
   const user = useRecoilValue(userState);
 
   return (
-    <div className={styles['modal-background']} onClick={onClose}>
-      <article className={styles['modal-content']} onClick={keepModalOpen}>
+    <div className={commonStyles['modal-background']} onClick={onClose}>
+      <article className={styles['modal']} onClick={keepModalOpen}>
         <section className={styles['modal-top-blue-icon-box']}>
           <FiCheckCircle className={styles['check-icon']} />
         </section>
