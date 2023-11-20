@@ -6,16 +6,29 @@
   right: 2%;
   bottom: 2rem;
   min-width: 16rem;
-  border-radius: 6px;
+  border-radius: 0.438rem;
   padding: 1.25rem;
   padding-right: 1.5rem;
-  font-size: 1.1rem;
+  font-size: 1.5rem;
+
+  @media screen and (min-width: 1900px) {
+    padding: 1.5rem;
+    font-size: 1.8rem;
+    border-radius: 0.625rem;
+  }
 
   .icon-wrapper {
-    font-size: 1.438rem;
+    font-size: 1.6rem;
     svg {
       font-size: inherit;
-      margin-right: 0.8rem;
+      margin-right: 1rem;
+    }
+
+    @media screen and (min-width: 1900px) {
+      font-size: 1.8rem;
+      svg {
+        margin-right: 1.2rem;
+      }
     }
   }
   .text-row-1 {
