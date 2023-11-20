@@ -63,6 +63,11 @@
 
     .answer-ul {
       padding-top: 0.2rem;
+      @media screen and (min-width: 1900px) {
+        display: flex;
+        flex-direction: column;
+        row-gap: 1rem;
+      }
     }
   }
 }
