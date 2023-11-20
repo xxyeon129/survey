@@ -208,6 +208,7 @@ export default function useChangeRespondedCheckObjectState(
             setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
               return { ...prev, [currentPageQuestionNumberList[index]]: true };
             });
+            notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
           }
         });
       }
