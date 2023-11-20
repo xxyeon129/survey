@@ -232,13 +232,18 @@
       }
     }
 
-    // for additional question
+    // for additional question (survey-07-PDQ)
     .additional-question {
-      margin-top: 1rem;
-      font-size: 0.9rem;
+      margin-top: 1.2rem;
+      font-size: 1.2rem;
       display: flex;
       column-gap: 0.2rem;
       cursor: pointer;
+
+      @media screen and (min-width: 1900px) {
+        margin-top: 1.5rem;
+        font-size: 1.5rem;
+      }
 
       .additional-question-input {
         margin-top: 0.4rem;
