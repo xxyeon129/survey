@@ -1,42 +1,42 @@
-import { useRecoilValue } from 'recoil';
 import { useNavigate } from 'react-router-dom';
+// import { useRecoilValue } from 'recoil';
 // states
-import {
-  personalInfoBirthdayState,
-  personalInfoGenderState,
-  personalInfoNameState,
-} from 'pages/survey/personalInfo/personalInfo.state';
+// import {
+//   personalInfoBirthdayState,
+//   personalInfoGenderState,
+//   personalInfoNameState,
+// } from 'pages/survey/personalInfo/personalInfo.state';
 // constants
 import { PATH_URL } from 'common/constants/path.const';
 // hooks
-import useNaviateNotRespondedSurveyPage from 'pages/main/hooks/useNavigateNotRespondedSurveyPage';
+// import useNaviateNotRespondedSurveyPage from 'pages/main/hooks/useNavigateNotRespondedSurveyPage';
 // styles
 import continueIcon from 'assets/mainpage-continue-icon.svg';
 import styles from 'pages/main/main.module.scss';
 
 export default function ContinueBox() {
   const navigate = useNavigate();
-  const naviageNotRespondedSurveyPage = useNaviateNotRespondedSurveyPage();
+  // const naviageNotRespondedSurveyPage = useNaviateNotRespondedSurveyPage();
 
   // for check personal info responses -> to navigate personal page when only responded personal page
-  const respondedPersonalInfoName = useRecoilValue(personalInfoNameState);
-  const respondedPersonalInfoBirthday = useRecoilValue(personalInfoBirthdayState);
-  const respondedPersonalInfoGender = useRecoilValue(personalInfoGenderState);
+  // const respondedPersonalInfoName = useRecoilValue(personalInfoNameState);
+  // const respondedPersonalInfoBirthday = useRecoilValue(personalInfoBirthdayState);
+  // const respondedPersonalInfoGender = useRecoilValue(personalInfoGenderState);
 
   // for click continue box -> navigate personal info page
-  const notRespondedPersonalInfo =
-    respondedPersonalInfoName.length === 0 ||
-    respondedPersonalInfoBirthday.length === 0 ||
-    respondedPersonalInfoGender.length === 0;
+  // const notRespondedPersonalInfo =
+  //   respondedPersonalInfoName.length === 0 ||
+  //   respondedPersonalInfoBirthday.length === 0 ||
+  //   respondedPersonalInfoGender.length === 0;
 
   const onClickContinueBox = () => {
     // TO DO: 웹스토리지에 저장된 내용 있는지 확인 -> 있으면 설문 페이지로 이동, 없으면 작성된 내용 없습니다 + 새로 작성하시겠습니까 버튼 팝업창
-    if (notRespondedPersonalInfo) {
-      navigate(PATH_URL.PERSONAL);
-      return;
-    } else {
-      naviageNotRespondedSurveyPage();
-    }
+    // if (notRespondedPersonalInfo) {
+    navigate(PATH_URL.PERSONAL);
+    //   return;
+    // } else {
+    //   naviageNotRespondedSurveyPage();
+    // }
   };
 
   return (
