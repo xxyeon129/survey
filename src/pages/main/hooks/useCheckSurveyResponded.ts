@@ -1,11 +1,11 @@
 import { useRecoilValue } from 'recoil';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
 import {
   UploadedResponseDataListType,
   UploadedResponseDataType,
-} from 'pages/test/types/uploadedResponseData.type';
+} from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 
 export default function useCheckSurveyResponded() {
   const checkSurveyResponded = (list: UploadedResponseDataListType) => {

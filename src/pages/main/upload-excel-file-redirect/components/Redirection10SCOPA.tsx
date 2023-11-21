@@ -4,7 +4,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 // components
 import RedirectionShortAnswersContent from './common/RedirectionShortAnswersContent';
 // states
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
@@ -16,7 +16,7 @@ import {
 import {
   UploadedResponseDataGroupedListType,
   UploadedResponseDataListType,
-} from 'pages/test/types/uploadedResponseData.type';
+} from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 
 export default function Redirection10SCOPA() {
   const questions = SCOPA_QUESTIONS;

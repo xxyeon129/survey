@@ -5,7 +5,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import RedirectionShortAnswersContent from './common/RedirectionShortAnswersContent';
 // states
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {

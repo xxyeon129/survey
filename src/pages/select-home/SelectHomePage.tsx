@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 // states
@@ -13,7 +14,6 @@ import { IoIosArrowForward } from 'react-icons/io';
 import logo from 'assets/header-logo.svg';
 import backgroundImg from 'assets/hompage-background.png';
 import styles from './selectHomePage.module.scss';
-import { useEffect } from 'react';
 
 export default function SelectHomePage() {
   const setUser = useSetRecoilState(userState);

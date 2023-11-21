@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import RedirectionMedicineEffectContent from './common/RedirectionMedicineEffectContent';
 // states
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import { FG_QUESTIONS, SURVEY_02_FG_STATE_KEYWORD } from 'pages/survey/survey-02-FG/survey.const';
@@ -14,7 +14,7 @@ import { NOT_TAKE_MEDICINE, TAKE_MEDICINE } from 'pages/survey/survey-01-UPDRS/s
 import {
   UploadedResponseDataGroupedListType,
   UploadedResponseDataListType,
-} from 'pages/test/types/uploadedResponseData.type';
+} from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 
 export default function Redirection02FG() {
   const questions = FG_QUESTIONS;

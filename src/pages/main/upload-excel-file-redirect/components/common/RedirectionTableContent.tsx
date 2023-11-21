@@ -4,7 +4,7 @@ import { useSetRecoilState } from 'recoil';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
-import { UploadedResponseDataType } from 'pages/test/types/uploadedResponseData.type';
+import { UploadedResponseDataType } from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 
 interface RedirectionTableContentProps {
   question: SurveyContentObjectType;

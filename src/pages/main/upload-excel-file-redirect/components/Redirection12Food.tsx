@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 // components
 import RedirectionTableContent from './common/RedirectionTableContent';
 // states
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
 // constants
 import {
   FOOD_QUESTIONS,

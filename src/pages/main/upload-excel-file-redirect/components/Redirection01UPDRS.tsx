@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import RedirectionMedicineEffectContent from './common/RedirectionMedicineEffectContent';
 // states
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -18,7 +18,7 @@ import {
 import {
   UploadedResponseDataGroupedListType,
   UploadedResponseDataListType,
-} from 'pages/test/types/uploadedResponseData.type';
+} from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 
 export default function Redirection01UPDRS() {
   const questions = UPDRS_QUESTIONS;

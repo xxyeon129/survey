@@ -3,7 +3,7 @@ import { useRecoilValue } from 'recoil';
 // components
 import RedirectionShortAnswersContent from './common/RedirectionShortAnswersContent';
 // states
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {

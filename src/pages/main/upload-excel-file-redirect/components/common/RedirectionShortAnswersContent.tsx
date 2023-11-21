@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSetRecoilState } from 'recoil';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
-import { UploadedResponseDataListType } from 'pages/test/types/uploadedResponseData.type';
+import { UploadedResponseDataListType } from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 
 interface RedirectionShortAnswersContentProps {
   question: SurveyContentObjectType;

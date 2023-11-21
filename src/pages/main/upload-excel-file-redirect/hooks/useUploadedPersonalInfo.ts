@@ -7,7 +7,7 @@ import {
   personalInfoGenderState,
   personalInfoNameState,
 } from 'pages/survey/personalInfo/personalInfo.state';
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
 
 export default function useUploadedPersonalInfo() {
   const personalInfo_excelFileRawData = useRecoilValue(

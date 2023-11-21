@@ -14,7 +14,7 @@ import {
   UploadedResponseDataGroupedListType,
   UploadedResponseDataListType,
   UploadedResponseDataType,
-} from 'pages/test/types/uploadedResponseData.type';
+} from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 
 interface RedirectMedicineEffectContentProps {
   question: SurveyContentObjectType;

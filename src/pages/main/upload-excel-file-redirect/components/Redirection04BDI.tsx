@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 // states
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // constants
 import {
@@ -12,7 +12,7 @@ import {
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
-import { UploadedResponseDataListType } from 'pages/test/types/uploadedResponseData.type';
+import { UploadedResponseDataListType } from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 
 export default function Redirection04BDI() {
   const questions = BDI_QUESTIONS;

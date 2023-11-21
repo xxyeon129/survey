@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // states
-import { uploadedResponseStates } from 'pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
@@ -11,7 +11,7 @@ import {
   SURVEY_08_PDSS_STATE_KEYWORD,
 } from 'pages/survey/survey-08-PDSS/survey.const';
 // types
-import { UploadedResponseDataType } from 'pages/test/types/uploadedResponseData.type';
+import { UploadedResponseDataType } from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 
 export default function Redirection08PDSS() {

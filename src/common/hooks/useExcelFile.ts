@@ -7,20 +7,20 @@ import {
   personalInfoBirthdayState,
   personalInfoNameState,
 } from 'pages/survey/personalInfo/personalInfo.state';
-import { personalInfo_excelData } from '../../pages/test/responseDataSelectors/personalInfo_excelData';
-import { survey01UPDRS_excelData } from '../../pages/test/responseDataSelectors/survey01UPDRS_excelData';
-import { survey02FG_excelData } from '../../pages/test/responseDataSelectors/survey02FG_excelData';
-import { survey03BAI_excelData } from '../../pages/test/responseDataSelectors/survey03BAI_excelData';
-import { survey04BDI_excelData } from '../../pages/test/responseDataSelectors/survey04BDI_excelData';
-import { survey05RBD_excelData } from '../../pages/test/responseDataSelectors/survey05RBD_excelData';
-import { survey06NMS_excelData } from '../../pages/test/responseDataSelectors/survey06NMS_excelData';
-import { survey07PDQ_excelData } from '../../pages/test/responseDataSelectors/survey07PDQ_excelData';
-import { survey08PDSS_excelData } from '../../pages/test/responseDataSelectors/survey08PDSS_excelData';
-import { survey09Tired_excelData } from '../../pages/test/responseDataSelectors/survey09Tired_excelData';
-import { survey10SCOPA_excelData } from '../../pages/test/responseDataSelectors/survey10SCOPA_excelData';
-import { survey11Constipation_excelData } from '../../pages/test/responseDataSelectors/survey11Constipation_excelData';
-import { survey12Food_excelData } from '../../pages/test/responseDataSelectors/survey12Food_excelData';
-import { uploadedResponseStates } from '../../pages/test/uploadedResponseDataStates/uploadedResponseData.state';
+import { personalInfo_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/personalInfo_excelData';
+import { survey01UPDRS_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey01UPDRS_excelData';
+import { survey02FG_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey02FG_excelData';
+import { survey03BAI_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey03BAI_excelData';
+import { survey04BDI_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey04BDI_excelData';
+import { survey05RBD_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey05RBD_excelData';
+import { survey06NMS_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey06NMS_excelData';
+import { survey07PDQ_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey07PDQ_excelData';
+import { survey08PDSS_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey08PDSS_excelData';
+import { survey09Tired_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey09Tired_excelData';
+import { survey10SCOPA_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey10SCOPA_excelData';
+import { survey11Constipation_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey11Constipation_excelData';
+import { survey12Food_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey12Food_excelData';
+import { uploadedResponseStates } from '../layout/header/excelFileHandle/states/uploadedResponseData.state';
 import { useNavigate } from 'react-router-dom';
 import { PATH_URL } from 'common/constants/path.const';
 
