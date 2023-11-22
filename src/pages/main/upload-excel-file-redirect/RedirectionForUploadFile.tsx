@@ -15,6 +15,7 @@ import Redirection12Food from './components/Redirection12Food';
 import Redirection08PDSS from './components/Redirection08PDSS';
 import useCheckSurveyResponded from '../hooks/useCheckSurveyResponded';
 import RedirectionLoadingSpinner from '../components/loading-spinner/RedirectionLoadindSpinner';
+import { PATH_URL } from 'common/constants/path.const';
 
 export default function RedirectionForUploadFile() {
   // personal info
@@ -37,6 +38,9 @@ export default function RedirectionForUploadFile() {
       if (isRespondedSurveyList[i].isNotResponded) {
         navigate(isRespondedSurveyList[i].path);
         break;
+      } else {
+        // TO DO: "모든 항목에 응답하셨습니다" 모달창
+        navigate(PATH_URL.SURVEY['12_FOOD']);
       }
     }
   }, 1000);
