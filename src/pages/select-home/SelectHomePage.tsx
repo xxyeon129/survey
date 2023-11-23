@@ -7,6 +7,8 @@ import { userState } from './selectHomePage.state';
 import { SURVEY_NAME } from 'common/constants/survey.const';
 import { USER_HOSPITAL, USER_PATIENT } from './selectHomeUser.const';
 import { PATH_URL } from 'common/constants/path.const';
+// hooks
+import useBackBlock from 'common/hooks/useBackBlock';
 // styles
 import { IoPeople } from 'react-icons/io5';
 import { FaHospitalUser } from 'react-icons/fa';
@@ -24,16 +26,19 @@ export default function SelectHomePage() {
     navigate(PATH_URL.MAIN);
   };
 
+  useEffect(() => {
+    setUser('');
+  }, []);
+
+  // for prevent back page
+  useBackBlock('/');
+
   const topTitleElement = (
     <hgroup className={styles['top-title-container']}>
       <h1 className={styles['top-title-h1']}>전자 설문지 작성자를 선택해 주세요.</h1>
       <h3 className={styles['top-sub-title-h3']}>{SURVEY_NAME} 전자 설문</h3>
     </hgroup>
   );
-
-  useEffect(() => {
-    setUser('');
-  }, []);
 
   return (
     <article className={styles['select-page-container']}>
