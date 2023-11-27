@@ -4,8 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import BottomPrevNextButton from '../../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
 import { respondedCheckObject08PDSS } from 'pages/survey/common/states/respondedCheckObjects.state';
-// constants
-import { PDSS_QUESTIONS_PER_PAGE } from '../survey.const';
 // hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 // types
@@ -18,6 +16,8 @@ import styles from './surveyContent.module.scss';
 interface SurveyContentDegreeGradationProps {
   question: SurveyContentObjectType;
   answers: string[];
+  surveyQuestionsPerPage: number;
+  respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
   exceptionalAnswers?: string[];
   exceptionalNo?: number;
 
@@ -46,7 +46,7 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
 
   // for show not-responded question "!" icon, not-responded question number message
   const respondedCheckObject: RespondedCheckObjectStateType = useRecoilValue(
-    respondedCheckObject08PDSS
+    props.respondedCheckObject
   );
 
   return (
@@ -125,7 +125,7 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
           responseStateList={props.responseStateList}
           currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
           currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
-          surveyQuestionsPerPage={PDSS_QUESTIONS_PER_PAGE}
+          surveyQuestionsPerPage={props.surveyQuestionsPerPage}
           // for scroll unresponded question when click disabled next button
           scrollIdKeyword={props.surveyStateKeyword}
         />

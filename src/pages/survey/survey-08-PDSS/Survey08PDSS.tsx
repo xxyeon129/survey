@@ -12,6 +12,7 @@ import {
 } from '../common/surveyPaginationStates';
 import { survey08PDSS_responseSelector } from './survey08PDSS.selector';
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import { respondedCheckObject08PDSS } from '../common/states/respondedCheckObjects.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -85,6 +86,7 @@ export default function Survey08PDSS() {
             exceptionalAnswers={PDSS_ANSWERS_01}
             exceptionalNo={1}
             surveyStateKeyword={SURVEY_08_PDSS_STATE_KEYWORD}
+            surveyQuestionsPerPage={PDSS_QUESTIONS_PER_PAGE}
             // for bottom prev/next button
             handlePrevPage={handlePrevPage}
             handleNextPage={handleNextPage}
@@ -92,6 +94,8 @@ export default function Survey08PDSS() {
             currentPageFirstQuestionNumber={currentPageQuestions[0].No}
             currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
             responseStateList={responseStateList}
+            // for show not-responded question "!" icon, not-responded question number message
+            respondedCheckObject={respondedCheckObject08PDSS}
             key={uuidv4()}
           />
         ))}
