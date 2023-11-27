@@ -28,8 +28,8 @@ export default function MainPage() {
             : `${styles['route-container']} ${styles['route-container-patient']}`
         }
       >
-        <ContinueBox />
         <CreateBox />
+        <ContinueBox />
         {user === USER_HOSPITAL && <UploadExcelFileBox />}
       </ul>
     </article>
