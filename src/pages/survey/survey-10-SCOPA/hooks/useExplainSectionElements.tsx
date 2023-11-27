@@ -39,9 +39,9 @@ function Before22SectionExplain() {
         만약 지난 한 달간 성생활을 한 적이 없거나, 다른 이유로 답을 하기 어려운 경우에는{' '}
         <span className={styles['explain-emphasize']}>"해당 없음"</span>에 표시해 주세요.
         <br />
-        성생활에 대한 설문은 개인정보 입력 시 체크한 성별에 따라 다른 설문 내용으로 구성됩니다.
+        성생활에 대한 설문은 개인정보 입력 시 선택한 성별에 따라 다른 설문 내용으로 구성됩니다.
         <br />
-        환자의 성별을 잘못 체크하셨다면 아래 버튼을 눌러 성별을 수정해 주세요.
+        환자의 성별을 잘못 선택하셨다면 아래 버튼을 눌러 성별을 수정해 주세요.
       </p>
       <button
         className={styles['explain-gender-change-button']}
@@ -58,12 +58,14 @@ function Before22SectionExplain() {
 function Before24SectionExplain() {
   return (
     <p>
-      다음은 <span className={styles['explain-emphasize']}>복용했던 약</span>에 대한 질문입니다.
+      다음은 파킨슨병 증상 이외의 증상으로{' '}
+      <span className={styles['explain-emphasize']}>복용했던 약</span>
+      에 대한 질문입니다.
       <br />
       의사에게 처방을 받은 약과, 처방 없이 살 수 있는 일반약 모두를 포함합니다.
       <br />
-      만약 약을 먹었다면, <span className={styles['explain-emphasize']}>약 이름</span>이나 성분명을
-      입력해주세요.
+      만약 파킨슨병 증상 이외 약을 먹었다면,{' '}
+      <span className={styles['explain-emphasize']}>약 이름</span>이나 성분명을 입력해주세요.
     </p>
   );
 }
