@@ -11,7 +11,8 @@ import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respondedCheckObjectState.types';
 // styles
 import { BsExclamationCircleFill } from 'react-icons/bs';
-import styles from './surveyContent.module.scss';
+import { FaCheck } from 'react-icons/fa';
+import styles from './surveyContentDegreeGradationFor08PDSS.module.scss';
 
 interface SurveyContentDegreeGradationProps {
   question: SurveyContentObjectType;
@@ -167,6 +168,7 @@ function DegreeBtn(props: DegreeBtnProps) {
         onChange={handleRadioBtnChange}
         checked={responseValue === `${props.degree}점`}
       />
+      {responseValue === `${props.degree}점` && <FaCheck className={styles['check-icon']} />}
     </label>
   );
 }
