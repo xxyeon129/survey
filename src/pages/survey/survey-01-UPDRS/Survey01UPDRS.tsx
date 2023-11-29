@@ -3,7 +3,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
+import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContentWithMedicineEffect';
 import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
 // states
 import {
@@ -20,11 +20,15 @@ import {
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
+  NOT_TAKE_MEDICINE,
   SURVEY_01_UPDRS_STATE_KEYWORD,
+  SURVEY_01_UPDRS_TAKE_MEDICINE_TOTAL_PAGES,
+  SURVEY_01_UPDRS_TOTAL_PAGES,
   TAKE_MEDICINE,
   UPDRS_PRE_QUESTION,
   UPDRS_QUESTIONS,
   UPDRS_QUESTIONS_PER_PAGE,
+  UPDRS_TAKE_MEDICINE_QUESTIONS,
 } from './survey.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
@@ -32,11 +36,16 @@ import usePagination from '../common/hooks/usePagination';
 import styles from '../common/survey.module.scss';
 
 export default function Survey01UPDRS() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [totalPagesCount, setTotalPagesCount] = useState(SURVEY_01_UPDRS_TOTAL_PAGES);
+  const [questionsAccordingToTakeMedicine, setQuestionsAccordingToTakeMedicine] =
+    useState(UPDRS_QUESTIONS);
+
   // pagination hook props
   const setNextSurveyPage = useSetRecoilState(survey02CurrentPageState);
   const prevSurveyTotalPages = 0;
   const currentPageState = survey01CurrentPageState;
-  const questions = UPDRS_QUESTIONS;
+  const questions = questionsAccordingToTakeMedicine;
   const questionsPerPage = UPDRS_QUESTIONS_PER_PAGE;
 
   const { currentPageQuestions, handleNextPage, handlePrevPage } = usePagination({
@@ -53,9 +62,8 @@ export default function Survey01UPDRS() {
   // for display questions only when answered pre-question
   const respondedPreQuestionResponse = responseStateList[0] !== '';
 
-  // for updata header current page
+  // for update header current page
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
-
   useEffect(() => {
     if (currentPageQuestions.length > 0 && currentPageQuestions[0].No === 1) {
       setHeaderCurrentPage(1);
@@ -69,8 +77,15 @@ export default function Survey01UPDRS() {
   );
 
   useEffect(() => {
-    if (takeMedicineResponse === TAKE_MEDICINE)
+    if (takeMedicineResponse === TAKE_MEDICINE) {
       setRespondedCheckObject(takeMedicineRespondedCheckObject01UPDRS);
+      setQuestionsAccordingToTakeMedicine(UPDRS_TAKE_MEDICINE_QUESTIONS);
+      setTotalPagesCount(SURVEY_01_UPDRS_TAKE_MEDICINE_TOTAL_PAGES);
+    }
+    if (takeMedicineResponse === NOT_TAKE_MEDICINE) {
+      setQuestionsAccordingToTakeMedicine(UPDRS_QUESTIONS);
+      setTotalPagesCount(SURVEY_01_UPDRS_TOTAL_PAGES);
+    }
   }, [takeMedicineResponse]);
 
   // for survey-01-UPDRS show pre-question only first page
@@ -78,9 +93,11 @@ export default function Survey01UPDRS() {
 
   const surveyExplain = (
     <p className={styles.explain}>
-      총 {UPDRS_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[1].TITLE}에 관한
-      설문입니다. <br />
-      파킨슨병 약 복용 여부에 따라 설문이 다르게 구성되므로 하단 질문에 응답해 주세요.
+      {takeMedicineResponse === TAKE_MEDICINE
+        ? `총 ${UPDRS_TAKE_MEDICINE_QUESTIONS.length}개의 문항으로 이루어진 `
+        : `총 ${UPDRS_QUESTIONS.length}개의 문항으로 이루어진 `}
+      {SURVEY_TITLE_LIST[1].TITLE}에 관한 설문입니다. <br />
+      파킨슨병 약 복용 여부에 따라 설문이 다르게 구성되므로 첫 페이지 상단의 질문에 응답해 주세요.
     </p>
   );
 
@@ -101,7 +118,6 @@ export default function Survey01UPDRS() {
           />
         </>
       )}
-
       {/* for display questions only when answered pre-question */}
       {respondedPreQuestionResponse && (
         <>

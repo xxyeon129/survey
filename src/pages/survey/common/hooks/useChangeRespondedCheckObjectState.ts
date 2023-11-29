@@ -1,10 +1,6 @@
 import { TAKE_MEDICINE } from 'pages/survey/survey-01-UPDRS/survey.const';
 import { RecoilState, useRecoilState } from 'recoil';
 import { RespondedCheckObjectStateType } from '../types/respondedCheckObjectState.types';
-import {
-  MEDICINE_EFFECT_FALSE,
-  MEDICINE_EFFECT_TRUE,
-} from '../components/survey-contents/survey-contents-with-medicine-effect/surveyContent.const';
 
 interface ChangeRespondedCheckObjectStateProps {
   responseStateList: string[];
@@ -27,16 +23,6 @@ export default function useChangeRespondedCheckObjectState(
 ) {
   const currentPageQuestionNumberList: number[] = [];
   const notRespondedQuestionNumberList: string[] = [];
-  // for survey-01, 02 take medicine case
-  const takeMedicineResponseStateListRaw = props.responseStateList.slice(1);
-  const takeMedicineResponseStateList: Array<string>[] = [];
-  for (let i = 0; i < takeMedicineResponseStateListRaw.length; i += 2) {
-    takeMedicineResponseStateList.push([
-      takeMedicineResponseStateListRaw[i],
-      takeMedicineResponseStateListRaw[i + 1],
-    ]);
-  }
-  const takeMedicineCurrentPageQuestionNumberList: number[] = [];
 
   // for survey-01-UPDRS, survey-02-FG, suevey-05-RBD pre-question
   if (props.havePreQuestion && props.currentPageFirstQuestionNumber === 1) {
@@ -54,67 +40,23 @@ export default function useChangeRespondedCheckObjectState(
       currentPageQuestionNumberList.push(19.5);
   }
 
-  for (
-    let questionIndex = props.currentPageFirstQuestionNumber;
-    questionIndex <= props.currentPageLastQuestionNumber;
-    questionIndex++
-  ) {
-    takeMedicineCurrentPageQuestionNumberList.push(questionIndex);
-  }
-
   const [respondedCheckObjectAfterChange, setRespondedCheckObject] = useRecoilState(
     props.respondedCheckObject
   );
 
   const changeRespondedCheckObjectState = async () => {
-    // for survey-01-UPDRS, survey-02-FG
     return new Promise<void>((resolve) => {
+      // for survey-01-UPDRS, survey-02-FG take medicine case
       if (props.takeMedicineResponse === TAKE_MEDICINE) {
-        takeMedicineCurrentPageQuestionNumberList.forEach((_, index) => {
-          // "약 효과가 없을/있을 때" haveMedicineEffectIndex 0 -> 있을 때, 1 -> 없을 때
-          for (
-            let haveMedicineEffectIndex = 0;
-            haveMedicineEffectIndex <= 1;
-            haveMedicineEffectIndex++
-          ) {
-            if (
-              haveMedicineEffectIndex === 0 && // 약 효과가 있을 때
-              // [['효과있텍스트','없텍스트'], ['효과있텍스트','없텍스트'], ['효과있텍스트','없텍스트']...][[1,2,3,4,5][0~4] - 1] [1or2]
-              takeMedicineResponseStateList[takeMedicineCurrentPageQuestionNumberList[index] - 1][
-                haveMedicineEffectIndex
-              ] === ''
-            ) {
-              // [1,2,3,4,5][0~4]
-              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-                return {
-                  ...prev,
-                  [`${takeMedicineCurrentPageQuestionNumberList[index]}-${MEDICINE_EFFECT_TRUE}`]:
-                    true,
-                };
-              });
-              notRespondedQuestionNumberList.push(
-                `${takeMedicineCurrentPageQuestionNumberList[index]}번 약 효과가 있을 때`
-              );
-            }
-
-            if (
-              haveMedicineEffectIndex === 1 && // 약 효과가 없을 때
-              takeMedicineResponseStateList[takeMedicineCurrentPageQuestionNumberList[index] - 1][
-                haveMedicineEffectIndex
-              ] === ''
-            ) {
-              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-                return {
-                  ...prev,
-                  [`${takeMedicineCurrentPageQuestionNumberList[index]}-${MEDICINE_EFFECT_FALSE}`]:
-                    true,
-                };
-              });
-
-              notRespondedQuestionNumberList.push(
-                `${takeMedicineCurrentPageQuestionNumberList[index]}번 약 효과가 없을 때`
-              );
-            }
+        currentPageQuestionNumberList.forEach((_, index) => {
+          if (props.responseStateList[currentPageQuestionNumberList[index]] === '') {
+            setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
+              return {
+                ...prev,
+                [`${currentPageQuestionNumberList[index]}-${TAKE_MEDICINE}`]: true,
+              };
+            });
+            notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
           }
         });
       } else {
@@ -147,15 +89,6 @@ export default function useChangeRespondedCheckObjectState(
               } else {
                 notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
               }
-            }
-          }
-
-          // for survey-01-UPDRS, survey-02-FG
-          if (props.takeMedicineResponse === TAKE_MEDICINE) {
-            if (props.responseStateList[currentPageQuestionNumberList[index] - 1] === '') {
-              setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-                return { ...prev, [currentPageQuestionNumberList[index]]: true };
-              });
             }
           }
 

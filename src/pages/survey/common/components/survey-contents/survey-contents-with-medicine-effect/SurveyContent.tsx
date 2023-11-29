@@ -1,3 +1,4 @@
+/* UNUSED FILE: medicine effect answer parallel UI */
 import { useEffect, useState } from 'react';
 import { RecoilState, useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';

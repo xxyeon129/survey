@@ -7,15 +7,15 @@ import { BAI_QUESTIONS } from 'pages/survey/survey-03-BAI/survey.const';
 import { TIRED_QUESTIONS } from 'pages/survey/survey-09-TIRED/survey.const';
 import { PDQ_QUESTIONS } from 'pages/survey/survey-07-PDQ/survey.const';
 import { FOOD_QUESTIONS } from 'pages/survey/survey-12-FOOD/survey.const';
-import { UPDRS_QUESTIONS } from 'pages/survey/survey-01-UPDRS/survey.const';
+import {
+  TAKE_MEDICINE,
+  UPDRS_QUESTIONS,
+  UPDRS_TAKE_MEDICINE_QUESTIONS,
+} from 'pages/survey/survey-01-UPDRS/survey.const';
 import { FG_QUESTIONS } from 'pages/survey/survey-02-FG/survey.const';
 import { BDI_QUESTIONS } from 'pages/survey/survey-04-BDI/survey.const';
 import { NMS_QUESTIONS } from 'pages/survey/survey-06-NMS/survey.const';
 import { PDSS_QUESTIONS } from 'pages/survey/survey-08-PDSS/survey.const';
-import {
-  MEDICINE_EFFECT_FALSE,
-  MEDICINE_EFFECT_TRUE,
-} from '../components/survey-contents/survey-contents-with-medicine-effect/surveyContent.const';
 
 const { persistAtom } = recoilPersist({
   key: 'responded-check-for-not-responded-icon',
@@ -33,10 +33,8 @@ export const respondedCheckObject01UPDRS = atom({
 export const takeMedicineRespondedCheckObject01UPDRS = atom({
   key: 'take-medicine-responded-check-01UPDRS',
   default: Object.fromEntries(
-    Array.from({ length: UPDRS_QUESTIONS.length * 2 }, (_, index) => [
-      `${Math.floor(index / 2) + 1}-${
-        index % 2 === 0 ? MEDICINE_EFFECT_TRUE : MEDICINE_EFFECT_FALSE
-      }`,
+    Array.from({ length: UPDRS_TAKE_MEDICINE_QUESTIONS.length }, (_, index) => [
+      `${index + 1}-${TAKE_MEDICINE}`,
       false,
     ])
   ),
@@ -55,9 +53,7 @@ export const takeMedicineRespondedCheckObject02FG = atom({
   key: 'take-medicine-responded-check-02FG',
   default: Object.fromEntries(
     Array.from({ length: FG_QUESTIONS.length * 2 }, (_, index) => [
-      `${Math.floor(index / 2) + 1}-${
-        index % 2 === 0 ? MEDICINE_EFFECT_TRUE : MEDICINE_EFFECT_FALSE
-      }`,
+      `${index + 1}-${TAKE_MEDICINE}`,
       false,
     ])
   ),

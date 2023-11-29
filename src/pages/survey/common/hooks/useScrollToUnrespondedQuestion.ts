@@ -1,5 +1,11 @@
 import { MutableRefObject, useRef } from 'react';
 import { RespondedCheckObjectStateType } from '../types/respondedCheckObjectState.types';
+import { useRecoilValue } from 'recoil';
+import { responseState } from '../states/surveyResponse.state';
+import {
+  SURVEY_01_UPDRS_STATE_KEYWORD,
+  TAKE_MEDICINE,
+} from 'pages/survey/survey-01-UPDRS/survey.const';
 
 interface ScrollToUnrespondedQuestionProps {
   respondedCheckObjectAfterChange: RespondedCheckObjectStateType;
@@ -9,12 +15,18 @@ interface ScrollToUnrespondedQuestionProps {
 export default function useScrollToUnrespondedQuestion(props: ScrollToUnrespondedQuestionProps) {
   const scrollElementRef: MutableRefObject<HTMLElement | null> = useRef(null);
 
+  // for survey-01-UPDRS, 02-FG
+  const haveTakeMedicine =
+    useRecoilValue(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)) === TAKE_MEDICINE;
+
   const getUnrespondedFirstQuestionNumber = () => {
     let unrespondedFirstQuestionNumber = Infinity;
+    const onlyNumberKeyMaxLength = 3;
+    const stringKeyMinLength = 2;
 
     for (const key in props.respondedCheckObjectAfterChange) {
       if (
-        key.length < 3 &&
+        key.length < onlyNumberKeyMaxLength &&
         props.respondedCheckObjectAfterChange[key] === true &&
         parseInt(key) < unrespondedFirstQuestionNumber
       ) {
@@ -22,8 +34,8 @@ export default function useScrollToUnrespondedQuestion(props: ScrollToUnresponde
       }
 
       // for survey-01-UPDRS, 02-FG
-      if (key.length > 2) {
-        const questionNumber = key.split('--')[0];
+      if (key.length > stringKeyMinLength) {
+        const questionNumber = key.split('-')[0];
         if (
           props.respondedCheckObjectAfterChange[key] === true &&
           parseInt(questionNumber) < unrespondedFirstQuestionNumber
@@ -40,9 +52,14 @@ export default function useScrollToUnrespondedQuestion(props: ScrollToUnresponde
     const unrespondedFirstQuestionNumber = getUnrespondedFirstQuestionNumber();
 
     if (unrespondedFirstQuestionNumber !== null) {
-      const unrespondedFirstQuestionElement = document.getElementById(
+      let unrespondedFirstQuestionElement = document.getElementById(
         `scroll-${props.scrollIdKeyword}-${unrespondedFirstQuestionNumber}`
       );
+      // for survey-01-UPDRS, 02-FG
+      if (haveTakeMedicine)
+        unrespondedFirstQuestionElement = document.getElementById(
+          `scroll-${props.scrollIdKeyword}-${unrespondedFirstQuestionNumber}-${TAKE_MEDICINE}`
+        );
 
       if (unrespondedFirstQuestionElement !== null) {
         scrollElementRef.current = unrespondedFirstQuestionElement as HTMLElement;
