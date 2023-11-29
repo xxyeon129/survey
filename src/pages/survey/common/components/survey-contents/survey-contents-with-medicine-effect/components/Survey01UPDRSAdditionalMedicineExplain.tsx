@@ -13,10 +13,6 @@ export default function Survey01UPDRSAdditionalMedicineExplain() {
         {SURVEY_TITLE_LIST[1].TITLE}는 약효가 있을 때, 없을 때 두 가지로 체크합니다.
         <br />
         약을 복용할 때와 복용하지 않을 때 상태를 비교합니다.
-        <br />
-        약의 효과가 있을 때와 없을 때 두 가지를{' '}
-        <span className={styles['explain-emphasize']}>모두 체크</span>
-        해주세요.
       </p>
     </section>
   );
