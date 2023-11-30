@@ -8,8 +8,12 @@ import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { FG_QUESTIONS, SURVEY_02_FG_STATE_KEYWORD } from 'pages/survey/survey-02-FG/survey.const';
-import { NOT_TAKE_MEDICINE, TAKE_MEDICINE } from 'pages/survey/survey-01-UPDRS/survey.const';
+import {
+  FG_QUESTIONS,
+  FG_TAKE_MEDICINE_QUESTIONS,
+  SURVEY_02_FG_STATE_KEYWORD,
+} from 'pages/survey/survey-02-FG/survey.const';
+import { TAKE_MEDICINE } from 'pages/survey/survey-01-UPDRS/survey.const';
 // types
 import {
   UploadedResponseDataGroupedListType,
@@ -17,7 +21,7 @@ import {
 } from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 
 export default function Redirection02FG() {
-  const questions = FG_QUESTIONS;
+  const [questions, setQuestions] = useState(FG_QUESTIONS);
 
   // for get uploaded excel file response data
   const uploadedExcelFileRawData = useRecoilValue(
@@ -52,6 +56,10 @@ export default function Redirection02FG() {
       setSurvey01UPDRS_uploadedExcelFilePreQuestion(
         survey01UPDRS_uploadedExcelFilePreQuestionRawData.응답내용
       );
+
+      // for setting questions according to take medicine
+      survey01UPDRS_uploadedExcelFilePreQuestionRawData.응답내용 === TAKE_MEDICINE &&
+        setQuestions(FG_TAKE_MEDICINE_QUESTIONS);
     }
 
     // for pre-question radio button checked according to uploaded excel response data
@@ -60,25 +68,10 @@ export default function Redirection02FG() {
     }
   }, [survey01UPDRS_uploadedExcelFilePreQuestionRawData]);
 
-  // for separate uploaded excel file raw data according to pre question answer
+  // for uploaded excel file raw data
   useEffect(() => {
     if (uploadedExcelFileRawData.length > 0) {
-      // in case take medicine - uploadedExcelFileDataList setting
-      if (survey01UPDRS_uploadedExcelFilePreQuestion === NOT_TAKE_MEDICINE) {
-        setUploadedExcelFileDataList(uploadedExcelFileRawData);
-      }
-      // in case not take medicine - uploadedExcelFileDataList setting
-      if (survey01UPDRS_uploadedExcelFilePreQuestion === TAKE_MEDICINE) {
-        const questionGroupArray: UploadedResponseDataGroupedListType = [];
-        for (let i = 1; i <= uploadedExcelFileRawData.length; i += 2) {
-          const questionGroup: UploadedResponseDataListType = [
-            uploadedExcelFileRawData[i],
-            uploadedExcelFileRawData[i + 1],
-          ];
-          questionGroupArray.push(questionGroup);
-        }
-        setUploadedExcelFileDataList(questionGroupArray);
-      }
+      setUploadedExcelFileDataList(uploadedExcelFileRawData);
     }
   }, [survey01UPDRS_uploadedExcelFilePreQuestion]);
 

@@ -23,7 +23,11 @@ import {
   UPDRS_QUESTIONS,
   UPDRS_TAKE_MEDICINE_QUESTIONS,
 } from 'pages/survey/survey-01-UPDRS/survey.const';
-import { FG_QUESTIONS, SURVEY_02_FG_STATE_KEYWORD } from 'pages/survey/survey-02-FG/survey.const';
+import {
+  FG_QUESTIONS,
+  FG_TAKE_MEDICINE_QUESTIONS,
+  SURVEY_02_FG_STATE_KEYWORD,
+} from 'pages/survey/survey-02-FG/survey.const';
 import {
   SCOPA_QUESTIONS,
   SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST,
@@ -79,8 +83,8 @@ export default function RedirectionForResetResponseState() {
   // for survey-01,02 question
   const haveTakeMedicine = useRecoilValue(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`));
   const [questions01UPDRS, setQuestion01UPDRS] = useState(UPDRS_QUESTIONS);
+  const [question02FG, setQuestion02FG] = useState(FG_QUESTIONS);
 
-  const question02FG = FG_QUESTIONS;
   const question03BAI = BAI_QUESTIONS;
   const question04BDI = BDI_QUESTIONS;
   const question05RBD = RBD_QUESTIONS;
@@ -97,6 +101,7 @@ export default function RedirectionForResetResponseState() {
     // for survey-01,02 question
     if (haveTakeMedicine === TAKE_MEDICINE) {
       setQuestion01UPDRS(UPDRS_TAKE_MEDICINE_QUESTIONS);
+      setQuestion02FG(FG_TAKE_MEDICINE_QUESTIONS);
     }
 
     resetPersonalInfoName();
