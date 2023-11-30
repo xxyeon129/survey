@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
+import SurveyContentDegreeGradation from '../common/components/survey-contents/survey-contents-degree-gradation/SurveyContentDegreeGradation';
 // states
 import {
   survey06CurrentPageState,
@@ -79,24 +80,25 @@ export default function Survey07PDQ() {
       {surveyExplain}
 
       <section className={styles['survey-content-wrapper']}>
-        <SurveyContentTable
-          questions={currentPageQuestions}
-          answers={PDQ_ANSWERS}
-          radioBtnValues={SURVEY_07_PDQ_STATE_ANSWERS}
-          surveyStateKeyword={SURVEY_07_PDQ_STATE_KEYWORD}
-          additionalCheckQuestionNo={28}
-          additionalCheckQuestion="귀하에게 배우자나 같이 사는 사람이 없다면 여기에 표시해주십시오."
-          // for bottom prev/next button
-          handlePrevPage={handlePrevPage}
-          handleNextPage={handleNextPage}
-          // for bottom next button disabled
-          currentPageFirstQuestionNumber={currentPageQuestions[0].No}
-          currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
-          responseStateList={responseStateList}
-          // for show not-responded question "!" icon, not-responded question number message
-          respondedCheckObject={respondedCheckObject}
-          surveyQuestionsPerPage={PDQ_QUESTIONS_PER_PAGE}
-        />
+        {currentPageQuestions.map((question) => (
+          <SurveyContentDegreeGradation
+            question={question}
+            degreesListForDisplay={PDQ_ANSWERS}
+            degreesList={SURVEY_07_PDQ_STATE_ANSWERS}
+            surveyStateKeyword={SURVEY_07_PDQ_STATE_KEYWORD}
+            surveyQuestionsPerPage={PDQ_QUESTIONS_PER_PAGE}
+            // for bottom prev/next button
+            handlePrevPage={handlePrevPage}
+            handleNextPage={handleNextPage}
+            // for bottom next button disabled
+            currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+            currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
+            responseStateList={responseStateList}
+            // for show not-responded question "!" icon, not-responded question number message
+            respondedCheckObject={respondedCheckObject}
+            key={uuidv4()}
+          />
+        ))}
       </section>
     </article>
   );

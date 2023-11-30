@@ -1,0 +1,140 @@
+.survey-content-container {
+  margin-top: 3rem;
+
+  .question-text-section {
+    position: relative;
+
+    .question-h3 {
+      font-size: 1.7rem;
+      line-height: 170%;
+
+      @media screen and (min-width: 1900px) {
+        font-size: 2.2rem;
+      }
+    }
+    .not-responded-question-h3 {
+      color: $text-warn-red-color;
+    }
+
+    .not-responded-icon {
+      position: absolute;
+      left: -3.2rem;
+      top: 0rem;
+      color: $warn-red;
+      font-size: 2.2rem;
+    }
+  }
+
+  .degrees-container-ul {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: space-between;
+
+    > li {
+      .degree-li-label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        row-gap: 0.5rem;
+        position: relative;
+
+        input[type='radio'] {
+          appearance: none;
+          cursor: pointer;
+          width: 6rem;
+          height: 6rem;
+          @media screen and (min-width: 1900px) {
+            width: 8rem;
+            height: 8rem;
+          }
+        }
+
+        // for check icon
+        .check-icon {
+          position: absolute;
+          font-size: 3.8rem;
+          color: white;
+          top: 15%;
+
+          @media screen and (min-width: 1900px) {
+            font-size: 4.5rem;
+            top: 18%;
+          }
+        }
+      }
+
+      .degree-bottom-text {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+        white-space: pre;
+        text-align: center;
+        line-height: 125%;
+
+        @media screen and (min-width: 1900px) {
+          font-size: 1.8rem;
+        }
+      }
+    }
+
+    .degree-container-li {
+      // for gradation color
+      &:first-child {
+        input {
+          background-color: $checkbox-gradation-0-color;
+        }
+      }
+      &:nth-child(2) {
+        input {
+          background-color: $checkbox-gradation-2-color;
+        }
+      }
+      &:nth-child(3) {
+        input {
+          background-color: $checkbox-gradation-4-color;
+        }
+      }
+      &:nth-child(4) {
+        input {
+          background-color: $checkbox-gradation-6-color;
+        }
+      }
+      &:last-child {
+        input {
+          background-color: $main-blue-color;
+        }
+      }
+    }
+
+    // for survey-03-BAI
+    .degree-container-li-under-5 {
+      // for gradation color
+      &:first-child {
+        input {
+          background-color: $checkbox-gradation-0-color;
+        }
+      }
+      &:nth-child(2) {
+        input {
+          background-color: $checkbox-gradation-1-color;
+        }
+      }
+      &:nth-child(3) {
+        input {
+          background-color: $checkbox-gradation-4-color;
+        }
+      }
+      &:last-child {
+        input {
+          background-color: $main-blue-color;
+        }
+      }
+    }
+  }
+
+  .bottom-hr {
+    margin-top: 5.5rem;
+    height: 0.12rem;
+    background-color: #dfe1e6;
+    border: none;
+  }
+}

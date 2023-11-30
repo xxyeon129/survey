@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
+import SurveyContentDegreeGradation from '../common/components/survey-contents/survey-contents-degree-gradation/SurveyContentDegreeGradation';
 // states
 import {
   survey08CurrentPageState,
@@ -17,7 +18,6 @@ import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
   SURVEY_09_TIRED_STATE_ANSWERS,
   SURVEY_09_TIRED_STATE_KEYWORD,
-  TIRED_ANSWERS,
   TIRED_QUESTIONS,
   TIRED_QUESTIONS_PER_PAGE,
 } from './survey.const';
@@ -79,22 +79,25 @@ export default function Survey09Tired() {
       {surveyExplain}
 
       <section className={styles['survey-content-wrapper']}>
-        <SurveyContentTable
-          questions={currentPageQuestions}
-          answers={TIRED_ANSWERS}
-          radioBtnValues={SURVEY_09_TIRED_STATE_ANSWERS}
-          surveyStateKeyword={SURVEY_09_TIRED_STATE_KEYWORD}
-          // for bottom prev/next button
-          handlePrevPage={handlePrevPage}
-          handleNextPage={handleNextPage}
-          // for bottom next button disabled
-          currentPageFirstQuestionNumber={currentPageQuestions[0].No}
-          currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
-          responseStateList={responseStateList}
-          // for show not-responded question "!" icon, not-responded question number message
-          respondedCheckObject={respondedCheckObject}
-          surveyQuestionsPerPage={TIRED_QUESTIONS_PER_PAGE}
-        />
+        {currentPageQuestions.map((question) => (
+          <SurveyContentDegreeGradation
+            question={question}
+            degreesListForDisplay={SURVEY_09_TIRED_STATE_ANSWERS}
+            degreesList={SURVEY_09_TIRED_STATE_ANSWERS}
+            surveyStateKeyword={SURVEY_09_TIRED_STATE_KEYWORD}
+            surveyQuestionsPerPage={TIRED_QUESTIONS_PER_PAGE}
+            // for bottom prev/next button
+            handlePrevPage={handlePrevPage}
+            handleNextPage={handleNextPage}
+            // for bottom next button disabled
+            currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+            currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
+            responseStateList={responseStateList}
+            // for show not-responded question "!" icon, not-responded question number message
+            respondedCheckObject={respondedCheckObject}
+            key={uuidv4()}
+          />
+        ))}
       </section>
     </article>
   );

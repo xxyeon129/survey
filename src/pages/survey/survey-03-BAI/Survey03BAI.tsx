@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
+import SurveyContentDegreeGradation from '../common/components/survey-contents/survey-contents-degree-gradation/SurveyContentDegreeGradation';
 // states
 import {
   survey02CurrentPageState,
@@ -16,7 +17,6 @@ import { respondedCheckObject03BAI } from '../common/states/respondedCheckObject
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
-  BAI_ANSWERS,
   BAI_QUESTIONS,
   BAI_QUESTIONS_PER_PAGE,
   SURVEY_03_BAI_STATE_ANSWERS,
@@ -100,22 +100,25 @@ export default function Survey03BAI() {
       {surveyExplain}
 
       <section className={styles['survey-content-wrapper']}>
-        <SurveyContentTable
-          questions={currentPageQuestions}
-          answers={BAI_ANSWERS}
-          radioBtnValues={SURVEY_03_BAI_STATE_ANSWERS}
-          surveyStateKeyword={SURVEY_03_BAI_STATE_KEYWORD}
-          // for bottom prev/next button
-          handlePrevPage={handlePrevPage}
-          handleNextPage={handleNextPage}
-          // for bottom next button disabled
-          currentPageFirstQuestionNumber={currentPageQuestions[0].No}
-          currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
-          responseStateList={responseStateList}
-          // for show not-responded question "!" icon, not-responded question number message
-          respondedCheckObject={respondedCheckObject}
-          surveyQuestionsPerPage={BAI_QUESTIONS_PER_PAGE}
-        />
+        {currentPageQuestions.map((question) => (
+          <SurveyContentDegreeGradation
+            question={question}
+            degreesListForDisplay={SURVEY_03_BAI_STATE_ANSWERS}
+            degreesList={SURVEY_03_BAI_STATE_ANSWERS}
+            surveyStateKeyword={SURVEY_03_BAI_STATE_KEYWORD}
+            surveyQuestionsPerPage={BAI_QUESTIONS_PER_PAGE}
+            // for bottom prev/next button
+            handlePrevPage={handlePrevPage}
+            handleNextPage={handleNextPage}
+            // for bottom next button disabled
+            currentPageFirstQuestionNumber={currentPageQuestions[0].No}
+            currentPageLastQuestionNumber={currentPageQuestions[currentPageQuestions.length - 1].No}
+            responseStateList={responseStateList}
+            // for show not-responded question "!" icon, not-responded question number message
+            respondedCheckObject={respondedCheckObject}
+            key={uuidv4()}
+          />
+        ))}
       </section>
     </article>
   );

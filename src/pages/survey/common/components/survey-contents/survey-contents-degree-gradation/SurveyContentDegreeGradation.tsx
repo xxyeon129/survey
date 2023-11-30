@@ -1,7 +1,7 @@
 import { RecoilState, useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
-import BottomPrevNextButton from '../../common/components/bottom-prev-next-button/BottomPrevNextButton';
+import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
 // states
 import { respondedCheckObject08PDSS } from 'pages/survey/common/states/respondedCheckObjects.state';
 // hooks
@@ -12,15 +12,14 @@ import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respond
 // styles
 import { BsExclamationCircleFill } from 'react-icons/bs';
 import { FaCheck } from 'react-icons/fa';
-import styles from './surveyContentDegreeGradationFor08PDSS.module.scss';
+import styles from './surveyContentDegreeGradation.module.scss';
 
 interface SurveyContentDegreeGradationProps {
   question: SurveyContentObjectType;
-  answers: string[];
   surveyQuestionsPerPage: number;
   respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
-  exceptionalAnswers?: string[];
-  exceptionalNo?: number;
+  degreesListForDisplay: string[];
+  degreesList: string[];
 
   // for bottom prev/next pagination button
   handlePrevPage: () => void;
@@ -35,11 +34,7 @@ interface SurveyContentDegreeGradationProps {
 }
 
 // survey-08-PDSS
-export default function SurveyContentDegreeGradationFor08PDSS(
-  props: SurveyContentDegreeGradationProps
-) {
-  const degreesList = Array.from({ length: 11 }, (_, index) => index);
-
+export default function SurveyContentDegreeGradation(props: SurveyContentDegreeGradationProps) {
   // for bottom next button disabled
   const currentPageResponseList = props.responseStateList.slice(
     props.currentPageFirstQuestionNumber - 1,
@@ -70,48 +65,23 @@ export default function SurveyContentDegreeGradationFor08PDSS(
         )}
       </section>
       <ul className={styles['degrees-container-ul']}>
-        {degreesList.map((degree) => (
-          <li className={styles['degree-container-li']} key={uuidv4()}>
+        {props.degreesList.map((degree, index) => (
+          <li
+            className={
+              props.degreesList.length < 5
+                ? styles['degree-container-li-under-5']
+                : styles['degree-container-li']
+            }
+            key={uuidv4()}
+          >
             <DegreeBtn
               questionNumber={props.question.No}
               surveyStateKeyword={props.surveyStateKeyword}
               degree={degree}
+              degreeForDisplay={props.degreesListForDisplay[index]}
               // for hide question right not-responded "!" icon when checked
               respondedCheckObject={respondedCheckObject08PDSS}
             />
-
-            {/* for bottom degree explain text */}
-            {props.exceptionalNo &&
-            props.question.No === props.exceptionalNo &&
-            props.exceptionalAnswers ? (
-              <>
-                {/* for exceptional text -> exceptionalAnswers list */}
-                {degree === 0 && (
-                  <p className={styles['zero-degree-bottom-text']}>{props.exceptionalAnswers[0]}</p>
-                )}
-                {degree === 5 && (
-                  <p className={styles['middle-degree-bottom-text']}>
-                    {props.exceptionalAnswers[1]}
-                  </p>
-                )}
-                {degree === 10 && (
-                  <p className={styles['last-degree-bottom-text']}>{props.exceptionalAnswers[2]}</p>
-                )}
-              </>
-            ) : (
-              <>
-                {/* for non-exceptional text -> answers list */}
-                {degree === 0 && (
-                  <p className={styles['zero-degree-bottom-text']}>{props.answers[0]}</p>
-                )}
-                {degree === 5 && (
-                  <p className={styles['middle-degree-bottom-text']}>{props.answers[1]}</p>
-                )}
-                {degree === 10 && (
-                  <p className={styles['last-degree-bottom-text']}>{props.answers[2]}</p>
-                )}
-              </>
-            )}
           </li>
         ))}
       </ul>
@@ -140,8 +110,8 @@ export default function SurveyContentDegreeGradationFor08PDSS(
 interface DegreeBtnProps {
   questionNumber: number;
   surveyStateKeyword: string;
-  degree: number;
-
+  degree: string;
+  degreeForDisplay: string;
   // for hide question right not-responded "!" icon when checked
   respondedCheckObject: RecoilState<RespondedCheckObjectStateType>;
 }
@@ -161,16 +131,16 @@ function DegreeBtn(props: DegreeBtnProps) {
 
   return (
     <label className={styles['degree-li-label']}>
-      <span className={styles['degree-number']}>{props.degree}</span>
       <input
         type="radio"
         name={`${props.questionNumber}`}
         id={`${props.questionNumber}${props.degree}`}
-        value={`${props.degree}점`}
+        value={props.degree}
         onChange={handleRadioBtnChange}
-        checked={responseValue === `${props.degree}점`}
+        checked={responseValue === props.degree}
       />
-      {responseValue === `${props.degree}점` && <FaCheck className={styles['check-icon']} />}
+      {responseValue === props.degree && <FaCheck className={styles['check-icon']} />}
+      <span className={styles['degree-bottom-text']}>{props.degreeForDisplay}</span>
     </label>
   );
 }
