@@ -12,7 +12,7 @@ import {
 } from '../common/surveyPaginationStates';
 import { survey09Tired_responseSelector } from './survey09Tired.selector';
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
-import { respondedCheckObject07PDQ } from '../common/states/respondedCheckObjects.state';
+import { respondedCheckObject09Tired } from '../common/states/respondedCheckObjects.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -62,7 +62,7 @@ export default function Survey09Tired() {
   }, []);
 
   // for show not-responded question "!" icon, not-responded question number message
-  const respondedCheckObject = respondedCheckObject07PDQ;
+  const respondedCheckObject = respondedCheckObject09Tired;
 
   const surveyExplain = (
     <p className={styles.explain}>

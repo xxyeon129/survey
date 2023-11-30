@@ -2,8 +2,6 @@ import { RecoilState, useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
-// states
-import { respondedCheckObject08PDSS } from 'pages/survey/common/states/respondedCheckObjects.state';
 // hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 // types
@@ -80,7 +78,7 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
               degree={degree}
               degreeForDisplay={props.degreesListForDisplay[index]}
               // for hide question right not-responded "!" icon when checked
-              respondedCheckObject={respondedCheckObject08PDSS}
+              respondedCheckObject={props.respondedCheckObject}
             />
           </li>
         ))}
@@ -94,7 +92,7 @@ export default function SurveyContentDegreeGradation(props: SurveyContentDegreeG
           handlePrevPage={props.handlePrevPage}
           nextBtnDisabledCondition={nextBtnDisabledCondition}
           // for show not-responded question "!" icon, not-responded question number message
-          respondedCheckObject={respondedCheckObject08PDSS}
+          respondedCheckObject={props.respondedCheckObject}
           responseStateList={props.responseStateList}
           currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
           currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
