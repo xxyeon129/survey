@@ -64,13 +64,18 @@ export default function SurveyContentWithMedicineEffect(
   // for show not-responded question "!" icon, not-responded question number message
   const respondedCheckObject = useRecoilValue(props.respondedCheckObject);
 
+  // for show additional medicine explain
+  const medicineEffectTrueQuestionStartNumber = 1;
+  const medicineEffectFalseQuestionStartNumber = 23;
+
   return (
     <>
       {/* show additional explain when responded take medicine in pre-question */}
       {props.surveyStateKeyword === SURVEY_01_UPDRS_STATE_KEYWORD &&
         takeMedicineResponse === TAKE_MEDICINE &&
-        props.question.No === props.currentPageFirstQuestionNumber && (
-          <Survey01UPDRSAdditionalMedicineExplain />
+        (props.question.No === medicineEffectTrueQuestionStartNumber ||
+          props.question.No === medicineEffectFalseQuestionStartNumber) && (
+          <Survey01UPDRSAdditionalMedicineExplain currentQuestionNumber={props.question.No} />
         )}
 
       <article className={styles['survey-content-container']}>
