@@ -120,6 +120,12 @@ export default function Survey02FG() {
     }
   }, [takeMedicineResponse]);
 
+  // for setting pages when click "없다" in pre-question
+  const haveSymptom = useRecoilValue(responseState(`${SURVEY_02_FG_STATE_KEYWORD}-pre`));
+  useEffect(() => {
+    haveSymptom === HAVE_NO_FG_SYMPTOM && setTotalPagesCount(SURVEY_02_FG_TOTAL_PAGES);
+  }, [haveSymptom]);
+
   const surveyExplain = (
     <p className={styles.explain}>
       총 {FG_QUESTIONS.length}개의 문항으로 이루어진 {SURVEY_TITLE_LIST[2].TITLE.slice(0, 4)}에 관한
