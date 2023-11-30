@@ -13,14 +13,14 @@ export const survey01UPDRS_responseSelector = selector({
   get: ({ get }) => {
     const takeMedicineResponse = get(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`));
     const responseList = [takeMedicineResponse];
-    if (get(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)) === TAKE_MEDICINE) {
+    if (takeMedicineResponse === TAKE_MEDICINE) {
       // take medicine response
       for (let i = 1; i <= UPDRS_TAKE_MEDICINE_QUESTIONS.length; i++) {
         responseList.push(
           get(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-${i}-${TAKE_MEDICINE}`))
         );
       }
-    } else if (get(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)) === NOT_TAKE_MEDICINE) {
+    } else if (takeMedicineResponse === NOT_TAKE_MEDICINE) {
       for (let j = 1; j <= UPDRS_QUESTIONS.length; j++)
         responseList.push(get(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-${j}`)));
     }

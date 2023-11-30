@@ -9,7 +9,7 @@ import {
   survey03CurrentPageState,
   survey04CurrentPageState,
 } from '../common/surveyPaginationStates';
-import { haveFGSymptomState } from '../survey-02-FG/Survey02FG.state';
+import { haveFGSymptomState, survey02FG_totalPagesState } from '../survey-02-FG/Survey02FG.state';
 import { survey03BAI_responseSelector } from './survey03BAI.selector';
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 import { respondedCheckObject03BAI } from '../common/states/respondedCheckObjects.state';
@@ -22,7 +22,7 @@ import {
   SURVEY_03_BAI_STATE_ANSWERS,
   SURVEY_03_BAI_STATE_KEYWORD,
 } from './survey.const';
-import { HAVE_NO_FG_SYMPTOM, SURVEY_02_FG_TOTAL_PAGES } from '../survey-02-FG/survey.const';
+import { HAVE_NO_FG_SYMPTOM } from '../survey-02-FG/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
@@ -45,7 +45,7 @@ export default function Survey03BAI() {
   // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey02CurrentPageState);
   const setNextSurveyPage = useSetRecoilState(survey04CurrentPageState);
-  const prevSurveyTotalPages = SURVEY_02_FG_TOTAL_PAGES;
+  const prevSurveyTotalPages = useRecoilValue(survey02FG_totalPagesState);
   const currentPageState = survey03CurrentPageState;
   const questions = BAI_QUESTIONS;
   const questionsPerPage = BAI_QUESTIONS_PER_PAGE;

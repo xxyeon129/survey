@@ -1,7 +1,10 @@
 import { selector } from 'recoil';
 import { responseState } from '../common/states/surveyResponse.state';
-import { medicineDivisionList } from '../common/components/survey-contents/survey-contents-with-medicine-effect/surveyContent.const';
-import { FG_QUESTIONS, SURVEY_02_FG_STATE_KEYWORD } from './survey.const';
+import {
+  FG_QUESTIONS,
+  FG_TAKE_MEDICINE_QUESTIONS,
+  SURVEY_02_FG_STATE_KEYWORD,
+} from './survey.const';
 import {
   NOT_TAKE_MEDICINE,
   SURVEY_01_UPDRS_STATE_KEYWORD,
@@ -13,26 +16,16 @@ export const survey02FG_responseSelector = selector({
   get: ({ get }) => {
     const takeMedicineResponse = get(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`));
     const responseList = [get(responseState(`${SURVEY_02_FG_STATE_KEYWORD}-pre`))];
-    for (let i = 1; i <= FG_QUESTIONS.length; i++) {
-      if (takeMedicineResponse === TAKE_MEDICINE) {
-        // medicine effect true response
+    if (takeMedicineResponse === TAKE_MEDICINE) {
+      // take medicine response
+      for (let i = 1; i <= FG_TAKE_MEDICINE_QUESTIONS.length; i++) {
         responseList.push(
-          get(
-            responseState(
-              `${SURVEY_02_FG_STATE_KEYWORD}-${i}-${medicineDivisionList[0].radioBtnKeyword}`
-            )
-          )
+          get(responseState(`${SURVEY_02_FG_STATE_KEYWORD}-${i}-${TAKE_MEDICINE}`))
         );
-        // medicine effect false response
-        responseList.push(
-          get(
-            responseState(
-              `${SURVEY_02_FG_STATE_KEYWORD}-${i}-${medicineDivisionList[1].radioBtnKeyword}`
-            )
-          )
-        );
-      } else if (takeMedicineResponse === NOT_TAKE_MEDICINE) {
-        responseList.push(get(responseState(`${SURVEY_02_FG_STATE_KEYWORD}-${i}`)));
+      }
+    } else if (takeMedicineResponse === NOT_TAKE_MEDICINE) {
+      for (let j = 1; j <= FG_QUESTIONS.length; j++) {
+        responseList.push(get(responseState(`${SURVEY_02_FG_STATE_KEYWORD}-${j}`)));
       }
     }
     return responseList;

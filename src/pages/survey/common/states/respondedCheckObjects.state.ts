@@ -12,7 +12,7 @@ import {
   UPDRS_QUESTIONS,
   UPDRS_TAKE_MEDICINE_QUESTIONS,
 } from 'pages/survey/survey-01-UPDRS/survey.const';
-import { FG_QUESTIONS } from 'pages/survey/survey-02-FG/survey.const';
+import { FG_QUESTIONS, FG_TAKE_MEDICINE_QUESTIONS } from 'pages/survey/survey-02-FG/survey.const';
 import { BDI_QUESTIONS } from 'pages/survey/survey-04-BDI/survey.const';
 import { NMS_QUESTIONS } from 'pages/survey/survey-06-NMS/survey.const';
 import { PDSS_QUESTIONS } from 'pages/survey/survey-08-PDSS/survey.const';
@@ -52,7 +52,7 @@ export const respondedCheckObject02FG = atom({
 export const takeMedicineRespondedCheckObject02FG = atom({
   key: 'take-medicine-responded-check-02FG',
   default: Object.fromEntries(
-    Array.from({ length: FG_QUESTIONS.length * 2 }, (_, index) => [
+    Array.from({ length: FG_TAKE_MEDICINE_QUESTIONS.length }, (_, index) => [
       `${index + 1}-${TAKE_MEDICINE}`,
       false,
     ])

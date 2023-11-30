@@ -1,5 +1,5 @@
 import { survey01UPDRS_totalPagesState } from 'pages/survey/survey-01-UPDRS/survey01UPDRS.state';
-import { SURVEY_02_FG_TOTAL_PAGES } from 'pages/survey/survey-02-FG/survey.const';
+import { survey02FG_totalPagesState } from 'pages/survey/survey-02-FG/Survey02FG.state';
 import { SURVEY_03_BAI_TOTAL_PAGES } from 'pages/survey/survey-03-BAI/survey.const';
 import { SURVEY_04_BDI_TOTAL_PAGES } from 'pages/survey/survey-04-BDI/survey.const';
 import { SURVEY_05_RBD_TOTAL_PAGES } from 'pages/survey/survey-05-RBD/survey.const';
@@ -14,11 +14,12 @@ import { useRecoilValue } from 'recoil';
 
 export default function useTotalPages() {
   const survey01UPDRS_totalPages = useRecoilValue(survey01UPDRS_totalPagesState);
+  const survey02FG_totalPages = useRecoilValue(survey02FG_totalPagesState);
 
   // for calculate header current page count when click sidebar survey list
   const totalPagesList = [
     survey01UPDRS_totalPages,
-    SURVEY_02_FG_TOTAL_PAGES,
+    survey02FG_totalPages,
     SURVEY_03_BAI_TOTAL_PAGES,
     SURVEY_04_BDI_TOTAL_PAGES,
     SURVEY_05_RBD_TOTAL_PAGES,

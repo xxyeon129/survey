@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
-import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContent';
+import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContentWithMedicineEffect';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -20,17 +20,25 @@ import {
 } from '../common/states/respondedCheckObjects.state';
 import { responseState } from '../common/states/surveyResponse.state';
 import { survey01UPDRS_totalPagesState } from '../survey-01-UPDRS/survey01UPDRS.state';
+import { survey02FG_totalPagesState } from './Survey02FG.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
   FG_PRE_QUESTION,
   FG_QUESTIONS,
   FG_QUESTIONS_PER_PAGE,
+  FG_TAKE_MEDICINE_QUESTIONS,
   HAVE_FG_SYMPTOM,
   HAVE_NO_FG_SYMPTOM,
   SURVEY_02_FG_STATE_KEYWORD,
+  SURVEY_02_FG_TAKE_MEDICINE_TOTAL_PAGES,
+  SURVEY_02_FG_TOTAL_PAGES,
 } from './survey.const';
-import { SURVEY_01_UPDRS_STATE_KEYWORD, TAKE_MEDICINE } from '../survey-01-UPDRS/survey.const';
+import {
+  NOT_TAKE_MEDICINE,
+  SURVEY_01_UPDRS_STATE_KEYWORD,
+  TAKE_MEDICINE,
+} from '../survey-01-UPDRS/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
@@ -55,12 +63,17 @@ export default function Survey02FG() {
   // for bottom next button activate when answered "없다"
   const nextBtnDisabledCondition = preQuestionResponse === '';
 
+  // for total pages according to take medicine response
+  const setTotalPagesCount = useSetRecoilState(survey02FG_totalPagesState);
+  const [questionsAccordingToTakeMedicine, setQuestionsAccordingToTakeMedicine] =
+    useState(FG_QUESTIONS);
+
   // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey01CurrentPageState);
   const setNextSurveyPage = useSetRecoilState(survey03CurrentPageState);
   const prevSurveyTotalPages = useRecoilValue(survey01UPDRS_totalPagesState);
   const currentPageState = survey02CurrentPageState;
-  const questions = FG_QUESTIONS;
+  const questions = questionsAccordingToTakeMedicine;
   const questionsPerPage = FG_QUESTIONS_PER_PAGE;
   // for route to next survey when click bottom next button in condition answered "없음" to pre-question
   const conditionToRouteNextSurvey = preQuestionResponse === HAVE_NO_FG_SYMPTOM;
@@ -95,8 +108,16 @@ export default function Survey02FG() {
   );
 
   useEffect(() => {
-    if (takeMedicineResponse === TAKE_MEDICINE)
+    if (takeMedicineResponse === TAKE_MEDICINE) {
       setRespondedCheckObject(takeMedicineRespondedCheckObject02FG);
+      setQuestionsAccordingToTakeMedicine(FG_TAKE_MEDICINE_QUESTIONS);
+      setTotalPagesCount(SURVEY_02_FG_TAKE_MEDICINE_TOTAL_PAGES);
+    }
+    if (takeMedicineResponse === NOT_TAKE_MEDICINE) {
+      setRespondedCheckObject(respondedCheckObject02FG);
+      setQuestionsAccordingToTakeMedicine(FG_QUESTIONS);
+      setTotalPagesCount(SURVEY_02_FG_TOTAL_PAGES);
+    }
   }, [takeMedicineResponse]);
 
   const surveyExplain = (
