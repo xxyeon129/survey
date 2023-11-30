@@ -23,11 +23,11 @@ import {
   SURVEY_10_SCOPA_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_09_TIRED_TOTAL_PAGES } from '../survey-09-TIRED/survey.const';
-import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 import useSeparateGender from './hooks/useSeparateGender';
 import useExplainSectionElements from './hooks/useExplainSectionElements';
+import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 // styles
 import styles from '../common/survey.module.scss';
 
@@ -59,6 +59,7 @@ export default function Survey10SCOPA() {
   const explainSectionList = useExplainSectionElements();
 
   // for updata header current page
+  const { totalPagesList } = useTotalPages();
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
   const survey10SCOPA_totalPagesListIndex = 9;
   const prevPagesList = totalPagesList.slice(0, survey10SCOPA_totalPagesListIndex);

@@ -22,9 +22,9 @@ import {
   SURVEY_07_PDQ_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_06_NMS_TOTAL_PAGES } from '../survey-06-NMS/survey.const';
-import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
+import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 // styles
 import styles from '../common/survey.module.scss';
 
@@ -50,6 +50,7 @@ export default function Survey07PDQ() {
   const responseStateList = useRecoilValue(survey07PDQ_responseSelector);
 
   // for updata header current page
+  const { totalPagesList } = useTotalPages();
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
   const survey07PDQ_totalPagesListIndex = 6;
   const prevPagesList = totalPagesList.slice(0, survey07PDQ_totalPagesListIndex);

@@ -1,10 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { RecoilState, SetterOrUpdater, useRecoilState } from 'recoil';
+// states
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+// constants
 import { PATH_URL } from 'common/constants/path.const';
+// hooks
 import useCurrentSurveyPagePath from 'pages/survey/common/hooks/useCurrentSurveyPagePath';
+import useTotalPages from 'common/layout/header/pagination/useTotalPages';
+// types
 import { SurveyContentObjectType } from '../types/surveyTypes';
-import { totalPagesCount } from 'common/layout/header/pagination/totalPages.const';
 
 interface usePaginationProps {
   // for prev survey type last page / next survey type first page
@@ -29,6 +33,7 @@ interface usePaginationProps {
 export default function usePagination(props: usePaginationProps) {
   // for header page display
   const [headerCurrentPage, setHeaderCurrentPage] = useRecoilState(headerCurrentPageState);
+  const { totalPagesCount } = useTotalPages();
 
   // current survey pages
   const [currentPage, setCurrentPage] = useRecoilState(props.currentPageState);

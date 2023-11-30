@@ -6,6 +6,7 @@ import {
   SURVEY_01_UPDRS_STATE_KEYWORD,
   TAKE_MEDICINE,
 } from 'pages/survey/survey-01-UPDRS/survey.const';
+import { SURVEY_02_FG_STATE_KEYWORD } from 'pages/survey/survey-02-FG/survey.const';
 
 interface ScrollToUnrespondedQuestionProps {
   respondedCheckObjectAfterChange: RespondedCheckObjectStateType;
@@ -56,7 +57,11 @@ export default function useScrollToUnrespondedQuestion(props: ScrollToUnresponde
         `scroll-${props.scrollIdKeyword}-${unrespondedFirstQuestionNumber}`
       );
       // for survey-01-UPDRS, 02-FG
-      if (haveTakeMedicine)
+      if (
+        haveTakeMedicine &&
+        (props.scrollIdKeyword === SURVEY_01_UPDRS_STATE_KEYWORD ||
+          props.scrollIdKeyword === SURVEY_02_FG_STATE_KEYWORD)
+      )
         unrespondedFirstQuestionElement = document.getElementById(
           `scroll-${props.scrollIdKeyword}-${unrespondedFirstQuestionNumber}-${TAKE_MEDICINE}`
         );

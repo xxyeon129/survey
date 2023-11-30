@@ -17,6 +17,7 @@ import {
   respondedCheckObject01UPDRS,
   takeMedicineRespondedCheckObject01UPDRS,
 } from '../common/states/respondedCheckObjects.state';
+import { survey01UPDRS_totalPagesState } from './survey01UPDRS.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -36,8 +37,7 @@ import usePagination from '../common/hooks/usePagination';
 import styles from '../common/survey.module.scss';
 
 export default function Survey01UPDRS() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [totalPagesCount, setTotalPagesCount] = useState(SURVEY_01_UPDRS_TOTAL_PAGES);
+  const setTotalPagesCount = useSetRecoilState(survey01UPDRS_totalPagesState);
   const [questionsAccordingToTakeMedicine, setQuestionsAccordingToTakeMedicine] =
     useState(UPDRS_QUESTIONS);
 
@@ -83,6 +83,7 @@ export default function Survey01UPDRS() {
       setTotalPagesCount(SURVEY_01_UPDRS_TAKE_MEDICINE_TOTAL_PAGES);
     }
     if (takeMedicineResponse === NOT_TAKE_MEDICINE) {
+      setRespondedCheckObject(respondedCheckObject01UPDRS);
       setQuestionsAccordingToTakeMedicine(UPDRS_QUESTIONS);
       setTotalPagesCount(SURVEY_01_UPDRS_TOTAL_PAGES);
     }

@@ -19,6 +19,7 @@ import {
   takeMedicineRespondedCheckObject02FG,
 } from '../common/states/respondedCheckObjects.state';
 import { responseState } from '../common/states/surveyResponse.state';
+import { survey01UPDRS_totalPagesState } from '../survey-01-UPDRS/survey01UPDRS.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
@@ -29,16 +30,12 @@ import {
   HAVE_NO_FG_SYMPTOM,
   SURVEY_02_FG_STATE_KEYWORD,
 } from './survey.const';
-import {
-  SURVEY_01_UPDRS_STATE_KEYWORD,
-  SURVEY_01_UPDRS_TOTAL_PAGES,
-  TAKE_MEDICINE,
-} from '../survey-01-UPDRS/survey.const';
+import { SURVEY_01_UPDRS_STATE_KEYWORD, TAKE_MEDICINE } from '../survey-01-UPDRS/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
-import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 import useRouteToNextSurvey from './hooks/useRouteToNextSurvey';
+import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 // styles
 import styles from '../common/survey.module.scss';
 
@@ -61,7 +58,7 @@ export default function Survey02FG() {
   // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey01CurrentPageState);
   const setNextSurveyPage = useSetRecoilState(survey03CurrentPageState);
-  const prevSurveyTotalPages = SURVEY_01_UPDRS_TOTAL_PAGES;
+  const prevSurveyTotalPages = useRecoilValue(survey01UPDRS_totalPagesState);
   const currentPageState = survey02CurrentPageState;
   const questions = FG_QUESTIONS;
   const questionsPerPage = FG_QUESTIONS_PER_PAGE;
@@ -80,6 +77,7 @@ export default function Survey02FG() {
   });
 
   // for updata header current page
+  const { totalPagesList } = useTotalPages();
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
   const survey02FG_totalPagesListIndex = 1;
   const prevPagesList = totalPagesList.slice(0, survey02FG_totalPagesListIndex);

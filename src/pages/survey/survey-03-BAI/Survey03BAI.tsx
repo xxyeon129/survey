@@ -24,10 +24,10 @@ import {
 } from './survey.const';
 import { HAVE_NO_FG_SYMPTOM, SURVEY_02_FG_TOTAL_PAGES } from '../survey-02-FG/survey.const';
 import { PATH_URL } from 'common/constants/path.const';
-import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 import useSetPrevSurveyFirstPage from './hooks/useSetPrevSurveyFirstPage';
+import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 // styles
 import styles from '../common/survey.module.scss';
 
@@ -70,6 +70,7 @@ export default function Survey03BAI() {
   const responseStateList = useRecoilValue(survey03BAI_responseSelector);
 
   // for updata header current page
+  const { totalPagesList } = useTotalPages();
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
   const survey03BAI_totalPagesListIndex = 2;
   const prevPagesList = totalPagesList.slice(0, survey03BAI_totalPagesListIndex);

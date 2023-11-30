@@ -8,11 +8,11 @@ import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { headerCurrentPageState } from '../header/pagination/headerPageState';
 // constants
 import { SURVEY_NAME, SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { totalPagesList } from '../header/pagination/totalPages.const';
 import { surveyCurrentPageStates } from './surveyCurrentPageStates.const';
 import { PATH_URL } from 'common/constants/path.const';
 // hooks
 import useCheckRespondedForSidebar from './hooks/useCheckRespondedForSidebar';
+import useTotalPages from '../header/pagination/useTotalPages';
 import useModal from 'common/hooks/useModal';
 // styles
 import styles from './sidebar.module.scss';
@@ -46,6 +46,9 @@ export default function Sidebar() {
 
   // for for modal prevent move when not responded survey
   const { modalOpen, openModalHandler, closeModalHandler } = useModal();
+
+  // for update header current page display
+  const { totalPagesList } = useTotalPages();
 
   const handleClick = (index: number) => {
     if (index === 0) {

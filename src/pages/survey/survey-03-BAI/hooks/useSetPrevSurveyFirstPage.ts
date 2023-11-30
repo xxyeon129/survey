@@ -1,7 +1,7 @@
 import { RecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
-import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
-import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 import { useNavigate } from 'react-router-dom';
+import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
+import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 
 interface SetPrevSurveyPageProps {
   beforPrevSurveyIndex: number;
@@ -12,6 +12,7 @@ interface SetPrevSurveyPageProps {
 export default function useSetPrevSurveyFirstPage(props: SetPrevSurveyPageProps) {
   const navigate = useNavigate();
   // for header page display
+  const { totalPagesList } = useTotalPages();
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
   const beforPrevSurveyPagesList = totalPagesList.slice(0, props.beforPrevSurveyIndex);
   const prevSurveyFirstPage = beforPrevSurveyPagesList.reduce((acc, cur) => acc + cur, 1);

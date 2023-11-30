@@ -11,10 +11,10 @@ import { headerCurrentPageState } from './pagination/headerPageState';
 import { userState } from 'pages/select-home/selectHomePage.state';
 // constants
 import { SURVEY_NAME } from 'common/constants/survey.const';
-import { totalPagesCount } from './pagination/totalPages.const';
 import { USER_HOSPITAL } from 'pages/select-home/selectHomeUser.const';
 // hooks
 import usePathCheck from 'common/hooks/usePathCheck';
+import useTotalPages from './pagination/useTotalPages';
 import useModal from 'common/hooks/useModal';
 // styles
 import logo from 'assets/header-logo.svg';
@@ -23,6 +23,9 @@ import styles from './header.module.scss';
 export default function Header() {
   const headerCurrentPage = useRecoilValue(headerCurrentPageState);
   const isSurveyPage = usePathCheck();
+
+  // for display total pages count
+  const { totalPagesCount } = useTotalPages();
 
   // for different modal content
   const user = useRecoilValue(userState);

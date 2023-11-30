@@ -23,9 +23,9 @@ import {
   SURVEY_05_RBD_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_04_BDI_TOTAL_PAGES } from '../survey-04-BDI/survey.const';
-import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
+import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 // styles
 import styles from '../common/survey.module.scss';
 
@@ -51,6 +51,7 @@ export default function Survey05RBD() {
   const responseStateList = useRecoilValue(survey05RBD_responseSelector);
 
   // for updata header current page
+  const { totalPagesList } = useTotalPages();
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
   const survey05RBD_totalPagesListIndex = 4;
   const prevPagesList = totalPagesList.slice(0, survey05RBD_totalPagesListIndex);

@@ -22,9 +22,9 @@ import {
   TIRED_QUESTIONS_PER_PAGE,
 } from './survey.const';
 import { SURVEY_08_PDSS_TOTAL_PAGES } from '../survey-08-PDSS/survey.const';
-import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
+import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 // styles
 import styles from '../common/survey.module.scss';
 
@@ -50,6 +50,7 @@ export default function Survey09Tired() {
   const responseStateList = useRecoilValue(survey09Tired_responseSelector);
 
   // for updata header current page
+  const { totalPagesList } = useTotalPages();
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
   const survey09Tired_totalPagesListIndex = 8;
   const prevPagesList = totalPagesList.slice(0, survey09Tired_totalPagesListIndex);

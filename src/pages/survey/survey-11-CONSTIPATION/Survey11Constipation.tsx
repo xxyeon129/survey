@@ -22,9 +22,9 @@ import {
   SURVEY_11_CONSTIPATION_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_10_SCOPA_TOTAL_PAGES } from '../survey-10-SCOPA/survey.const';
-import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
+import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 // styles
 import styles from '../common/survey.module.scss';
 
@@ -50,6 +50,7 @@ export default function Survey11Constipation() {
   const responseStateList = useRecoilValue(survey11Constipation_responseSelector);
 
   // for updata header current page
+  const { totalPagesList } = useTotalPages();
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
   const survey11Constipation_totalPagesListIndex = 10;
   const prevPagesList = totalPagesList.slice(0, survey11Constipation_totalPagesListIndex);

@@ -24,12 +24,12 @@ import {
   SURVEY_04_BDI_TOTAL_PAGES,
 } from './survey.const';
 import { SURVEY_03_BAI_TOTAL_PAGES } from '../survey-03-BAI/survey.const';
-import { totalPagesList } from 'common/layout/header/pagination/totalPages.const';
 // types
 import { SurveyContentObjectType } from '../common/types/surveyTypes';
 import { RespondedCheckObjectStateType } from '../common/types/respondedCheckObjectState.types';
 // hooks
 import usePagination from '../common/hooks/usePagination';
+import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 // styles
 import { BsExclamationCircleFill } from 'react-icons/bs';
 import styles from '../common/survey.module.scss';
@@ -57,6 +57,7 @@ export default function Survey04BDI() {
   const responseStateList = useRecoilValue(survey04BDI_responseSelector);
 
   // for updata header current page
+  const { totalPagesList } = useTotalPages();
   const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
   const survey04BDI_totalPagesListIndex = 3;
   const prevPagesList = totalPagesList.slice(0, survey04BDI_totalPagesListIndex);

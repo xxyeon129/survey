@@ -1,10 +1,12 @@
 import { useRecoilValue } from 'recoil';
 import styles from './header.module.scss';
 import { headerCurrentPageState } from './pagination/headerPageState';
-import { totalPagesCount } from './pagination/totalPages.const';
+import useTotalPages from './pagination/useTotalPages';
 
 export default function ProgressBar() {
   const headerCurrentPage = useRecoilValue(headerCurrentPageState);
+
+  const { totalPagesCount } = useTotalPages();
 
   const getProgressWidth = Math.floor((headerCurrentPage / totalPagesCount) * 100);
 
