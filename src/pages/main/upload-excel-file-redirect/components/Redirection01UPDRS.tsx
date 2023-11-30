@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import RedirectionMedicineEffectContent from './common/RedirectionMedicineEffectContent';
 // states
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
+import { survey01UPDRS_totalPagesState } from 'pages/survey/survey-01-UPDRS/survey01UPDRS.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
   SURVEY_01_UPDRS_STATE_KEYWORD,
+  SURVEY_01_UPDRS_TAKE_MEDICINE_TOTAL_PAGES,
   TAKE_MEDICINE,
   UPDRS_QUESTIONS,
   UPDRS_TAKE_MEDICINE_QUESTIONS,
@@ -40,14 +42,19 @@ export default function Redirection01UPDRS() {
     UploadedResponseDataListType | UploadedResponseDataGroupedListType
   >([]);
 
-  // for pre-question radio button checked according to uploaded excel file response data
+  // for setting total pages
+  const setTotalPages = useSetRecoilState(survey01UPDRS_totalPagesState);
+
   useEffect(() => {
     if (uploadedExcelFileRawData.length > 0) {
+      // for pre-question radio button checked according to uploaded excel file response data
       setUploadedExcelDataPreQuestionAnswer(uploadedExcelFileRawData[0].응답내용);
       setPreQuestionResponseValue(uploadedExcelFileRawData[0].응답내용);
 
+      // for setting question UI, total pages
       if (uploadedExcelFileRawData[0].응답내용 === TAKE_MEDICINE) {
         setQuestions(UPDRS_TAKE_MEDICINE_QUESTIONS);
+        setTotalPages(SURVEY_01_UPDRS_TAKE_MEDICINE_TOTAL_PAGES);
       }
     }
   }, []);

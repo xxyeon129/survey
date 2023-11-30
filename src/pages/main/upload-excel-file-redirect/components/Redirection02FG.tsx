@@ -6,12 +6,14 @@ import RedirectionMedicineEffectContent from './common/RedirectionMedicineEffect
 // states
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
+import { survey02FG_totalPagesState } from 'pages/survey/survey-02-FG/Survey02FG.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
   FG_QUESTIONS,
   FG_TAKE_MEDICINE_QUESTIONS,
   SURVEY_02_FG_STATE_KEYWORD,
+  SURVEY_02_FG_TAKE_MEDICINE_TOTAL_PAGES,
 } from 'pages/survey/survey-02-FG/survey.const';
 import { TAKE_MEDICINE } from 'pages/survey/survey-01-UPDRS/survey.const';
 // types
@@ -47,6 +49,9 @@ export default function Redirection02FG() {
     setSurvey01UPDRS_uploadedExcelFilePreQuestion,
   ] = useState('');
 
+  // for setting total pages
+  const setTotalPages = useSetRecoilState(survey02FG_totalPagesState);
+
   useEffect(() => {
     // for survey-01-UPDRS pre-question uploaded excel file setting
     if (
@@ -60,6 +65,7 @@ export default function Redirection02FG() {
       // for setting questions according to take medicine
       survey01UPDRS_uploadedExcelFilePreQuestionRawData.응답내용 === TAKE_MEDICINE &&
         setQuestions(FG_TAKE_MEDICINE_QUESTIONS);
+      setTotalPages(SURVEY_02_FG_TAKE_MEDICINE_TOTAL_PAGES);
     }
 
     // for pre-question radio button checked according to uploaded excel response data

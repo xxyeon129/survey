@@ -4,7 +4,6 @@ import { SURVEY_01_UPDRS_TOTAL_PAGES } from './survey.const';
 
 const { persistAtom } = recoilPersist({
   key: 'survey-01-UPDRS',
-  storage: sessionStorage,
 });
 
 export const survey01UPDRS_totalPagesState = atom({

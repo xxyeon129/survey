@@ -15,6 +15,7 @@ import {
   selectedBirthMonthState,
   selectedBirthYearState,
 } from 'pages/survey/personalInfo/components/rightSection/selectBirthday/selectBirthdaySection.state';
+import { survey01UPDRS_totalPagesState } from 'pages/survey/survey-01-UPDRS/survey01UPDRS.state';
 // constants
 import { PATH_URL } from 'common/constants/path.const';
 import {
@@ -71,6 +72,7 @@ import {
 } from 'pages/survey/survey-12-FOOD/survey.const';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+import { survey02FG_totalPagesState } from 'pages/survey/survey-02-FG/Survey02FG.state';
 
 export default function RedirectionForResetResponseState() {
   const resetPersonalInfoName = useResetRecoilState(personalInfoNameState);
@@ -81,6 +83,8 @@ export default function RedirectionForResetResponseState() {
   const resetSelectedBirthDay = useResetRecoilState(selectedBirthDayState);
 
   // for survey-01,02 question
+  const resetTotalPages_survey01UPDRS = useResetRecoilState(survey01UPDRS_totalPagesState);
+  const resetTotalPages_survey02FG = useResetRecoilState(survey02FG_totalPagesState);
   const haveTakeMedicine = useRecoilValue(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`));
   const [questions01UPDRS, setQuestion01UPDRS] = useState(UPDRS_QUESTIONS);
   const [question02FG, setQuestion02FG] = useState(FG_QUESTIONS);
@@ -99,6 +103,9 @@ export default function RedirectionForResetResponseState() {
   const navigate = useNavigate();
   useEffect(() => {
     // for survey-01,02 question
+    resetTotalPages_survey01UPDRS();
+    resetTotalPages_survey02FG();
+
     if (haveTakeMedicine === TAKE_MEDICINE) {
       setQuestion01UPDRS(UPDRS_TAKE_MEDICINE_QUESTIONS);
       setQuestion02FG(FG_TAKE_MEDICINE_QUESTIONS);
