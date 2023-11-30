@@ -6,7 +6,7 @@ import PreQuestion from '../common/components/survey-contents/preQuestion/PreQue
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContentWithMedicineEffect';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
   survey01CurrentPageState,
   survey02CurrentPageState,
@@ -91,7 +91,7 @@ export default function Survey02FG() {
 
   // for updata header current page
   const { totalPagesList } = useTotalPages();
-  const setHeaderCurrentPage = useSetRecoilState(headerCurrentPageState);
+  const [headerCurrentPage, setHeaderCurrentPage] = useRecoilState(headerCurrentPageState);
   const survey02FG_totalPagesListIndex = 1;
   const prevPagesList = totalPagesList.slice(0, survey02FG_totalPagesListIndex);
   const prevPagesCount = prevPagesList.reduce((acc, cur) => acc + cur, 1);
@@ -139,14 +139,17 @@ export default function Survey02FG() {
       {surveyExplain}
 
       {/* for pre-question */}
-      <PreQuestion
-        question={FG_PRE_QUESTION}
-        clickedQuestionNumber="pre"
-        surveyStateKeyword={SURVEY_02_FG_STATE_KEYWORD}
-        routeToNextSurvey={routeToNextSurvey}
-        // for show not-responded question "!" icon, not-responded question number message
-        respondedCheckObject={respondedCheckObject}
-      />
+      {/* show pre-question only first page */}
+      {headerCurrentPage === prevPagesCount && (
+        <PreQuestion
+          question={FG_PRE_QUESTION}
+          clickedQuestionNumber="pre"
+          surveyStateKeyword={SURVEY_02_FG_STATE_KEYWORD}
+          routeToNextSurvey={routeToNextSurvey}
+          // for show not-responded question "!" icon, not-responded question number message
+          respondedCheckObject={respondedCheckObject}
+        />
+      )}
 
       {/* for display questions only when answered "있다" in pre-question */}
       {preQuestionResponse === HAVE_FG_SYMPTOM && (
