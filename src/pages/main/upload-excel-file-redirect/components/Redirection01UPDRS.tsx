@@ -9,10 +9,10 @@ import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/sta
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
-  NOT_TAKE_MEDICINE,
   SURVEY_01_UPDRS_STATE_KEYWORD,
   TAKE_MEDICINE,
   UPDRS_QUESTIONS,
+  UPDRS_TAKE_MEDICINE_QUESTIONS,
 } from 'pages/survey/survey-01-UPDRS/survey.const';
 // types
 import {
@@ -21,7 +21,7 @@ import {
 } from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 
 export default function Redirection01UPDRS() {
-  const questions = UPDRS_QUESTIONS;
+  const [questions, setQuestions] = useState(UPDRS_QUESTIONS);
 
   // for get uploaded excel file response data
   const uploadedExcelFileRawData = useRecoilValue(
@@ -39,35 +39,23 @@ export default function Redirection01UPDRS() {
   const [uploadedExcelFileDataList, setUploadedExcelFileDataList] = useState<
     UploadedResponseDataListType | UploadedResponseDataGroupedListType
   >([]);
-  const uploadedExcelFilePreQuestion = uploadedExcelFileRawData[0];
 
   // for pre-question radio button checked according to uploaded excel file response data
   useEffect(() => {
     if (uploadedExcelFileRawData.length > 0) {
       setUploadedExcelDataPreQuestionAnswer(uploadedExcelFileRawData[0].응답내용);
       setPreQuestionResponseValue(uploadedExcelFileRawData[0].응답내용);
+
+      if (uploadedExcelFileRawData[0].응답내용 === TAKE_MEDICINE) {
+        setQuestions(UPDRS_TAKE_MEDICINE_QUESTIONS);
+      }
     }
   }, []);
 
   // for separate uploaded excel file raw data according to pre question answer
   useEffect(() => {
     if (uploadedExcelFileRawData.length > 0) {
-      // in case take medicine - uploadedExcelFileDataList setting
-      if (uploadedExcelFilePreQuestion.응답내용 === NOT_TAKE_MEDICINE) {
-        setUploadedExcelFileDataList(uploadedExcelFileRawData);
-      }
-      // in case not take medicine - uploadedExcelFileDataList setting
-      if (uploadedExcelFilePreQuestion.응답내용 === TAKE_MEDICINE) {
-        const questionGroupArray: UploadedResponseDataGroupedListType = [];
-        for (let i = 1; i <= uploadedExcelFileRawData.length; i += 2) {
-          const questionGroup: UploadedResponseDataListType = [
-            uploadedExcelFileRawData[i],
-            uploadedExcelFileRawData[i + 1],
-          ];
-          questionGroupArray.push(questionGroup);
-        }
-        setUploadedExcelFileDataList(questionGroupArray);
-      }
+      setUploadedExcelFileDataList(uploadedExcelFileRawData);
     }
   }, [preQuestionResponseValue]);
 

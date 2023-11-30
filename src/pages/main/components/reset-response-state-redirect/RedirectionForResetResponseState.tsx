@@ -1,15 +1,28 @@
-import {
-  SURVEY_01_UPDRS_STATE_KEYWORD,
-  UPDRS_QUESTIONS,
-} from 'pages/survey/survey-01-UPDRS/survey.const';
-import { useResetRecoilState } from 'recoil';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+// components
+import RedirectionLoadingSpinner from '../loading-spinner/RedirectionLoadindSpinner';
+// states
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import {
-  MEDICINE_EFFECT_FALSE,
-  MEDICINE_EFFECT_TRUE,
-} from 'pages/survey/common/components/survey-contents/survey-contents-with-medicine-effect/surveyContent.const';
-import { useEffect } from 'react';
-import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+  personalInfoBirthdayState,
+  personalInfoGenderState,
+  personalInfoNameState,
+} from 'pages/survey/personalInfo/personalInfo.state';
+import {
+  selectedBirthDayState,
+  selectedBirthMonthState,
+  selectedBirthYearState,
+} from 'pages/survey/personalInfo/components/rightSection/selectBirthday/selectBirthdaySection.state';
+// constants
+import { PATH_URL } from 'common/constants/path.const';
+import {
+  SURVEY_01_UPDRS_STATE_KEYWORD,
+  TAKE_MEDICINE,
+  UPDRS_QUESTIONS,
+  UPDRS_TAKE_MEDICINE_QUESTIONS,
+} from 'pages/survey/survey-01-UPDRS/survey.const';
 import { FG_QUESTIONS, SURVEY_02_FG_STATE_KEYWORD } from 'pages/survey/survey-02-FG/survey.const';
 import {
   SCOPA_QUESTIONS,
@@ -52,19 +65,8 @@ import {
   FOOD_QUESTIONS,
   SURVEY_12_FOOD_STATE_KEYWORD,
 } from 'pages/survey/survey-12-FOOD/survey.const';
-import { useNavigate } from 'react-router-dom';
-import { PATH_URL } from 'common/constants/path.const';
-import {
-  personalInfoBirthdayState,
-  personalInfoGenderState,
-  personalInfoNameState,
-} from 'pages/survey/personalInfo/personalInfo.state';
-import {
-  selectedBirthDayState,
-  selectedBirthMonthState,
-  selectedBirthYearState,
-} from 'pages/survey/personalInfo/components/rightSection/selectBirthday/selectBirthdaySection.state';
-import RedirectionLoadingSpinner from '../loading-spinner/RedirectionLoadindSpinner';
+// types
+import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 
 export default function RedirectionForResetResponseState() {
   const resetPersonalInfoName = useResetRecoilState(personalInfoNameState);
@@ -74,7 +76,10 @@ export default function RedirectionForResetResponseState() {
   const resetSelectedBirthMonth = useResetRecoilState(selectedBirthMonthState);
   const resetSelectedBirthDay = useResetRecoilState(selectedBirthDayState);
 
-  const questions01UPDRS = UPDRS_QUESTIONS;
+  // for survey-01,02 question
+  const haveTakeMedicine = useRecoilValue(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`));
+  const [questions01UPDRS, setQuestion01UPDRS] = useState(UPDRS_QUESTIONS);
+
   const question02FG = FG_QUESTIONS;
   const question03BAI = BAI_QUESTIONS;
   const question04BDI = BDI_QUESTIONS;
@@ -89,6 +94,11 @@ export default function RedirectionForResetResponseState() {
 
   const navigate = useNavigate();
   useEffect(() => {
+    // for survey-01,02 question
+    if (haveTakeMedicine === TAKE_MEDICINE) {
+      setQuestion01UPDRS(UPDRS_TAKE_MEDICINE_QUESTIONS);
+    }
+
     resetPersonalInfoName();
     resetPersonalInfoBirthday();
     resetPersonalInfoGender();
@@ -111,7 +121,7 @@ export default function RedirectionForResetResponseState() {
       {questions01UPDRS.map((question) => (
         <>
           <ResetQuestion question={question} surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD} />
-          <ResetMedicineEffectQuestion
+          <ResetTakeMedicineQuestion
             question={question}
             surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
           />
@@ -120,7 +130,7 @@ export default function RedirectionForResetResponseState() {
       {question02FG.map((question) => (
         <>
           <ResetQuestion question={question} surveyStateKeyword={SURVEY_02_FG_STATE_KEYWORD} />
-          <ResetMedicineEffectQuestion
+          <ResetTakeMedicineQuestion
             question={question}
             surveyStateKeyword={SURVEY_02_FG_STATE_KEYWORD}
           />
@@ -192,18 +202,13 @@ function ResetPreQuestion({ surveyStateKeyword }: { surveyStateKeyword: string }
   return <></>;
 }
 
-function ResetMedicineEffectQuestion(props: ResetQuestionProps) {
-  const resetMedicineEffectTrueResponse = useResetRecoilState(
-    responseState(`${props.surveyStateKeyword}-${props.question.No}-${MEDICINE_EFFECT_TRUE}`)
-  );
-
-  const resetMedicineEffectFalseResponse = useResetRecoilState(
-    responseState(`${props.surveyStateKeyword}-${props.question.No}-${MEDICINE_EFFECT_FALSE}`)
+function ResetTakeMedicineQuestion(props: ResetQuestionProps) {
+  const resetTakeMedicineResponse = useResetRecoilState(
+    responseState(`${props.surveyStateKeyword}-${props.question.No}-${TAKE_MEDICINE}`)
   );
 
   useEffect(() => {
-    resetMedicineEffectTrueResponse();
-    resetMedicineEffectFalseResponse();
+    resetTakeMedicineResponse();
   }, []);
 
   return <></>;
