@@ -16,7 +16,9 @@ export default function Survey01UPDRSAdditionalMedicineExplain(
   return (
     <>
       {/* for margin-top before first no-medicine-effcet question (question number 23) */}
-      <div className={styles['before-no-medicine-effect-questions-margin-top']} />
+      {props.currentQuestionNumber === medicineEffectFalseQuestionStartNumber && (
+        <div className={styles['before-no-medicine-effect-questions-margin-top']} />
+      )}
 
       <section className={styles['take-medicine-additional-explain-container']}>
         <span className={styles['asterisk']}>
