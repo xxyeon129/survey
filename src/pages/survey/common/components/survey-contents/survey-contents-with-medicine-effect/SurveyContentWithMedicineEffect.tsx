@@ -11,6 +11,7 @@ import {
   SURVEY_01_UPDRS_STATE_KEYWORD,
   TAKE_MEDICINE,
 } from 'pages/survey/survey-01-UPDRS/survey.const';
+import { SURVEY_02_FG_STATE_KEYWORD } from 'pages/survey/survey-02-FG/survey.const';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respondedCheckObjectState.types';
@@ -68,6 +69,16 @@ export default function SurveyContentWithMedicineEffect(
   const medicineEffectTrueQuestionStartNumber = 1;
   const medicineEffectFalseQuestionStartNumber = 23;
 
+  // for different color question UI - survey-01-UPDRS
+  let medicineEffectText = props.question.Q?.slice(0, 17);
+  let questionText = props.question.Q?.slice(17);
+
+  // for different color question UI - survey-02-FG
+  if (props.surveyStateKeyword === SURVEY_02_FG_STATE_KEYWORD) {
+    medicineEffectText = props.question.Q?.slice(0, 18);
+    questionText = props.question.Q?.slice(18);
+  }
+
   return (
     <>
       {/* show additional explain when responded take medicine in pre-question */}
@@ -81,6 +92,7 @@ export default function SurveyContentWithMedicineEffect(
       <article className={styles['survey-content-container']}>
         <section className={styles['question-title-section']}>
           {takeMedicineResponse === TAKE_MEDICINE ? (
+            // take medcicine case
             <>
               <hr
                 className={
@@ -98,8 +110,20 @@ export default function SurveyContentWithMedicineEffect(
                     : styles['question-text']
                 }
               >
-                {props.question.No}. {props.question.Q}
+                {props.question.No}.{' '}
+                <span
+                  className={
+                    respondedCheckObject[`${props.question.No}-${TAKE_MEDICINE}`]
+                      ? ''
+                      : styles['medicine-effect-text']
+                  }
+                >
+                  {medicineEffectText}
+                </span>
+                {questionText}
               </h3>
+
+              {/* not responded icon */}
               {respondedCheckObject[`${props.question.No}-${TAKE_MEDICINE}`] && (
                 <span className={styles['not-responded-icon']}>
                   <BsExclamationCircleFill />
@@ -107,6 +131,7 @@ export default function SurveyContentWithMedicineEffect(
               )}
             </>
           ) : (
+            // not take medicine case
             <>
               <hr
                 className={
@@ -126,6 +151,8 @@ export default function SurveyContentWithMedicineEffect(
               >
                 {props.question.No}. {props.question.Q}
               </h3>
+
+              {/* not responded icon */}
               {respondedCheckObject[props.question.No] && (
                 <span className={styles['not-responded-icon']}>
                   <BsExclamationCircleFill />
