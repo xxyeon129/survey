@@ -120,28 +120,75 @@
 
       // for gradation color
       &:first-child {
+        .degree-li-explain-text {
+          color: $checkbox-gradation-1-blue-color;
+        }
+        .degree-li-line {
+          border-radius: 2rem 0rem 0rem 2rem;
+          background-color: $checkbox-gradation-1-blue-color;
+        }
         input {
-          background-color: $checkbox-gradation-0-color;
+          outline-color: $checkbox-gradation-1-blue-color;
+        }
+        input[type='radio']:checked {
+          background-color: $checkbox-gradation-1-blue-color;
         }
       }
       &:nth-child(2) {
+        .degree-li-explain-text {
+          color: $checkbox-gradation-2-blue-color;
+        }
+        .degree-li-line {
+          background-color: $checkbox-gradation-2-blue-color;
+        }
         input {
-          background-color: $checkbox-gradation-2-color;
+          outline-color: $checkbox-gradation-2-blue-color;
+        }
+        input[type='radio']:checked {
+          background-color: $checkbox-gradation-2-blue-color;
         }
       }
       &:nth-child(3) {
+        .degree-li-explain-text {
+          color: $checkbox-gradation-2-5-blue-color;
+        }
+        .degree-li-line {
+          background-color: $checkbox-gradation-2-5-blue-color;
+        }
         input {
-          background-color: $checkbox-gradation-4-color;
+          outline-color: $checkbox-gradation-2-5-blue-color;
+        }
+        input[type='radio']:checked {
+          background-color: $checkbox-gradation-2-5-blue-color;
         }
       }
       &:nth-child(4) {
+        .degree-li-explain-text {
+          color: $checkbox-gradation-3-blue-color;
+        }
+        .degree-li-line {
+          background-color: $checkbox-gradation-3-blue-color;
+        }
         input {
-          background-color: $checkbox-gradation-6-color;
+          outline-color: $checkbox-gradation-3-blue-color;
+        }
+        input[type='radio']:checked {
+          background-color: $checkbox-gradation-3-blue-color;
         }
       }
       &:last-child {
+        .degree-li-explain-text {
+          color: $checkbox-gradation-4-blue-color;
+        }
+        .degree-li-line {
+          border-radius: 0rem 2rem 2rem 0rem;
+          background-color: $checkbox-gradation-4-blue-color;
+        }
         input {
-          background-color: $main-blue-color;
+          outline-color: $checkbox-gradation-4-blue-color;
+        }
+        input[type='radio']:checked {
+          background-color: $checkbox-gradation-4-blue-color;
         }
       }
     }

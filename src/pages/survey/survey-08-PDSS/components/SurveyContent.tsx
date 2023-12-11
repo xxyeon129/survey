@@ -11,7 +11,7 @@ import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respondedCheckObjectState.types';
 // styles
 import { BsExclamationCircleFill } from 'react-icons/bs';
-import { FaCheck } from 'react-icons/fa';
+import { FaCheck } from 'react-icons/fa6';
 import styles from './surveyContentDegreeGradationFor08PDSS.module.scss';
 
 interface SurveyContentDegreeGradationProps {
@@ -115,6 +115,7 @@ export default function SurveyContentDegreeGradationFor08PDSS(
           </li>
         ))}
       </ul>
+
       <hr className={styles['bottom-hr']} />
 
       {/* bottom prev/next pagination buttons */}

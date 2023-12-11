@@ -1,6 +1,10 @@
 .survey-content-container {
   margin-top: 3rem;
 
+  @media screen and (min-width: 1900px) {
+    margin-top: 5rem;
+  }
+
   .question-text-section {
     position: relative;
 
@@ -28,28 +32,37 @@
   .degrees-container-ul {
     margin-top: 3rem;
     display: flex;
-    justify-content: space-between;
+    column-gap: 1px;
+    @media screen and (min-width: 1900px) {
+      column-gap: 2px;
+    }
 
     .degree-container-li {
+      width: 100%;
       .degree-li-label {
         display: flex;
         flex-direction: column;
         align-items: center;
         row-gap: 0.5rem;
         position: relative;
+        width: 100%;
 
         .degree-number {
           font-weight: $text-bold;
+
+          @media screen and (min-width: 1900px) {
+            font-size: 1.5rem;
+          }
         }
 
         input[type='radio'] {
           appearance: none;
-          width: 3.8rem;
-          height: 3.8rem;
+          width: 100%;
+          padding-bottom: 100%;
           cursor: pointer;
+          margin: 0;
 
           @media screen and (min-width: 1900px) {
-            width: 5rem;
             height: 5rem;
           }
         }
@@ -57,9 +70,13 @@
         // for check icon
         .check-icon {
           position: absolute;
-          font-size: 2rem;
+          font-size: 3.5rem;
           color: white;
-          top: 48%;
+          top: 38%;
+          @media screen and (min-width: 1900px) {
+            top: 42%;
+            font-size: 4rem;
+          }
         }
       }
 
@@ -67,19 +84,30 @@
       &:nth-child(1) {
         position: relative;
         input {
+          border-radius: 1rem 0 0 1rem;
           background-color: $checkbox-gradation-0-color;
         }
 
         .zero-degree-bottom-text {
           position: absolute;
-          min-width: 8rem;
-          top: 6.8rem;
-          font-size: 1.3rem;
+          min-width: 10rem;
+          top: 7rem;
+          font-size: 1.5rem;
+
+          @media screen and (min-width: 1340px) {
+            transition: 1s;
+            top: 8rem;
+          }
+
+          @media screen and (min-width: 1500px) {
+            transition: 1s;
+            top: 9rem;
+          }
 
           @media screen and (min-width: 1900px) {
-            min-width: 10rem;
-            top: 8rem;
-            font-size: 1.5rem;
+            min-width: 15rem;
+            top: 12rem;
+            font-size: 1.8rem;
           }
         }
       }
@@ -111,17 +139,27 @@
 
         .middle-degree-bottom-text {
           position: absolute;
-          min-width: 6.5rem;
-          top: 6.8rem;
-          right: -1.1rem;
+          min-width: 10rem;
+          top: 7rem;
+          left: calc(50% - 5rem);
+          font-size: 1.5rem;
           text-align: center;
-          font-size: 1.3rem;
+
+          @media screen and (min-width: 1340px) {
+            transition: 1s;
+            top: 8rem;
+          }
+
+          @media screen and (min-width: 1500px) {
+            transition: 1s;
+            top: 9rem;
+          }
 
           @media screen and (min-width: 1900px) {
-            min-width: 10rem;
-            top: 8rem;
-            right: -2.5rem;
-            font-size: 1.5rem;
+            min-width: 15rem;
+            top: 12rem;
+            left: calc(50% - 7.5rem);
+            font-size: 1.8rem;
           }
         }
       }
@@ -148,20 +186,31 @@
       &:nth-child(11) {
         position: relative;
         input {
-          background-color: $main-blue-color;
+          border-radius: 0 1rem 1rem 0;
+          background-color: $checkbox-gradation-10-color;
         }
         .last-degree-bottom-text {
           position: absolute;
-          min-width: 10rem;
+          min-width: 13rem;
           text-align: right;
-          top: 6.8rem;
+          top: 7rem;
           right: 0;
-          font-size: 1.3rem;
+          font-size: 1.5rem;
+
+          @media screen and (min-width: 1340px) {
+            transition: 1s;
+            top: 8rem;
+          }
+
+          @media screen and (min-width: 1500px) {
+            transition: 1s;
+            top: 9rem;
+          }
 
           @media screen and (min-width: 1900px) {
-            min-width: 10rem;
-            top: 8rem;
-            font-size: 1.5rem;
+            min-width: 15rem;
+            top: 12rem;
+            font-size: 1.8rem;
           }
         }
       }
@@ -169,9 +218,13 @@
   }
 
   .bottom-hr {
-    margin-top: 5.5rem;
+    margin-top: 6rem;
     height: 0.12rem;
     background-color: #dfe1e6;
     border: none;
+
+    @media screen and (min-width: 1900px) {
+      margin-top: 10rem;
+    }
   }
 }
