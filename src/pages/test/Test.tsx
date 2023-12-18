@@ -245,6 +245,21 @@ export default function Test() {
     }
   };
 
+  const handleComposeClick = () => {
+    const mailTo = 'test@naver.com';
+    const mailSubject = 'Subject';
+    const mailBody = 'Message';
+
+    // const gmailComposeUrl = `https://mail.google.com/mail/u/0/#compose?to=${to}&subject=${encodeURIComponent(
+    //   subject
+    // )}&body=${encodeURIComponent(body)}`;
+    // const gmailComposeUrl = 'https://mail.google.com/mail/u/0/#compose';
+
+    const gmailComposeUrl = `https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&su=${mailSubject}&body=${mailBody}&to=${mailTo}`;
+
+    window.open(gmailComposeUrl, '_blank');
+  };
+
   return (
     <>
       <button onClick={() => downloadExcelFileHandler()}>Excel 다운로드</button>
@@ -257,6 +272,7 @@ export default function Test() {
       />
       <hr />
       <button onClick={() => sendFile()}>이메일 전송</button>
+      <button onClick={handleComposeClick}>Compose in Gmail</button>
     </>
   );
 }
