@@ -7,7 +7,7 @@ export default function useExplainSectionElements() {
   const explainSectionList = [
     { questionNumber: 8, element: Before08SectionExplain },
     { questionNumber: 22, element: Before22SectionExplain },
-    { questionNumber: 24, element: Before24SectionExplain },
+    { questionNumber: 26, element: Before26SectionExplain },
   ];
 
   return explainSectionList;
@@ -55,7 +55,7 @@ function Before22SectionExplain() {
 }
 
 // for explain text box before question number 24
-function Before24SectionExplain() {
+function Before26SectionExplain() {
   return (
     <p>
       다음은 파킨슨병 증상 이외의 증상으로{' '}

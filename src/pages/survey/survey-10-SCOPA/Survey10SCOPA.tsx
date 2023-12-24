@@ -3,7 +3,7 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import SurveyContentWithShortAnswers from '../common/components/survey-contents/survey-contents-with-short-answers/SurveyContent';
+import SurveyContent10SCOPA from './components/SurveyContent10SCOPA';
 // states
 import {
   survey09CurrentPageState,
@@ -15,18 +15,10 @@ import { headerCurrentPageState } from 'common/layout/header/pagination/headerPa
 import { respondedCheckObject10SCOPA } from '../common/states/respondedCheckObjects.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import {
-  SCOPA_QUESTIONS,
-  SCOPA_QUESTIONS_WITH_INPUT,
-  SCOPA_QUESTIONS_PER_PAGE,
-  SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST,
-  SURVEY_10_SCOPA_STATE_KEYWORD,
-} from './survey.const';
+import { SCOPA_QUESTIONS, SCOPA_QUESTIONS_PER_PAGE } from './survey.const';
 import { SURVEY_09_TIRED_TOTAL_PAGES } from '../survey-09-TIRED/survey.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
-import useSeparateGender from './hooks/useSeparateGender';
-import useExplainSectionElements from './hooks/useExplainSectionElements';
 import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 // styles
 import styles from '../common/survey.module.scss';
@@ -51,12 +43,6 @@ export default function Survey10SCOPA() {
 
   // for bottom next button disabled
   const responseStateList = useRecoilValue(survey10SCOPA_responseSelector);
-
-  // for separate question 22-23 by gender
-  const categorizedQuestionList = useSeparateGender();
-
-  // for explain text box before question number 8~13, 22~23, 24
-  const explainSectionList = useExplainSectionElements();
 
   // for updata header current page
   const { totalPagesList } = useTotalPages();
@@ -90,14 +76,8 @@ export default function Survey10SCOPA() {
       {surveyExplain}
       <ul>
         {currentPageQuestions.map((question) => (
-          <SurveyContentWithShortAnswers
+          <SurveyContent10SCOPA
             question={question}
-            surveyStateKeyword={SURVEY_10_SCOPA_STATE_KEYWORD}
-            explainSectionList={explainSectionList}
-            categorizedQuestionList={categorizedQuestionList}
-            questionWithInput={SCOPA_QUESTIONS_WITH_INPUT}
-            answerWithInputTitleList={SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST}
-            showInputCondition={SCOPA_QUESTIONS_WITH_INPUT.A[1]}
             // for bottom prev/next button
             handlePrevPage={handlePrevPage}
             handleNextPage={handleNextPage}

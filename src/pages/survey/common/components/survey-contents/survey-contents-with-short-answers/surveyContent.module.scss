@@ -53,7 +53,6 @@
 
   // for explain text box (survey-10-SCOPA)
   .explain-section {
-    margin-top: 10rem;
     margin-bottom: 1.5rem;
     background-color: $sidebar-background-blue-color;
     border-radius: 0.625rem;
@@ -89,6 +88,14 @@
         color: white;
       }
     }
+  }
+
+  // for survey-10-SCOPA
+  .female-question-delete-margin-top {
+    margin-top: -3rem;
+  }
+  .last-input-question-explain-section-top-margin {
+    margin-top: 10rem;
   }
 
   // for image select answer component
