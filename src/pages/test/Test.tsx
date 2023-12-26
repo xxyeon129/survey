@@ -21,6 +21,7 @@ import {
   personalInfoBirthdayState,
   personalInfoNameState,
 } from 'pages/survey/personalInfo/personalInfo.state';
+import ExcelChangeTest from './ExcelChangeTest';
 
 export default function Test() {
   const personalInfo_ResponseList = useRecoilValue(personalInfo_excelData);
@@ -260,6 +261,107 @@ export default function Test() {
     window.open(gmailComposeUrl, '_blank');
   };
 
+  // const testData = [
+  //   {
+  //     id: 'nick',
+  //     items: [
+  //       {
+  //         name: 'ball',
+  //       },
+  //       {
+  //         name: 'phone',
+  //       },
+  //     ],
+  //   },
+  //   {
+  //     id: 'jack',
+  //     items: [
+  //       {
+  //         name: 'pen',
+  //       },
+  //       {
+  //         name: 'doll',
+  //       },
+  //     ],
+  //   },
+  // ];
+  // const testWs = XLSX.utils.json_to_sheet(testData);
+  // const testWb = XLSX.utils.book_new();
+  // XLSX.utils.book_append_sheet(testWb, testWs, '');
+  // const merge = [
+  //   { s: { r: 1, c: 0 }, e: { r: 2, c: 0 } },
+  //   { s: { r: 3, c: 0 }, e: { r: 4, c: 0 } },
+  // ];
+  // testWs['!merges'] = merge;
+
+  const alphabetArray = [
+    'D',
+    'E',
+    'F',
+    'G',
+    'H',
+    'I',
+    'J',
+    'K',
+    'L',
+    'M',
+    'N',
+    'O',
+    'P',
+    'Q',
+    'R',
+    'S',
+    'T',
+    'U',
+    'V',
+    'W',
+  ];
+
+  let testData = [{ Name: 'George', MedicineO: '69', MedicineX: '112' }];
+
+  const responseData: { [key: number]: number } = {};
+  for (let i = 0; i < alphabetArray.length; i++) {
+    responseData[i] = 1;
+  }
+
+  testData = testData.map((obj) => ({ ...obj, ...responseData }));
+
+  // add empty rows in the beginning
+  testData.unshift(
+    { Name: '', MedicineO: '', MedicineX: '' },
+    { Name: '', MedicineO: '', MedicineX: '' }
+  );
+
+  // Hide headers by adding skipHeader: true
+  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(testData, { skipHeader: true });
+  ws.A1 = { t: 's', v: 'Name' };
+
+  ws.B1 = { t: 's', v: 'UPDRS I, II' };
+  ws.B2 = { t: 's', v: 'MedicineO' };
+  ws.C2 = { t: 's', v: 'MedicineX' };
+
+  ws.D1 = { t: 's', v: 'PDQ 31' };
+
+  for (let i = 0; i < alphabetArray.length; i++) {
+    ws[`${alphabetArray[i]}2`] = { t: 's', v: i + 1 };
+  }
+
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, '');
+
+  // s - start, e - end, r - row, c - col (0 based)
+  const merge = [
+    { s: { r: 0, c: 0 }, e: { r: 1, c: 0 } }, // Name
+    { s: { r: 0, c: 1 }, e: { r: 0, c: 2 } }, // UPDRS
+    { s: { r: 0, c: 3 }, e: { r: 0, c: 21 } }, // PDQ 31
+  ];
+  ws['!merges'] = merge;
+
+  const testDynamicColumnsExcelFile = () => {
+    // * XLSX.writeFile(workbook, 'test.xlsx');
+    XLSX.writeFile(wb, 'T0432.xlsx', {});
+  };
+
   return (
     <>
       <button onClick={() => downloadExcelFileHandler()}>Excel 다운로드</button>
@@ -272,7 +374,12 @@ export default function Test() {
       />
       <hr />
       <button onClick={() => sendFile()}>이메일 전송</button>
+      <hr />
       <button onClick={handleComposeClick}>Compose in Gmail</button>
+      <hr />
+      <button onClick={() => testDynamicColumnsExcelFile()}>복수행 Excel 다운로드</button>
+      <hr />
+      <ExcelChangeTest />
     </>
   );
 }

@@ -1,7 +1,7 @@
 import { RecoilState, useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
-import AnswerList from '../answerList/AnswerList';
+import AnswerList from '../answerList/AnswerList_forExcel';
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
 import Survey01UPDRSAdditionalMedicineExplain from './components/Survey01UPDRSAdditionalMedicineExplain';
 // states
@@ -240,6 +240,8 @@ function AnswersUnorderedList(props: AnswersUnorderedListProps) {
           surveyStateKeyword={props.surveyStateKeyword}
           // for hide question right not-responded "!" icon when checked
           respondedCheckObject={props.respondedCheckObject}
+          // for excel file number value
+          answersList={props.answersList}
           key={uuidv4()}
         />
       ))}
