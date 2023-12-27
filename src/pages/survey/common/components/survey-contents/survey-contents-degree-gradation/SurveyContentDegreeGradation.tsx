@@ -30,7 +30,7 @@ interface SurveyContentDegreeGradationProps {
   surveyStateKeyword: string;
 }
 
-// survey-08-PDSS
+// survey-03-BAI, survey-08-PDSS
 export default function SurveyContentDegreeGradation(props: SurveyContentDegreeGradationProps) {
   // for bottom next button disabled
   const currentPageResponseList = props.responseStateList.slice(

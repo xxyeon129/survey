@@ -19,6 +19,7 @@ import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
   BAI_QUESTIONS,
   BAI_QUESTIONS_PER_PAGE,
+  SURVEY_03_BAI_INPUT_VALUE_LIST,
   SURVEY_03_BAI_STATE_ANSWERS,
   SURVEY_03_BAI_STATE_KEYWORD,
 } from './survey.const';
@@ -104,7 +105,7 @@ export default function Survey03BAI() {
           <SurveyContentDegreeGradation
             question={question}
             degreesListForDisplay={SURVEY_03_BAI_STATE_ANSWERS}
-            degreesList={SURVEY_03_BAI_STATE_ANSWERS}
+            degreesList={SURVEY_03_BAI_INPUT_VALUE_LIST}
             surveyStateKeyword={SURVEY_03_BAI_STATE_KEYWORD}
             surveyQuestionsPerPage={BAI_QUESTIONS_PER_PAGE}
             // for bottom prev/next button

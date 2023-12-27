@@ -1,3 +1,9 @@
+import {
+  getRowCellAlphabetArray,
+  getStartRowCellAlphabet,
+} from 'common/hooks/excel-file/create-cell-question-number/utils/excelFileRowCellAlphabet';
+import { BAI_QUESTIONS } from 'pages/survey/survey-03-BAI/survey.const';
+
 export const WS_COLUMN_SURVEY_01_UPDRS = {
   NOT_TAKE: [
     'F',
@@ -79,5 +85,15 @@ export const WS_COLUMN_SURVEY_01_UPDRS = {
 export const WS_COLUMN_SURVEY_02_FG = {
   NOT_TAKE: ['BW', 'BX', 'BY', 'BZ', 'CA', 'CB', 'CC'],
   EFFECT_OFF: ['CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ'],
-  EFFECT_ON: ['CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ'], // , 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ', 'DA', 'DB', 'DC'
+  EFFECT_ON: ['CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ'],
 };
+
+const addSumIndex = 1;
+
+const survey03BAI_startAlphabet = getStartRowCellAlphabet(
+  WS_COLUMN_SURVEY_02_FG.EFFECT_ON[WS_COLUMN_SURVEY_02_FG.EFFECT_ON.length - 1]
+);
+export const WS_COLUMN_SURVEY_03_BAI = getRowCellAlphabetArray(
+  survey03BAI_startAlphabet,
+  BAI_QUESTIONS.length + addSumIndex
+);

@@ -17,7 +17,9 @@ import { UPDRS_QUESTIONS } from 'pages/survey/survey-01-UPDRS/survey.const';
 import useExcelFileCreateCellData_survey02FG from './excel-file/create-cell-data/useExcelFileCreateCellData_survey02FG';
 import { excelFileCreateCellQuestionNumber_survey02FG } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey02FG';
 import { FG_QUESTIONS } from 'pages/survey/survey-02-FG/survey.const';
-import { EXCEL_FILE_HEADER_CELL_SURVEY_TITLE } from './excel-file/constants/excelFile.const';
+import { EXCEL_FILE_HEADER_CELL_SURVEY_TITLE } from './excel-file/constants/excelFileHeaderSurveyTitle.const';
+import useExcelFileCreateCellData_survey03BAI from './excel-file/create-cell-data/useExcelFileCreateCellData_survey03BAI';
+import { excelFileCreateCellQuestionNumber_survey03BAI } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey03BAI';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
@@ -45,12 +47,14 @@ export default function useExcelFile(props: UseExcelFileProps) {
   ];
   const survey01UPDRS_responseData = useExcelFileCreateCellData_survey01UPDRS();
   const survey02FG_responseData = useExcelFileCreateCellData_survey02FG();
+  const survey03BAI_responseData = useExcelFileCreateCellData_survey03BAI();
 
   // * combine in one row ----------
   const responseData = personalInfo_responseData.map((obj) => ({
     ...obj,
     ...survey01UPDRS_responseData,
     ...survey02FG_responseData,
+    ...survey03BAI_responseData,
   }));
 
   // add empty rows in the beginning
@@ -77,9 +81,12 @@ export default function useExcelFile(props: UseExcelFileProps) {
   ws.CD2 = { t: 's', v: '파킨슨병약 효과 X (OFF)' };
   ws.CK2 = { t: 's', v: '파킨슨병약 효과 O (ON)' };
 
+  ws.CR1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['03_BAI'] };
+
   // * header cell setting question number ----------
   excelFileCreateCellQuestionNumber_survey01UPDRS(ws);
   excelFileCreateCellQuestionNumber_survey02FG(ws);
+  excelFileCreateCellQuestionNumber_survey03BAI(ws);
 
   // * create excel file ----------
   const wb = XLSX.utils.book_new();
@@ -103,6 +110,8 @@ export default function useExcelFile(props: UseExcelFileProps) {
     { s: { r: 1, c: 74 }, e: { r: 1, c: 80 } }, // FG - MedicineX
     { s: { r: 1, c: 81 }, e: { r: 1, c: 87 } }, // FG - EffectOff
     { s: { r: 1, c: 88 }, e: { r: 1, c: 94 } }, // FG - EffectOn
+
+    { s: { r: 0, c: 95 }, e: { r: 1, c: 116 } }, // BAI
   ];
   ws['!merges'] = merge;
 
