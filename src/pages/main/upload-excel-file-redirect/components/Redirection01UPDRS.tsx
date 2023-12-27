@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import RedirectionMedicineEffectContent from './common/RedirectionMedicineEffectContent';
@@ -10,61 +10,64 @@ import { survey01UPDRS_totalPagesState } from 'pages/survey/survey-01-UPDRS/surv
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
+  NOT_TAKE_MEDICINE,
   SURVEY_01_UPDRS_STATE_KEYWORD,
   SURVEY_01_UPDRS_TAKE_MEDICINE_TOTAL_PAGES,
   TAKE_MEDICINE,
   UPDRS_QUESTIONS,
+  UPDRS_QUESTIONS_PER_PAGE,
   UPDRS_TAKE_MEDICINE_QUESTIONS,
 } from 'pages/survey/survey-01-UPDRS/survey.const';
-// types
-import {
-  UploadedResponseDataGroupedListType,
-  UploadedResponseDataListType,
-} from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 
 export default function Redirection01UPDRS() {
+  // for setting questions according to pre question answer
   const [questions, setQuestions] = useState(UPDRS_QUESTIONS);
 
   // for get uploaded excel file response data
   const uploadedExcelFileRawData = useRecoilValue(
     uploadedResponseStates(SURVEY_TITLE_LIST[1].TITLE)
   );
+  // for check data processed successfully
+  const haveUploadedExcelFileRawData = Object.keys(uploadedExcelFileRawData).length > 0;
 
   // for make uploaded excel file pre-question response data to recoil state (localStorage)
-  const [preQuestionResponseValue, setPreQuestionResponseValue] = useRecoilState(
+  const setPreQuestionResponseValue = useSetRecoilState(
     responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)
   );
+
   // for pre-question radio button checked according to uploaded excel file response data
   const [uploadedExcelDataPreQuestionAnswer, setUploadedExcelDataPreQuestionAnswer] = useState('');
-
-  // for separate uploaded excel file raw data according to pre question answer
-  const [uploadedExcelFileDataList, setUploadedExcelFileDataList] = useState<
-    UploadedResponseDataListType | UploadedResponseDataGroupedListType
-  >([]);
 
   // for setting total pages
   const setTotalPages = useSetRecoilState(survey01UPDRS_totalPagesState);
 
   useEffect(() => {
-    if (uploadedExcelFileRawData.length > 0) {
+    if (haveUploadedExcelFileRawData) {
       // for pre-question radio button checked according to uploaded excel file response data
-      setUploadedExcelDataPreQuestionAnswer(uploadedExcelFileRawData[0].응답내용);
-      setPreQuestionResponseValue(uploadedExcelFileRawData[0].응답내용);
-
-      // for setting question UI, total pages
-      if (uploadedExcelFileRawData[0].응답내용 === TAKE_MEDICINE) {
-        setQuestions(UPDRS_TAKE_MEDICINE_QUESTIONS);
-        setTotalPages(SURVEY_01_UPDRS_TAKE_MEDICINE_TOTAL_PAGES);
+      for (let i = 1; i <= UPDRS_QUESTIONS_PER_PAGE; i++) {
+        if (uploadedExcelFileRawData[`01_NOT_${i}`].length > 0) {
+          setUploadedExcelDataPreQuestionAnswer(NOT_TAKE_MEDICINE);
+          break;
+        }
+        if (uploadedExcelFileRawData[`01_ON_${i}`].length > 0) {
+          setUploadedExcelDataPreQuestionAnswer(TAKE_MEDICINE);
+          break;
+        }
       }
     }
   }, []);
 
-  // for separate uploaded excel file raw data according to pre question answer
   useEffect(() => {
-    if (uploadedExcelFileRawData.length > 0) {
-      setUploadedExcelFileDataList(uploadedExcelFileRawData);
+    if (haveUploadedExcelFileRawData) {
+      setPreQuestionResponseValue(uploadedExcelDataPreQuestionAnswer);
+
+      // for setting question UI, total pages
+      if (uploadedExcelDataPreQuestionAnswer === TAKE_MEDICINE) {
+        setQuestions(UPDRS_TAKE_MEDICINE_QUESTIONS);
+        setTotalPages(SURVEY_01_UPDRS_TAKE_MEDICINE_TOTAL_PAGES);
+      }
     }
-  }, [preQuestionResponseValue]);
+  }, [uploadedExcelDataPreQuestionAnswer]);
 
   return (
     <>
@@ -72,7 +75,7 @@ export default function Redirection01UPDRS() {
         <RedirectionMedicineEffectContent
           question={question}
           surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
-          uploadedExcelFileDataList={uploadedExcelFileDataList}
+          uploadedExcelFileRawData={uploadedExcelFileRawData}
           uploadedExcelDataPreQuestionAnswer={uploadedExcelDataPreQuestionAnswer}
           key={uuidv4()}
         />

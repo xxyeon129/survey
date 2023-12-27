@@ -5,24 +5,32 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
   personalInfoBirthdayState,
+  personalInfoGenderState,
   personalInfoNameState,
 } from 'pages/survey/personalInfo/personalInfo.state';
-import { personalInfo_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/personalInfo_excelData';
-import { survey01UPDRS_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey01UPDRS_excelData';
-import { survey02FG_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey02FG_excelData';
-import { survey03BAI_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey03BAI_excelData';
-import { survey04BDI_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey04BDI_excelData';
-import { survey05RBD_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey05RBD_excelData';
-import { survey06NMS_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey06NMS_excelData';
-import { survey07PDQ_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey07PDQ_excelData';
-import { survey08PDSS_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey08PDSS_excelData';
-import { survey09Tired_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey09Tired_excelData';
-import { survey10SCOPA_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey10SCOPA_excelData';
-import { survey11Constipation_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey11Constipation_excelData';
-import { survey12Food_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey12Food_excelData';
+// import { personalInfo_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/personalInfo_excelData';
+// import { survey01UPDRS_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey01UPDRS_excelData';
+// import { survey02FG_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey02FG_excelData';
+// import { survey03BAI_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey03BAI_excelData';
+// import { survey04BDI_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey04BDI_excelData';
+// import { survey05RBD_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey05RBD_excelData';
+// import { survey06NMS_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey06NMS_excelData';
+// import { survey07PDQ_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey07PDQ_excelData';
+// import { survey08PDSS_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey08PDSS_excelData';
+// import { survey09Tired_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey09Tired_excelData';
+// import { survey10SCOPA_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey10SCOPA_excelData';
+// import { survey11Constipation_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey11Constipation_excelData';
+// import { survey12Food_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey12Food_excelData';
 import { uploadedResponseStates } from '../layout/header/excelFileHandle/states/uploadedResponseData.state';
 import { useNavigate } from 'react-router-dom';
 import { PATH_URL } from 'common/constants/path.const';
+import {
+  survey01UPDRS_medicineEffectOFF_excelData,
+  survey01UPDRS_medicineEffectON_excelData,
+  survey01UPDRS_notTakeMedicine_excelData,
+} from 'common/layout/header/excelFileHandle/states/responseDataSelectors/survey01UPDRS_excelData';
+import { UPDRS_QUESTIONS } from 'pages/survey/survey-01-UPDRS/survey.const';
+import { WS_COLUMN_SURVEY_01_UPDRS } from 'pages/test/excelWorksheetColumn.const';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
@@ -31,141 +39,269 @@ interface UseExcelFileProps {
 }
 
 export default function useExcelFile(props: UseExcelFileProps) {
-  // create recoil state in session storage
+  // create excel file ---------------------------------------------------------------
+
+  // * personal info ----------
+  const respondedName = useRecoilValue(personalInfoNameState);
+  const respondedBirthday = useRecoilValue(personalInfoBirthdayState);
+  const respondedGender = useRecoilValue(personalInfoGenderState);
+
+  const personalInfo_responseData = [
+    {
+      No: '1',
+      Name: respondedName,
+      'Patient ID': '',
+      'D.O.B': respondedBirthday,
+      Gender: respondedGender,
+    },
+  ];
+
+  // * survey-01-UPDRS ----------
+  const survey01UPDRS_notTakeMedicine_responseData: { [key: string]: string } = {};
+  const survey01UPDRS_medicineEffectOFF_responseData: { [key: string]: string } = {};
+  const survey01UPDRS_medicineEffectON_responseData: { [key: string]: string } = {};
+
+  const survey01UPDRS_notTakeMedicine_responseList = useRecoilValue(
+    survey01UPDRS_notTakeMedicine_excelData
+  );
+  const survey01UPDRS_medicineEffectOFF_responseList = useRecoilValue(
+    survey01UPDRS_medicineEffectOFF_excelData
+  );
+  const survey01UPDRS_medicineEffectON_responseList = useRecoilValue(
+    survey01UPDRS_medicineEffectON_excelData
+  );
+
+  const survey01UPDRS_questionLength = UPDRS_QUESTIONS.length; // 22
+
+  let survey01UPDRS_notTakeMedicine_sum: string | number = '';
+  let survey01UPDRS_medicineEffectOFF_sum: string | number = '';
+  let survey01UPDRS_medicineEffectON_sum: string | number = '';
+
+  // add response data - survey-01-UPDRS not take medicine case
+  for (let i = 1; i <= survey01UPDRS_questionLength; i++) {
+    const responseRecoilState = survey01UPDRS_notTakeMedicine_responseList[i][`${i}`] || '';
+    // add response cell data
+    survey01UPDRS_notTakeMedicine_responseData[`01_NOT_${i}`] = responseRecoilState;
+
+    // get sum
+    if (responseRecoilState.length > 0) {
+      if (i === 1) survey01UPDRS_notTakeMedicine_sum = 0;
+      if (typeof survey01UPDRS_notTakeMedicine_sum === 'number') {
+        survey01UPDRS_notTakeMedicine_sum += parseInt(responseRecoilState);
+      }
+    }
+    // apply sum cell data
+    if (i === survey01UPDRS_questionLength) {
+      survey01UPDRS_notTakeMedicine_responseData[
+        '01_NOT_SUM'
+      ] = `${survey01UPDRS_notTakeMedicine_sum}`;
+    }
+  }
+  // add response data - survey-01-UPDRS medicine effect off case
+  for (let i = 1; i <= survey01UPDRS_questionLength; i++) {
+    const responseRecoilState = survey01UPDRS_medicineEffectOFF_responseList[i][`${i}`] || '';
+    // add response cell data
+    survey01UPDRS_medicineEffectOFF_responseData[`01_OFF_${i}`] = responseRecoilState;
+
+    // get sum
+    if (responseRecoilState.length > 0) {
+      if (i === 1) survey01UPDRS_medicineEffectOFF_sum = 0;
+      if (typeof survey01UPDRS_medicineEffectOFF_sum === 'number') {
+        survey01UPDRS_medicineEffectOFF_sum += parseInt(responseRecoilState);
+      }
+    }
+    // add sum cell data
+    if (i === survey01UPDRS_questionLength) {
+      survey01UPDRS_medicineEffectOFF_responseData[
+        '01_OFF_SUM'
+      ] = `${survey01UPDRS_medicineEffectOFF_sum}`;
+    }
+  }
+  // add response data - survey-01-UPDRS medicine effect on case
+  for (let i = 1; i <= survey01UPDRS_questionLength; i++) {
+    const responseRecoilState = survey01UPDRS_medicineEffectON_responseList[i][`${i}`] || '';
+    // add response cell data
+    survey01UPDRS_medicineEffectON_responseData[`01_ON_${i}`] = responseRecoilState;
+
+    // get sum
+    if (responseRecoilState.length > 0) {
+      if (i === 1) survey01UPDRS_medicineEffectON_sum = 0;
+      if (typeof survey01UPDRS_medicineEffectON_sum === 'number')
+        survey01UPDRS_medicineEffectON_sum += parseInt(responseRecoilState);
+    }
+    // add sum cell data
+    if (i === survey01UPDRS_questionLength) {
+      survey01UPDRS_medicineEffectON_responseData[
+        '01_ON_SUM'
+      ] = `${survey01UPDRS_medicineEffectON_sum}`;
+    }
+  }
+
+  // * combine in one row ----------
+  const responseData = personalInfo_responseData.map((obj) => ({
+    ...obj,
+    ...survey01UPDRS_notTakeMedicine_responseData,
+    ...survey01UPDRS_medicineEffectOFF_responseData,
+    ...survey01UPDRS_medicineEffectON_responseData,
+  }));
+
+  // add empty rows in the beginning
+  responseData.unshift(
+    { No: '', Name: '', 'Patient ID': '', 'D.O.B': '', Gender: '' },
+    { No: '', Name: '', 'Patient ID': '', 'D.O.B': '', Gender: '' }
+  );
+
+  // * excel file header cell title setting ----------
+  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(responseData);
+  ws.A1 = { t: 's', v: 'No' };
+  ws.B1 = { t: 's', v: 'Name' };
+  ws.C1 = { t: 's', v: 'Patient ID' };
+  ws.D1 = { t: 's', v: 'D.O.B' };
+  ws.E1 = { t: 's', v: 'Gender' };
+
+  ws.F1 = { t: 's', v: 'UPDRS I, II' };
+  ws.F2 = { t: 's', v: '파킨슨병약 복용 전' };
+  ws.AC2 = { t: 's', v: '파킨슨병약 효과 X (OFF)' };
+  ws.AZ2 = { t: 's', v: '파킨슨병약 효과 O (ON)' };
+
+  // * header cell setting question number ----------
+  // ** survey-01-UPDRS
+  // *** not take medicine case
+  for (let i = 0; i <= survey01UPDRS_questionLength; i++) {
+    const sumColumnIndex = survey01UPDRS_questionLength;
+
+    if (i < sumColumnIndex) {
+      const questionNumber = i + 1;
+      ws[`${WS_COLUMN_SURVEY_01_UPDRS.NOT_TAKE[i]}3`] = {
+        t: 's',
+        v: questionNumber,
+      };
+    } else if (i === sumColumnIndex) {
+      // add sum title
+      ws[`${WS_COLUMN_SURVEY_01_UPDRS.NOT_TAKE[i]}3`] = {
+        t: 's',
+        v: 'SUM',
+      };
+    }
+  }
+  // *** survey-01-UPDRS - medicine effect off case
+  for (let i = 0; i <= survey01UPDRS_questionLength; i++) {
+    const sumColumnIndex = survey01UPDRS_questionLength;
+
+    if (i < sumColumnIndex) {
+      const questionNumber = i + 1;
+      ws[`${WS_COLUMN_SURVEY_01_UPDRS.EFFECT_OFF[i]}3`] = {
+        t: 's',
+        v: questionNumber,
+      };
+    } else if (i === sumColumnIndex) {
+      // add sum title
+      ws[`${WS_COLUMN_SURVEY_01_UPDRS.EFFECT_OFF[i]}3`] = {
+        t: 's',
+        v: 'SUM',
+      };
+    }
+  }
+  // *** survey-01-UPDRS - medicine effect on case
+  for (let i = 0; i <= survey01UPDRS_questionLength; i++) {
+    const sumColumnIndex = survey01UPDRS_questionLength;
+
+    if (i < sumColumnIndex) {
+      const questionNumber = i + 1;
+      ws[`${WS_COLUMN_SURVEY_01_UPDRS.EFFECT_ON[i]}3`] = {
+        t: 's',
+        v: questionNumber,
+      };
+    } else if (i === sumColumnIndex) {
+      // add sum title
+      ws[`${WS_COLUMN_SURVEY_01_UPDRS.EFFECT_ON[i]}3`] = {
+        t: 's',
+        v: 'SUM',
+      };
+    }
+  }
+
+  // * create excel file ----------
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, '비운동증상 설문');
+
+  // * excel file header cell column, row location setting -----
+  // s - start, e - end, r - row, c - col (0 based)
+  const merge = [
+    { s: { r: 0, c: 0 }, e: { r: 2, c: 0 } }, // No
+    { s: { r: 0, c: 1 }, e: { r: 2, c: 1 } }, // Name
+    { s: { r: 0, c: 2 }, e: { r: 2, c: 2 } }, // Patient ID
+    { s: { r: 0, c: 3 }, e: { r: 2, c: 3 } }, // D.O.B
+    { s: { r: 0, c: 4 }, e: { r: 2, c: 4 } }, // Gender
+
+    { s: { r: 0, c: 5 }, e: { r: 0, c: 73 } }, // UPDRS
+    { s: { r: 1, c: 5 }, e: { r: 1, c: 27 } }, // MedicineX
+    { s: { r: 1, c: 28 }, e: { r: 1, c: 50 } }, // EffectOff
+    { s: { r: 1, c: 51 }, e: { r: 1, c: 73 } }, // EffectOn
+  ];
+  ws['!merges'] = merge;
+
+  // * download excel file ----------
+  // for file name, send mail
+  const personalInfoName = useRecoilValue(personalInfoNameState);
+  const birthday = useRecoilValue(personalInfoBirthdayState);
+  const rawDate = new Date();
+  const fileRawDate = `${rawDate.getFullYear()}-${rawDate.getMonth()}-${rawDate.getDate()}`;
+  const fileRawTime = `T${rawDate.getHours()}-${rawDate.getMinutes()}`;
+  const fileDate = `${fileRawDate}${fileRawTime}`;
+
+  const downloadExcelFileHandler = () => {
+    XLSX.writeFile(
+      wb,
+      `이상운동질환 비운동증상 전자설문_${birthday}${personalInfoName}_${fileDate}.xlsx`
+    );
+  };
+
+  // upload excel file  ---------------------------------------------------------------
+
+  // for apply response - create recoil state in session storage
   const setUploadedPersonalInfo = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[0].TITLE)
   );
   const setUploadedSurvey01UPDRS = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[1].TITLE)
   );
-  const setUploadedSurvey02FG = useSetRecoilState(
-    uploadedResponseStates(SURVEY_TITLE_LIST[2].TITLE)
-  );
-  const setUploadedSurvey03BAI = useSetRecoilState(
-    uploadedResponseStates(SURVEY_TITLE_LIST[3].TITLE)
-  );
-  const setUploadedSurvey04BDI = useSetRecoilState(
-    uploadedResponseStates(SURVEY_TITLE_LIST[4].TITLE)
-  );
-  const setUploadedSurvey05RBD = useSetRecoilState(
-    uploadedResponseStates(SURVEY_TITLE_LIST[5].TITLE)
-  );
-  const setUploadedSurvey06NMS = useSetRecoilState(
-    uploadedResponseStates(SURVEY_TITLE_LIST[6].TITLE)
-  );
-  const setUploadedSurvey07PDQ = useSetRecoilState(
-    uploadedResponseStates(SURVEY_TITLE_LIST[7].TITLE)
-  );
-  const setUploadedSurvey08PDSS = useSetRecoilState(
-    uploadedResponseStates(SURVEY_TITLE_LIST[8].TITLE)
-  );
-  const setUploadedSurvey09Tired = useSetRecoilState(
-    uploadedResponseStates(SURVEY_TITLE_LIST[9].TITLE)
-  );
-  const setUploadedSurvey10SCOPA = useSetRecoilState(
-    uploadedResponseStates(SURVEY_TITLE_LIST[10].TITLE)
-  );
-  const setUploadedSurvey11Constipation = useSetRecoilState(
-    uploadedResponseStates(SURVEY_TITLE_LIST[11].TITLE)
-  );
-  const setUploadedSurvey12Food = useSetRecoilState(
-    uploadedResponseStates(SURVEY_TITLE_LIST[12].TITLE)
-  );
+  // const setUploadedSurvey02FG = useSetRecoilState(
+  //   uploadedResponseStates(SURVEY_TITLE_LIST[2].TITLE)
+  // );
+  // const setUploadedSurvey03BAI = useSetRecoilState(
+  //   uploadedResponseStates(SURVEY_TITLE_LIST[3].TITLE)
+  // );
+  // const setUploadedSurvey04BDI = useSetRecoilState(
+  //   uploadedResponseStates(SURVEY_TITLE_LIST[4].TITLE)
+  // );
+  // const setUploadedSurvey05RBD = useSetRecoilState(
+  //   uploadedResponseStates(SURVEY_TITLE_LIST[5].TITLE)
+  // );
+  // const setUploadedSurvey06NMS = useSetRecoilState(
+  //   uploadedResponseStates(SURVEY_TITLE_LIST[6].TITLE)
+  // );
+  // const setUploadedSurvey07PDQ = useSetRecoilState(
+  //   uploadedResponseStates(SURVEY_TITLE_LIST[7].TITLE)
+  // );
+  // const setUploadedSurvey08PDSS = useSetRecoilState(
+  //   uploadedResponseStates(SURVEY_TITLE_LIST[8].TITLE)
+  // );
+  // const setUploadedSurvey09Tired = useSetRecoilState(
+  //   uploadedResponseStates(SURVEY_TITLE_LIST[9].TITLE)
+  // );
+  // const setUploadedSurvey10SCOPA = useSetRecoilState(
+  //   uploadedResponseStates(SURVEY_TITLE_LIST[10].TITLE)
+  // );
+  // const setUploadedSurvey11Constipation = useSetRecoilState(
+  //   uploadedResponseStates(SURVEY_TITLE_LIST[11].TITLE)
+  // );
+  // const setUploadedSurvey12Food = useSetRecoilState(
+  //   uploadedResponseStates(SURVEY_TITLE_LIST[12].TITLE)
+  // );
 
-  const sessinStorageStatesSetterList = [
-    setUploadedPersonalInfo,
-    setUploadedSurvey01UPDRS,
-    setUploadedSurvey02FG,
-    setUploadedSurvey03BAI,
-    setUploadedSurvey04BDI,
-    setUploadedSurvey05RBD,
-    setUploadedSurvey06NMS,
-    setUploadedSurvey07PDQ,
-    setUploadedSurvey08PDSS,
-    setUploadedSurvey09Tired,
-    setUploadedSurvey10SCOPA,
-    setUploadedSurvey11Constipation,
-    setUploadedSurvey12Food,
-  ];
-
-  // get json data for create excel file ------------------------------------------
-  const personalInfo_ResponseList = useRecoilValue(personalInfo_excelData);
-  const survey01UPDRS_ResponseList = useRecoilValue(survey01UPDRS_excelData);
-  const survey02FG_ResponseList = useRecoilValue(survey02FG_excelData);
-  const survey03BAI_ResponseList = useRecoilValue(survey03BAI_excelData);
-  const survey04BDI_ResponseList = useRecoilValue(survey04BDI_excelData);
-  const survey05RBD_ResponseList = useRecoilValue(survey05RBD_excelData);
-  const survey06NMS_ResponseList = useRecoilValue(survey06NMS_excelData);
-  const survey07PDQ_ResponseList = useRecoilValue(survey07PDQ_excelData);
-  const survey08PDSS_ResponseList = useRecoilValue(survey08PDSS_excelData);
-  const survey09Tired_ResponseList = useRecoilValue(survey09Tired_excelData);
-  const survey10SCOPA_ResponseList = useRecoilValue(survey10SCOPA_excelData);
-  const survey11Constipation_ResponseList = useRecoilValue(survey11Constipation_excelData);
-  const survey12Food_ResponseList = useRecoilValue(survey12Food_excelData);
-
-  // create excel file ------------------------------------------
-  const workbook = XLSX.utils.book_new();
-
-  const worksheetPersonalInfo = XLSX.utils.json_to_sheet(personalInfo_ResponseList);
-  const worksheetSurvey01UPDRS = XLSX.utils.json_to_sheet(survey01UPDRS_ResponseList);
-  const worksheetSurvey02FG = XLSX.utils.json_to_sheet(survey02FG_ResponseList);
-  const worksheetSurvey03BAI = XLSX.utils.json_to_sheet(survey03BAI_ResponseList);
-  const worksheetSurvey04BDI = XLSX.utils.json_to_sheet(survey04BDI_ResponseList);
-  const worksheetSurvey05RBD = XLSX.utils.json_to_sheet(survey05RBD_ResponseList);
-  const worksheetSurvey06NMS = XLSX.utils.json_to_sheet(survey06NMS_ResponseList);
-  const worksheetSurvey07PDQ = XLSX.utils.json_to_sheet(survey07PDQ_ResponseList);
-  const worksheetSurvey08PDSS = XLSX.utils.json_to_sheet(survey08PDSS_ResponseList);
-  const worksheetSurvey09Tired = XLSX.utils.json_to_sheet(survey09Tired_ResponseList);
-  const worksheetSurvey10SCOPA = XLSX.utils.json_to_sheet(survey10SCOPA_ResponseList);
-  const worksheetSurvey11Constipation = XLSX.utils.json_to_sheet(survey11Constipation_ResponseList);
-  const worksheetSurvey12Food = XLSX.utils.json_to_sheet(survey12Food_ResponseList);
-
-  const worksheetList = [
-    worksheetPersonalInfo,
-    worksheetSurvey01UPDRS,
-    worksheetSurvey02FG,
-    worksheetSurvey03BAI,
-    worksheetSurvey04BDI,
-    worksheetSurvey05RBD,
-    worksheetSurvey06NMS,
-    worksheetSurvey07PDQ,
-    worksheetSurvey08PDSS,
-    worksheetSurvey09Tired,
-    worksheetSurvey10SCOPA,
-    worksheetSurvey11Constipation,
-    worksheetSurvey12Food,
-  ];
-  const worksheetTotalCount = worksheetList.length;
-
-  const bookAppendSheetHandler = () => {
-    const bookAppendSheet = (worksheetTotalCount: number) => {
-      for (let i = 0; i < worksheetTotalCount; i++) {
-        XLSX.utils.book_append_sheet(workbook, worksheetList[i], SURVEY_TITLE_LIST[i].TITLE);
-      }
-    };
-    bookAppendSheet(worksheetTotalCount);
-  };
-
-  // for file name, send mail
-  const personalInfoName = useRecoilValue(personalInfoNameState);
-  const birthday = useRecoilValue(personalInfoBirthdayState);
-  const rawDate = new Date().toISOString();
-  const fileRawDate = rawDate.slice(0, 10);
-  const fileRawTime = rawDate.slice(10, 19).replace(/:/g, '-');
-  const fileDate = `${fileRawDate}${fileRawTime}`;
-
-  const downloadExcelFileHandler = () => {
-    bookAppendSheetHandler();
-
-    XLSX.writeFile(
-      workbook,
-      `이상운동질환 비운동증상 전자설문_${birthday}${personalInfoName}_${fileDate}.xlsx`
-    );
-  };
-
-  // upload excel file ------------------------------------------
+  // upload file
   const fileRef = useRef<HTMLInputElement | null>(null);
-
   const uploadExcelFileHandler = () => {
     return new Promise((resolve) => {
       const uploadedFile = fileRef.current;
@@ -183,12 +319,32 @@ export default function useExcelFile(props: UseExcelFileProps) {
               const workbook = XLSX.read(result, { type: 'array' });
 
               // for get json data from uploaded excel sheet
-              for (let i = 0; i < worksheetTotalCount; i++) {
-                const sheetName = workbook.SheetNames[i];
-                const uploadedWorksheet = workbook.Sheets[sheetName];
-                const jsonData = XLSX.utils.sheet_to_json(uploadedWorksheet);
-                sessinStorageStatesSetterList[i](jsonData);
+              const sheetName = '비운동증상 설문';
+              const uploadedWorksheet = workbook.Sheets[sheetName];
+              const jsonData: { [key: string]: string }[] =
+                XLSX.utils.sheet_to_json(uploadedWorksheet);
+              // console.log(jsonData);
+              const uploadedData = jsonData[2];
+
+              // personalInfo
+              setUploadedPersonalInfo({
+                name: uploadedData.Name,
+                birthday: uploadedData['D.O.B'],
+                gender: uploadedData.Gender,
+              });
+
+              // survey-01-UPDRS
+              const uplodedSurvey01UPDRS: { [key: string]: string } = {};
+              for (let i = 1; i <= UPDRS_QUESTIONS.length; i++) {
+                if (i === 1) {
+                  uplodedSurvey01UPDRS['01_NOT_1'] = uploadedData['UPDRS I, II'];
+                } else {
+                  uplodedSurvey01UPDRS[`01_NOT_${i}`] = uploadedData[`01_NOT_${i}`];
+                }
+                uplodedSurvey01UPDRS[`01_OFF_${i}`] = uploadedData[`01_OFF_${i}`];
+                uplodedSurvey01UPDRS[`01_ON_${i}`] = uploadedData[`01_ON_${i}`];
               }
+              setUploadedSurvey01UPDRS(uplodedSurvey01UPDRS);
 
               resolve(undefined);
             }
@@ -199,16 +355,17 @@ export default function useExcelFile(props: UseExcelFileProps) {
     });
   };
 
-  // send email ----------------------------------------------
+  // send email  ---------------------------------------------------------------
+
   // for survey-12-Food
   const navigate = useNavigate();
+
   const sendFile = () => {
-    bookAppendSheetHandler();
-    const wbout = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+    const wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
 
     const blob = new Blob([new Uint8Array(wbout)], { type: 'multipart/form-data' });
     const formdata = new FormData();
-    formdata.append('file', blob, 'sendFileTest.xlsx');
+    formdata.append('file', blob, 'serverSendFile.xlsx');
     formdata.append('name', personalInfoName);
     formdata.append('birthday', birthday);
 

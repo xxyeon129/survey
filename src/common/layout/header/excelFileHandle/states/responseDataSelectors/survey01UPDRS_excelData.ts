@@ -4,7 +4,6 @@ import {
   NOT_TAKE_MEDICINE,
   SURVEY_01_UPDRS_STATE_KEYWORD,
   TAKE_MEDICINE,
-  // UPDRS_PRE_QUESTION,
   UPDRS_QUESTIONS,
   UPDRS_TAKE_MEDICINE_QUESTIONS,
 } from 'pages/survey/survey-01-UPDRS/survey.const';
@@ -15,8 +14,6 @@ export const survey01UPDRS_excelData = selector({
     const takeMedicineResponse = get(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`));
     const responseList: { [key: string]: string }[] = [
       {
-        // 문항번호: '사전질문',
-        // 질문내용: UPDRS_PRE_QUESTION.Q,
         pre: takeMedicineResponse,
       },
     ];
