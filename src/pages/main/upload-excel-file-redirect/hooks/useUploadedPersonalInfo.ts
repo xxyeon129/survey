@@ -10,15 +10,15 @@ import {
 import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
 
 export default function useUploadedPersonalInfo() {
-  const personalInfo_excelFileRawData = useRecoilValue(
+  const personalInfo_excelFileData = useRecoilValue(
     uploadedResponseStates(SURVEY_TITLE_LIST[0].TITLE)
   );
-  // set data from uploaded raw data file
+  // for set data from uploaded raw data file
   const [nameData, setNameData] = useState('');
   const [birthData, setBirthData] = useState('');
   const [genderData, setGenderData] = useState('');
 
-  // set localStorage state
+  // localStorage state setting
   const setSelectedName = useSetRecoilState(personalInfoNameState);
   const setSelectedBirth = useSetRecoilState(personalInfoBirthdayState);
   const setSeclectedGender = useSetRecoilState(personalInfoGenderState);
@@ -28,12 +28,10 @@ export default function useUploadedPersonalInfo() {
 
   useEffect(() => {
     // get data from uploaded raw data file
-    if (personalInfo_excelFileRawData.length > 0) {
-      const personalInfo_excelFileDataObject = personalInfo_excelFileRawData[0];
-
-      setNameData(personalInfo_excelFileDataObject.성명);
-      setBirthData(personalInfo_excelFileDataObject.생년월일);
-      setGenderData(personalInfo_excelFileDataObject.성별);
+    if (Object.keys(personalInfo_excelFileData).length > 0) {
+      setNameData(personalInfo_excelFileData.name);
+      setBirthData(personalInfo_excelFileData.birthday);
+      setGenderData(personalInfo_excelFileData.gender);
     }
   }, []);
 
