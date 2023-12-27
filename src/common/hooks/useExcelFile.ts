@@ -8,29 +8,12 @@ import {
   personalInfoGenderState,
   personalInfoNameState,
 } from 'pages/survey/personalInfo/personalInfo.state';
-// import { personalInfo_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/personalInfo_excelData';
-// import { survey01UPDRS_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey01UPDRS_excelData';
-// import { survey02FG_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey02FG_excelData';
-// import { survey03BAI_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey03BAI_excelData';
-// import { survey04BDI_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey04BDI_excelData';
-// import { survey05RBD_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey05RBD_excelData';
-// import { survey06NMS_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey06NMS_excelData';
-// import { survey07PDQ_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey07PDQ_excelData';
-// import { survey08PDSS_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey08PDSS_excelData';
-// import { survey09Tired_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey09Tired_excelData';
-// import { survey10SCOPA_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey10SCOPA_excelData';
-// import { survey11Constipation_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey11Constipation_excelData';
-// import { survey12Food_excelData } from '../layout/header/excelFileHandle/states/responseDataSelectors/survey12Food_excelData';
 import { uploadedResponseStates } from '../layout/header/excelFileHandle/states/uploadedResponseData.state';
 import { useNavigate } from 'react-router-dom';
 import { PATH_URL } from 'common/constants/path.const';
-import {
-  survey01UPDRS_medicineEffectOFF_excelData,
-  survey01UPDRS_medicineEffectON_excelData,
-  survey01UPDRS_notTakeMedicine_excelData,
-} from 'common/layout/header/excelFileHandle/states/responseDataSelectors/survey01UPDRS_excelData';
+import useExcelFileCreateCellData_survey01UPDRS from './excel-file/create-cell-data/useExcelFileCreateCellData_survey01UPDRS';
+import { excelFileCreateCellQuestionNumber_survey01UPDRS } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey01UPDRS';
 import { UPDRS_QUESTIONS } from 'pages/survey/survey-01-UPDRS/survey.const';
-import { WS_COLUMN_SURVEY_01_UPDRS } from 'pages/test/excelWorksheetColumn.const';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
@@ -41,11 +24,12 @@ interface UseExcelFileProps {
 export default function useExcelFile(props: UseExcelFileProps) {
   // create excel file ---------------------------------------------------------------
 
-  // * personal info ----------
+  // * personal info cell data ----------
   const respondedName = useRecoilValue(personalInfoNameState);
   const respondedBirthday = useRecoilValue(personalInfoBirthdayState);
   const respondedGender = useRecoilValue(personalInfoGenderState);
 
+  // * create cell data ----------
   const personalInfo_responseData = [
     {
       No: '1',
@@ -55,94 +39,12 @@ export default function useExcelFile(props: UseExcelFileProps) {
       Gender: respondedGender,
     },
   ];
-
-  // * survey-01-UPDRS ----------
-  const survey01UPDRS_notTakeMedicine_responseData: { [key: string]: string } = {};
-  const survey01UPDRS_medicineEffectOFF_responseData: { [key: string]: string } = {};
-  const survey01UPDRS_medicineEffectON_responseData: { [key: string]: string } = {};
-
-  const survey01UPDRS_notTakeMedicine_responseList = useRecoilValue(
-    survey01UPDRS_notTakeMedicine_excelData
-  );
-  const survey01UPDRS_medicineEffectOFF_responseList = useRecoilValue(
-    survey01UPDRS_medicineEffectOFF_excelData
-  );
-  const survey01UPDRS_medicineEffectON_responseList = useRecoilValue(
-    survey01UPDRS_medicineEffectON_excelData
-  );
-
-  const survey01UPDRS_questionLength = UPDRS_QUESTIONS.length; // 22
-
-  let survey01UPDRS_notTakeMedicine_sum: string | number = '';
-  let survey01UPDRS_medicineEffectOFF_sum: string | number = '';
-  let survey01UPDRS_medicineEffectON_sum: string | number = '';
-
-  // add response data - survey-01-UPDRS not take medicine case
-  for (let i = 1; i <= survey01UPDRS_questionLength; i++) {
-    const responseRecoilState = survey01UPDRS_notTakeMedicine_responseList[i][`${i}`] || '';
-    // add response cell data
-    survey01UPDRS_notTakeMedicine_responseData[`01_NOT_${i}`] = responseRecoilState;
-
-    // get sum
-    if (responseRecoilState.length > 0) {
-      if (i === 1) survey01UPDRS_notTakeMedicine_sum = 0;
-      if (typeof survey01UPDRS_notTakeMedicine_sum === 'number') {
-        survey01UPDRS_notTakeMedicine_sum += parseInt(responseRecoilState);
-      }
-    }
-    // apply sum cell data
-    if (i === survey01UPDRS_questionLength) {
-      survey01UPDRS_notTakeMedicine_responseData[
-        '01_NOT_SUM'
-      ] = `${survey01UPDRS_notTakeMedicine_sum}`;
-    }
-  }
-  // add response data - survey-01-UPDRS medicine effect off case
-  for (let i = 1; i <= survey01UPDRS_questionLength; i++) {
-    const responseRecoilState = survey01UPDRS_medicineEffectOFF_responseList[i][`${i}`] || '';
-    // add response cell data
-    survey01UPDRS_medicineEffectOFF_responseData[`01_OFF_${i}`] = responseRecoilState;
-
-    // get sum
-    if (responseRecoilState.length > 0) {
-      if (i === 1) survey01UPDRS_medicineEffectOFF_sum = 0;
-      if (typeof survey01UPDRS_medicineEffectOFF_sum === 'number') {
-        survey01UPDRS_medicineEffectOFF_sum += parseInt(responseRecoilState);
-      }
-    }
-    // add sum cell data
-    if (i === survey01UPDRS_questionLength) {
-      survey01UPDRS_medicineEffectOFF_responseData[
-        '01_OFF_SUM'
-      ] = `${survey01UPDRS_medicineEffectOFF_sum}`;
-    }
-  }
-  // add response data - survey-01-UPDRS medicine effect on case
-  for (let i = 1; i <= survey01UPDRS_questionLength; i++) {
-    const responseRecoilState = survey01UPDRS_medicineEffectON_responseList[i][`${i}`] || '';
-    // add response cell data
-    survey01UPDRS_medicineEffectON_responseData[`01_ON_${i}`] = responseRecoilState;
-
-    // get sum
-    if (responseRecoilState.length > 0) {
-      if (i === 1) survey01UPDRS_medicineEffectON_sum = 0;
-      if (typeof survey01UPDRS_medicineEffectON_sum === 'number')
-        survey01UPDRS_medicineEffectON_sum += parseInt(responseRecoilState);
-    }
-    // add sum cell data
-    if (i === survey01UPDRS_questionLength) {
-      survey01UPDRS_medicineEffectON_responseData[
-        '01_ON_SUM'
-      ] = `${survey01UPDRS_medicineEffectON_sum}`;
-    }
-  }
+  const survey01UPDRS_responseData = useExcelFileCreateCellData_survey01UPDRS();
 
   // * combine in one row ----------
   const responseData = personalInfo_responseData.map((obj) => ({
     ...obj,
-    ...survey01UPDRS_notTakeMedicine_responseData,
-    ...survey01UPDRS_medicineEffectOFF_responseData,
-    ...survey01UPDRS_medicineEffectON_responseData,
+    ...survey01UPDRS_responseData,
   }));
 
   // add empty rows in the beginning
@@ -165,61 +67,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
   ws.AZ2 = { t: 's', v: '파킨슨병약 효과 O (ON)' };
 
   // * header cell setting question number ----------
-  // ** survey-01-UPDRS
-  // *** not take medicine case
-  for (let i = 0; i <= survey01UPDRS_questionLength; i++) {
-    const sumColumnIndex = survey01UPDRS_questionLength;
-
-    if (i < sumColumnIndex) {
-      const questionNumber = i + 1;
-      ws[`${WS_COLUMN_SURVEY_01_UPDRS.NOT_TAKE[i]}3`] = {
-        t: 's',
-        v: questionNumber,
-      };
-    } else if (i === sumColumnIndex) {
-      // add sum title
-      ws[`${WS_COLUMN_SURVEY_01_UPDRS.NOT_TAKE[i]}3`] = {
-        t: 's',
-        v: 'SUM',
-      };
-    }
-  }
-  // *** survey-01-UPDRS - medicine effect off case
-  for (let i = 0; i <= survey01UPDRS_questionLength; i++) {
-    const sumColumnIndex = survey01UPDRS_questionLength;
-
-    if (i < sumColumnIndex) {
-      const questionNumber = i + 1;
-      ws[`${WS_COLUMN_SURVEY_01_UPDRS.EFFECT_OFF[i]}3`] = {
-        t: 's',
-        v: questionNumber,
-      };
-    } else if (i === sumColumnIndex) {
-      // add sum title
-      ws[`${WS_COLUMN_SURVEY_01_UPDRS.EFFECT_OFF[i]}3`] = {
-        t: 's',
-        v: 'SUM',
-      };
-    }
-  }
-  // *** survey-01-UPDRS - medicine effect on case
-  for (let i = 0; i <= survey01UPDRS_questionLength; i++) {
-    const sumColumnIndex = survey01UPDRS_questionLength;
-
-    if (i < sumColumnIndex) {
-      const questionNumber = i + 1;
-      ws[`${WS_COLUMN_SURVEY_01_UPDRS.EFFECT_ON[i]}3`] = {
-        t: 's',
-        v: questionNumber,
-      };
-    } else if (i === sumColumnIndex) {
-      // add sum title
-      ws[`${WS_COLUMN_SURVEY_01_UPDRS.EFFECT_ON[i]}3`] = {
-        t: 's',
-        v: 'SUM',
-      };
-    }
-  }
+  excelFileCreateCellQuestionNumber_survey01UPDRS(ws);
 
   // * create excel file ----------
   const wb = XLSX.utils.book_new();
@@ -235,9 +83,9 @@ export default function useExcelFile(props: UseExcelFileProps) {
     { s: { r: 0, c: 4 }, e: { r: 2, c: 4 } }, // Gender
 
     { s: { r: 0, c: 5 }, e: { r: 0, c: 73 } }, // UPDRS
-    { s: { r: 1, c: 5 }, e: { r: 1, c: 27 } }, // MedicineX
-    { s: { r: 1, c: 28 }, e: { r: 1, c: 50 } }, // EffectOff
-    { s: { r: 1, c: 51 }, e: { r: 1, c: 73 } }, // EffectOn
+    { s: { r: 1, c: 5 }, e: { r: 1, c: 27 } }, // UPDRS - MedicineX
+    { s: { r: 1, c: 28 }, e: { r: 1, c: 50 } }, // UPDRS - EffectOff
+    { s: { r: 1, c: 51 }, e: { r: 1, c: 73 } }, // UPDRS - EffectOn
   ];
   ws['!merges'] = merge;
 
@@ -260,10 +108,10 @@ export default function useExcelFile(props: UseExcelFileProps) {
   // upload excel file  ---------------------------------------------------------------
 
   // for apply response - create recoil state in session storage
-  const setUploadedPersonalInfo = useSetRecoilState(
+  const setSessionStoragePersonalInfo = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[0].TITLE)
   );
-  const setUploadedSurvey01UPDRS = useSetRecoilState(
+  const setSessionStorageSurvey01UPDRS = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[1].TITLE)
   );
   // const setUploadedSurvey02FG = useSetRecoilState(
@@ -327,7 +175,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
               const uploadedData = jsonData[2];
 
               // personalInfo
-              setUploadedPersonalInfo({
+              setSessionStoragePersonalInfo({
                 name: uploadedData.Name,
                 birthday: uploadedData['D.O.B'],
                 gender: uploadedData.Gender,
@@ -344,7 +192,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
                 uplodedSurvey01UPDRS[`01_OFF_${i}`] = uploadedData[`01_OFF_${i}`];
                 uplodedSurvey01UPDRS[`01_ON_${i}`] = uploadedData[`01_ON_${i}`];
               }
-              setUploadedSurvey01UPDRS(uplodedSurvey01UPDRS);
+              setSessionStorageSurvey01UPDRS(uplodedSurvey01UPDRS);
 
               resolve(undefined);
             }
