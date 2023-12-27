@@ -1,6 +1,6 @@
 import * as XLSX from 'xlsx';
 import { UPDRS_QUESTIONS } from 'pages/survey/survey-01-UPDRS/survey.const';
-import { WS_COLUMN_SURVEY_01_UPDRS } from 'pages/test/excelWorksheetColumn.const';
+import { WS_COLUMN_SURVEY_01_UPDRS } from 'common/hooks/excel-file/constants/excelWorksheetColumn.const';
 
 export function excelFileCreateCellQuestionNumber_survey01UPDRS(ws: XLSX.WorkSheet) {
   const survey01UPDRS_questionLength = UPDRS_QUESTIONS.length; // 22

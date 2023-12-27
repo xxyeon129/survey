@@ -1,5 +1,5 @@
 import { BAI_QUESTIONS } from 'pages/survey/survey-03-BAI/survey.const';
-import { WS_COLUMN_SURVEY_03_BAI } from 'pages/test/excelWorksheetColumn.const';
+import { WS_COLUMN_SURVEY_03_BAI } from 'common/hooks/excel-file/constants/excelWorksheetColumn.const';
 import * as XLSX from 'xlsx';
 
 export function excelFileCreateCellQuestionNumber_survey03BAI(ws: XLSX.WorkSheet) {

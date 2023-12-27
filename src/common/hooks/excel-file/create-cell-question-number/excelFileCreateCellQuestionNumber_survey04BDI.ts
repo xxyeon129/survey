@@ -1,5 +1,5 @@
 import { BDI_QUESTIONS } from 'pages/survey/survey-04-BDI/survey.const';
-import { WS_COLUMN_SURVEY_04_BDI } from 'pages/test/excelWorksheetColumn.const';
+import { WS_COLUMN_SURVEY_04_BDI } from 'common/hooks/excel-file/constants/excelWorksheetColumn.const';
 import * as XLSX from 'xlsx';
 
 export function excelFileCreateCellQuestionNumber_survey04BDI(ws: XLSX.WorkSheet) {

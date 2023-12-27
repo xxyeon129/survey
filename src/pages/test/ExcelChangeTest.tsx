@@ -10,7 +10,7 @@ import {
   personalInfoNameState,
 } from 'pages/survey/personalInfo/personalInfo.state';
 import { useRecoilValue } from 'recoil';
-import { WS_COLUMN_SURVEY_01_UPDRS } from './excelWorksheetColumn.const';
+import { WS_COLUMN_SURVEY_01_UPDRS } from '../../common/hooks/excel-file/constants/excelWorksheetColumn.const';
 import { UPDRS_QUESTIONS } from 'pages/survey/survey-01-UPDRS/survey.const';
 import UploadExcelTest from './UploadExcelTest';
 

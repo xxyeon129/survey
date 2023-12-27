@@ -1,5 +1,5 @@
 import { FG_QUESTIONS } from 'pages/survey/survey-02-FG/survey.const';
-import { WS_COLUMN_SURVEY_02_FG } from 'pages/test/excelWorksheetColumn.const';
+import { WS_COLUMN_SURVEY_02_FG } from 'common/hooks/excel-file/constants/excelWorksheetColumn.const';
 import * as XLSX from 'xlsx';
 
 export function excelFileCreateCellQuestionNumber_survey02FG(ws: XLSX.WorkSheet) {
