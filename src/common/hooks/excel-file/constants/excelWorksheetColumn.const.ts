@@ -4,6 +4,7 @@ import {
 } from 'common/hooks/excel-file/create-cell-question-number/utils/excelFileRowCellAlphabet';
 import { BAI_QUESTIONS } from 'pages/survey/survey-03-BAI/survey.const';
 import { BDI_QUESTIONS } from 'pages/survey/survey-04-BDI/survey.const';
+import { RBD_QUESTIONS } from 'pages/survey/survey-05-RBD/survey.const';
 
 export const WS_COLUMN_SURVEY_01_UPDRS = {
   NOT_TAKE: [
@@ -107,4 +108,10 @@ export const WS_COLUMN_SURVEY_04_BDI = getRowCellAlphabetArray(
   BDI_QUESTIONS.length + additionalQuestionLength + addSumIndex
 );
 
-console.log(WS_COLUMN_SURVEY_04_BDI);
+const preQuestionLength = 1;
+const survey05RBD_prevAlphabet = WS_COLUMN_SURVEY_04_BDI[WS_COLUMN_SURVEY_04_BDI.length - 1];
+const survey05RBD_startAlphabet = getStartRowCellAlphabet(survey05RBD_prevAlphabet);
+export const WS_COLUMN_SURVEY_05_RBD = getRowCellAlphabetArray(
+  survey05RBD_startAlphabet,
+  RBD_QUESTIONS.length + preQuestionLength + addSumIndex
+);

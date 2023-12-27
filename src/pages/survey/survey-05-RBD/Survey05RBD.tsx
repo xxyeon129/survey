@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
+import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion_forExcel';
 import SurveyContentWithShortAnswers from '../common/components/survey-contents/survey-contents-with-short-answers/SurveyContent';
 // states
 import { useRecoilValue, useSetRecoilState } from 'recoil';

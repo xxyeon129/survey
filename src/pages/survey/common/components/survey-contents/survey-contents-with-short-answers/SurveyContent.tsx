@@ -1,7 +1,7 @@
 import { RecoilState, useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
-import AnswerList from '../answerList/AnswerList';
+import AnswerList from '../answerList/AnswerList_forExcel';
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
 // hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
@@ -39,7 +39,7 @@ interface SurveyContentWithShortAnswersProps {
   imageSelectAnswersList?: ImageSelectAnswerListType;
 }
 
-// survey-05-RBD, survey-10-SCOPA, survey-11-Constipation
+// survey-05-RBD, survey-11-Constipation
 export default function SurveyContentWithShortAnswers(props: SurveyContentWithShortAnswersProps) {
   // for bottom next button disabled
   let currentPageResponseList = props.responseStateList.slice(
@@ -88,17 +88,23 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
       </header>
 
       <ul className={contentStyles['answers-ul']}>
-        {props.question.A?.map((answer) => (
-          <AnswerList
-            answer={answer}
-            inputName={`${props.question.No}`}
-            inputId={`${props.question.No}${answer}`}
-            clickedQuestionNumber={`${props.question.No}`}
-            surveyStateKeyword={props.surveyStateKeyword}
-            respondedCheckObject={props.respondedCheckObject}
-            key={uuidv4()}
-          />
-        ))}
+        {props.question.A?.map(
+          (answer) =>
+            props.question.A && (
+              <AnswerList
+                answer={answer}
+                inputName={`${props.question.No}`}
+                inputId={`${props.question.No}${answer}`}
+                clickedQuestionNumber={`${props.question.No}`}
+                surveyStateKeyword={props.surveyStateKeyword}
+                // for show not-responded question "!" icon, not-responded question number message
+                respondedCheckObject={props.respondedCheckObject}
+                // for excel file number value
+                answersList={props.question.A}
+                key={uuidv4()}
+              />
+            )
+        )}
       </ul>
 
       {/* for image select type */}
@@ -166,8 +172,8 @@ function ImageSelectAnswers(props: ImageSelectAnswersProps) {
             id={`img-answer-${imageList.key}`}
             name="img-answer"
             onChange={handleRadioBtnChange}
-            value={imageList.alt}
-            checked={responseValue === imageList.alt}
+            value={`${imageList.key}`}
+            checked={responseValue === `${imageList.key}`}
           />
           <label htmlFor={`img-answer-${imageList.key}`}>
             <figure>

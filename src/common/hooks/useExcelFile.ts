@@ -22,10 +22,12 @@ import useExcelFileCreateCellData_survey03BAI from './excel-file/create-cell-dat
 import { excelFileCreateCellQuestionNumber_survey03BAI } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey03BAI';
 import useExcelFileCreateCellData_survey04BDI from './excel-file/create-cell-data/useExcelFileCreateCellData_survey04BDI';
 import { excelFileCreateCellQuestionNumber_survey04BDI } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey04BDI';
+import useExcelFileCreateCellData_survey05RBD from './excel-file/create-cell-data/useExcelFileCreateCellData_survey05RBD';
+import { excelFileCreateCellQuestionNumber_survey05RBD } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey05RBD';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
-  // for survey-12-Fodd
+  // for survey-12-Food
   isLastPage?: boolean;
 }
 
@@ -51,6 +53,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
   const survey02FG_responseData = useExcelFileCreateCellData_survey02FG();
   const survey03BAI_responseData = useExcelFileCreateCellData_survey03BAI();
   const survey04BDI_responseData = useExcelFileCreateCellData_survey04BDI();
+  const survey05RBD_responseData = useExcelFileCreateCellData_survey05RBD();
 
   // * combine in one row ----------
   const responseData = personalInfo_responseData.map((obj) => ({
@@ -59,6 +62,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
     ...survey02FG_responseData,
     ...survey03BAI_responseData,
     ...survey04BDI_responseData,
+    ...survey05RBD_responseData,
   }));
 
   // add empty rows in the beginning
@@ -87,12 +91,14 @@ export default function useExcelFile(props: UseExcelFileProps) {
 
   ws.CR1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['03_BAI'] };
   ws.DN1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['04_BDI'] };
+  ws.EK1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['05_RBD'] };
 
   // * header cell setting question number ----------
   excelFileCreateCellQuestionNumber_survey01UPDRS(ws);
   excelFileCreateCellQuestionNumber_survey02FG(ws);
   excelFileCreateCellQuestionNumber_survey03BAI(ws);
   excelFileCreateCellQuestionNumber_survey04BDI(ws);
+  excelFileCreateCellQuestionNumber_survey05RBD(ws);
 
   // * create excel file ----------
   const wb = XLSX.utils.book_new();
@@ -118,8 +124,8 @@ export default function useExcelFile(props: UseExcelFileProps) {
     { s: { r: 1, c: 88 }, e: { r: 1, c: 94 } }, // FG - EffectOn
 
     { s: { r: 0, c: 95 }, e: { r: 1, c: 116 } }, // BAI
-
     { s: { r: 0, c: 117 }, e: { r: 1, c: 139 } }, // BDI
+    { s: { r: 0, c: 140 }, e: { r: 1, c: 146 } }, // RBD
   ];
   ws['!merges'] = merge;
 

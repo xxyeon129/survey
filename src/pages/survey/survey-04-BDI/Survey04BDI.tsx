@@ -34,12 +34,8 @@ import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 import { BsExclamationCircleFill } from 'react-icons/bs';
 import styles from '../common/survey.module.scss';
 import surveyStyles from './surveyBDI.module.scss';
-import { survey04BDI_excelData } from 'common/layout/header/excelFileHandle/states/responseDataSelectors/survey04BDI_excelData';
 
 export default function Survey04BDI() {
-  const responseList = useRecoilValue(survey04BDI_excelData);
-  console.log(responseList);
-
   // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey03CurrentPageState);
   const setNextSurveyPage = useSetRecoilState(survey05CurrentPageState);
