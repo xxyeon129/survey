@@ -11,75 +11,69 @@ import { survey02FG_totalPagesState } from 'pages/survey/survey-02-FG/Survey02FG
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
   FG_QUESTIONS,
+  FG_QUESTIONS_PER_PAGE,
   FG_TAKE_MEDICINE_QUESTIONS,
+  HAVE_FG_SYMPTOM,
   SURVEY_02_FG_STATE_KEYWORD,
   SURVEY_02_FG_TAKE_MEDICINE_TOTAL_PAGES,
 } from 'pages/survey/survey-02-FG/survey.const';
-import { TAKE_MEDICINE } from 'pages/survey/survey-01-UPDRS/survey.const';
-// types
 import {
-  UploadedResponseDataGroupedListType,
-  UploadedResponseDataListType,
-} from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
+  SURVEY_01_UPDRS_STATE_KEYWORD,
+  TAKE_MEDICINE,
+} from 'pages/survey/survey-01-UPDRS/survey.const';
 
 export default function Redirection02FG() {
+  // for setting questions according to pre question answer
   const [questions, setQuestions] = useState(FG_QUESTIONS);
 
   // for get uploaded excel file response data
   const uploadedExcelFileRawData = useRecoilValue(
     uploadedResponseStates(SURVEY_TITLE_LIST[2].TITLE)
   );
+  // TO DO: for pre-question radio button "HAVE_NO_FG_SYMPTOM" checked condition
+
+  // for check data processed successfully
+  const haveUploadedExcelFileRawData = Object.keys(uploadedExcelFileRawData).length > 0;
 
   // for make uploaded excel file pre-question response data to recoil state (localStorage)
   const setPreQuestionResponseValue = useSetRecoilState(
     responseState(`${SURVEY_02_FG_STATE_KEYWORD}-pre`)
   );
 
-  // for separate uploaded excel file raw data according to pre question answer
-  const [uploadedExcelFileDataList, setUploadedExcelFileDataList] = useState<
-    UploadedResponseDataListType | UploadedResponseDataGroupedListType
-  >([]);
-
-  const survey01UPDRS_uploadedExcelFilePreQuestionRawData = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[1].TITLE)
-  )[0];
-
-  const [
-    survey01UPDRS_uploadedExcelFilePreQuestion,
-    setSurvey01UPDRS_uploadedExcelFilePreQuestion,
-  ] = useState('');
+  // for pre-question radio button checked according to uploaded excel file response data
+  const takeMedicinePreQuestion = useRecoilValue(
+    responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)
+  );
 
   // for setting total pages
   const setTotalPages = useSetRecoilState(survey02FG_totalPagesState);
 
-  useEffect(() => {
-    // for survey-01-UPDRS pre-question uploaded excel file setting
-    if (
-      survey01UPDRS_uploadedExcelFilePreQuestionRawData !== undefined &&
-      '응답내용' in survey01UPDRS_uploadedExcelFilePreQuestionRawData
-    ) {
-      setSurvey01UPDRS_uploadedExcelFilePreQuestion(
-        survey01UPDRS_uploadedExcelFilePreQuestionRawData.응답내용
-      );
+  const surveyNumber = '02';
 
-      // for setting questions according to take medicine
-      survey01UPDRS_uploadedExcelFilePreQuestionRawData.응답내용 === TAKE_MEDICINE &&
-        setQuestions(FG_TAKE_MEDICINE_QUESTIONS);
+  useEffect(() => {
+    if (haveUploadedExcelFileRawData) {
+      // for pre-question radio button checked according to uploaded excel file response data
+      for (let i = 1; i <= FG_QUESTIONS_PER_PAGE; i++) {
+        if (uploadedExcelFileRawData[`${surveyNumber}_NOT_${i}`].length > 0) {
+          setPreQuestionResponseValue(HAVE_FG_SYMPTOM);
+          break;
+        } else if (uploadedExcelFileRawData[`${surveyNumber}_ON_${i}`].length > 0) {
+          setPreQuestionResponseValue(HAVE_FG_SYMPTOM);
+          break;
+        }
+        // TO DO: 다음 설문은 답변이 존재할 경우
+        // setPreQuestionResponseValue(HAVE_NO_FG_SYMPTOM)
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    // for setting question UI, total pages
+    if (takeMedicinePreQuestion === TAKE_MEDICINE) {
+      setQuestions(FG_TAKE_MEDICINE_QUESTIONS);
       setTotalPages(SURVEY_02_FG_TAKE_MEDICINE_TOTAL_PAGES);
     }
-
-    // for pre-question radio button checked according to uploaded excel response data
-    if (uploadedExcelFileRawData.length > 0) {
-      setPreQuestionResponseValue(uploadedExcelFileRawData[0].응답내용);
-    }
-  }, [survey01UPDRS_uploadedExcelFilePreQuestionRawData]);
-
-  // for uploaded excel file raw data
-  useEffect(() => {
-    if (uploadedExcelFileRawData.length > 0) {
-      setUploadedExcelFileDataList(uploadedExcelFileRawData);
-    }
-  }, [survey01UPDRS_uploadedExcelFilePreQuestion]);
+  }, [takeMedicinePreQuestion]);
 
   return (
     <>
@@ -87,8 +81,10 @@ export default function Redirection02FG() {
         <RedirectionMedicineEffectContent
           question={question}
           surveyStateKeyword={SURVEY_02_FG_STATE_KEYWORD}
-          uploadedExcelFileDataList={uploadedExcelFileDataList}
-          uploadedExcelDataPreQuestionAnswer={survey01UPDRS_uploadedExcelFilePreQuestion}
+          uploadedExcelFileRawData={uploadedExcelFileRawData}
+          uploadedExcelDataPreQuestionAnswer={takeMedicinePreQuestion}
+          surveyNumber={surveyNumber}
+          medicineEffectOnQuestionEndNumber={6}
           key={uuidv4()}
         />
       ))}

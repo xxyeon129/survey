@@ -12,6 +12,8 @@ interface RedirectMedicineEffectContentProps {
   surveyStateKeyword: string;
   uploadedExcelFileRawData: { [key: string]: string };
   uploadedExcelDataPreQuestionAnswer: string;
+  surveyNumber: string;
+  medicineEffectOnQuestionEndNumber: number;
 }
 
 export default function RedirectionMedicineEffectContent(
@@ -29,7 +31,7 @@ export default function RedirectionMedicineEffectContent(
   // for separate medicine effect on, off
   const [uploadedExcelTakeMedicineDataResponse, setUploadedExcelTakeMedicineDataResponse] =
     useState('');
-  const medicineEffectOnQuestionEndNumber = 22;
+  // const medicineEffectOnQuestionEndNumber = 22;
 
   const haveUploadedExcelFileRawData = Object.keys(props.uploadedExcelFileRawData).length > 0;
 
@@ -40,7 +42,7 @@ export default function RedirectionMedicineEffectContent(
         props.uploadedExcelDataPreQuestionAnswer === NOT_TAKE_MEDICINE
       ) {
         const uploadedExcelDataResponse =
-          props.uploadedExcelFileRawData[`01_NOT_${props.question.No}`];
+          props.uploadedExcelFileRawData[`${props.surveyNumber}_NOT_${props.question.No}`];
 
         if (uploadedExcelDataResponse !== undefined) {
           setNotTakeMedicine_responseValue(uploadedExcelDataResponse);
@@ -50,14 +52,16 @@ export default function RedirectionMedicineEffectContent(
         props.uploadedExcelDataPreQuestionAnswer === TAKE_MEDICINE
       ) {
         if (takeMedicine_responseValue.length === 0) {
-          if (props.question.No <= medicineEffectOnQuestionEndNumber) {
+          if (props.question.No <= props.medicineEffectOnQuestionEndNumber) {
             setUploadedExcelTakeMedicineDataResponse(
-              props.uploadedExcelFileRawData[`01_ON_${props.question.No}`]
+              props.uploadedExcelFileRawData[`${props.surveyNumber}_ON_${props.question.No}`]
             );
-          } else if (props.question.No > medicineEffectOnQuestionEndNumber) {
+          } else if (props.question.No > props.medicineEffectOnQuestionEndNumber) {
             setUploadedExcelTakeMedicineDataResponse(
               props.uploadedExcelFileRawData[
-                `01_OFF_${props.question.No - medicineEffectOnQuestionEndNumber}`
+                `${props.surveyNumber}_OFF_${
+                  props.question.No - props.medicineEffectOnQuestionEndNumber
+                }`
               ]
             );
           }

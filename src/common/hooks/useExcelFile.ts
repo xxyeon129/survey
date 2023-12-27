@@ -16,6 +16,8 @@ import { excelFileCreateCellQuestionNumber_survey01UPDRS } from './excel-file/cr
 import { UPDRS_QUESTIONS } from 'pages/survey/survey-01-UPDRS/survey.const';
 import useExcelFileCreateCellData_survey02FG from './excel-file/create-cell-data/useExcelFileCreateCellData_survey02FG';
 import { excelFileCreateCellQuestionNumber_survey02FG } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey02FG';
+import { FG_QUESTIONS } from 'pages/survey/survey-02-FG/survey.const';
+import { EXCEL_FILE_HEADER_CELL_SURVEY_TITLE } from './excel-file/constants/excelFile.const';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
@@ -65,12 +67,12 @@ export default function useExcelFile(props: UseExcelFileProps) {
   ws.D1 = { t: 's', v: 'D.O.B' };
   ws.E1 = { t: 's', v: 'Gender' };
 
-  ws.F1 = { t: 's', v: 'UPDRS I, II' };
+  ws.F1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['01_UPDRS'] };
   ws.F2 = { t: 's', v: '파킨슨병약 복용 전' };
   ws.AC2 = { t: 's', v: '파킨슨병약 효과 X (OFF)' };
   ws.AZ2 = { t: 's', v: '파킨슨병약 효과 O (ON)' };
 
-  ws.BW1 = { t: 's', v: 'Freezing of Gait' };
+  ws.BW1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['02_FG'] };
   ws.BW2 = { t: 's', v: '파킨슨병약 복용 전' };
   ws.CD2 = { t: 's', v: '파킨슨병약 효과 X (OFF)' };
   ws.CK2 = { t: 's', v: '파킨슨병약 효과 O (ON)' };
@@ -129,9 +131,9 @@ export default function useExcelFile(props: UseExcelFileProps) {
   const setSessionStorageSurvey01UPDRS = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[1].TITLE)
   );
-  // const setUploadedSurvey02FG = useSetRecoilState(
-  //   uploadedResponseStates(SURVEY_TITLE_LIST[2].TITLE)
-  // );
+  const setSessionStorageSurvey02FG = useSetRecoilState(
+    uploadedResponseStates(SURVEY_TITLE_LIST[2].TITLE)
+  );
   // const setUploadedSurvey03BAI = useSetRecoilState(
   //   uploadedResponseStates(SURVEY_TITLE_LIST[3].TITLE)
   // );
@@ -186,17 +188,18 @@ export default function useExcelFile(props: UseExcelFileProps) {
               const uploadedWorksheet = workbook.Sheets[sheetName];
               const jsonData: { [key: string]: string }[] =
                 XLSX.utils.sheet_to_json(uploadedWorksheet);
-              // console.log(jsonData);
+
+              // for apply response - create recoil state in session storage ------------------
               const uploadedData = jsonData[2];
 
-              // personalInfo
+              // * personalInfo ----------
               setSessionStoragePersonalInfo({
                 name: uploadedData.Name,
                 birthday: uploadedData['D.O.B'],
                 gender: uploadedData.Gender,
               });
 
-              // survey-01-UPDRS
+              // * survey-01-UPDRS ----------
               const uplodedSurvey01UPDRS: { [key: string]: string } = {};
               for (let i = 1; i <= UPDRS_QUESTIONS.length; i++) {
                 if (i === 1) {
@@ -208,6 +211,24 @@ export default function useExcelFile(props: UseExcelFileProps) {
                 uplodedSurvey01UPDRS[`01_ON_${i}`] = uploadedData[`01_ON_${i}`];
               }
               setSessionStorageSurvey01UPDRS(uplodedSurvey01UPDRS);
+
+              // * survey-02-FG ----------
+              const uploadedSurvey02FG: { [key: string]: string } = {};
+              const survey02FG_number = '02';
+              for (let i = 1; i <= FG_QUESTIONS.length; i++) {
+                if (i === 1) {
+                  uploadedSurvey02FG[`${survey02FG_number}_NOT_1`] =
+                    uploadedData[EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['02_FG']];
+                } else {
+                  uploadedSurvey02FG[`${survey02FG_number}_NOT_${i}`] =
+                    uploadedData[`${survey02FG_number}_NOT_${i}`];
+                }
+                uploadedSurvey02FG[`${survey02FG_number}_OFF_${i}`] =
+                  uploadedData[`${survey02FG_number}_OFF_${i}`];
+                uploadedSurvey02FG[`${survey02FG_number}_ON_${i}`] =
+                  uploadedData[`${survey02FG_number}_ON_${i}`];
+              }
+              setSessionStorageSurvey02FG(uploadedSurvey02FG);
 
               resolve(undefined);
             }

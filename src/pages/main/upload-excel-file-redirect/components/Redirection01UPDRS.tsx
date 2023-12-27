@@ -77,6 +77,8 @@ export default function Redirection01UPDRS() {
           surveyStateKeyword={SURVEY_01_UPDRS_STATE_KEYWORD}
           uploadedExcelFileRawData={uploadedExcelFileRawData}
           uploadedExcelDataPreQuestionAnswer={uploadedExcelDataPreQuestionAnswer}
+          surveyNumber="01"
+          medicineEffectOnQuestionEndNumber={22}
           key={uuidv4()}
         />
       ))}
