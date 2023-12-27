@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
-import AnswerList from '../common/components/survey-contents/answerList/AnswerList';
+import AnswerList from '../common/components/survey-contents/answerList/AnswerList_forExcel';
 import BottomPrevNextButton from '../common/components/bottom-prev-next-button/BottomPrevNextButton';
 // states
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -34,8 +34,12 @@ import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 import { BsExclamationCircleFill } from 'react-icons/bs';
 import styles from '../common/survey.module.scss';
 import surveyStyles from './surveyBDI.module.scss';
+import { survey04BDI_excelData } from 'common/layout/header/excelFileHandle/states/responseDataSelectors/survey04BDI_excelData';
 
 export default function Survey04BDI() {
+  const responseList = useRecoilValue(survey04BDI_excelData);
+  console.log(responseList);
+
   // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey03CurrentPageState);
   const setNextSurveyPage = useSetRecoilState(survey05CurrentPageState);
@@ -172,18 +176,23 @@ function SurveyContent_Survey04BDI(props: SurveyContentProps) {
         />
 
         <ul className={surveyStyles['answers-ul']}>
-          {props.question.A?.map((answer) => (
-            <AnswerList
-              answer={answer}
-              inputName={`${props.question.No}`}
-              inputId={`${props.question.No}${answer}`}
-              clickedQuestionNumber={`${props.question.No}`}
-              surveyStateKeyword={SURVEY_04_BDI_STATE_KEYWORD}
-              // for show not-responded question "!" icon, not-responded question number message
-              respondedCheckObject={respondedCheckObject}
-              key={uuidv4()}
-            />
-          ))}
+          {props.question.A?.map(
+            (answer) =>
+              props.question.A && (
+                <AnswerList
+                  answer={answer}
+                  inputName={`${props.question.No}`}
+                  inputId={`${props.question.No}${answer}`}
+                  clickedQuestionNumber={`${props.question.No}`}
+                  surveyStateKeyword={SURVEY_04_BDI_STATE_KEYWORD}
+                  // for show not-responded question "!" icon, not-responded question number message
+                  respondedCheckObject={respondedCheckObject}
+                  // for excel file number value
+                  answersList={props.question.A}
+                  key={uuidv4()}
+                />
+              )
+          )}
         </ul>
       </li>
 
@@ -214,6 +223,8 @@ function SurveyContent_Survey04BDI(props: SurveyContentProps) {
                 inputId={`${props.question.No}${answer}`}
                 // for show not-responded question "!" icon, not-responded question number message
                 respondedCheckObject={respondedCheckObject}
+                // for excel file number value
+                answersList={BDI_ADDITIONAL_QUESTIONS_19.A}
                 key={uuidv4()}
               />
             ))}

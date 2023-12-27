@@ -3,6 +3,7 @@ import {
   getStartRowCellAlphabet,
 } from 'common/hooks/excel-file/create-cell-question-number/utils/excelFileRowCellAlphabet';
 import { BAI_QUESTIONS } from 'pages/survey/survey-03-BAI/survey.const';
+import { BDI_QUESTIONS } from 'pages/survey/survey-04-BDI/survey.const';
 
 export const WS_COLUMN_SURVEY_01_UPDRS = {
   NOT_TAKE: [
@@ -90,10 +91,20 @@ export const WS_COLUMN_SURVEY_02_FG = {
 
 const addSumIndex = 1;
 
-const survey03BAI_startAlphabet = getStartRowCellAlphabet(
-  WS_COLUMN_SURVEY_02_FG.EFFECT_ON[WS_COLUMN_SURVEY_02_FG.EFFECT_ON.length - 1]
-);
+const survey03BAI_prevAlphabet =
+  WS_COLUMN_SURVEY_02_FG.EFFECT_ON[WS_COLUMN_SURVEY_02_FG.EFFECT_ON.length - 1];
+const survey03BAI_startAlphabet = getStartRowCellAlphabet(survey03BAI_prevAlphabet);
 export const WS_COLUMN_SURVEY_03_BAI = getRowCellAlphabetArray(
   survey03BAI_startAlphabet,
   BAI_QUESTIONS.length + addSumIndex
 );
+
+const additionalQuestionLength = 1;
+const survey04BDI_prevAlphabet = WS_COLUMN_SURVEY_03_BAI[WS_COLUMN_SURVEY_03_BAI.length - 1];
+const survey04BDI_startAlphabet = getStartRowCellAlphabet(survey04BDI_prevAlphabet);
+export const WS_COLUMN_SURVEY_04_BDI = getRowCellAlphabetArray(
+  survey04BDI_startAlphabet,
+  BDI_QUESTIONS.length + additionalQuestionLength + addSumIndex
+);
+
+console.log(WS_COLUMN_SURVEY_04_BDI);
