@@ -1,46 +1,45 @@
 import { selector } from 'recoil';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import {
-  NOT_TAKE_MEDICINE,
   SURVEY_01_UPDRS_STATE_KEYWORD,
   TAKE_MEDICINE,
   UPDRS_QUESTIONS,
   UPDRS_TAKE_MEDICINE_QUESTIONS,
 } from 'pages/survey/survey-01-UPDRS/survey.const';
 
-export const survey01UPDRS_excelData = selector({
-  key: 'survey01UPDRS_excelData',
-  get: ({ get }) => {
-    const takeMedicineResponse = get(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`));
-    const responseList: { [key: string]: string }[] = [
-      {
-        pre: takeMedicineResponse,
-      },
-    ];
+// export const survey01UPDRS_excelData = selector({
+//   key: 'survey01UPDRS_excelData',
+//   get: ({ get }) => {
+//     const takeMedicineResponse = get(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`));
+//     const responseList: { [key: string]: string }[] = [
+//       {
+//         pre: takeMedicineResponse,
+//       },
+//     ];
 
-    if (takeMedicineResponse === TAKE_MEDICINE) {
-      // take medicine response
-      for (let i = 1; i <= UPDRS_TAKE_MEDICINE_QUESTIONS.length; i++) {
-        const takeMedicineResponseValue = get(
-          responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-${i}-${TAKE_MEDICINE}`)
-        );
-        const response: { [key: string]: string } = {};
-        response[i] = takeMedicineResponseValue;
-        responseList.push(response);
-      }
-    } else if (takeMedicineResponse === NOT_TAKE_MEDICINE) {
-      // not take medicine response
-      for (let i = 1; i <= UPDRS_QUESTIONS.length; i++) {
-        const responseValue = get(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-${i}`));
-        const response: { [key: string]: string } = {};
-        response[i] = responseValue;
-        responseList.push(response);
-      }
-    }
+//     if (takeMedicineResponse === TAKE_MEDICINE) {
+//       // take medicine response
+//       for (let i = 1; i <= UPDRS_TAKE_MEDICINE_QUESTIONS.length; i++) {
+//         const takeMedicineResponseValue = get(
+//           responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-${i}-${TAKE_MEDICINE}`)
+//         );
+//         const response: { [key: string]: string } = {};
+//         response[i] = takeMedicineResponseValue;
+//         responseList.push(response);
+//       }
+//     } else if (takeMedicineResponse === NOT_TAKE_MEDICINE) {
+//       // not take medicine response
+//       for (let i = 1; i <= UPDRS_QUESTIONS.length; i++) {
+//         const responseValue = get(responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-${i}`));
+//         const response: { [key: string]: string } = {};
+//         response[i] = responseValue;
+//         responseList.push(response);
+//       }
+//     }
 
-    return responseList;
-  },
-});
+//     return responseList;
+//   },
+// });
 
 export const survey01UPDRS_notTakeMedicine_excelData = selector({
   key: 'survey01UPDRS_notTakeMedicine_excelData',
