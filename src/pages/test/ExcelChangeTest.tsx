@@ -119,8 +119,6 @@ export default function ExcelChangeTest() {
     { No: '', Name: '', 'Patient ID': '', 'D.O.B': '', Gender: '' }
   );
 
-  console.log(responseData);
-
   // hide headers by adding skipHeader: true , { skipHeader: true }
   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(responseData);
   ws.A1 = { t: 's', v: 'No' };

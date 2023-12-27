@@ -108,7 +108,6 @@ function Redirection01UPDRS() {
   const uploadedExcelFileRawData = useRecoilValue(
     uploadedResponseStates(SURVEY_TITLE_LIST[1].TITLE)
   );
-  console.log(uploadedExcelFileRawData);
   // for check data processed successfully
   const haveUploadedExcelFileRawData = Object.keys(uploadedExcelFileRawData).length > 0;
 
@@ -218,14 +217,16 @@ function RedirectionMedicineEffectContent(props: RedirectMedicineEffectContentPr
               ]
             );
           }
-
-          if (uploadedExcelTakeMedicineDataResponse.length > 0) {
-            setTakeMedicine_responseValue(uploadedExcelTakeMedicineDataResponse);
-          }
         }
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (uploadedExcelTakeMedicineDataResponse.length > 0) {
+      setTakeMedicine_responseValue(uploadedExcelTakeMedicineDataResponse);
+    }
+  }, [uploadedExcelTakeMedicineDataResponse]);
 
   return <></>;
 }
