@@ -75,3 +75,9 @@ export const WS_COLUMN_SURVEY_01_UPDRS = {
     'BV',
   ],
 };
+
+export const WS_COLUMN_SURVEY_02_FG = {
+  NOT_TAKE: ['BW', 'BX', 'BY', 'BZ', 'CA', 'CB', 'CC'],
+  EFFECT_OFF: ['CD', 'CE', 'CF', 'CG', 'CH', 'CI', 'CJ'],
+  EFFECT_ON: ['CK', 'CL', 'CM', 'CN', 'CO', 'CP', 'CQ'], // , 'CR', 'CS', 'CT', 'CU', 'CV', 'CW', 'CX', 'CY', 'CZ', 'DA', 'DB', 'DC'
+};

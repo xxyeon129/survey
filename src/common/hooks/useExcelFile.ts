@@ -14,6 +14,8 @@ import { PATH_URL } from 'common/constants/path.const';
 import useExcelFileCreateCellData_survey01UPDRS from './excel-file/create-cell-data/useExcelFileCreateCellData_survey01UPDRS';
 import { excelFileCreateCellQuestionNumber_survey01UPDRS } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey01UPDRS';
 import { UPDRS_QUESTIONS } from 'pages/survey/survey-01-UPDRS/survey.const';
+import useExcelFileCreateCellData_survey02FG from './excel-file/create-cell-data/useExcelFileCreateCellData_survey02FG';
+import { excelFileCreateCellQuestionNumber_survey02FG } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey02FG';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
@@ -40,11 +42,13 @@ export default function useExcelFile(props: UseExcelFileProps) {
     },
   ];
   const survey01UPDRS_responseData = useExcelFileCreateCellData_survey01UPDRS();
+  const survey02FG_responseData = useExcelFileCreateCellData_survey02FG();
 
   // * combine in one row ----------
   const responseData = personalInfo_responseData.map((obj) => ({
     ...obj,
     ...survey01UPDRS_responseData,
+    ...survey02FG_responseData,
   }));
 
   // add empty rows in the beginning
@@ -66,8 +70,14 @@ export default function useExcelFile(props: UseExcelFileProps) {
   ws.AC2 = { t: 's', v: '파킨슨병약 효과 X (OFF)' };
   ws.AZ2 = { t: 's', v: '파킨슨병약 효과 O (ON)' };
 
+  ws.BW1 = { t: 's', v: 'Freezing of Gait' };
+  ws.BW2 = { t: 's', v: '파킨슨병약 복용 전' };
+  ws.CD2 = { t: 's', v: '파킨슨병약 효과 X (OFF)' };
+  ws.CK2 = { t: 's', v: '파킨슨병약 효과 O (ON)' };
+
   // * header cell setting question number ----------
   excelFileCreateCellQuestionNumber_survey01UPDRS(ws);
+  excelFileCreateCellQuestionNumber_survey02FG(ws);
 
   // * create excel file ----------
   const wb = XLSX.utils.book_new();
@@ -86,6 +96,11 @@ export default function useExcelFile(props: UseExcelFileProps) {
     { s: { r: 1, c: 5 }, e: { r: 1, c: 27 } }, // UPDRS - MedicineX
     { s: { r: 1, c: 28 }, e: { r: 1, c: 50 } }, // UPDRS - EffectOff
     { s: { r: 1, c: 51 }, e: { r: 1, c: 73 } }, // UPDRS - EffectOn
+
+    { s: { r: 0, c: 74 }, e: { r: 0, c: 94 } }, // FG
+    { s: { r: 1, c: 74 }, e: { r: 1, c: 80 } }, // FG - MedicineX
+    { s: { r: 1, c: 81 }, e: { r: 1, c: 87 } }, // FG - EffectOff
+    { s: { r: 1, c: 88 }, e: { r: 1, c: 94 } }, // FG - EffectOn
   ];
   ws['!merges'] = merge;
 
