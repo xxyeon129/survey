@@ -38,6 +38,7 @@ import useExcelFileCreateCellData_survey11CONSTIPATION from './excel-file/create
 import { excelFileCreateCellQuestionNumber_survey11CONSTIPATION } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey11CONSTIPATION';
 import useExcelFileCreateCellData_survey12FOOD from './excel-file/create-cell-data/useExcelFileCreateCellData_survey12FOOD';
 import { excelFileCreateCellQuestionNumber_survey12FOOD } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey12FOOD';
+import { BAI_QUESTIONS } from 'pages/survey/survey-03-BAI/survey.const';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
@@ -206,9 +207,9 @@ export default function useExcelFile(props: UseExcelFileProps) {
   const setSessionStorageSurvey02FG = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[2].TITLE)
   );
-  // const setUploadedSurvey03BAI = useSetRecoilState(
-  //   uploadedResponseStates(SURVEY_TITLE_LIST[3].TITLE)
-  // );
+  const setSessionStorageSurvey03BAI = useSetRecoilState(
+    uploadedResponseStates(SURVEY_TITLE_LIST[3].TITLE)
+  );
   // const setUploadedSurvey04BDI = useSetRecoilState(
   //   uploadedResponseStates(SURVEY_TITLE_LIST[4].TITLE)
   // );
@@ -301,6 +302,20 @@ export default function useExcelFile(props: UseExcelFileProps) {
                   uploadedData[`${survey02FG_number}_ON_${i}`];
               }
               setSessionStorageSurvey02FG(uploadedSurvey02FG);
+
+              // * survey-03-BAI ----------
+              const uploadedSurvey03BAI: { [key: string]: string } = {};
+              const survey03BAI_number = '03';
+              for (let i = 1; i <= BAI_QUESTIONS.length; i++) {
+                if (i === 1) {
+                  uploadedSurvey03BAI[`${survey03BAI_number}_1`] =
+                    uploadedData[EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['03_BAI']];
+                } else {
+                  uploadedSurvey03BAI[`${survey03BAI_number}_${i}`] =
+                    uploadedData[`${survey03BAI_number}_${i}`];
+                }
+              }
+              setSessionStorageSurvey03BAI(uploadedSurvey03BAI);
 
               resolve(undefined);
             }

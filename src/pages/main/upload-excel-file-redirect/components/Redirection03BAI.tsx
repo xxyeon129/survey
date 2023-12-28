@@ -15,9 +15,7 @@ export default function Redirection03BAI() {
   const questions = BAI_QUESTIONS;
 
   // for apply uploaded excel file response
-  const uploadedExcelFileDataList = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[3].TITLE)
-  );
+  const sessionStorageDataList = useRecoilValue(uploadedResponseStates(SURVEY_TITLE_LIST[3].TITLE));
 
   return (
     <>
@@ -25,7 +23,8 @@ export default function Redirection03BAI() {
         <RedirectionTableContent
           question={question}
           surveyStateKeyword={SURVEY_03_BAI_STATE_KEYWORD}
-          uploadedExcelFileDataList={uploadedExcelFileDataList}
+          sessionStorageDataList={sessionStorageDataList}
+          surveyNumber="03"
           key={uuidv4()}
         />
       ))}

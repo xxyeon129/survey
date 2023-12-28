@@ -5,6 +5,7 @@ import useUploadedPersonalInfo from './hooks/useUploadedPersonalInfo';
 import RedirectionLoadingSpinner from '../components/loading-spinner/RedirectionLoadindSpinner';
 import { PATH_URL } from 'common/constants/path.const';
 import Redirection02FG from './components/Redirection02FG';
+import Redirection03BAI from './components/Redirection03BAI';
 
 export default function RedirectionForUploadFile() {
   // personal info
@@ -40,8 +41,8 @@ export default function RedirectionForUploadFile() {
       <RedirectionLoadingSpinner />
       <Redirection01UPDRS />
       <Redirection02FG />
-      {/* 
       <Redirection03BAI />
+      {/* 
       <Redirection04BDI />
       <Redirection06NMS />
       <Redirection07PDQ />

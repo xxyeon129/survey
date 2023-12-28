@@ -4,27 +4,28 @@ import { useSetRecoilState } from 'recoil';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
-import { UploadedResponseDataType } from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 
 interface RedirectionTableContentProps {
   question: SurveyContentObjectType;
   surveyStateKeyword: string;
-  uploadedExcelFileDataList: UploadedResponseDataType[];
+  sessionStorageDataList: { [key: string]: string };
+  surveyNumber: string;
 }
 
 export default function RedirectionTableContent(props: RedirectionTableContentProps) {
   // for create responseState when uploaded excel file exist
-  const setResponseValue = useSetRecoilState(
+  const setLocalStorage = useSetRecoilState(
     responseState(`${props.surveyStateKeyword}-${props.question.No}`)
   );
 
+  const haveUploadedExcelFileRawData = Object.keys(props.sessionStorageDataList).length > 0;
+
   // for radio button checked according to uploaded excel file progress
   useEffect(() => {
-    if (
-      props.uploadedExcelFileDataList.length > 0 &&
-      '응답내용' in props.uploadedExcelFileDataList[props.question.No - 1]
-    ) {
-      setResponseValue(props.uploadedExcelFileDataList[props.question.No - 1].응답내용);
+    if (haveUploadedExcelFileRawData) {
+      const uploadedExcelDataFromSessionStorage =
+        props.sessionStorageDataList[`${props.surveyNumber}_${props.question.No}`];
+      setLocalStorage(uploadedExcelDataFromSessionStorage);
     }
   }, []);
 
