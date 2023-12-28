@@ -8,6 +8,7 @@ import { RBD_QUESTIONS } from 'pages/survey/survey-05-RBD/survey.const';
 import { NMS_QUESTIONS } from 'pages/survey/survey-06-NMS/survey.const';
 import { PDQ_QUESTIONS } from 'pages/survey/survey-07-PDQ/survey.const';
 import { PDSS_QUESTIONS } from 'pages/survey/survey-08-PDSS/survey.const';
+import { TIRED_QUESTIONS } from 'pages/survey/survey-09-TIRED/survey.const';
 
 export const WS_COLUMN_SURVEY_01_UPDRS = {
   NOT_TAKE: [
@@ -139,4 +140,11 @@ const survey08PDSS_startAlphabet = getStartRowCellAlphabet(survey08PDSS_prevAlph
 export const WS_COLUMN_SURVEY_08_PDSS = getRowCellAlphabetArray(
   survey08PDSS_startAlphabet,
   PDSS_QUESTIONS.length + addSumIndex
+);
+
+const survey09TIRED_prevAlphabet = WS_COLUMN_SURVEY_08_PDSS[WS_COLUMN_SURVEY_08_PDSS.length - 1];
+const survey09TIRED_startAlphabet = getStartRowCellAlphabet(survey09TIRED_prevAlphabet);
+export const WS_COLUMN_SURVEY_09_TIRED = getRowCellAlphabetArray(
+  survey09TIRED_startAlphabet,
+  TIRED_QUESTIONS.length + addSumIndex
 );

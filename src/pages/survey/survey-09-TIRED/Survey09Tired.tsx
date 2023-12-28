@@ -16,6 +16,7 @@ import { respondedCheckObject09Tired } from '../common/states/respondedCheckObje
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 import {
+  SURVEY_09_TIRED_INPUT_VALUE_LIST,
   SURVEY_09_TIRED_STATE_ANSWERS,
   SURVEY_09_TIRED_STATE_KEYWORD,
   TIRED_QUESTIONS,
@@ -83,7 +84,7 @@ export default function Survey09Tired() {
           <SurveyContentDegreeGradation
             question={question}
             degreesListForDisplay={SURVEY_09_TIRED_STATE_ANSWERS}
-            degreesList={SURVEY_09_TIRED_STATE_ANSWERS}
+            degreesList={SURVEY_09_TIRED_INPUT_VALUE_LIST}
             surveyStateKeyword={SURVEY_09_TIRED_STATE_KEYWORD}
             surveyQuestionsPerPage={TIRED_QUESTIONS_PER_PAGE}
             // for bottom prev/next button

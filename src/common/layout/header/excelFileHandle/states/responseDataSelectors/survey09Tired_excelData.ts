@@ -10,14 +10,15 @@ export const survey09Tired_excelData = selector({
   get: ({ get }) => {
     const responseList = [];
 
-    for (let i = 1; i <= TIRED_QUESTIONS.length; i++) {
-      const responseValue = get(responseState(`${SURVEY_09_TIRED_STATE_KEYWORD}-${i}`));
+    for (let questionNumber = 1; questionNumber <= TIRED_QUESTIONS.length; questionNumber++) {
+      const responseValue = get(
+        responseState(`${SURVEY_09_TIRED_STATE_KEYWORD}-${questionNumber}`)
+      );
 
-      responseList.push({
-        문항번호: `${i}`,
-        질문내용: TIRED_QUESTIONS[i - 1].Q,
-        응답내용: responseValue,
-      });
+      const response: { [key: string]: string } = {};
+      response[questionNumber] = responseValue; // {1: response number}
+
+      responseList.push(response);
     }
     return responseList;
   },
