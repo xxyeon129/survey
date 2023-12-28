@@ -19,7 +19,7 @@ import {
   PDQ_ANSWERS,
   PDQ_QUESTIONS,
   PDQ_QUESTIONS_PER_PAGE,
-  SURVEY_07_PDQ_STATE_ANSWERS,
+  SURVEY_07_PDQ_INPUT_VALUE_LIST,
   SURVEY_07_PDQ_STATE_KEYWORD,
 } from './survey.const';
 import { SURVEY_06_NMS_TOTAL_PAGES } from '../survey-06-NMS/survey.const';
@@ -84,7 +84,7 @@ export default function Survey07PDQ() {
           <SurveyContentDegreeGradation
             question={question}
             degreesListForDisplay={PDQ_ANSWERS}
-            degreesList={SURVEY_07_PDQ_STATE_ANSWERS}
+            degreesList={SURVEY_07_PDQ_INPUT_VALUE_LIST}
             surveyStateKeyword={SURVEY_07_PDQ_STATE_KEYWORD}
             surveyQuestionsPerPage={PDQ_QUESTIONS_PER_PAGE}
             // for bottom prev/next button

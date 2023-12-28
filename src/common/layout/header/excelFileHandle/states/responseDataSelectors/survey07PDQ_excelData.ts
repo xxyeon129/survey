@@ -10,14 +10,13 @@ export const survey07PDQ_excelData = selector({
   get: ({ get }) => {
     const responseList = [];
 
-    for (let i = 1; i <= PDQ_QUESTIONS.length; i++) {
-      const responseValue = get(responseState(`${SURVEY_07_PDQ_STATE_KEYWORD}-${i}`));
+    for (let questionNumber = 1; questionNumber <= PDQ_QUESTIONS.length; questionNumber++) {
+      const responseValue = get(responseState(`${SURVEY_07_PDQ_STATE_KEYWORD}-${questionNumber}`));
 
-      responseList.push({
-        문항번호: `${i}`,
-        질문내용: PDQ_QUESTIONS[i - 1].Q,
-        응답내용: responseValue,
-      });
+      const response: { [key: string]: string } = {};
+      response[questionNumber] = responseValue; // {1: response number}
+
+      responseList.push(response);
     }
     return responseList;
   },
