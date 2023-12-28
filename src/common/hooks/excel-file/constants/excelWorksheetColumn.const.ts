@@ -5,6 +5,7 @@ import {
 import { BAI_QUESTIONS } from 'pages/survey/survey-03-BAI/survey.const';
 import { BDI_QUESTIONS } from 'pages/survey/survey-04-BDI/survey.const';
 import { RBD_QUESTIONS } from 'pages/survey/survey-05-RBD/survey.const';
+import { NMS_QUESTIONS } from 'pages/survey/survey-06-NMS/survey.const';
 
 export const WS_COLUMN_SURVEY_01_UPDRS = {
   NOT_TAKE: [
@@ -114,4 +115,12 @@ const survey05RBD_startAlphabet = getStartRowCellAlphabet(survey05RBD_prevAlphab
 export const WS_COLUMN_SURVEY_05_RBD = getRowCellAlphabetArray(
   survey05RBD_startAlphabet,
   RBD_QUESTIONS.length + preQuestionLength + addSumIndex
+);
+
+const sectionLength = 9;
+const survey06NMS_prevAlphabet = WS_COLUMN_SURVEY_05_RBD[WS_COLUMN_SURVEY_05_RBD.length - 1];
+const survey06NMS_startAlphabet = getStartRowCellAlphabet(survey06NMS_prevAlphabet);
+export const WS_COLUMN_SURVEY_06_NMS = getRowCellAlphabetArray(
+  survey06NMS_startAlphabet,
+  NMS_QUESTIONS.length + sectionLength + addSumIndex
 );
