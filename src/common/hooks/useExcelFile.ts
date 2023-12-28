@@ -34,6 +34,8 @@ import useExcelFileCreateCellData_survey09TIRED from './excel-file/create-cell-d
 import { excelFileCreateCellQuestionNumber_survey09TIRED } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey09TIRED';
 import useExcelFileCreateCellData_survey10SCOPA from './excel-file/create-cell-data/useExcelFileCreateCellData_survey10SCOPA';
 import { excelFileCreateCellQuestionNumber_survey10SCOPA } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey10SCOPA';
+import useExcelFileCreateCellData_survey11CONSTIPATION from './excel-file/create-cell-data/useExcelFileCreateCellData_survey11CONSTIPATION';
+import { excelFileCreateCellQuestionNumber_survey11CONSTIPATION } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey11CONSTIPATION';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
@@ -69,6 +71,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
   const survey08PDSS_responseData = useExcelFileCreateCellData_survey08PDSS();
   const survey09TIRED_responseData = useExcelFileCreateCellData_survey09TIRED();
   const survey10SCOPA_responseData = useExcelFileCreateCellData_survey10SCOPA();
+  const survey11CONSTIPATION_responseData = useExcelFileCreateCellData_survey11CONSTIPATION();
 
   // * combine in one row ----------
   const responseData = personalInfo_responseData.map((obj) => ({
@@ -83,6 +86,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
     ...survey08PDSS_responseData,
     ...survey09TIRED_responseData,
     ...survey10SCOPA_responseData,
+    ...survey11CONSTIPATION_responseData,
   }));
 
   // add empty rows in the beginning
@@ -117,6 +121,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
   ws.HT1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['08_PDSS'] };
   ws.IJ1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['09_TIRED'] };
   ws.JA1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['10_SCOPA'] };
+  ws.KF1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['11_CONSTIPATION'] };
 
   // * header cell setting question number ----------
   excelFileCreateCellQuestionNumber_survey01UPDRS(ws);
@@ -129,6 +134,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
   excelFileCreateCellQuestionNumber_survey08PDSS(ws);
   excelFileCreateCellQuestionNumber_survey09TIRED(ws);
   excelFileCreateCellQuestionNumber_survey10SCOPA(ws);
+  excelFileCreateCellQuestionNumber_survey11CONSTIPATION(ws);
 
   // * create excel file ----------
   const wb = XLSX.utils.book_new();
@@ -161,6 +167,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
     { s: { r: 0, c: 227 }, e: { r: 1, c: 242 } }, // PDSS
     { s: { r: 0, c: 243 }, e: { r: 1, c: 259 } }, // TIRED
     { s: { r: 0, c: 260 }, e: { r: 1, c: 290 } }, // SCOPA
+    { s: { r: 0, c: 291 }, e: { r: 1, c: 296 } }, // CONSTIPATION
   ];
   ws['!merges'] = merge;
 

@@ -10,6 +10,7 @@ import { PDQ_QUESTIONS } from 'pages/survey/survey-07-PDQ/survey.const';
 import { PDSS_QUESTIONS } from 'pages/survey/survey-08-PDSS/survey.const';
 import { TIRED_QUESTIONS } from 'pages/survey/survey-09-TIRED/survey.const';
 import { SCOPA_QUESTIONS } from 'pages/survey/survey-10-SCOPA/survey.const';
+import { CONSTIPATION_QUESTIONS } from 'pages/survey/survey-11-CONSTIPATION/survey.const';
 
 export const WS_COLUMN_SURVEY_01_UPDRS = {
   NOT_TAKE: [
@@ -156,4 +157,14 @@ const survey10SCOPA_startAlphabet = getStartRowCellAlphabet(survey10SCOPA_prevAl
 export const WS_COLUMN_SURVEY_10_SCOPA = getRowCellAlphabetArray(
   survey10SCOPA_startAlphabet,
   SCOPA_QUESTIONS.length + addInputQuestion + addSumIndex
+);
+
+const survey11CONSTIPATION_prevAlphabet =
+  WS_COLUMN_SURVEY_10_SCOPA[WS_COLUMN_SURVEY_10_SCOPA.length - 1];
+const survey11CONSTIPATION_startAlphabet = getStartRowCellAlphabet(
+  survey11CONSTIPATION_prevAlphabet
+);
+export const WS_COLUMN_SURVEY_11_CONSTIPATION = getRowCellAlphabetArray(
+  survey11CONSTIPATION_startAlphabet,
+  CONSTIPATION_QUESTIONS.length + addSumIndex
 );
