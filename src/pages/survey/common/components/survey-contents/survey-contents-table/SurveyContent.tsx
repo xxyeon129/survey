@@ -182,12 +182,12 @@ function QuestionsTableRow(props: QuestionsTableRowProps) {
           )}
       </th>
       {/* radio buttons */}
-      {props.radioBtnValues.map((radioBtnValue) =>
+      {props.radioBtnValues.map((_, radioBtnValue) =>
         props.nonGradationStyle ? (
           <TableRadioBtn
             surveyStateKeyword={props.surveyStateKeyword}
             clickedQuestionNumber={props.question.No}
-            radioBtnValue={radioBtnValue}
+            radioBtnValue={`${radioBtnValue}`}
             nonGradationStyle={props.nonGradationStyle}
             // for hide question right not-responded "!" icon when checked
             respondedCheckObject={props.respondedCheckObject}
@@ -197,7 +197,7 @@ function QuestionsTableRow(props: QuestionsTableRowProps) {
           <TableRadioBtn
             surveyStateKeyword={props.surveyStateKeyword}
             clickedQuestionNumber={props.question.No}
-            radioBtnValue={radioBtnValue}
+            radioBtnValue={`${radioBtnValue}`}
             // for hide question right not-responded "!" icon when checked
             respondedCheckObject={props.respondedCheckObject}
             key={uuidv4()}

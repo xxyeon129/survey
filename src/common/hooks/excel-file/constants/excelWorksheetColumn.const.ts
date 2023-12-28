@@ -11,6 +11,7 @@ import { PDSS_QUESTIONS } from 'pages/survey/survey-08-PDSS/survey.const';
 import { TIRED_QUESTIONS } from 'pages/survey/survey-09-TIRED/survey.const';
 import { SCOPA_QUESTIONS } from 'pages/survey/survey-10-SCOPA/survey.const';
 import { CONSTIPATION_QUESTIONS } from 'pages/survey/survey-11-CONSTIPATION/survey.const';
+import { FOOD_QUESTIONS } from 'pages/survey/survey-12-FOOD/survey.const';
 
 export const WS_COLUMN_SURVEY_01_UPDRS = {
   NOT_TAKE: [
@@ -167,4 +168,12 @@ const survey11CONSTIPATION_startAlphabet = getStartRowCellAlphabet(
 export const WS_COLUMN_SURVEY_11_CONSTIPATION = getRowCellAlphabetArray(
   survey11CONSTIPATION_startAlphabet,
   CONSTIPATION_QUESTIONS.length + addSumIndex
+);
+
+const survey12FOOD_prevAlphabet =
+  WS_COLUMN_SURVEY_11_CONSTIPATION[WS_COLUMN_SURVEY_11_CONSTIPATION.length - 1];
+const survey12FOOD_startAlphabet = getStartRowCellAlphabet(survey12FOOD_prevAlphabet);
+export const WS_COLUMN_SURVEY_12_FOOD = getRowCellAlphabetArray(
+  survey12FOOD_startAlphabet,
+  FOOD_QUESTIONS.length + addSumIndex
 );
