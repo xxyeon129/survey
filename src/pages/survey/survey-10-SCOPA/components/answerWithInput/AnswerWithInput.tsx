@@ -4,6 +4,7 @@ import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 import styles from './answerWithInput.module.scss';
 import { v4 as uuidv4 } from 'uuid';
+import { SURVEY_10_SCOPA_LAST_INPUT_QUESTION_ALPHABET_KEY_LIST } from '../../survey.const';
 
 interface AnswerWithInputProps {
   answerWithInput: SurveyContentObjectType;
@@ -18,7 +19,7 @@ interface AnswerWithInputProps {
 export default function AnswerWithInput(props: AnswerWithInputProps) {
   return (
     <ul className={styles['answer-with-input-ul']}>
-      {props.answerWithInputTitleList.map((answerTitle) => (
+      {props.answerWithInputTitleList.map((answerTitle, index) => (
         <li className={styles['answer-with-input-li']} key={uuidv4()}>
           <header className={styles['answer-with-input-header']}>
             <h3 className={styles['answer-with-input-title']}>{answerTitle}</h3>
@@ -33,6 +34,8 @@ export default function AnswerWithInput(props: AnswerWithInputProps) {
               // for radio button checked
               clickedQuestionNumber={props.clickedQuestionNumber}
               surveyStateKeyword={props.surveyStateKeyword}
+              // for excel cell data
+              localStorageStateKey={SURVEY_10_SCOPA_LAST_INPUT_QUESTION_ALPHABET_KEY_LIST[index]}
             />
           )}
         </li>
@@ -50,6 +53,9 @@ interface RadioBtnSectionProps {
   // for radio button checked
   clickedQuestionNumber: string;
   surveyStateKeyword: string;
+
+  // for excel cell data
+  localStorageStateKey: string;
 }
 
 function RadioBtnSection(props: RadioBtnSectionProps) {
@@ -57,13 +63,15 @@ function RadioBtnSection(props: RadioBtnSectionProps) {
 
   // for radio button checked
   const [responseValue, setResponseValue] = useRecoilState(
-    responseState(`${props.surveyStateKeyword}-${props.clickedQuestionNumber}-${props.answerTitle}`)
+    responseState(
+      `${props.surveyStateKeyword}-${props.clickedQuestionNumber}${props.localStorageStateKey}`
+    )
   );
 
   // for medicine input state
   const [responseMedicineInputValue, setResponseMedicineInputValue] = useRecoilState(
     responseState(
-      `${props.surveyStateKeyword}-${props.clickedQuestionNumber}-${props.answerTitle}-medicineName`
+      `${props.surveyStateKeyword}-${props.clickedQuestionNumber}${props.localStorageStateKey}-medicineName`
     )
   );
 
@@ -88,15 +96,15 @@ function RadioBtnSection(props: RadioBtnSectionProps) {
   return (
     <section className={styles['answer-with-input-check-container']}>
       <ul className={styles['answer-with-input-check-ul']}>
-        {props.answerList.map((answer) => (
+        {props.answerList.map((answer, index) => (
           <li className={styles['answer-with-input-check-li']} key={uuidv4()}>
             <input
               type="radio"
               id={`${props.btnName}${answer}`}
               name={props.btnName}
-              value={answer}
+              value={`${index}`}
               onChange={handleRadioBtnChange}
-              checked={responseValue === answer}
+              checked={responseValue === `${index}`}
             />
             <label htmlFor={`${props.btnName}${answer}`}>
               <div className={styles['radio-button']}>

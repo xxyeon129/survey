@@ -22,8 +22,12 @@ import usePagination from '../common/hooks/usePagination';
 import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 // styles
 import styles from '../common/survey.module.scss';
+import { survey10SCOPA_excelData } from 'common/layout/header/excelFileHandle/states/responseDataSelectors/survey10SCOPA_excelData';
 
 export default function Survey10SCOPA() {
+  const responseList = useRecoilValue(survey10SCOPA_excelData);
+  console.log(responseList);
+
   // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey09CurrentPageState);
   const setNextSurveyPage = useSetRecoilState(survey11CurrentPageState);

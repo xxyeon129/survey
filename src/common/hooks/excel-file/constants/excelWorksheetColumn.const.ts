@@ -9,6 +9,7 @@ import { NMS_QUESTIONS } from 'pages/survey/survey-06-NMS/survey.const';
 import { PDQ_QUESTIONS } from 'pages/survey/survey-07-PDQ/survey.const';
 import { PDSS_QUESTIONS } from 'pages/survey/survey-08-PDSS/survey.const';
 import { TIRED_QUESTIONS } from 'pages/survey/survey-09-TIRED/survey.const';
+import { SCOPA_QUESTIONS } from 'pages/survey/survey-10-SCOPA/survey.const';
 
 export const WS_COLUMN_SURVEY_01_UPDRS = {
   NOT_TAKE: [
@@ -147,4 +148,12 @@ const survey09TIRED_startAlphabet = getStartRowCellAlphabet(survey09TIRED_prevAl
 export const WS_COLUMN_SURVEY_09_TIRED = getRowCellAlphabetArray(
   survey09TIRED_startAlphabet,
   TIRED_QUESTIONS.length + addSumIndex
+);
+
+const addInputQuestion = 3;
+const survey10SCOPA_prevAlphabet = WS_COLUMN_SURVEY_09_TIRED[WS_COLUMN_SURVEY_09_TIRED.length - 1];
+const survey10SCOPA_startAlphabet = getStartRowCellAlphabet(survey10SCOPA_prevAlphabet);
+export const WS_COLUMN_SURVEY_10_SCOPA = getRowCellAlphabetArray(
+  survey10SCOPA_startAlphabet,
+  SCOPA_QUESTIONS.length + addInputQuestion + addSumIndex
 );

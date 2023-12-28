@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 // states
 import { personalInfoGenderState } from 'pages/survey/personalInfo/personalInfo.state';
 // components
-import AnswerList from 'pages/survey/common/components/survey-contents/answerList/AnswerList';
+import AnswerList from 'pages/survey/common/components/survey-contents/answerList/AnswerList_forExcel';
 import AnswerWithInput from 'pages/survey/survey-10-SCOPA/components/answerWithInput/AnswerWithInput';
 import BottomPrevNextButton from 'pages/survey/common/components/bottom-prev-next-button/BottomPrevNextButton';
 // constants
@@ -210,17 +210,22 @@ function NormalQuestion(props: NormalQuestionProps) {
       </header>
 
       <ul className={contentStyles['answers-ul']}>
-        {props.questionAnswer?.map((answer) => (
-          <AnswerList
-            answer={answer}
-            inputName={`${props.questionNumber}`}
-            inputId={`${props.questionNumber}${answer}`}
-            clickedQuestionNumber={`${props.questionNumber}`}
-            surveyStateKeyword={SURVEY_10_SCOPA_STATE_KEYWORD}
-            respondedCheckObject={props.recoilStateRespondedCheckObject}
-            key={uuidv4()}
-          />
-        ))}
+        {props.questionAnswer?.map(
+          (answer) =>
+            props.questionAnswer && (
+              <AnswerList
+                answer={answer}
+                inputName={`${props.questionNumber}`}
+                inputId={`${props.questionNumber}${answer}`}
+                clickedQuestionNumber={`${props.questionNumber}`}
+                surveyStateKeyword={SURVEY_10_SCOPA_STATE_KEYWORD}
+                respondedCheckObject={props.recoilStateRespondedCheckObject}
+                // for excel file number value
+                answersList={props.questionAnswer}
+                key={uuidv4()}
+              />
+            )
+        )}
       </ul>
     </>
   );
