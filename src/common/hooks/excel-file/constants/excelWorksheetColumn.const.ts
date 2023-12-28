@@ -7,6 +7,7 @@ import { BDI_QUESTIONS } from 'pages/survey/survey-04-BDI/survey.const';
 import { RBD_QUESTIONS } from 'pages/survey/survey-05-RBD/survey.const';
 import { NMS_QUESTIONS } from 'pages/survey/survey-06-NMS/survey.const';
 import { PDQ_QUESTIONS } from 'pages/survey/survey-07-PDQ/survey.const';
+import { PDSS_QUESTIONS } from 'pages/survey/survey-08-PDSS/survey.const';
 
 export const WS_COLUMN_SURVEY_01_UPDRS = {
   NOT_TAKE: [
@@ -131,4 +132,11 @@ const survey07PDQ_startAlphabet = getStartRowCellAlphabet(survey07PDQ_prevAlphab
 export const WS_COLUMN_SURVEY_07_PDQ = getRowCellAlphabetArray(
   survey07PDQ_startAlphabet,
   PDQ_QUESTIONS.length + addSumIndex
+);
+
+const survey08PDSS_prevAlphabet = WS_COLUMN_SURVEY_07_PDQ[WS_COLUMN_SURVEY_07_PDQ.length - 1];
+const survey08PDSS_startAlphabet = getStartRowCellAlphabet(survey08PDSS_prevAlphabet);
+export const WS_COLUMN_SURVEY_08_PDSS = getRowCellAlphabetArray(
+  survey08PDSS_startAlphabet,
+  PDSS_QUESTIONS.length + addSumIndex
 );

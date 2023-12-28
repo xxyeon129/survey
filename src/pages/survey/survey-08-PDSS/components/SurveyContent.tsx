@@ -167,11 +167,11 @@ function DegreeBtn(props: DegreeBtnProps) {
         type="radio"
         name={`${props.questionNumber}`}
         id={`${props.questionNumber}${props.degree}`}
-        value={`${props.degree}점`}
+        value={`${props.degree}`}
         onChange={handleRadioBtnChange}
-        checked={responseValue === `${props.degree}점`}
+        checked={responseValue === `${props.degree}`}
       />
-      {responseValue === `${props.degree}점` && <FaCheck className={styles['check-icon']} />}
+      {responseValue === `${props.degree}` && <FaCheck className={styles['check-icon']} />}
     </label>
   );
 }

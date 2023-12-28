@@ -28,6 +28,8 @@ import useExcelFileCreateCellData_survey06NMS from './excel-file/create-cell-dat
 import { excelFileCreateCellQuestionNumber_survey06NMS } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey06NMS';
 import useExcelFileCreateCellData_survey07PDQ from './excel-file/create-cell-data/useExcelFileCreateCellData_survey07PDQ';
 import { excelFileCreateCellQuestionNumber_survey07PDQ } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey07PDQ';
+import useExcelFileCreateCellData_survey08PDSS from './excel-file/create-cell-data/useExcelFileCreateCellData_survey08PDSS';
+import { excelFileCreateCellQuestionNumber_survey08PDSS } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey08PDSS';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
@@ -60,6 +62,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
   const survey05RBD_responseData = useExcelFileCreateCellData_survey05RBD();
   const survey06NMS_responseData = useExcelFileCreateCellData_survey06NMS();
   const survey07PDQ_responseData = useExcelFileCreateCellData_survey07PDQ();
+  const survey08PDSS_responseData = useExcelFileCreateCellData_survey08PDSS();
 
   // * combine in one row ----------
   const responseData = personalInfo_responseData.map((obj) => ({
@@ -71,6 +74,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
     ...survey05RBD_responseData,
     ...survey06NMS_responseData,
     ...survey07PDQ_responseData,
+    ...survey08PDSS_responseData,
   }));
 
   // add empty rows in the beginning
@@ -102,6 +106,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
   ws.EK1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['05_RBD'] };
   ws.ER1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['06_NMS'] };
   ws.GF1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['07_PDQ'] };
+  ws.HT1 = { t: 's', v: EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['08_PDSS'] };
 
   // * header cell setting question number ----------
   excelFileCreateCellQuestionNumber_survey01UPDRS(ws);
@@ -111,6 +116,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
   excelFileCreateCellQuestionNumber_survey05RBD(ws);
   excelFileCreateCellQuestionNumber_survey06NMS(ws);
   excelFileCreateCellQuestionNumber_survey07PDQ(ws);
+  excelFileCreateCellQuestionNumber_survey08PDSS(ws);
 
   // * create excel file ----------
   const wb = XLSX.utils.book_new();
@@ -140,6 +146,7 @@ export default function useExcelFile(props: UseExcelFileProps) {
     { s: { r: 0, c: 140 }, e: { r: 1, c: 146 } }, // RBD
     { s: { r: 0, c: 147 }, e: { r: 1, c: 186 } }, // NMS
     { s: { r: 0, c: 187 }, e: { r: 1, c: 226 } }, // PDQ
+    { s: { r: 0, c: 227 }, e: { r: 1, c: 242 } }, // PDSS
   ];
   ws['!merges'] = merge;
 
