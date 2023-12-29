@@ -117,6 +117,7 @@ export default function RedirectionForResetResponseState() {
     resetSelectedBirthYear();
     resetSelectedBirthMonth();
     resetSelectedBirthDay();
+    localStorage.clear();
 
     setTimeout(() => {
       navigate(PATH_URL.PERSONAL);
