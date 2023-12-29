@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
@@ -59,7 +58,8 @@ interface RadioBtnSectionProps {
 }
 
 function RadioBtnSection(props: RadioBtnSectionProps) {
-  const [showInput, setShowInput] = useState(false);
+  // UNUSED FUNCTION : delete input request (12/14)
+  // const [showInput, setShowInput] = useState(false);
 
   // for radio button checked
   const [responseValue, setResponseValue] = useRecoilState(
@@ -68,30 +68,33 @@ function RadioBtnSection(props: RadioBtnSectionProps) {
     )
   );
 
+  // UNUSED FUNCTION : delete input request (12/14)
   // for medicine input state
-  const [responseMedicineInputValue, setResponseMedicineInputValue] = useRecoilState(
-    responseState(
-      `${props.surveyStateKeyword}-${props.clickedQuestionNumber}${props.localStorageStateKey}-medicineName`
-    )
-  );
+  // const [responseMedicineInputValue, setResponseMedicineInputValue] = useRecoilState(
+  //   responseState(
+  //     `${props.surveyStateKeyword}-${props.clickedQuestionNumber}${props.localStorageStateKey}-medicineName`
+  //   )
+  // );
 
   const handleRadioBtnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectValue = e.target.value;
     setResponseValue(selectValue);
 
+    // UNUSED FUNCTION : delete input request (12/14)
     // for reset input text when click "아니오"
-    selectValue !== props.showInputCondition && setResponseMedicineInputValue('');
+    // selectValue !== props.showInputCondition && setResponseMedicineInputValue('');
   };
 
+  // UNUSED FUNCTION : delete input request (12/14)
   // for show input
-  useEffect(() => {
-    props.showInputCondition === responseValue ? setShowInput(true) : setShowInput(false);
-  }, [responseValue]);
+  // useEffect(() => {
+  //   props.showInputCondition === responseValue ? setShowInput(true) : setShowInput(false);
+  // }, [responseValue]);
 
-  const onChangeMedicineInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputValue = e.target.value;
-    setResponseMedicineInputValue(inputValue);
-  };
+  // const onChangeMedicineInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const inputValue = e.target.value;
+  //   setResponseMedicineInputValue(inputValue);
+  // };
 
   return (
     <section className={styles['answer-with-input-check-container']}>
@@ -115,7 +118,8 @@ function RadioBtnSection(props: RadioBtnSectionProps) {
           </li>
         ))}
       </ul>
-      {showInput && (
+      {/* UNUSED FUNCTION : delete input request (12/14) */}
+      {/* {showInput && (
         <div className={styles['conditional-input-container']}>
           <label>약 이름</label>
           <input
@@ -125,7 +129,7 @@ function RadioBtnSection(props: RadioBtnSectionProps) {
             placeholder={`${props.answerTitle}에 대해 복용하신 약 이름이나 성분명을 입력해주세요.`}
           />
         </div>
-      )}
+      )} */}
     </section>
   );
 }

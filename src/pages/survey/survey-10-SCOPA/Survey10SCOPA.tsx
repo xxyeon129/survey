@@ -22,12 +22,8 @@ import usePagination from '../common/hooks/usePagination';
 import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 // styles
 import styles from '../common/survey.module.scss';
-import { survey10SCOPA_excelData } from 'common/layout/header/excelFileHandle/states/responseDataSelectors/survey10SCOPA_excelData';
 
 export default function Survey10SCOPA() {
-  const responseList = useRecoilValue(survey10SCOPA_excelData);
-  console.log(responseList);
-
   // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey09CurrentPageState);
   const setNextSurveyPage = useSetRecoilState(survey11CurrentPageState);
@@ -70,7 +66,8 @@ export default function Survey10SCOPA() {
       설문지입니다. 본인의 증상을 가장 잘 설명하는 답안을 선택해 주세요. 만약 이런 증상들에 대해
       약을 복용하는 것이 있다면,{' '}
       <span className={styles['explain-emphasize']}>약을 먹은 상태에서</span> 어느 정도인지를
-      평가해주시기 바랍니다. 복용하는 약 이름은 마지막 페이지에 적어 주십시오.
+      평가해주시기 바랍니다.
+      {/* UNUSED TEXT: delete input request (12/14) 복용하는 약 이름은 마지막 페이지에 적어 주십시오. */}
     </p>
   );
 

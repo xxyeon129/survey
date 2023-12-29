@@ -63,9 +63,9 @@ function Before26SectionExplain() {
       에 대한 질문입니다.
       <br />
       의사에게 처방을 받은 약과, 처방 없이 살 수 있는 일반약 모두를 포함합니다.
-      <br />
+      {/* UNUSED TEXT: delete input request (12/14) <br />
       만약 파킨슨병 증상 이외 약을 먹었다면,{' '}
-      <span className={styles['explain-emphasize']}>약 이름</span>이나 성분명을 입력해주세요.
+      <span className={styles['explain-emphasize']}>약 이름</span>이나 성분명을 입력해주세요. */}
     </p>
   );
 }
