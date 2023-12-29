@@ -39,6 +39,7 @@ import { excelFileCreateCellQuestionNumber_survey11CONSTIPATION } from './excel-
 import useExcelFileCreateCellData_survey12FOOD from './excel-file/create-cell-data/useExcelFileCreateCellData_survey12FOOD';
 import { excelFileCreateCellQuestionNumber_survey12FOOD } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey12FOOD';
 import { BAI_QUESTIONS } from 'pages/survey/survey-03-BAI/survey.const';
+import { BDI_QUESTIONS } from 'pages/survey/survey-04-BDI/survey.const';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
@@ -210,9 +211,9 @@ export default function useExcelFile(props: UseExcelFileProps) {
   const setSessionStorageSurvey03BAI = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[3].TITLE)
   );
-  // const setUploadedSurvey04BDI = useSetRecoilState(
-  //   uploadedResponseStates(SURVEY_TITLE_LIST[4].TITLE)
-  // );
+  const setSessionStorageSurvey04BDI = useSetRecoilState(
+    uploadedResponseStates(SURVEY_TITLE_LIST[4].TITLE)
+  );
   // const setUploadedSurvey05RBD = useSetRecoilState(
   //   uploadedResponseStates(SURVEY_TITLE_LIST[5].TITLE)
   // );
@@ -316,6 +317,20 @@ export default function useExcelFile(props: UseExcelFileProps) {
                 }
               }
               setSessionStorageSurvey03BAI(uploadedSurvey03BAI);
+
+              // * survey-04-BDI ----------
+              const uploadedSurvey04BDI: { [key: string]: string } = {};
+              const survey04BDI_number = '04';
+              for (let i = 1; i <= BDI_QUESTIONS.length; i++) {
+                if (i === 1) {
+                  uploadedSurvey04BDI[`${survey04BDI_number}_1`] =
+                    uploadedData[EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['04_BDI']];
+                } else {
+                  uploadedSurvey04BDI[`${survey04BDI_number}_${i}`] =
+                    uploadedData[`${survey04BDI_number}_${i}`];
+                }
+              }
+              setSessionStorageSurvey04BDI(uploadedSurvey04BDI);
 
               resolve(undefined);
             }

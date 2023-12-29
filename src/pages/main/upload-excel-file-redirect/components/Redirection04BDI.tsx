@@ -12,22 +12,19 @@ import {
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
 // types
 import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
-import { UploadedResponseDataListType } from 'common/layout/header/excelFileHandle/types/uploadedResponseData.type';
 
 export default function Redirection04BDI() {
   const questions = BDI_QUESTIONS;
 
   // for apply uploaded excel file response data
-  const uploadedExcelFileDataList = useRecoilValue(
-    uploadedResponseStates(SURVEY_TITLE_LIST[4].TITLE)
-  );
+  const sessionStorageDataList = useRecoilValue(uploadedResponseStates(SURVEY_TITLE_LIST[4].TITLE));
 
   return (
     <>
       {questions.map((question) => (
         <Redirection04BDIContent
           question={question}
-          uploadedExcelFileDataList={uploadedExcelFileDataList}
+          sessionStorageDataList={sessionStorageDataList}
           key={uuidv4()}
         />
       ))}
@@ -37,46 +34,45 @@ export default function Redirection04BDI() {
 
 interface Redirection04BDIContentProps {
   question: SurveyContentObjectType;
-  uploadedExcelFileDataList: UploadedResponseDataListType;
+  sessionStorageDataList: { [key: string]: string };
 }
 
 function Redirection04BDIContent(props: Redirection04BDIContentProps) {
   // for create responseState when uploaded excel file exist
-  const setResponseValue = useSetRecoilState(
+  const setLocalStorage = useSetRecoilState(
     responseState(`${SURVEY_04_BDI_STATE_KEYWORD}-${props.question.No}`)
   );
+  // for additional question radio button checked according to uploaded excel file progress
+  const setAdditionalQuestionLocalStorage = useSetRecoilState(
+    responseState(`${SURVEY_04_BDI_STATE_KEYWORD}-19-additional`)
+  );
+
+  const haveSessionStorageData = Object.keys(props.sessionStorageDataList).length > 0;
 
   // for radio button checked according to uploaded excel file progress
   // const [uploadedExcelDataAnswer, setUploadedExcelDataAnswer] = useState('');
 
-  const isQuestionsBeforeAdditionalQuestion = props.question.No <= 19;
+  // const isQuestionsBeforeAdditionalQuestion = props.question.No <= 19;
+  const isAdditionalQuestion = props.question.No === 19;
 
   useEffect(() => {
-    if (props.uploadedExcelFileDataList.length > 0) {
-      if (isQuestionsBeforeAdditionalQuestion) {
-        // for before additional question(19-1) index setting
-        // setUploadedExcelDataAnswer(props.uploadedExcelFileDataList[props.question.No - 1].응답내용);
-        setResponseValue(props.uploadedExcelFileDataList[props.question.No - 1].응답내용);
-      } else {
-        // for after additional question(19-1) index setting
-        // setUploadedExcelDataAnswer(props.uploadedExcelFileDataList[props.question.No].응답내용);
-        setResponseValue(props.uploadedExcelFileDataList[props.question.No].응답내용);
+    if (haveSessionStorageData) {
+      // if (isQuestionsBeforeAdditionalQuestion) {
+      // for before additional question(19-1) index setting
+      const uploadedExcelDataFromSessionStorage =
+        props.sessionStorageDataList[`04_${props.question.No}`];
+      setLocalStorage(uploadedExcelDataFromSessionStorage);
+
+      if (isAdditionalQuestion) {
+        const uploadedExcelDataFromSessionStorage = props.sessionStorageDataList[`04_19_1`];
+        setAdditionalQuestionLocalStorage(uploadedExcelDataFromSessionStorage);
       }
-    }
-  }, []);
-
-  // for additional question radio button checked according to uploaded excel file progress
-  const setAdditionalQuestionResponseValue = useSetRecoilState(
-    responseState(`${SURVEY_04_BDI_STATE_KEYWORD}-19-additional`)
-  );
-  // const [uploadedExcelDataAdditionalQuestionAnswer, setUploadedExcelDataAdditionalQuestionAnswer] =
-  //   useState('');
-  const additionalQuestionIndex = 19;
-  useEffect(() => {
-    if (props.uploadedExcelFileDataList.length > 0) {
-      setAdditionalQuestionResponseValue(
-        props.uploadedExcelFileDataList[additionalQuestionIndex].응답내용
-      );
+      // } else if (isAdditionalQuestion) {
+      //   // for after additional question(19-1) index setting
+      //   const uploadedExcelDataFromSessionStorage =
+      //     props.sessionStorageDataList[`04_${props.question.No}`];
+      //   setLocalStorage(uploadedExcelDataFromSessionStorage);
+      // }
     }
   }, []);
 

@@ -6,6 +6,7 @@ import RedirectionLoadingSpinner from '../components/loading-spinner/Redirection
 import { PATH_URL } from 'common/constants/path.const';
 import Redirection02FG from './components/Redirection02FG';
 import Redirection03BAI from './components/Redirection03BAI';
+import Redirection04BDI from './components/Redirection04BDI';
 
 export default function RedirectionForUploadFile() {
   // personal info
@@ -42,8 +43,8 @@ export default function RedirectionForUploadFile() {
       <Redirection01UPDRS />
       <Redirection02FG />
       <Redirection03BAI />
-      {/* 
       <Redirection04BDI />
+      {/* 
       <Redirection06NMS />
       <Redirection07PDQ />
       <Redirection08PDSS />
