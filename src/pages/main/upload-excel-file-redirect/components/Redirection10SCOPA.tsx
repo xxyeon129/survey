@@ -72,7 +72,8 @@ interface RedirectionInputAnswersContentProps {
 function RedirectionInputAnswersContent(props: RedirectionInputAnswersContentProps) {
   const medicineCheckQuestionNumber = 24;
   const yesOrNoQuestion = props.medicineCheckData[0];
-  const medicineNameQuestion = props.medicineCheckData[1];
+  // UNUSED : delete input request (12/14)
+  // const medicineNameQuestion = props.medicineCheckData[1];
 
   // for get symptom name
   const questionArrayForGetSymptomName = yesOrNoQuestion.질문내용.split('-');
@@ -81,18 +82,20 @@ function RedirectionInputAnswersContent(props: RedirectionInputAnswersContentPro
   const setYesOrNotResponseValue = useSetRecoilState(
     responseState(`${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}-${symptomName}`)
   );
-  const setMedicineNameResponseValue = useSetRecoilState(
-    responseState(
-      `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}-${symptomName}-medicineName`
-    )
-  );
+  // UNUSED : delete input request (12/14)
+  // const setMedicineNameResponseValue = useSetRecoilState(
+  //   responseState(
+  //     `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}-${symptomName}-medicineName`
+  //   )
+  // );
 
   useEffect(() => {
     if (props.medicineCheckData.length > 0) {
       if (typeof yesOrNoQuestion === 'object' && '응답내용' in yesOrNoQuestion)
         setYesOrNotResponseValue(yesOrNoQuestion.응답내용);
-      if (typeof medicineNameQuestion === 'object' && '응답내용' in medicineNameQuestion)
-        setMedicineNameResponseValue(medicineNameQuestion.응답내용);
+      // UNUSED : delete input request (12/14)
+      // if (typeof medicineNameQuestion === 'object' && '응답내용' in medicineNameQuestion)
+      // setMedicineNameResponseValue(medicineNameQuestion.응답내용);
     }
   }, []);
 

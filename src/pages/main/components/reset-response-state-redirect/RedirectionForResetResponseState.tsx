@@ -31,7 +31,7 @@ import {
 } from 'pages/survey/survey-02-FG/survey.const';
 import {
   SCOPA_QUESTIONS,
-  SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST,
+  SURVEY_10_SCOPA_LAST_INPUT_QUESTION_ALPHABET_KEY_LIST,
   SURVEY_10_SCOPA_STATE_KEYWORD,
 } from 'pages/survey/survey-10-SCOPA/survey.const';
 import {
@@ -249,45 +249,31 @@ function ResetAdditionalQuestion() {
   );
 
   // survey-10-SCOPA
-  const medicineCheckQuestionNumber = 24;
-  const resetYesOrNotResponse_list1 = useResetRecoilState(
+  const medicineCheckQuestionNumber = 26;
+  const resetYesOrNotResponse_list_a = useResetRecoilState(
     responseState(
-      `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}-${SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST[0]}`
+      `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}${SURVEY_10_SCOPA_LAST_INPUT_QUESTION_ALPHABET_KEY_LIST[0]}`
     )
   );
-  const resetMedicineNameResponse_list1 = useResetRecoilState(
+  // UNUSED : delete input request (12/14)
+  // const resetMedicineNameResponse_list1 = useResetRecoilState(
+  //   responseState(
+  //     `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}-${SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST[0]}-medicineName`
+  //   )
+  // );
+  const resetYesOrNotResponse_list_b = useResetRecoilState(
     responseState(
-      `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}-${SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST[0]}-medicineName`
+      `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}${SURVEY_10_SCOPA_LAST_INPUT_QUESTION_ALPHABET_KEY_LIST[1]}`
     )
   );
-  const resetYesOrNotResponse_list2 = useResetRecoilState(
+  const resetYesOrNotResponse_list_c = useResetRecoilState(
     responseState(
-      `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}-${SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST[1]}`
+      `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}${SURVEY_10_SCOPA_LAST_INPUT_QUESTION_ALPHABET_KEY_LIST[2]}`
     )
   );
-  const resetMedicineNameResponse_list2 = useResetRecoilState(
+  const resetYesOrNotResponse_list_d = useResetRecoilState(
     responseState(
-      `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}-${SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST[1]}-medicineName`
-    )
-  );
-  const resetYesOrNotResponse_list3 = useResetRecoilState(
-    responseState(
-      `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}-${SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST[2]}`
-    )
-  );
-  const resetMedicineNameResponse_list3 = useResetRecoilState(
-    responseState(
-      `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}-${SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST[2]}-medicineName`
-    )
-  );
-  const resetYesOrNotResponse_list4 = useResetRecoilState(
-    responseState(
-      `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}-${SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST[3]}`
-    )
-  );
-  const resetMedicineNameResponse_list4 = useResetRecoilState(
-    responseState(
-      `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}-${SCOPA_QUESTIONS_WITH_INPUT_TITLE_LIST[3]}-medicineName`
+      `${SURVEY_10_SCOPA_STATE_KEYWORD}-${medicineCheckQuestionNumber}${SURVEY_10_SCOPA_LAST_INPUT_QUESTION_ALPHABET_KEY_LIST[3]}`
     )
   );
 
@@ -295,14 +281,10 @@ function ResetAdditionalQuestion() {
     // survey-04-BDI
     resetAdditionalResponse_04BDI();
     // survey-10-SCOPA
-    resetYesOrNotResponse_list1();
-    resetYesOrNotResponse_list2();
-    resetYesOrNotResponse_list3();
-    resetYesOrNotResponse_list4();
-    resetMedicineNameResponse_list1();
-    resetMedicineNameResponse_list2();
-    resetMedicineNameResponse_list3();
-    resetMedicineNameResponse_list4();
+    resetYesOrNotResponse_list_a();
+    resetYesOrNotResponse_list_b();
+    resetYesOrNotResponse_list_c();
+    resetYesOrNotResponse_list_d();
   }, []);
 
   return <></>;
