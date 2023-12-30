@@ -15,7 +15,9 @@ export const survey10SCOPA_responseSelector = selector({
     // for male additional question
     const forMaleAdditionalQuestionNumber = 23;
 
-    for (let i = 1; i < SCOPA_QUESTIONS.length; i++) {
+    const deleteAnotherSymptomQuestionLength = 1;
+    const questionLength = SCOPA_QUESTIONS.length - deleteAnotherSymptomQuestionLength;
+    for (let i = 1; i < questionLength; i++) {
       responseList.push(get(responseState(`${SURVEY_10_SCOPA_STATE_KEYWORD}-${i}`)));
 
       if (i === forMaleAdditionalQuestionNumber) {

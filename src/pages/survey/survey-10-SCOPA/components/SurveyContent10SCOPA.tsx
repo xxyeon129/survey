@@ -58,10 +58,18 @@ export default function SurveyContent10SCOPA(props: SurveyContentWithShortAnswer
     props.currentPageLastQuestionNumber
   );
 
+  // for show not-responded question "!" icon, not-responded question number message
+  const responseStateListForBottomNextButton = [...props.responseStateList];
+
   // for bottom next button disabled - separate gender type question, input type question page
   if (props.question.No >= genderQuestionStartNumber) {
     if (selectedGender === MALE) {
       currentPageResponseList = currentPageResponseList.slice(0, 3);
+
+      const femaleQuestionStartIndex = 24;
+      const femaleQuestionLength = 2;
+
+      responseStateListForBottomNextButton.splice(femaleQuestionStartIndex, femaleQuestionLength);
     } else if (selectedGender === FEMALE) {
       currentPageResponseList = currentPageResponseList.slice(3);
     }
@@ -80,15 +88,25 @@ export default function SurveyContent10SCOPA(props: SurveyContentWithShortAnswer
   const [respondedCheckObject, setRespondedCheckObject] =
     useRecoilState<RespondedCheckObjectStateType>(props.respondedCheckObject);
   const surveyWithShortAnswersQuestionsPerPage = 5;
+
   // for input type question not-responded UI
   useEffect(() => {
-    if (props.currentPageFirstQuestionNumber === 22) {
-      const inputTypeQuestion = props.responseStateList.slice(23);
-      const inputTypeQuestionAllResponded = !inputTypeQuestion.some((response) => response === '');
+    const anotherSymptomQuestionPageStartNumber = 22;
+    const anotherSymptomQuestionNumber = 26;
+    const anotherSymptomQuestionLength = 4;
 
-      inputTypeQuestionAllResponded &&
+    if (props.currentPageFirstQuestionNumber === anotherSymptomQuestionPageStartNumber) {
+      const anotherSymptomQuestionResponseList = props.responseStateList.slice(
+        -anotherSymptomQuestionLength
+      );
+
+      const isAnotherSymptomQuestionAllResponded = !anotherSymptomQuestionResponseList.some(
+        (response) => response === ''
+      );
+
+      isAnotherSymptomQuestionAllResponded &&
         setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-          return { ...prev, [24]: false };
+          return { ...prev, [anotherSymptomQuestionNumber]: false };
         });
     }
   }, []);
@@ -156,12 +174,13 @@ export default function SurveyContent10SCOPA(props: SurveyContentWithShortAnswer
           nextBtnDisabledCondition={nextBtnDisabledCondition}
           // for show not-responded question "!" icon, not-responded question number message
           respondedCheckObject={props.respondedCheckObject}
-          responseStateList={props.responseStateList}
+          responseStateList={responseStateListForBottomNextButton}
           currentPageLastQuestionNumber={props.currentPageLastQuestionNumber}
           currentPageFirstQuestionNumber={props.currentPageFirstQuestionNumber}
           surveyQuestionsPerPage={surveyWithShortAnswersQuestionsPerPage}
           // for scroll unresponded question when click disabled next button
           scrollIdKeyword={SURVEY_10_SCOPA_STATE_KEYWORD}
+          selectedGender={selectedGender}
         />
       )}
     </li>

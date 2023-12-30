@@ -38,6 +38,8 @@ interface BottomPrevNextButtonProps {
   additionalQuestionRespondedCheckKey?: string;
   // for survey-01-UPDRS, survey-02-FG, suevey-05-RBD
   havePreQuestion?: boolean;
+  // for survey-10-SCOPA
+  selectedGender?: string;
   // for last page
   isLastPage?: boolean;
 
@@ -67,6 +69,7 @@ export default function BottomPrevNextButton(props: BottomPrevNextButtonProps) {
     additionalQuestionNumberListIndex: props.additionalQuestionNumberListIndex,
     additionalQuestionResponseListIndex: props.additionalQuestionResponseListIndex,
     additionalQuestionRespondedCheckKey: props.additionalQuestionRespondedCheckKey,
+    selectedGender: props.selectedGender,
   });
 
   const onClickDisabledBtn = () => {
