@@ -225,27 +225,6 @@ export default function useChangeRespondedCheckObjectState(
             notRespondedQuestionNumberList.push(`${currentPageQuestionNumberList[index]}번`);
           }
         });
-        //for survey-10-SCOPA
-
-        // if (props.selectedGender) {
-        //   if (props.selectedGender === MALE) {
-        //     const anotherSymptomQuestionIndex = 24;
-        //     const isNotRespondedMaleAdditionalQuestion =
-        //       props.respondedCheckObject[anotherSymptomQuestionIndex];
-
-        //     console.log(props.responseStateList);
-
-        //     if (isNotRespondedMaleAdditionalQuestion) {
-        //       setRespondedCheckObject((prev: RespondedCheckObjectStateType) => {
-        //         return { ...prev, [SURVEY_10_SCOPA_MALE_ADDITIONAL_QUESTION_NUMBER]: true };
-        //       });
-
-        //       notRespondedQuestionNumberList.push(
-        //         `${SURVEY_10_SCOPA_MALE_ADDITIONAL_QUESTION_NUMBER}번`
-        //       );
-        //     }
-        //   }
-        // }
       }
       resolve();
     });
