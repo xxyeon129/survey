@@ -23,6 +23,7 @@ interface PreQuestionProps {
   routeToNextSurvey?: () => void;
 }
 
+// survey-01-UPDRS, 02-FG
 export default function PreQuestion(props: PreQuestionProps) {
   const surveyStateKeyword = props.surveyStateKeyword;
   const clickedQuestionNumber = props.clickedQuestionNumber;

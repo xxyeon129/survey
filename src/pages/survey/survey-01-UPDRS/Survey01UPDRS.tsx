@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentWithMedicineEffect from '../common/components/survey-contents/survey-contents-with-medicine-effect/SurveyContentWithMedicineEffect';
 import PreQuestion from '../common/components/survey-contents/preQuestion/PreQuestion';
+import Survey01UPDRS_ResetLocalStorageResponse from './reset-response-for-change-pre-question/Survey01UPDRS_ResetLocalStorageResponse';
 // states
 import {
   survey01CurrentPageState,
@@ -76,16 +77,26 @@ export default function Survey01UPDRS() {
     responseState(`${SURVEY_01_UPDRS_STATE_KEYWORD}-pre`)
   );
 
+  // for reset localStorage response according to change pre-question
+  const [isTakeMedicineResetCondition, setIsTakeMedicineResetCondition] = useState(false);
+  const [isNotTakeMedicineResetCondition, setIsNotTakeMedicineResetCondition] = useState(false);
+
   useEffect(() => {
     if (takeMedicineResponse === TAKE_MEDICINE) {
       setRespondedCheckObject(takeMedicineRespondedCheckObject01UPDRS);
       setQuestionsAccordingToTakeMedicine(UPDRS_TAKE_MEDICINE_QUESTIONS);
       setTotalPagesCount(SURVEY_01_UPDRS_TAKE_MEDICINE_TOTAL_PAGES);
+      // for reset localStorage response according to change pre-question
+      setIsNotTakeMedicineResetCondition(true);
+      setIsTakeMedicineResetCondition(false);
     }
     if (takeMedicineResponse === NOT_TAKE_MEDICINE) {
       setRespondedCheckObject(respondedCheckObject01UPDRS);
       setQuestionsAccordingToTakeMedicine(UPDRS_QUESTIONS);
       setTotalPagesCount(SURVEY_01_UPDRS_TOTAL_PAGES);
+      // for reset localStorage response according to change pre-question
+      setIsTakeMedicineResetCondition(true);
+      setIsNotTakeMedicineResetCondition(false);
     }
   }, [takeMedicineResponse]);
 
@@ -142,6 +153,20 @@ export default function Survey01UPDRS() {
             />
           ))}
         </>
+      )}
+
+      {/* for reset localStorage response according to change pre-question */}
+      {isNotTakeMedicineResetCondition && (
+        <Survey01UPDRS_ResetLocalStorageResponse
+          questionList={UPDRS_QUESTIONS}
+          resetTarget={NOT_TAKE_MEDICINE}
+        />
+      )}
+      {isTakeMedicineResetCondition && (
+        <Survey01UPDRS_ResetLocalStorageResponse
+          questionList={UPDRS_TAKE_MEDICINE_QUESTIONS}
+          resetTarget={TAKE_MEDICINE}
+        />
       )}
     </article>
   );
