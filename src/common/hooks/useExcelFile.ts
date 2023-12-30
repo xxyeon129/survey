@@ -46,6 +46,13 @@ import { PDSS_QUESTIONS } from 'pages/survey/survey-08-PDSS/survey.const';
 import { TIRED_QUESTIONS } from 'pages/survey/survey-09-TIRED/survey.const';
 import { CONSTIPATION_QUESTIONS } from 'pages/survey/survey-11-CONSTIPATION/survey.const';
 import { FOOD_QUESTIONS } from 'pages/survey/survey-12-FOOD/survey.const';
+import {
+  SCOPA_QUESTIONS,
+  SURVEY_10_SCOPA_LAST_INPUT_QUESTION_ALPHABET_KEY_LIST,
+  SURVEY_10_SCOPA_LAST_INPUT_QUESTION_NUMBER,
+  SURVEY_10_SCOPA_MALE_ADDITIONAL_QUESTION_INDEX,
+  SURVEY_10_SCOPA_MALE_ADDITIONAL_QUESTION_NUMBER,
+} from 'pages/survey/survey-10-SCOPA/survey.const';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
@@ -235,9 +242,9 @@ export default function useExcelFile(props: UseExcelFileProps) {
   const setSessionStorageSurvey09TIRED = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[9].TITLE)
   );
-  // const setUploadedSurvey10SCOPA = useSetRecoilState(
-  //   uploadedResponseStates(SURVEY_TITLE_LIST[10].TITLE)
-  // );
+  const setSessionStorageSurvey10SCOPA = useSetRecoilState(
+    uploadedResponseStates(SURVEY_TITLE_LIST[10].TITLE)
+  );
   const setSessionStorageSurvey11CONSTIPATION = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[11].TITLE)
   );
@@ -396,6 +403,43 @@ export default function useExcelFile(props: UseExcelFileProps) {
               setSessionStorageSurvey09TIRED(uploadedSurvey09TIRED);
 
               // * survey-10-SCOPA ----------
+              const uploadedSurvey10SCOPA: { [key: string]: string } = {};
+              const survey10SCOPA_number = '10';
+              for (let i = 1; i <= SCOPA_QUESTIONS.length; i++) {
+                if (i === 1) {
+                  uploadedSurvey10SCOPA[`${survey10SCOPA_number}_1`] =
+                    uploadedData[EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['10_SCOPA']];
+                } else {
+                  // before another symptom questions
+                  if (i < SCOPA_QUESTIONS.length) {
+                    uploadedSurvey10SCOPA[`${survey10SCOPA_number}_${i}`] =
+                      uploadedData[`${survey10SCOPA_number}_${i}`];
+                  }
+
+                  // male additional question
+                  if (i === SURVEY_10_SCOPA_MALE_ADDITIONAL_QUESTION_INDEX) {
+                    uploadedSurvey10SCOPA[
+                      `${survey10SCOPA_number}_${SURVEY_10_SCOPA_MALE_ADDITIONAL_QUESTION_NUMBER}`
+                    ] =
+                      uploadedData[
+                        `${survey10SCOPA_number}_${SURVEY_10_SCOPA_MALE_ADDITIONAL_QUESTION_NUMBER}`
+                      ];
+                  }
+
+                  // another symptom questions
+                  if (i === SCOPA_QUESTIONS.length) {
+                    SURVEY_10_SCOPA_LAST_INPUT_QUESTION_ALPHABET_KEY_LIST.forEach((alphabetKey) => {
+                      uploadedSurvey10SCOPA[
+                        `${survey10SCOPA_number}_${SURVEY_10_SCOPA_LAST_INPUT_QUESTION_NUMBER}${alphabetKey}`
+                      ] =
+                        uploadedData[
+                          `${survey10SCOPA_number}_${SURVEY_10_SCOPA_LAST_INPUT_QUESTION_NUMBER}${alphabetKey}`
+                        ];
+                    });
+                  }
+                }
+              }
+              setSessionStorageSurvey10SCOPA(uploadedSurvey10SCOPA);
 
               // * survey-11-CONSTIPATION ----------
               const uploadedSurvey11CONSTIPATION: { [key: string]: string } = {};

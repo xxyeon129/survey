@@ -13,6 +13,7 @@ import Redirection08PDSS from './components/Redirection08PDSS';
 import Redirection09Tired from './components/Redirection09Tired';
 import Redirection11Constipation from './components/Redirection11Constipation';
 import Redirection12Food from './components/Redirection12Food';
+import Redirection10SCOPA from './components/Redirection10SCOPA';
 
 export default function RedirectionForUploadFile() {
   // personal info
@@ -54,11 +55,11 @@ export default function RedirectionForUploadFile() {
       <Redirection07PDQ />
       <Redirection08PDSS />
       <Redirection09Tired />
+      <Redirection10SCOPA />
       <Redirection11Constipation />
       <Redirection12Food />
       {/* 
       <Redirection06NMS />
-      <Redirection10SCOPA />
        */}
     </>
   );
