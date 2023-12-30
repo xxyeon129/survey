@@ -8,6 +8,11 @@ import Redirection02FG from './components/Redirection02FG';
 import Redirection03BAI from './components/Redirection03BAI';
 import Redirection04BDI from './components/Redirection04BDI';
 import Redirection05RBD from './components/Redirection05RBD';
+import Redirection07PDQ from './components/Redirection07PDQ';
+import Redirection08PDSS from './components/Redirection08PDSS';
+import Redirection09Tired from './components/Redirection09Tired';
+import Redirection11Constipation from './components/Redirection11Constipation';
+import Redirection12Food from './components/Redirection12Food';
 
 export default function RedirectionForUploadFile() {
   // personal info
@@ -46,14 +51,15 @@ export default function RedirectionForUploadFile() {
       <Redirection03BAI />
       <Redirection04BDI />
       <Redirection05RBD />
-      {/* 
-      <Redirection06NMS />
       <Redirection07PDQ />
       <Redirection08PDSS />
       <Redirection09Tired />
-      <Redirection10SCOPA />
       <Redirection11Constipation />
-      <Redirection12Food /> */}
+      <Redirection12Food />
+      {/* 
+      <Redirection06NMS />
+      <Redirection10SCOPA />
+       */}
     </>
   );
 }

@@ -41,6 +41,11 @@ import { excelFileCreateCellQuestionNumber_survey12FOOD } from './excel-file/cre
 import { BAI_QUESTIONS } from 'pages/survey/survey-03-BAI/survey.const';
 import { BDI_QUESTIONS } from 'pages/survey/survey-04-BDI/survey.const';
 import { RBD_QUESTIONS } from 'pages/survey/survey-05-RBD/survey.const';
+import { PDQ_QUESTIONS } from 'pages/survey/survey-07-PDQ/survey.const';
+import { PDSS_QUESTIONS } from 'pages/survey/survey-08-PDSS/survey.const';
+import { TIRED_QUESTIONS } from 'pages/survey/survey-09-TIRED/survey.const';
+import { CONSTIPATION_QUESTIONS } from 'pages/survey/survey-11-CONSTIPATION/survey.const';
+import { FOOD_QUESTIONS } from 'pages/survey/survey-12-FOOD/survey.const';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
@@ -221,24 +226,24 @@ export default function useExcelFile(props: UseExcelFileProps) {
   // const setUploadedSurvey06NMS = useSetRecoilState(
   //   uploadedResponseStates(SURVEY_TITLE_LIST[6].TITLE)
   // );
-  // const setUploadedSurvey07PDQ = useSetRecoilState(
-  //   uploadedResponseStates(SURVEY_TITLE_LIST[7].TITLE)
-  // );
-  // const setUploadedSurvey08PDSS = useSetRecoilState(
-  //   uploadedResponseStates(SURVEY_TITLE_LIST[8].TITLE)
-  // );
-  // const setUploadedSurvey09Tired = useSetRecoilState(
-  //   uploadedResponseStates(SURVEY_TITLE_LIST[9].TITLE)
-  // );
+  const setSessionStorageSurvey07PDQ = useSetRecoilState(
+    uploadedResponseStates(SURVEY_TITLE_LIST[7].TITLE)
+  );
+  const setSessionStorageSurvey08PDSS = useSetRecoilState(
+    uploadedResponseStates(SURVEY_TITLE_LIST[8].TITLE)
+  );
+  const setSessionStorageSurvey09TIRED = useSetRecoilState(
+    uploadedResponseStates(SURVEY_TITLE_LIST[9].TITLE)
+  );
   // const setUploadedSurvey10SCOPA = useSetRecoilState(
   //   uploadedResponseStates(SURVEY_TITLE_LIST[10].TITLE)
   // );
-  // const setUploadedSurvey11Constipation = useSetRecoilState(
-  //   uploadedResponseStates(SURVEY_TITLE_LIST[11].TITLE)
-  // );
-  // const setUploadedSurvey12Food = useSetRecoilState(
-  //   uploadedResponseStates(SURVEY_TITLE_LIST[12].TITLE)
-  // );
+  const setSessionStorageSurvey11CONSTIPATION = useSetRecoilState(
+    uploadedResponseStates(SURVEY_TITLE_LIST[11].TITLE)
+  );
+  const setSessionStorageSurvey12FOOD = useSetRecoilState(
+    uploadedResponseStates(SURVEY_TITLE_LIST[12].TITLE)
+  );
 
   // upload file
   const fileRef = useRef<HTMLInputElement | null>(null);
@@ -347,6 +352,78 @@ export default function useExcelFile(props: UseExcelFileProps) {
                 }
               }
               setSessionStorageSurvey05RBD(uploadedSurvey05RBD);
+
+              // * survey-07-PDQ ----------
+              const uploadedSurvey07PDQ: { [key: string]: string } = {};
+              const survey07PDQ_number = '07';
+              for (let i = 1; i <= PDQ_QUESTIONS.length; i++) {
+                if (i === 1) {
+                  uploadedSurvey07PDQ[`${survey07PDQ_number}_1`] =
+                    uploadedData[EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['07_PDQ']];
+                } else {
+                  uploadedSurvey07PDQ[`${survey07PDQ_number}_${i}`] =
+                    uploadedData[`${survey07PDQ_number}_${i}`];
+                }
+              }
+              setSessionStorageSurvey07PDQ(uploadedSurvey07PDQ);
+
+              // * survey-08-PDSS ----------
+              const uploadedSurvey08PDSS: { [key: string]: string } = {};
+              const survey08PDSS_number = '08';
+              for (let i = 1; i <= PDSS_QUESTIONS.length; i++) {
+                if (i === 1) {
+                  uploadedSurvey08PDSS[`${survey08PDSS_number}_1`] =
+                    uploadedData[EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['08_PDSS']];
+                } else {
+                  uploadedSurvey08PDSS[`${survey08PDSS_number}_${i}`] =
+                    uploadedData[`${survey08PDSS_number}_${i}`];
+                }
+              }
+              setSessionStorageSurvey08PDSS(uploadedSurvey08PDSS);
+
+              // * survey-09-TIRED ----------
+              const uploadedSurvey09TIRED: { [key: string]: string } = {};
+              const survey09TIRED_number = '09';
+              for (let i = 1; i <= TIRED_QUESTIONS.length; i++) {
+                if (i === 1) {
+                  uploadedSurvey09TIRED[`${survey09TIRED_number}_1`] =
+                    uploadedData[EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['09_TIRED']];
+                } else {
+                  uploadedSurvey09TIRED[`${survey09TIRED_number}_${i}`] =
+                    uploadedData[`${survey09TIRED_number}_${i}`];
+                }
+              }
+              setSessionStorageSurvey09TIRED(uploadedSurvey09TIRED);
+
+              // * survey-10-SCOPA ----------
+
+              // * survey-11-CONSTIPATION ----------
+              const uploadedSurvey11CONSTIPATION: { [key: string]: string } = {};
+              const survey11CONSTIPATION_number = '11';
+              for (let i = 1; i <= CONSTIPATION_QUESTIONS.length; i++) {
+                if (i === 1) {
+                  uploadedSurvey11CONSTIPATION[`${survey11CONSTIPATION_number}_1`] =
+                    uploadedData[EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['11_CONSTIPATION']];
+                } else {
+                  uploadedSurvey11CONSTIPATION[`${survey11CONSTIPATION_number}_${i}`] =
+                    uploadedData[`${survey11CONSTIPATION_number}_${i}`];
+                }
+              }
+              setSessionStorageSurvey11CONSTIPATION(uploadedSurvey11CONSTIPATION);
+
+              // * survey-12-FOOD ----------
+              const uploadedSurvey12FOOD: { [key: string]: string } = {};
+              const survey12FOOD_number = '12';
+              for (let i = 1; i <= FOOD_QUESTIONS.length; i++) {
+                if (i === 1) {
+                  uploadedSurvey12FOOD[`${survey12FOOD_number}_1`] =
+                    uploadedData[EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['12_FOOD']];
+                } else {
+                  uploadedSurvey12FOOD[`${survey12FOOD_number}_${i}`] =
+                    uploadedData[`${survey12FOOD_number}_${i}`];
+                }
+              }
+              setSessionStorageSurvey12FOOD(uploadedSurvey12FOOD);
 
               resolve(undefined);
             }

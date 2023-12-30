@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 // components
-import RedirectionShortAnswersContent from './common/RedirectionShortAnswersContent';
+import RedirectionForHavePreQuestionContent from './common/RedirectionForHavePreQuestionContent';
 // states
 import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 import { uploadedResponseStates } from 'common/layout/header/excelFileHandle/states/uploadedResponseData.state';
@@ -29,7 +29,7 @@ export default function Redirection05RBD() {
   return (
     <>
       {questions.map((question) => (
-        <RedirectionShortAnswersContent
+        <RedirectionForHavePreQuestionContent
           question={question}
           surveyStateKeyword={SURVEY_05_RBD_STATE_KEYWORD}
           sessionStorageDataList={sessionStorageDataList}
