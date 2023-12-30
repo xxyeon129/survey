@@ -7,6 +7,7 @@ import { PATH_URL } from 'common/constants/path.const';
 import Redirection02FG from './components/Redirection02FG';
 import Redirection03BAI from './components/Redirection03BAI';
 import Redirection04BDI from './components/Redirection04BDI';
+import Redirection05RBD from './components/Redirection05RBD';
 
 export default function RedirectionForUploadFile() {
   // personal info
@@ -44,11 +45,11 @@ export default function RedirectionForUploadFile() {
       <Redirection02FG />
       <Redirection03BAI />
       <Redirection04BDI />
+      <Redirection05RBD />
       {/* 
       <Redirection06NMS />
       <Redirection07PDQ />
       <Redirection08PDSS />
-      <Redirection05RBD />
       <Redirection09Tired />
       <Redirection10SCOPA />
       <Redirection11Constipation />

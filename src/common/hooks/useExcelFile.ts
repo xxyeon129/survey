@@ -40,6 +40,7 @@ import useExcelFileCreateCellData_survey12FOOD from './excel-file/create-cell-da
 import { excelFileCreateCellQuestionNumber_survey12FOOD } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey12FOOD';
 import { BAI_QUESTIONS } from 'pages/survey/survey-03-BAI/survey.const';
 import { BDI_QUESTIONS } from 'pages/survey/survey-04-BDI/survey.const';
+import { RBD_QUESTIONS } from 'pages/survey/survey-05-RBD/survey.const';
 
 interface UseExcelFileProps {
   onCloseModal?: () => void;
@@ -214,9 +215,9 @@ export default function useExcelFile(props: UseExcelFileProps) {
   const setSessionStorageSurvey04BDI = useSetRecoilState(
     uploadedResponseStates(SURVEY_TITLE_LIST[4].TITLE)
   );
-  // const setUploadedSurvey05RBD = useSetRecoilState(
-  //   uploadedResponseStates(SURVEY_TITLE_LIST[5].TITLE)
-  // );
+  const setSessionStorageSurvey05RBD = useSetRecoilState(
+    uploadedResponseStates(SURVEY_TITLE_LIST[5].TITLE)
+  );
   // const setUploadedSurvey06NMS = useSetRecoilState(
   //   uploadedResponseStates(SURVEY_TITLE_LIST[6].TITLE)
   // );
@@ -331,6 +332,21 @@ export default function useExcelFile(props: UseExcelFileProps) {
                 }
               }
               setSessionStorageSurvey04BDI(uploadedSurvey04BDI);
+
+              // * survey-05-RBD ----------
+              const uploadedSurvey05RBD: { [key: string]: string } = {};
+              const survey05RBD_number = '05';
+              const preQuestionLength = 1;
+              for (let i = 1; i <= RBD_QUESTIONS.length + preQuestionLength; i++) {
+                if (i === 1) {
+                  uploadedSurvey05RBD[`${survey05RBD_number}_PRE`] =
+                    uploadedData[EXCEL_FILE_HEADER_CELL_SURVEY_TITLE['05_RBD']];
+                } else {
+                  uploadedSurvey05RBD[`${survey05RBD_number}_${i - preQuestionLength}`] =
+                    uploadedData[`${survey05RBD_number}_${i - preQuestionLength}`];
+                }
+              }
+              setSessionStorageSurvey05RBD(uploadedSurvey05RBD);
 
               resolve(undefined);
             }
