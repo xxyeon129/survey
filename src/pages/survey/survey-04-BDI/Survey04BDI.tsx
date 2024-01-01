@@ -150,6 +150,11 @@ function SurveyContent_Survey04BDI(props: SurveyContentProps) {
   return (
     <>
       <li className={surveyStyles['questions-li']}>
+        {/* not responded icon */}
+        {respondedCheckObjectValue[props.question.No] && (
+          <BsExclamationCircleFill className={surveyStyles['not-responded-icon']} />
+        )}
+
         <h2
           className={
             respondedCheckObjectValue[props.question.No]
@@ -159,10 +164,6 @@ function SurveyContent_Survey04BDI(props: SurveyContentProps) {
         >
           설문 {props.question.No}
         </h2>
-
-        {respondedCheckObjectValue[props.question.No] && (
-          <BsExclamationCircleFill className={surveyStyles['not-responded-icon']} />
-        )}
 
         <hr
           className={
@@ -195,11 +196,13 @@ function SurveyContent_Survey04BDI(props: SurveyContentProps) {
       {/* for additional question */}
       {props.question.No === 19 && (
         <li className={surveyStyles['questions-li-additional-question']}>
+          {/* not responded icon */}
           {respondedCheckObjectValue[additionalQuestionRespondedCheckKey] && (
             <BsExclamationCircleFill
               className={surveyStyles['additional-question-not-responded-icon']}
             />
           )}
+
           <h3
             className={
               respondedCheckObjectValue[additionalQuestionRespondedCheckKey]

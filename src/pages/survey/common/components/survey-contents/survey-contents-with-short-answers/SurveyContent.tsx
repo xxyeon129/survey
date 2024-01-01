@@ -76,6 +76,8 @@ export default function SurveyContentWithShortAnswers(props: SurveyContentWithSh
           >
             {props.question.No}. {props.question.Q}
           </h4>
+
+          {/* not responded icon */}
           {respondedCheckObject[props.question.No] && <BsExclamationCircleFill />}
         </section>
         {/* for question explain text */}

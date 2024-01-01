@@ -34,10 +34,15 @@
 
     .not-responded-icon {
       position: absolute;
-      top: 1.5rem;
-      right: 0.5rem;
+      top: 1.4rem;
+      left: -3.6rem;
       color: $warn-red;
       font-size: 2.5rem;
+
+      @media screen and (min-width: 1900px) {
+        left: -4rem;
+        font-size: 3rem;
+      }
     }
   }
 

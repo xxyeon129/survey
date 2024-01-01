@@ -7,7 +7,12 @@
     color: $warn-red;
     font-size: 2.2rem;
     top: -0.2rem;
-    right: 1rem;
+    left: -2.5rem;
+
+    @media screen and (min-width: 1900px) {
+      left: -3.5rem;
+      font-size: 2.8rem;
+    }
   }
 
   .questions-title {
@@ -49,6 +54,11 @@
     color: $warn-red;
     font-size: 2.2rem;
     left: -3.5rem;
+
+    @media screen and (min-width: 1900px) {
+      left: -3.5rem;
+      font-size: 2.5rem;
+    }
   }
 
   .questions-title-additional-question {
