@@ -39,7 +39,10 @@ import { excelFileCreateCellQuestionNumber_survey11CONSTIPATION } from './excel-
 import useExcelFileCreateCellData_survey12FOOD from './excel-file/create-cell-data/useExcelFileCreateCellData_survey12FOOD';
 import { excelFileCreateCellQuestionNumber_survey12FOOD } from './excel-file/create-cell-question-number/excelFileCreateCellQuestionNumber_survey12FOOD';
 import { BAI_QUESTIONS } from 'pages/survey/survey-03-BAI/survey.const';
-import { BDI_QUESTIONS } from 'pages/survey/survey-04-BDI/survey.const';
+import {
+  BDI_QUESTIONS,
+  SURVEY_04_BDI_ADDITIONAL_QUESTION_NUMBER,
+} from 'pages/survey/survey-04-BDI/survey.const';
 import { RBD_QUESTIONS } from 'pages/survey/survey-05-RBD/survey.const';
 import { PDQ_QUESTIONS } from 'pages/survey/survey-07-PDQ/survey.const';
 import { PDSS_QUESTIONS } from 'pages/survey/survey-08-PDSS/survey.const';
@@ -341,6 +344,15 @@ export default function useExcelFile(props: UseExcelFileProps) {
                 } else {
                   uploadedSurvey04BDI[`${survey04BDI_number}_${i}`] =
                     uploadedData[`${survey04BDI_number}_${i}`];
+
+                  if (i === SURVEY_04_BDI_ADDITIONAL_QUESTION_NUMBER) {
+                    uploadedSurvey04BDI[
+                      `${survey04BDI_number}_${SURVEY_04_BDI_ADDITIONAL_QUESTION_NUMBER}_1`
+                    ] =
+                      uploadedData[
+                        `${survey04BDI_number}_${SURVEY_04_BDI_ADDITIONAL_QUESTION_NUMBER}_1`
+                      ];
+                  }
                 }
               }
               setSessionStorageSurvey04BDI(uploadedSurvey04BDI);

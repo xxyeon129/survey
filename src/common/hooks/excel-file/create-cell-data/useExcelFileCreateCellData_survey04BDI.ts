@@ -1,5 +1,8 @@
 import { survey04BDI_excelData } from 'common/layout/header/excelFileHandle/states/responseDataSelectors/survey04BDI_excelData';
-import { BDI_QUESTIONS } from 'pages/survey/survey-04-BDI/survey.const';
+import {
+  BDI_QUESTIONS,
+  SURVEY_04_BDI_ADDITIONAL_QUESTION_NUMBER,
+} from 'pages/survey/survey-04-BDI/survey.const';
 import { useRecoilValue } from 'recoil';
 
 export default function useExcelFileCreateCellData_survey04BDI() {
@@ -18,16 +21,18 @@ export default function useExcelFileCreateCellData_survey04BDI() {
     const questionNumber = responseListIndex + 1;
 
     let responseRecoilState = '';
-    const additionalQuestionIndex = 19;
 
-    if (responseListIndex < additionalQuestionIndex) {
+    if (responseListIndex < SURVEY_04_BDI_ADDITIONAL_QUESTION_NUMBER) {
       responseRecoilState = responseList[responseListIndex][`${questionNumber}`] || '';
-      // add response cell data
       responseData[`${surveyNumber}_${questionNumber}`] = responseRecoilState;
-    } else if (responseListIndex === additionalQuestionIndex) {
-      responseRecoilState = responseList[additionalQuestionIndex]['19_1'] || '';
+
+      // additional question (question number 19)
+    } else if (responseListIndex === SURVEY_04_BDI_ADDITIONAL_QUESTION_NUMBER) {
+      responseRecoilState = responseList[SURVEY_04_BDI_ADDITIONAL_QUESTION_NUMBER]['19_1'] || '';
       responseData[`${surveyNumber}_19_1`] = responseRecoilState;
-    } else if (responseListIndex > additionalQuestionIndex) {
+
+      // after additional question (question number 20, 21)
+    } else if (responseListIndex > SURVEY_04_BDI_ADDITIONAL_QUESTION_NUMBER) {
       responseRecoilState = responseList[responseListIndex][`${responseListIndex}`] || '';
       responseData[`${surveyNumber}_${responseListIndex}`] = responseRecoilState;
     }

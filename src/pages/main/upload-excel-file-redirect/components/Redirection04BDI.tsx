@@ -7,6 +7,7 @@ import { responseState } from 'pages/survey/common/states/surveyResponse.state';
 // constants
 import {
   BDI_QUESTIONS,
+  SURVEY_04_BDI_ADDITIONAL_QUESTION_NUMBER,
   SURVEY_04_BDI_STATE_KEYWORD,
 } from 'pages/survey/survey-04-BDI/survey.const';
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
@@ -50,29 +51,19 @@ function Redirection04BDIContent(props: Redirection04BDIContentProps) {
   const haveSessionStorageData = Object.keys(props.sessionStorageDataList).length > 0;
 
   // for radio button checked according to uploaded excel file progress
-  // const [uploadedExcelDataAnswer, setUploadedExcelDataAnswer] = useState('');
-
-  // const isQuestionsBeforeAdditionalQuestion = props.question.No <= 19;
-  const isAdditionalQuestion = props.question.No === 19;
+  const isAdditionalQuestionNumber = props.question.No === SURVEY_04_BDI_ADDITIONAL_QUESTION_NUMBER;
 
   useEffect(() => {
     if (haveSessionStorageData) {
-      // if (isQuestionsBeforeAdditionalQuestion) {
       // for before additional question(19-1) index setting
       const uploadedExcelDataFromSessionStorage =
         props.sessionStorageDataList[`04_${props.question.No}`];
       setLocalStorage(uploadedExcelDataFromSessionStorage);
 
-      if (isAdditionalQuestion) {
+      if (isAdditionalQuestionNumber) {
         const uploadedExcelDataFromSessionStorage = props.sessionStorageDataList[`04_19_1`];
         setAdditionalQuestionLocalStorage(uploadedExcelDataFromSessionStorage);
       }
-      // } else if (isAdditionalQuestion) {
-      //   // for after additional question(19-1) index setting
-      //   const uploadedExcelDataFromSessionStorage =
-      //     props.sessionStorageDataList[`04_${props.question.No}`];
-      //   setLocalStorage(uploadedExcelDataFromSessionStorage);
-      // }
     }
   }, []);
 
