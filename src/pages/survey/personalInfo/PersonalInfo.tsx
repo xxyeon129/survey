@@ -20,11 +20,11 @@ export default function PersonalInfo() {
             {SURVEY_NAME} 설문을 실시하는 환자의 개인정보를 입력해주세요.
           </h3>
         </hgroup>
-        <form>
+        <article>
           <NameInputSection />
           <SelectBirthdaySection />
           <GenderCheckSection />
-        </form>
+        </article>
         <BottomStartBtn />
       </section>
     </article>

@@ -1,5 +1,9 @@
 .bottom-start-btn-container {
   margin-top: 5rem;
+
+  @media screen and (max-height: $tablet-max-height) {
+    margin-top: 4rem;
+  }
 }
 
 .start-btn {

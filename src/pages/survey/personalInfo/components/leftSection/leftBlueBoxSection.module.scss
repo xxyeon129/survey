@@ -25,6 +25,9 @@
       line-height: 140%;
       font-size: 4rem;
     }
+    @media screen and (max-width: $tablet-medium-width) {
+      font-size: 2.5rem;
+    }
   }
 
   .left-blue-section-p {
@@ -36,6 +39,9 @@
     @media screen and (min-width: 1900px) {
       margin-top: 3rem;
       font-size: 1.9rem;
+    }
+    @media screen and (max-width: $tablet-medium-width) {
+      font-size: 1.2rem;
     }
   }
 }
