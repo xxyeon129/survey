@@ -61,6 +61,16 @@
         margin-left: 0.5rem;
         font-size: 1.4rem;
         color: $text-grey-color;
+
+        @media screen and (max-width: $tablet-max-width) {
+          font-size: 1.3rem;
+          margin-left: 1.2rem;
+        }
+      }
+
+      @media screen and (max-width: $tablet-max-width) {
+        flex-direction: column;
+        gap: 0.1rem;
       }
     }
   }
