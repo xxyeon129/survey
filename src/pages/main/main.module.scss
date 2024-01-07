@@ -40,10 +40,24 @@
 
 .route-container-hospital {
   width: 80%;
+
+  @media screen and (max-width: $tablet-max-width) {
+    width: 85%;
+  }
+  @media screen and (max-width: $tablet-medium-width) {
+    width: 90%;
+  }
 }
 
 .route-container-patient {
   width: 55%;
+
+  @media screen and (max-width: $tablet-max-width) {
+    width: 60%;
+  }
+  @media screen and (max-width: $tablet-medium-width) {
+    width: 65%;
+  }
 }
 
 .route-container {
@@ -99,11 +113,17 @@
       height: 55%;
       display: flex;
       align-items: center;
+      justify-content: center;
 
       @media screen and (min-width: 1900px) {
         transition: 0.5s;
         img {
           width: 9rem;
+        }
+      }
+      @media screen and (max-width: $tablet-medium-width) {
+        img {
+          width: 80%;
         }
       }
     }
@@ -117,6 +137,15 @@
       color: white;
       font-size: 1.2rem;
 
+      @media screen and (max-width: $tablet-max-width) {
+        margin-top: -0.5rem;
+        gap: 0.8rem;
+      }
+      @media screen and (max-width: $tablet-medium-width) {
+        font-size: 1rem;
+        gap: 0.6rem;
+      }
+
       @media screen and (min-width: 1900px) {
         transition: 0.5s;
         font-size: 1.7rem;
@@ -126,8 +155,16 @@
       .route-box-description {
         white-space: pre-line;
         opacity: 0.65;
-        line-height: 145%;
+        line-height: 150%;
       }
     }
   }
+}
+
+// for responsive UI
+.responsive-adjust-height {
+  margin-top: -1rem;
+}
+.hide-br {
+  display: none;
 }

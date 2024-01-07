@@ -19,6 +19,9 @@ export default function UploadExcelFileBox() {
     navigate(PATH_URL.REDIRECT);
   };
 
+  // for responsive UI
+  const isTabletMaxWidth = window.innerWidth <= 1280;
+
   return (
     <li className={styles['route-box']}>
       <input
@@ -30,13 +33,17 @@ export default function UploadExcelFileBox() {
         onChange={onClickExcelBox}
       />
       <label htmlFor="excel" className={styles['route-box-content']}>
+        {/* for responsive UI */}
+        {isTabletMaxWidth && <div className={styles['responsive-adjust-height']} />}
+        {/* */}
         <figure className={styles['route-box-icon-wrapper']}>
           <img src={excelIcon} alt="excel icon" />
         </figure>
         <div className={styles['route-box-text-wrapper']}>
           <h3>Excel 파일 첨부 후 이어서 작성</h3>
           <div className={styles['route-box-description']}>
-            기존 작성 내용이 저장된 엑셀 파일이 있다면
+            기존 작성 내용이 저장된
+            <br className={isTabletMaxWidth ? '' : styles['hide-br']} /> 엑셀 파일이 있다면
             <br />
             첨부 후 이어서 작성해주세요.
           </div>
