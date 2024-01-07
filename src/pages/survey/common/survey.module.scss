@@ -1,6 +1,13 @@
 .survey-container {
   width: calc(100vw - 16.25rem);
   padding: 6rem 8.5rem;
+
+  @media screen and (max-width: $tablet-max-width) {
+    padding: 6rem 7rem;
+  }
+  @media screen and (max-width: $tablet-medium-width) {
+    padding: 6rem 5.5rem;
+  }
 }
 
 .survey-content-wrapper {

@@ -21,6 +21,10 @@
     :first-child {
       margin-bottom: 2rem;
       cursor: default;
+
+      @media screen and (max-height: $tablet-max-height) {
+        display: none;
+      }
     }
 
     li {
