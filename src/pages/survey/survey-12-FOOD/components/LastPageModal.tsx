@@ -22,13 +22,20 @@ export default function LastPageModal({ onClose }: { onClose: () => void }) {
   const onCloseModal = onClose;
   const { downloadExcelFileHandler, sendFile } = useExcelFile({ onCloseModal });
 
+  // for patient user
+  const onClickPatientSendFileAndeNavigateToHomePage = () => {
+    sendFile();
+    navigate('/');
+    onClose();
+  };
+
   // for hospital user
   const onClickdownloadExcelFileBtn = () => {
     downloadExcelFileHandler();
   };
 
   // for hospital user
-  const onClickNaviagteToHomePage = () => {
+  const onClickNavigateToHomePage = () => {
     navigate('/');
     onClose();
   };
@@ -78,11 +85,14 @@ export default function LastPageModal({ onClose }: { onClose: () => void }) {
           </p>
         )}
         {user === USER_HOSPITAL ? (
-          <button className={styles['hospital-user-home-btn']} onClick={onClickNaviagteToHomePage}>
+          <button className={styles['hospital-user-home-btn']} onClick={onClickNavigateToHomePage}>
             첫 화면으로 이동
           </button>
         ) : (
-          <button className={styles['patient-send-mail-btn']} onClick={sendFile}>
+          <button
+            className={styles['patient-send-mail-btn']}
+            onClick={onClickPatientSendFileAndeNavigateToHomePage}
+          >
             작성 내용 병원 전송에 동의
           </button>
         )}
