@@ -5,6 +5,18 @@
   @media screen and (max-width: $tablet-medium-width) {
     width: 60vw;
   }
+  @media screen and (min-width: 1355px) {
+    transition: 0.5s;
+    width: 68vw;
+  }
+  @media screen and (min-width: 1560px) {
+    transition: 0.5s;
+    width: 70vw;
+  }
+  @media screen and (min-width: 1625px) {
+    transition: 0.5s;
+    width: 72vw;
+  }
 
   table {
     width: 100%;
