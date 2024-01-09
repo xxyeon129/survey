@@ -13,15 +13,22 @@ import {
 import { survey10SCOPA_responseSelector } from './survey10SCOPA.selector';
 import { headerCurrentPageState } from 'common/layout/header/pagination/headerPageState';
 import { respondedCheckObject10SCOPA } from '../common/states/respondedCheckObjects.state';
+import { personalInfoGenderState } from 'pages/survey/personalInfo/personalInfo.state';
 // constants
 import { SURVEY_TITLE_LIST } from 'common/constants/survey.const';
-import { SCOPA_QUESTIONS, SCOPA_QUESTIONS_PER_PAGE } from './survey.const';
+import {
+  SCOPA_QUESTIONS,
+  SCOPA_QUESTIONS_PER_PAGE,
+  SURVEY_10_SCOPA_FEMALE_QUESTIONS_LENGTH,
+  SURVEY_10_SCOPA_MALE_QUESTIONS_LENGTH,
+} from './survey.const';
 import { SURVEY_09_TIRED_TOTAL_PAGES } from '../survey-09-TIRED/survey.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 // styles
 import styles from '../common/survey.module.scss';
+import { MALE } from '../personalInfo/components/rightSection/genderCheck/genderCheckSection.const';
 
 export default function Survey10SCOPA() {
   // pagination hook props
@@ -59,12 +66,19 @@ export default function Survey10SCOPA() {
   // for show not-responded question "!" icon, not-responded question number message
   const respondedCheckObject = respondedCheckObject10SCOPA;
 
+  // for survey explain questions length display ui
+  const selectedGender = useRecoilValue(personalInfoGenderState);
+  const questionsLength =
+    selectedGender === MALE
+      ? SURVEY_10_SCOPA_MALE_QUESTIONS_LENGTH
+      : SURVEY_10_SCOPA_FEMALE_QUESTIONS_LENGTH;
+
   const surveyExplain = (
     <p className={styles.explain}>
-      총 {SCOPA_QUESTIONS.length}개의 문항으로 이루어진{' '}
-      <span className={styles['explain-emphasize']}>지난 한 달 동안</span>의 자율신경계 증상에 대한
-      설문지입니다. 본인의 증상을 가장 잘 설명하는 답안을 선택해 주세요. 만약 이런 증상들에 대해
-      약을 복용하는 것이 있다면,{' '}
+      총 {questionsLength}
+      개의 문항으로 이루어진 <span className={styles['explain-emphasize']}>지난 한 달 동안</span>의
+      자율신경계 증상에 대한 설문지입니다. 본인의 증상을 가장 잘 설명하는 답안을 선택해 주세요. 만약
+      이런 증상들에 대해 약을 복용하는 것이 있다면,{' '}
       <span className={styles['explain-emphasize']}>약을 먹은 상태에서</span> 어느 정도인지를
       평가해주시기 바랍니다.
       {/* UNUSED TEXT: delete input request (12/14) 복용하는 약 이름은 마지막 페이지에 적어 주십시오. */}
