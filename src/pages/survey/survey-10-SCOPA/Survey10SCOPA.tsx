@@ -23,12 +23,12 @@ import {
   SURVEY_10_SCOPA_MALE_QUESTIONS_LENGTH,
 } from './survey.const';
 import { SURVEY_09_TIRED_TOTAL_PAGES } from '../survey-09-TIRED/survey.const';
+import { MALE } from '../personalInfo/components/rightSection/genderCheck/genderCheckSection.const';
 // hooks
 import usePagination from '../common/hooks/usePagination';
 import useTotalPages from 'common/layout/header/pagination/useTotalPages';
 // styles
 import styles from '../common/survey.module.scss';
-import { MALE } from '../personalInfo/components/rightSection/genderCheck/genderCheckSection.const';
 
 export default function Survey10SCOPA() {
   // pagination hook props

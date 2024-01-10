@@ -1,9 +1,12 @@
-import { responseState } from 'pages/survey/common/states/surveyResponse.state';
-import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
-import { useRecoilValue, useResetRecoilState } from 'recoil';
-import { SURVEY_01_UPDRS_STATE_KEYWORD, TAKE_MEDICINE } from '../survey.const';
 import { useEffect } from 'react';
+import { useRecoilValue, useResetRecoilState } from 'recoil';
+// states
+import { responseState } from 'pages/survey/common/states/surveyResponse.state';
+// constants
+import { SURVEY_01_UPDRS_STATE_KEYWORD, TAKE_MEDICINE } from '../survey.const';
 import { SURVEY_02_FG_STATE_KEYWORD } from 'pages/survey/survey-02-FG/survey.const';
+// types
+import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
 
 interface ResetLocalStorageResponseProps {
   questionList: SurveyContentObjectType[];

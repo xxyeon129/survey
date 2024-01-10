@@ -1,9 +1,13 @@
 import { useRecoilState } from 'recoil';
-import { responseState } from 'pages/survey/common/states/surveyResponse.state';
-import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
-import styles from './answerWithInput.module.scss';
 import { v4 as uuidv4 } from 'uuid';
+// states
+import { responseState } from 'pages/survey/common/states/surveyResponse.state';
+// constants
 import { SURVEY_10_SCOPA_LAST_INPUT_QUESTION_ALPHABET_KEY_LIST } from '../../survey.const';
+// types
+import { SurveyContentObjectType } from 'pages/survey/common/types/surveyTypes';
+// styles
+import styles from './answerWithInput.module.scss';
 
 interface AnswerWithInputProps {
   answerWithInput: SurveyContentObjectType;

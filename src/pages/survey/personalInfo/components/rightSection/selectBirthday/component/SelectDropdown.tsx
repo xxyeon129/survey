@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+// styles
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoIosArrowUp } from 'react-icons/io';
 import styles from './selectDropdown.module.scss';
-import { v4 as uuidv4 } from 'uuid';
 
 interface SelectDropdownProps {
   dropdownOptions: number[];

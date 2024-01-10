@@ -1,9 +1,11 @@
+import { useNavigate } from 'react-router-dom';
+// constants
 import { SURVEY_NAME } from 'common/constants/survey.const';
 import { SURVEY_NAME_FIRST, SURVEY_NAME_SECOND } from '../../personalInfo.const';
+import { PATH_URL } from 'common/constants/path.const';
+// styles
 import logo from 'assets/login-personalinfo-page-logo.svg';
 import styles from './leftBlueBoxSection.module.scss';
-import { useNavigate } from 'react-router-dom';
-import { PATH_URL } from 'common/constants/path.const';
 
 export default function LeftBlueBoxSection() {
   const navigate = useNavigate();

@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 // components
 import SelectDropdown from './component/SelectDropdown';
 // states
@@ -13,7 +14,6 @@ import {
 import useSelectBirthdayList from './hook/useSelectBirthdayList';
 // styles
 import styles from './selectBirthdaySection.module.scss';
-import { v4 as uuidv4 } from 'uuid';
 
 export default function SelectBirthdaySection() {
   const setBirthday = useSetRecoilState(personalInfoBirthdayState);

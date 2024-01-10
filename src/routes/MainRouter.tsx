@@ -17,10 +17,10 @@ import Survey09Tired from 'pages/survey/survey-09-TIRED/Survey09Tired';
 import Survey10SCOPA from 'pages/survey/survey-10-SCOPA/Survey10SCOPA';
 import Survey11Constipation from 'pages/survey/survey-11-CONSTIPATION/Survey11Constipation';
 import Survey12Food from 'pages/survey/survey-12-FOOD/Survey12Food';
-import FinishPage from 'pages/finish/FinishPage';
-import RedirectionForUploadFile from 'pages/main/upload-excel-file-redirect/RedirectionForUploadFile';
 import NotFound from 'pages/error/NotFound';
 import Test from 'pages/test/Test';
+// redirections
+import RedirectionForUploadFile from 'pages/main/upload-excel-file-redirect/RedirectionForUploadFile';
 import RedirectionForResetResponseState from 'pages/main/components/reset-response-state-redirect/RedirectionForResetResponseState';
 
 export default function MainRouter() {
@@ -43,7 +43,6 @@ export default function MainRouter() {
           <Route path={PATH_URL.SURVEY['10_SCOPA']} element={<Survey10SCOPA />} />
           <Route path={PATH_URL.SURVEY['11_CONSTIPATION']} element={<Survey11Constipation />} />
           <Route path={PATH_URL.SURVEY['12_FOOD']} element={<Survey12Food />} />
-          <Route path={PATH_URL.FINISH} element={<FinishPage />} />
           <Route path={PATH_URL.REDIRECT} element={<RedirectionForUploadFile />} />
           <Route path={PATH_URL.RESET} element={<RedirectionForResetResponseState />} />
           <Route path={PATH_URL.TEST} element={<Test />} />

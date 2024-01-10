@@ -2,6 +2,8 @@ import { RecoilState, useRecoilValue } from 'recoil';
 import { v4 as uuidv4 } from 'uuid';
 // components
 import BottomPrevNextButton from '../../bottom-prev-next-button/BottomPrevNextButton';
+// constants
+import { SURVEY_12_FOOD_STATE_KEYWORD } from 'pages/survey/survey-12-FOOD/survey.const';
 // hooks
 import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
 // types
@@ -10,7 +12,6 @@ import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respond
 // styles
 import { BsExclamationCircleFill } from 'react-icons/bs';
 import styles from './surveyContent.module.scss';
-import { SURVEY_12_FOOD_STATE_KEYWORD } from 'pages/survey/survey-12-FOOD/survey.const';
 
 interface SurveyContentTableProps {
   questions: SurveyContentObjectType[];

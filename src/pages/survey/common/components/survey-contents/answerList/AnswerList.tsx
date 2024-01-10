@@ -1,9 +1,12 @@
-import { ExplainTextObjectType } from 'pages/survey/survey-06-NMS/survey06NMS.type';
-import styles from './answerList.module.scss';
-import { v4 as uuidv4 } from 'uuid';
-import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
-import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respondedCheckObjectState.types';
 import { RecoilState } from 'recoil';
+import { v4 as uuidv4 } from 'uuid';
+// hooks
+import useClickedRadioBtnChecked from 'pages/survey/common/hooks/useClickedRadioBtnChecked';
+// types
+import { ExplainTextObjectType } from 'pages/survey/survey-06-NMS/survey06NMS.type';
+import { RespondedCheckObjectStateType } from 'pages/survey/common/types/respondedCheckObjectState.types';
+// styles
+import styles from './answerList.module.scss';
 
 interface AnswerLiProps {
   answer: string;
