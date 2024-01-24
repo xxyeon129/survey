@@ -5,6 +5,8 @@ import { useRecoilValue } from 'recoil';
 import { USER_HOSPITAL } from 'pages/select-home/selectHomeUser.const';
 // hooks
 import useExcelFile from 'common/hooks/useExcelFile';
+// types
+import { SendGmailModalProps } from 'common/layout/modal/sendGmailModal.type';
 // styles
 import { FiCheckCircle } from 'react-icons/fi';
 import { IoMdDownload } from 'react-icons/io';
@@ -12,21 +14,21 @@ import { FaPaperPlane } from 'react-icons/fa';
 import commonStyles from 'common/scss/common.module.scss';
 import styles from './lastPageModal.module.scss';
 
-export default function LastPageModal({ onClose }: { onClose: () => void }) {
+export default function LastPageModal(props: SendGmailModalProps) {
   const keepModalOpen = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
 
   const navigate = useNavigate();
 
-  const onCloseModal = onClose;
+  const onCloseModal = props.onClose;
   const { downloadExcelFileHandler, sendFile } = useExcelFile({ onCloseModal });
 
   // for patient user
   const onClickPatientSendFileAndeNavigateToHomePage = () => {
     sendFile();
     navigate('/');
-    onClose();
+    props.onClose();
   };
 
   // for hospital user
@@ -37,14 +39,19 @@ export default function LastPageModal({ onClose }: { onClose: () => void }) {
   // for hospital user
   const onClickNavigateToHomePage = () => {
     navigate('/');
-    onClose();
+    props.onClose();
   };
 
   // for patient user - hide excel file download button
   const user = useRecoilValue(userState);
 
+  const onClickSendErrorBtnHandler = () => {
+    props.onClose();
+    props.openSendGmailModalHandler();
+  };
+
   return (
-    <div className={commonStyles['modal-background']} onClick={onClose}>
+    <div className={commonStyles['modal-background']} onClick={props.onClose}>
       <article className={styles['modal']} onClick={keepModalOpen}>
         <section className={styles['modal-top-blue-icon-box']}>
           <FiCheckCircle className={styles['check-icon']} />
@@ -96,6 +103,9 @@ export default function LastPageModal({ onClose }: { onClose: () => void }) {
             작성 내용 병원 전송에 동의
           </button>
         )}
+        <button className={styles['send-error-btn']} onClick={onClickSendErrorBtnHandler}>
+          * 작성 내용 전송 오류가 발생한 경우 여기를 눌러주세요.
+        </button>
       </article>
     </div>
   );

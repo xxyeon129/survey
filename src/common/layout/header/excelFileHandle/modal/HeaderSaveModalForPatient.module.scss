@@ -4,6 +4,7 @@
   row-gap: 3rem;
   background-color: white;
   padding: 3rem 5rem;
+  padding-bottom: 1.5rem;
   border-radius: 1rem;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px,
     rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
@@ -52,5 +53,11 @@
       transition: 0.5s;
       background-color: $point-green-color;
     }
+  }
+
+  .send-error-btn {
+    margin-top: -1rem;
+    color: $main-blue-color;
+    cursor: pointer;
   }
 }

@@ -4,6 +4,7 @@ import SurveyTitle from '../common/components/survey-title/SurveyTitle';
 import SurveyContentTable from '../common/components/survey-contents/survey-contents-table/SurveyContent';
 import ModalPortal from 'common/layout/modalPortal';
 import LastPageModal from './components/LastPageModal';
+import SendGmailModal from 'common/layout/modal/SendGmailModal';
 // states
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import {
@@ -33,6 +34,13 @@ import styles from '../common/survey.module.scss';
 export default function Survey12Food() {
   // for last page modal
   const { modalOpen, openModalHandler, closeModalHandler } = useModal();
+
+  // for last page send gmail modal
+  const {
+    modalOpen: sendGmailModalOpen,
+    openModalHandler: openSendGmailModalHandler,
+    closeModalHandler: closeSendGmailModalHandler,
+  } = useModal();
 
   // pagination hook props
   const setPrevSurveyPage = useSetRecoilState(survey11CurrentPageState);
@@ -104,7 +112,15 @@ export default function Survey12Food() {
       </section>
       {modalOpen && (
         <ModalPortal>
-          <LastPageModal onClose={closeModalHandler} />
+          <LastPageModal
+            onClose={closeModalHandler}
+            openSendGmailModalHandler={openSendGmailModalHandler}
+          />
+        </ModalPortal>
+      )}
+      {sendGmailModalOpen && (
+        <ModalPortal>
+          <SendGmailModal onClose={closeSendGmailModalHandler} />
         </ModalPortal>
       )}
     </article>

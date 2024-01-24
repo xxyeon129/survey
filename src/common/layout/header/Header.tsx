@@ -19,6 +19,7 @@ import useModal from 'common/hooks/useModal';
 // styles
 import logo from 'assets/header-logo.svg';
 import styles from './header.module.scss';
+import SendGmailModal from '../modal/SendGmailModal';
 
 export default function Header() {
   const headerCurrentPage = useRecoilValue(headerCurrentPageState);
@@ -31,6 +32,13 @@ export default function Header() {
   const user = useRecoilValue(userState);
 
   const { modalOpen, openModalHandler, closeModalHandler } = useModal();
+
+  // for send gmail modal
+  const {
+    modalOpen: sendGmailModalOpen,
+    openModalHandler: openSendGmailModalHandler,
+    closeModalHandler: closeSendGmailModalHandler,
+  } = useModal();
 
   const rightContent = isSurveyPage ? (
     <>
@@ -55,10 +63,21 @@ export default function Header() {
       {modalOpen && (
         <ModalPortal>
           {user === USER_HOSPITAL ? (
-            <HeaderSaveModalForHospital onClose={closeModalHandler} />
+            <HeaderSaveModalForHospital
+              onClose={closeModalHandler}
+              openSendGmailModalHandler={openSendGmailModalHandler}
+            />
           ) : (
-            <HeaderSaveModalForPatient onClose={closeModalHandler} />
+            <HeaderSaveModalForPatient
+              onClose={closeModalHandler}
+              openSendGmailModalHandler={openSendGmailModalHandler}
+            />
           )}
+        </ModalPortal>
+      )}
+      {sendGmailModalOpen && (
+        <ModalPortal>
+          <SendGmailModal onClose={closeSendGmailModalHandler} />
         </ModalPortal>
       )}
     </header>

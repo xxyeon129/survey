@@ -1,0 +1,78 @@
+.modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 1rem;
+  background-color: white;
+  padding: 3rem 5rem;
+  border-radius: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px,
+    rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
+    rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
+  .title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    .warnLogoBackground {
+      background-color: $sidebar-checked-blue-color;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+
+      .warnLogo {
+        font-size: 2.5rem;
+        color: $main-blue-color;
+      }
+    }
+
+    > h1 {
+      text-align: center;
+      line-height: 150%;
+      font-size: 1.8rem;
+      color: $main-blue-color;
+    }
+  }
+
+  > p {
+    font-weight: $text-semi-bold;
+    font-size: 1.4rem;
+    line-height: 155%;
+    color: $text-light-grey-color;
+    text-align: center;
+
+    .highlight {
+      color: $main-blue-color;
+      font-weight: $text-bold;
+    }
+  }
+
+  .btnContainer {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 2rem;
+
+    > button {
+      width: 100%;
+      border-radius: 1rem;
+      padding: 1.5rem 0;
+      font-size: 1.3rem;
+      font-weight: $text-semi-bold;
+      cursor: pointer;
+    }
+
+    .downloadBtn {
+      border: 3px solid $main-blue-color;
+      color: $main-blue-color;
+    }
+    .sendBtn {
+      background-color: $main-blue-color;
+      color: white;
+    }
+  }
+}

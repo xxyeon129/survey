@@ -1,20 +1,27 @@
 // hooks
 import useExcelFile from 'common/hooks/useExcelFile';
+// types
+import { SendGmailModalProps } from 'common/layout/modal/sendGmailModal.type';
 // styles
 import { FaPaperPlane } from 'react-icons/fa';
 import commonStyles from 'common/scss/common.module.scss';
 import styles from './HeaderSaveModalForPatient.module.scss';
 
-export default function HeaderSaveModalForPatient({ onClose }: { onClose: () => void }) {
+export default function HeaderSaveModalForPatient(props: SendGmailModalProps) {
   const keepModalOpen = (e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
   };
 
-  const onCloseModal = onClose;
+  const onCloseModal = props.onClose;
   const { sendFile } = useExcelFile({ onCloseModal });
 
+  const onClickSendErrorBtnHandler = () => {
+    props.onClose();
+    props.openSendGmailModalHandler();
+  };
+
   return (
-    <div className={commonStyles['modal-background']} onClick={onClose}>
+    <div className={commonStyles['modal-background']} onClick={props.onClose}>
       <article className={styles['modal']} onClick={keepModalOpen}>
         <figure className={styles['top-icon-wrapper']}>
           <FaPaperPlane className={styles['top-icon']} />
@@ -31,6 +38,9 @@ export default function HeaderSaveModalForPatient({ onClose }: { onClose: () => 
         </hgroup>
         <button className={styles['send-mail-btn']} onClick={sendFile}>
           작성 내용 병원 전송에 동의
+        </button>
+        <button className={styles['send-error-btn']} onClick={onClickSendErrorBtnHandler}>
+          * 작성 내용 전송 오류가 발생한 경우 여기를 눌러주세요.
         </button>
       </article>
     </div>

@@ -8,6 +8,7 @@
     rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
     rgba(0, 0, 0, 0.09) 0px -3px 5px;
   padding: 3rem 8rem;
+  padding-bottom: 2rem;
   border-radius: 1rem;
   position: relative;
 
@@ -133,5 +134,11 @@
       transition: 0.8s;
       background-color: $point-green-color;
     }
+  }
+
+  .send-error-btn {
+    margin-top: 2rem;
+    color: $main-blue-color;
+    cursor: pointer;
   }
 }
