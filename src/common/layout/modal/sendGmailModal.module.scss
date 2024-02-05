@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  row-gap: 1rem;
+  row-gap: 1.5rem;
   background-color: white;
   padding: 3rem 5rem;
   border-radius: 1rem;
@@ -37,42 +37,80 @@
     }
   }
 
-  > p {
-    font-weight: $text-semi-bold;
-    font-size: 1.4rem;
-    line-height: 155%;
-    color: $text-light-grey-color;
-    text-align: center;
-
-    .highlight {
-      color: $main-blue-color;
-      font-weight: $text-bold;
-    }
-  }
-
-  .btnContainer {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
+  .content {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 1rem;
     margin-top: 2rem;
 
-    > button {
-      width: 100%;
-      border-radius: 1rem;
-      padding: 1.5rem 0;
-      font-size: 1.3rem;
+    > p {
       font-weight: $text-semi-bold;
-      cursor: pointer;
+      font-size: 1.4rem;
+      line-height: 155%;
+      color: $text-light-grey-color;
+      text-align: center;
+
+      .highlight {
+        color: $main-blue-color;
+        font-weight: $text-bold;
+      }
     }
 
+    > button {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      border-radius: 50px;
+      padding: 1.5rem 0;
+      padding-right: 1.7rem;
+      font-size: 1.3rem;
+      font-weight: $text-semi-bold;
+      color: white;
+      cursor: pointer;
+
+      .numberCircle {
+        position: absolute;
+        left: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(255, 255, 255, 0.4);
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        margin-right: 0.7rem;
+      }
+
+      &:hover {
+        transition: 0.5s;
+        background-color: $point-green-color;
+        .numberCircle {
+          color: $point-green-color;
+        }
+      }
+    }
     .downloadBtn {
-      border: 3px solid $main-blue-color;
-      color: $main-blue-color;
+      background-color: $main-skyblue-color;
+      .numberCircle {
+        color: $main-skyblue-color;
+      }
     }
     .sendBtn {
       background-color: $main-blue-color;
-      color: white;
+      .numberCircle {
+        color: $main-blue-color;
+      }
+    }
+
+    .attach-example-img {
+      // border: 2px solid $sidebar-checked-blue-color;
+      border-radius: 1rem;
+      object-fit: cover;
+      max-width: 35rem;
     }
   }
 }

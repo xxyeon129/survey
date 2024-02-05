@@ -1,5 +1,6 @@
 // hooks
-import useExcelFile from 'common/hooks/useExcelFile';
+// UNUSED: send email via backend server
+// import useExcelFile from 'common/hooks/useExcelFile';
 // types
 import { SendGmailModalProps } from 'common/layout/modal/sendGmailModal.type';
 // styles
@@ -12,8 +13,9 @@ export default function HeaderSaveModalForPatient(props: SendGmailModalProps) {
     e.stopPropagation();
   };
 
-  const onCloseModal = props.onClose;
-  const { sendFile } = useExcelFile({ onCloseModal });
+  // UNUSED: send email via backend server
+  // const onCloseModal = props.onClose;
+  // const { sendFile } = useExcelFile({ onCloseModal });
 
   const onClickSendErrorBtnHandler = () => {
     props.onClose();
@@ -36,12 +38,13 @@ export default function HeaderSaveModalForPatient(props: SendGmailModalProps) {
             다른 기기에서 이어서 작성하실 경우 아래 버튼을 눌러주세요.
           </h3>
         </hgroup>
-        <button className={styles['send-mail-btn']} onClick={sendFile}>
+        <button className={styles['send-mail-btn']} onClick={onClickSendErrorBtnHandler}>
           작성 내용 병원 전송에 동의
         </button>
-        <button className={styles['send-error-btn']} onClick={onClickSendErrorBtnHandler}>
+        {/* UNUSED: send email via backend server */}
+        {/* <button className={styles['send-error-btn']} onClick={onClickSendErrorBtnHandler}>
           * 작성 내용 전송 오류가 발생한 경우 여기를 눌러주세요.
-        </button>
+        </button> */}
       </article>
     </div>
   );
