@@ -14,7 +14,7 @@ export default function HeaderSaveModalForHospital(props: SendGmailModalProps) {
   };
 
   const onCloseModal = props.onClose;
-  const { downloadExcelFileHandler, sendFile } = useExcelFile({ onCloseModal });
+  const { downloadExcelFileHandler } = useExcelFile({ onCloseModal });
 
   const onClickdownloadExcelFileBtn = () => {
     downloadExcelFileHandler();
@@ -44,14 +44,15 @@ export default function HeaderSaveModalForHospital(props: SendGmailModalProps) {
             <FiDownload className={`${styles['btn-icon']} ${styles['download-icon']}`} />
             작성 내용 엑셀 파일로 다운로드
           </button>
-          <button className={styles['send-mail-btn']} onClick={sendFile}>
+          <button className={styles['send-mail-btn']} onClick={onClickSendErrorBtnHandler}>
             <FaPaperPlane className={styles['btn-icon']} />
             작성 내용 병원 전송에 동의
           </button>
         </section>
-        <button className={styles['send-error-btn']} onClick={onClickSendErrorBtnHandler}>
+        {/* UNUSED: send email via backend server */}
+        {/* <button className={styles['send-error-btn']} onClick={onClickSendErrorBtnHandler}>
           * 작성 내용 전송 오류가 발생한 경우 여기를 눌러주세요.
-        </button>
+        </button> */}
       </article>
     </div>
   );

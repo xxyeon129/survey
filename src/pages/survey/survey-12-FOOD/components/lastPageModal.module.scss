@@ -8,7 +8,8 @@
     rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px,
     rgba(0, 0, 0, 0.09) 0px -3px 5px;
   padding: 3rem 8rem;
-  padding-bottom: 2rem;
+  // UNUSED: send email via backend server
+  // padding-bottom: 2rem;
   border-radius: 1rem;
   position: relative;
 
@@ -68,12 +69,13 @@
 
       .hospital-user-download-send-icon-container {
         margin: 0;
+        margin-bottom: 0.5rem;
         display: flex;
         align-items: center;
         justify-content: center;
         width: 100%;
         .hospital-user-download-send-icon {
-          font-size: 3.5rem;
+          font-size: 3rem;
           color: $main-blue-color;
         }
       }

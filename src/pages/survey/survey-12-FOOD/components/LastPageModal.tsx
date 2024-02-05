@@ -22,14 +22,15 @@ export default function LastPageModal(props: SendGmailModalProps) {
   const navigate = useNavigate();
 
   const onCloseModal = props.onClose;
-  const { downloadExcelFileHandler, sendFile } = useExcelFile({ onCloseModal });
+  const { downloadExcelFileHandler } = useExcelFile({ onCloseModal });
 
+  // UNUSED: send email via backend server
   // for patient user
-  const onClickPatientSendFileAndeNavigateToHomePage = () => {
-    sendFile();
-    navigate('/');
-    props.onClose();
-  };
+  // const onClickPatientSendFileAndeNavigateToHomePage = () => {
+  //   sendFile();
+  //   navigate('/');
+  //   props.onClose();
+  // };
 
   // for hospital user
   const onClickdownloadExcelFileBtn = () => {
@@ -74,21 +75,26 @@ export default function LastPageModal(props: SendGmailModalProps) {
               </p>
             </button>
             <hr />
-            <button className={styles['hospital-user-download-send-btn']} onClick={sendFile}>
+            <button
+              className={styles['hospital-user-download-send-btn']}
+              onClick={onClickSendErrorBtnHandler}
+            >
               <figure className={styles['hospital-user-download-send-icon-container']}>
                 <FaPaperPlane className={styles['hospital-user-download-send-icon']} />
               </figure>
               <h3 className={styles['hospital-user-download-send-h3']}>작성 내용 병원 전송 동의</h3>
               <p className={styles['hospital-user-download-send-p']}>
-                작성하신 설문 내용이
+                담당자에게 메일을 전송하는
                 <br />
-                담당자에게 메일로 전송됩니다.
+                안내 팝업이 표시됩니다.
               </p>
             </button>
           </section>
         ) : (
           <p className={styles['patient-modal-text-explain-p']}>
-            하단 버튼 클릭 시 담당자에게 메일 전송 후<br />첫 화면으로 이동됩니다.
+            하단 버튼 클릭 시 표시되는 팝업창의 안내에 따라
+            <br />
+            병원 담당자에게 메일을 전송해주세요.
           </p>
         )}
         {user === USER_HOSPITAL ? (
@@ -96,16 +102,14 @@ export default function LastPageModal(props: SendGmailModalProps) {
             첫 화면으로 이동
           </button>
         ) : (
-          <button
-            className={styles['patient-send-mail-btn']}
-            onClick={onClickPatientSendFileAndeNavigateToHomePage}
-          >
+          <button className={styles['patient-send-mail-btn']} onClick={onClickSendErrorBtnHandler}>
             작성 내용 병원 전송에 동의
           </button>
         )}
-        <button className={styles['send-error-btn']} onClick={onClickSendErrorBtnHandler}>
+        {/* UNUSED: send email via backend server */}
+        {/* <button className={styles['send-error-btn']} onClick={onClickSendErrorBtnHandler}>
           * 작성 내용 전송 오류가 발생한 경우 여기를 눌러주세요.
-        </button>
+        </button> */}
       </article>
     </div>
   );

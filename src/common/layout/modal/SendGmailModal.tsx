@@ -44,7 +44,7 @@ export default function SendGmailModal({ onClose }: { onClose: () => void }) {
         </section>
 
         <section className={styles.content}>
-          <p>1. 먼저 하단 다운로드 버튼을 클릭해 파일을 다운로드해 주세요.</p>
+          <p>1. 하단 다운로드 버튼을 클릭해 파일을 다운로드해 주세요.</p>
           <button className={styles.downloadBtn} onClick={downloadExcelFileHandler}>
             <span className={styles.numberCircle}>1</span>작성 내용 다운로드
           </button>
@@ -52,12 +52,12 @@ export default function SendGmailModal({ onClose }: { onClose: () => void }) {
 
         <section className={styles.content}>
           <p>
-            2. "작성 내용 병원에 전송하기" 버튼을 클릭해 이동한 창에서
+            2. 하단 전송하기 버튼을 클릭해 이동한 창에서
             <br />
             <span className={styles.highlight}>반드시 다운로드한 파일을 첨부해</span> 메일을
             전송해주세요.
             <br />
-            이동한 창에서 보이는 좌측 하단의 클립 아이콘이 파일 첨부 버튼입니다.
+            이동한 창의 좌측 하단 클립 아이콘이 파일 첨부 버튼입니다.
           </p>
 
           <img

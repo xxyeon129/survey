@@ -70,6 +70,7 @@
       font-size: 1.3rem;
       font-weight: $text-semi-bold;
       color: white;
+      background-color: $main-blue-color;
       cursor: pointer;
 
       .numberCircle {
@@ -83,6 +84,7 @@
         height: 3rem;
         border-radius: 50%;
         margin-right: 0.7rem;
+        color: $main-blue-color;
       }
 
       &:hover {
@@ -93,21 +95,8 @@
         }
       }
     }
-    .downloadBtn {
-      background-color: $main-skyblue-color;
-      .numberCircle {
-        color: $main-skyblue-color;
-      }
-    }
-    .sendBtn {
-      background-color: $main-blue-color;
-      .numberCircle {
-        color: $main-blue-color;
-      }
-    }
 
     .attach-example-img {
-      // border: 2px solid $sidebar-checked-blue-color;
       border-radius: 1rem;
       object-fit: cover;
       max-width: 35rem;
