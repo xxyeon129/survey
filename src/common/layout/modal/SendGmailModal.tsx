@@ -40,7 +40,7 @@ export default function SendGmailModal({ onClose }: { onClose: () => void }) {
           <div className={styles.warnLogoBackground}>
             <PiWarningCircleBold className={styles.warnLogo} />
           </div>
-          <h1>아래 안내에 따라 메일을 전송해주세요.</h1>
+          <h1>아래 안내에 따라 메일을 전송해 주세요.</h1>
         </section>
 
         <section className={styles.content}>
