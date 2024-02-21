@@ -1,3 +1,4 @@
 export default function NotFound() {
-  return <h1>PAGE NOT FOUND</h1>;
+  // TO DO: main page navigate, redesign
+  return <h1>페이지를 찾을 수 없습니다.</h1>;
 }
