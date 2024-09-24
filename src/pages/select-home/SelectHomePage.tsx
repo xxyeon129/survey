@@ -14,7 +14,6 @@ import { IoPeople } from 'react-icons/io5';
 import { FaHospitalUser } from 'react-icons/fa';
 import { IoIosArrowForward } from 'react-icons/io';
 import logo from 'assets/header-logo.svg';
-import backgroundImg from 'assets/hompage-background.png';
 import styles from './selectHomePage.module.scss';
 
 export default function SelectHomePage() {
@@ -49,9 +48,7 @@ export default function SelectHomePage() {
           className={`${styles['select-box']} ${styles['select-box-patient']}`}
           onClick={() => onClickBox(USER_PATIENT)}
         >
-          <figure
-            className={`${styles['icon-circle-wrapper']} ${styles['icon-circle-wrapper-patient']}`}
-          >
+          <figure className={`${styles['icon-circle-wrapper']} ${styles['icon-circle-wrapper-patient']}`}>
             <IoPeople className={styles['icon']} />
           </figure>
           <figcaption className={styles['select-box-text-container']}>
@@ -72,9 +69,7 @@ export default function SelectHomePage() {
           className={`${styles['select-box']} ${styles['select-box-hospital']}`}
           onClick={() => onClickBox(USER_HOSPITAL)}
         >
-          <figure
-            className={`${styles['icon-circle-wrapper']} ${styles['icon-circle-wrapper-hospital']}`}
-          >
+          <figure className={`${styles['icon-circle-wrapper']} ${styles['icon-circle-wrapper-hospital']}`}>
             <FaHospitalUser className={styles['icon']} />
           </figure>
           <figcaption className={styles['select-box-text-container']}>
@@ -91,7 +86,6 @@ export default function SelectHomePage() {
           </button>
         </div>
       </section>
-      <img className={styles['background-img']} src={backgroundImg} alt="abstract background" />
     </article>
   );
 }
