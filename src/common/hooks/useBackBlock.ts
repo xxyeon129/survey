@@ -1,19 +1,24 @@
 import { useEffect } from 'react';
-import { Pathname, useNavigate } from 'react-router-dom';
-import history from 'common/constants/history.const';
+import { NavigationType, Pathname, useNavigate } from 'react-router-dom';
+import homePagerouter from 'routes/routes';
 
-export default function useBackBlock(location: Location | Pathname) {
+export default function useBackBlock(propsLocation: Location | Pathname) {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const listenBackEvent = () => {
-      navigate(location);
-    };
+  const blockBackEvent = () => {
+    navigate(propsLocation);
+  };
 
-    const historyEvent = history.listen(({ action }) => {
-      if (action === 'POP') listenBackEvent();
+  useEffect(() => {
+    const unsubscribe = homePagerouter.subscribe((state) => {
+      if (state.historyAction === NavigationType.Pop) {
+        blockBackEvent();
+      }
     });
 
-    return historyEvent;
+    // component unmount unsubscribe for non-homepage
+    return () => {
+      unsubscribe();
+    };
   }, []);
 }
