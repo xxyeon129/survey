@@ -15,6 +15,8 @@ import { FaHospitalUser } from 'react-icons/fa';
 import { IoIosArrowForward } from 'react-icons/io';
 import logo from 'assets/header-logo.svg';
 import styles from './selectHomePage.module.scss';
+// types
+import { IconType } from 'react-icons';
 
 export default function SelectHomePage() {
   const setUser = useSetRecoilState(userState);
@@ -29,7 +31,7 @@ export default function SelectHomePage() {
     setUser('');
   }, []);
 
-  // for prevent back page
+  // Prevent back page
   useBackBlock('/');
 
   const topTitleElement = (
@@ -41,51 +43,68 @@ export default function SelectHomePage() {
 
   return (
     <article className={styles['select-page-container']}>
-      <img className={styles['top-logo']} src={logo} />
+      <img className={styles['top-logo']} src={logo} alt='Hospital Logo' />
       {topTitleElement}
       <section className={styles['select-boxes-container-section']}>
-        <div
-          className={`${styles['select-box']} ${styles['select-box-patient']}`}
-          onClick={() => onClickBox(USER_PATIENT)}
-        >
-          <figure className={`${styles['icon-circle-wrapper']} ${styles['icon-circle-wrapper-patient']}`}>
-            <IoPeople className={styles['icon']} />
-          </figure>
-          <figcaption className={styles['select-box-text-container']}>
-            <h2 className={styles['select-box-title-text']}>환자 • 보호자</h2>
-            <p className={styles['select-box-explain-text']}>
+        <SelectBox
+          user='patient'
+          onClickBox={onClickBox}
+          clickedBoxValue={USER_PATIENT}
+          Icon={IoPeople}
+          title='환자 • 보호자'
+          description={
+            <>
               환자나 보호자분께서
               <br />
               직접 설문을 작성하시는 경우
-            </p>
-          </figcaption>
-          <button className={`${styles['select-box-bottom-btn']} ${styles['patient-button']}`}>
-            설문 작성하기
-            <IoIosArrowForward className={styles['bottom-button-arrow-icon']} />
-          </button>
-        </div>
-
-        <div
-          className={`${styles['select-box']} ${styles['select-box-hospital']}`}
-          onClick={() => onClickBox(USER_HOSPITAL)}
-        >
-          <figure className={`${styles['icon-circle-wrapper']} ${styles['icon-circle-wrapper-hospital']}`}>
-            <FaHospitalUser className={styles['icon']} />
-          </figure>
-          <figcaption className={styles['select-box-text-container']}>
-            <h2 className={styles['select-box-title-text']}>병원 관계자</h2>
-            <p className={styles['select-box-explain-text']}>
+            </>
+          }
+        />
+        <SelectBox
+          user='hospital'
+          onClickBox={onClickBox}
+          clickedBoxValue={USER_HOSPITAL}
+          Icon={FaHospitalUser}
+          title='병원 관계자'
+          description={
+            <>
               엑셀 파일 다운로드나
               <br />
               엑셀 파일 반영이 필요하신 경우
-            </p>
-          </figcaption>
-          <button className={`${styles['select-box-bottom-btn']} ${styles['hospital-button']}`}>
-            설문 작성하기
-            <IoIosArrowForward className={styles['bottom-button-arrow-icon']} />
-          </button>
-        </div>
+            </>
+          }
+        />
       </section>
     </article>
   );
 }
+
+interface SelectBoxProps {
+  user: string;
+  onClickBox: (clickedBoxValue: string) => void;
+  clickedBoxValue: string;
+  Icon: IconType;
+  title: string;
+  description: JSX.Element;
+}
+
+const SelectBox = ({ user, onClickBox, clickedBoxValue, Icon, title, description }: SelectBoxProps) => {
+  return (
+    <div
+      className={`${styles['select-box']} ${styles[`select-box-${user}`]}`}
+      onClick={() => onClickBox(clickedBoxValue)}
+    >
+      <figure className={`${styles['icon-circle-wrapper']} ${styles[`icon-circle-wrapper-${user}`]}`}>
+        <Icon className={styles['icon']} />
+      </figure>
+      <figcaption className={styles['select-box-text-container']}>
+        <h2 className={styles['select-box-title-text']}>{title}</h2>
+        <p className={styles['select-box-explain-text']}>{description}</p>
+      </figcaption>
+      <button className={`${styles['select-box-bottom-btn']} ${styles[`${user}-button`]}`}>
+        설문 작성하기
+        <IoIosArrowForward className={styles['bottom-button-arrow-icon']} />
+      </button>
+    </div>
+  );
+};
