@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 // components
 import ProgressBar from './ProgressBar';
-import SendExcelFileBtn from './excelFileHandle/button/sendExcelFileBtn';
 import ModalPortal from '../modalPortal';
 import HeaderSaveModalForPatient from './excelFileHandle/modal/HeaderSaveModalForPatient';
 import HeaderSaveModalForHospital from './excelFileHandle/modal/HeaderSaveModalForHospital';
@@ -42,10 +41,10 @@ export default function Header() {
 
   const rightContent = isSurveyPage ? (
     <>
-      <span
-        className={styles['header-right-text']}
-      >{`설문 ${headerCurrentPage} / ${totalPagesCount} 페이지`}</span>
-      <SendExcelFileBtn onClickBtnHandler={openModalHandler} />
+      <span className={styles['header-right-text']}>{`설문 ${headerCurrentPage} / ${totalPagesCount} 페이지`}</span>
+      <button className={styles['send-excel-file-btn']} onClick={openModalHandler}>
+        진행 내용 저장
+      </button>
     </>
   ) : (
     <span className={styles['header-right-text']}>{`${SURVEY_NAME} 전자설문`}</span>
@@ -54,8 +53,8 @@ export default function Header() {
   return (
     <header className={styles['header']}>
       <div className={styles['header-contents']}>
-        <Link to="/">
-          <img src={logo} alt="header 좌측 병원 로고" />
+        <Link to='/'>
+          <img src={logo} alt='header 좌측 병원 로고' />
         </Link>
         <div className={styles['header-right-contents']}>{rightContent}</div>
       </div>
