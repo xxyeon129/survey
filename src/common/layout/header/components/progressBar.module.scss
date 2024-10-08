@@ -1,0 +1,11 @@
+.progress-bar-background {
+  width: 100vw;
+  height: 6px;
+  background-color: $progressbar-grey-color;
+
+  .progress-bar-filled {
+    height: 100%;
+    background-color: $main-blue-color;
+    transition: 1s;
+  }
+}

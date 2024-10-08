@@ -1,7 +1,10 @@
+// state
 import { useRecoilValue } from 'recoil';
-import styles from './header.module.scss';
-import { headerCurrentPageState } from './pagination/headerPageState';
-import useTotalPages from './pagination/useTotalPages';
+import { headerCurrentPageState } from '../pagination/headerPageState';
+// hooks
+import useTotalPages from '../pagination/useTotalPages';
+// styles
+import styles from './progressBar.module.scss';
 
 export default function ProgressBar() {
   const headerCurrentPage = useRecoilValue(headerCurrentPageState);

@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 // components
-import ProgressBar from './ProgressBar';
+import ProgressBar from './components/ProgressBar';
 import ModalPortal from '../modalPortal';
 import HeaderSaveModalForPatient from './excelFileHandle/modal/HeaderSaveModalForPatient';
 import HeaderSaveModalForHospital from './excelFileHandle/modal/HeaderSaveModalForHospital';
+import SendGmailModal from '../modal/SendGmailModal';
 // states
 import { headerCurrentPageState } from './pagination/headerPageState';
 import { userState } from 'pages/select-home/selectHomePage.state';
@@ -18,16 +19,15 @@ import useModal from 'common/hooks/useModal';
 // styles
 import logo from 'assets/header-logo.svg';
 import styles from './header.module.scss';
-import SendGmailModal from '../modal/SendGmailModal';
 
 export default function Header() {
   const headerCurrentPage = useRecoilValue(headerCurrentPageState);
   const isSurveyPage = usePathCheck();
 
-  // for display total pages count
+  // Total pages count
   const { totalPagesCount } = useTotalPages();
 
-  // for different modal content
+  // Current user (patient or hospital) - for different modal content
   const user = useRecoilValue(userState);
 
   const { modalOpen, openModalHandler, closeModalHandler } = useModal();
@@ -39,7 +39,7 @@ export default function Header() {
     closeModalHandler: closeSendGmailModalHandler,
   } = useModal();
 
-  const rightContent = isSurveyPage ? (
+  const rightContentElement = isSurveyPage ? (
     <>
       <span className={styles['header-right-text']}>{`설문 ${headerCurrentPage} / ${totalPagesCount} 페이지`}</span>
       <button className={styles['send-excel-file-btn']} onClick={openModalHandler}>
@@ -54,11 +54,14 @@ export default function Header() {
     <header className={styles['header']}>
       <div className={styles['header-contents']}>
         <Link to='/'>
-          <img src={logo} alt='header 좌측 병원 로고' />
+          <img src={logo} className={styles['header-logo']} alt='header 좌측 병원 로고' />
         </Link>
-        <div className={styles['header-right-contents']}>{rightContent}</div>
+        <div className={styles['header-right-contents']}>{rightContentElement}</div>
       </div>
+
       {isSurveyPage && <ProgressBar />}
+
+      {/* modal */}
       {modalOpen && (
         <ModalPortal>
           {user === USER_HOSPITAL ? (

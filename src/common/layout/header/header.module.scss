@@ -18,7 +18,7 @@
   padding-left: 40px;
   padding-right: 58px;
 
-  img {
+  .header-logo {
     width: 10.25rem;
 
     @media screen and (min-width: 1900px) {
@@ -54,34 +54,5 @@
         font-size: 1.1rem;
       }
     }
-  }
-}
-
-.prev-next-btn {
-  display: flex;
-  gap: 10px;
-
-  button {
-    width: 2.2rem;
-    height: 2.2rem;
-    border-radius: 50%;
-
-    > svg {
-      font-size: 2.2rem;
-      color: $main-blue-color;
-      cursor: pointer;
-    }
-  }
-}
-
-.progress-bar-background {
-  width: 100vw;
-  height: 6px;
-  background-color: $progressbar-grey-color;
-
-  .progress-bar-filled {
-    height: 100%;
-    background-color: $main-blue-color;
-    transition: 1s;
   }
 }
